@@ -1,0 +1,177 @@
+# Default configuration for Mneme
+# This file contains all configurable parameters with sensible defaults
+
+project:
+  name: "mneme"
+  version: "0.1.0"
+  random_seed: 42
+
+# Data configuration
+data:
+  raw_path: "./data/raw"
+  processed_path: "./data/processed"
+  synthetic_path: "./data/synthetic"
+  cache_enabled: true
+  cache_size_mb: 1024
+
+# Preprocessing parameters
+preprocessing:
+  # Denoising
+  denoise:
+    enabled: true
+    method: "wavelet"  # Options: wavelet, gaussian, median
+    wavelet_type: "db4"
+    wavelet_level: 3
+    gaussian_sigma: 1.0
+    median_kernel_size: 3
+  
+  # Normalization
+  normalize:
+    enabled: true
+    method: "z_score"  # Options: z_score, min_max, histogram
+    per_frame: true
+    clip_percentile: 99.5
+  
+  # Registration
+  registration:
+    enabled: true
+    reference: "first"  # Options: first, mean, median
+    method: "rigid"  # Options: rigid, affine, deformable
+  
+  # Interpolation
+  interpolation:
+    enabled: true
+    method: "bicubic"  # Options: nearest, bilinear, bicubic
+    target_resolution: [256, 256]
+
+# Field reconstruction
+reconstruction:
+  method: "ift"  # Options: ift, gaussian_process, neural_field
+  resolution: [256, 256]
+  
+  # IFT specific
+  ift:
+    power_spectrum_model: "power_law"
+    correlation_length: 10.0
+    smoothness_prior: 2.0
+  
+  # Gaussian process specific
+  gaussian_process:
+    kernel: "rbf"  # Options: rbf, matern, periodic
+    length_scale: 10.0
+    noise_level: 0.1
+  
+  # Neural field specific
+  neural_field:
+    hidden_dims: [256, 128, 64]
+    activation: "relu"
+    positional_encoding_dims: 32
+
+# Topology analysis
+topology:
+  max_dimension: 2
+  filtration: "sublevel"  # Options: sublevel, superlevel
+  persistence_threshold: 0.05
+  compute_cycles: true
+  
+  # Attractor detection
+  attractors:
+    method: "recurrence"  # Options: recurrence, lyapunov, clustering
+    recurrence_threshold: 0.1
+    min_persistence: 0.1
+    embedding_dimension: 3
+    time_delay: 1
+
+# Machine learning models
+models:
+  # Autoencoder
+  autoencoder:
+    architecture: "convolutional"  # Options: convolutional, fully_connected
+    latent_dim: 32
+    encoder_channels: [32, 64, 128]
+    decoder_channels: [128, 64, 32]
+    kernel_size: 3
+    use_batch_norm: true
+    dropout_rate: 0.1
+  
+  # Symbolic regression
+  symbolic_regression:
+    operators: ["+", "-", "*", "/", "sin", "cos", "exp", "log"]
+    complexity_penalty: 0.001
+    population_size: 1000
+    generations: 20
+    tournament_size: 20
+    crossover_probability: 0.5
+    mutation_probability: 0.1
+
+# Training configuration
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  num_epochs: 100
+  optimizer: "adam"  # Options: adam, sgd, rmsprop
+  scheduler: "cosine"  # Options: none, step, cosine, plateau
+  early_stopping_patience: 10
+  gradient_clip_norm: 1.0
+
+# Analysis pipeline
+pipeline:
+  stages:
+    - name: "quality_check"
+      enabled: true
+    - name: "preprocessing"
+      enabled: true
+    - name: "reconstruction"
+      enabled: true
+    - name: "topology_analysis"
+      enabled: true
+    - name: "attractor_detection"
+      enabled: true
+    - name: "symbolic_regression"
+      enabled: false
+  
+  parallel_processing:
+    enabled: true
+    n_workers: 4
+    backend: "multiprocessing"  # Options: multiprocessing, threading, dask
+
+# Visualization
+visualization:
+  backend: "matplotlib"  # Options: matplotlib, plotly
+  figure_dpi: 300
+  save_format: "png"  # Options: png, svg, pdf
+  colormap: "viridis"
+  style: "publication"  # Options: default, publication, presentation
+  
+  # Animation settings
+  animation:
+    fps: 10
+    codec: "h264"
+    bitrate: 1800
+
+# Experiment tracking
+experiments:
+  output_dir: "./experiments/results"
+  save_intermediate: true
+  log_level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  tensorboard_enabled: false
+  wandb_enabled: false
+  mlflow_enabled: false
+
+# Compute resources
+compute:
+  device: "auto"  # Options: cpu, cuda, auto
+  mixed_precision: false
+  num_threads: -1  # -1 for auto
+  memory_limit_gb: null  # null for no limit
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "./logs/mneme.log"
+  console: true
+  rotation:
+    enabled: true
+    max_bytes: 10485760  # 10MB
+    backup_count: 5

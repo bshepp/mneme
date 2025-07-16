@@ -1,0 +1,62 @@
+# Example experiment configuration
+# This file demonstrates how to override default settings for specific experiments
+
+# Inherit from default configuration
+base_config: "default.yaml"
+
+# Experiment metadata
+experiment:
+  name: "planarian_bioelectric_phase1"
+  description: "Initial analysis of planarian bioelectric patterns"
+  tags: ["planarian", "bioelectric", "phase1"]
+  author: "Your Name"
+  date: "2024-01-01"
+
+# Override specific parameters
+data:
+  raw_path: "./data/raw/planarian_experiment_001"
+
+preprocessing:
+  denoise:
+    method: "wavelet"
+    wavelet_level: 4  # Increased for noisier bioelectric data
+  
+  normalize:
+    method: "histogram"  # Better for bioelectric imaging
+    
+reconstruction:
+  method: "gaussian_process"  # More suitable for sparse electrode data
+  gaussian_process:
+    kernel: "matern"
+    length_scale: 15.0  # Adjusted for planarian scale
+
+topology:
+  persistence_threshold: 0.1  # Higher threshold for biological noise
+
+models:
+  autoencoder:
+    latent_dim: 16  # Smaller latent space for initial experiments
+    encoder_channels: [16, 32, 64]  # Reduced complexity
+
+training:
+  batch_size: 16  # Smaller batches for limited data
+  num_epochs: 50  # Fewer epochs for quick iteration
+
+# Experiment-specific parameters
+analysis:
+  time_windows:
+    - [0, 3600]      # First hour
+    - [3600, 7200]   # Second hour
+    - [7200, 10800]  # Third hour
+  
+  regions_of_interest:
+    - name: "anterior"
+      bounds: [[0, 0], [128, 128]]
+    - name: "posterior"
+      bounds: [[128, 128], [256, 256]]
+  
+  comparison_groups:
+    - control: "intact"
+      treatment: "regenerating"
+    - control: "day0"
+      treatment: "day7"
