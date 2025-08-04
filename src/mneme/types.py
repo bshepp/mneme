@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from enum import Enum
 import numpy as np
 import torch
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 import numpy.typing as npt
 
 # Type aliases
@@ -97,9 +97,10 @@ class FieldDataSchema(BaseModel):
     shape: Tuple[Optional[int], ...]
     dtype: str = "float64"
     value_range: Optional[Tuple[float, float]] = None
-    required_metadata: List[str] = Field(default_factory=list)
+    required_metadata: List[str] = []
     
-    @validator("shape")
+    @field_validator("shape")
+    @classmethod
     def validate_shape(cls, v):
         if len(v) not in [2, 3]:
             raise ValueError("Field must be 2D or 3D (with time)")
@@ -125,7 +126,7 @@ class PipelineStage(BaseModel):
     enabled: bool = True
     inputs: List[str]
     outputs: List[str]
-    parameters: Dict[str, Any] = Field(default_factory=dict)
+    parameters: Dict[str, Any] = {}
 
 # Protocol classes for type checking
 class Reconstructor(Protocol):

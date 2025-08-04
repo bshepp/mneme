@@ -26,5 +26,5 @@ click>=8.0.0,<9.0.0  # CLI tools
 python-dotenv>=0.19.0,<1.0.0  # Environment variables
 
 # Data validation
-pydantic>=1.8.0,<2.0.0  # Data validation
+pydantic>=2.0.0,<3.0.0  # Data validation (updated for v2 compatibility)
 jsonschema>=3.2.0,<5.0.0  # JSON schema validation

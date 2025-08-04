@@ -1,6 +1,6 @@
 """Topological Data Analysis methods for field analysis."""
 
-from typing import List, Optional, Dict, Any, Tuple
+from typing import List, Optional, Dict, Any, Tuple, Union
 import numpy as np
 from abc import ABC, abstractmethod
 

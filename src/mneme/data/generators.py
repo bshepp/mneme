@@ -1,7 +1,7 @@
 """Synthetic data generation for testing and validation."""
 
 import numpy as np
-from typing import Dict, Any, Optional, Tuple, Union
+from typing import Dict, Any, Optional, Tuple, Union, List
 from scipy import ndimage
 from scipy.ndimage import gaussian_filter
 from scipy.spatial.distance import cdist
