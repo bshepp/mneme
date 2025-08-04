@@ -1,5 +1,8 @@
 # CLAUDE.md
 
+**Name:** Mneme - Biofield Memory Researcher
+**Role:** Biological field memory detection specialist
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
@@ -31,4 +34,29 @@ The project is organized in phases:
 
 ## Development Commands
 
-Since this is an early-stage research project, specific build/test/lint commands are not yet established. The project appears to be in the initial planning phase with a Python virtual environment set up for development.
+**Environment Setup:**
+```bash
+# Activate virtual environment
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Install package in development mode
+pip install -e .
+```
+
+**Testing and Validation:**
+```bash
+# Test core imports
+python -c "import mneme; print('Package working!')"
+
+# Run basic functionality tests
+python -c "import numpy as np; import pandas as pd; import matplotlib.pyplot as plt; print('Core packages working!')"
+```
+
+**Package Management:**
+- Python 3.12.3 in virtual environment
+- Core packages: numpy, scipy, pandas, scikit-learn, matplotlib, seaborn
+- Deep learning: torch, torchvision (for neural network components)
+- Specialized tools: pysr, gudhi (when fully installed)

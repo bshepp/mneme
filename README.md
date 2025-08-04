@@ -18,7 +18,7 @@ Mneme seeks to uncover attractor states, regulatory logic, and latent architectu
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/mneme.git
+git clone https://github.com/bshepp/mneme.git
 cd mneme
 
 # Create virtual environment

@@ -2,10 +2,11 @@
 
 ## Prerequisites
 
-- Python 3.9 or higher
+- Python 3.12.3 (tested and working)
 - Git
-- Virtual environment tool (venv, conda, or similar)
+- Virtual environment tool (venv recommended)
 - CUDA-capable GPU (optional, for deep learning models)
+- WSL2 environment (if on Windows)
 
 ## Initial Setup
 
@@ -55,8 +56,8 @@ scikit-learn>=0.24.0
 
 ### Deep Learning
 ```txt
-torch>=1.9.0
-torchvision>=0.10.0
+torch>=2.0.0
+torchvision>=0.15.0
 ```
 
 ### Specialized Tools
