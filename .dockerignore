@@ -1,0 +1,111 @@
+# Git
+.git
+.gitignore
+README.md
+.github/
+
+# Documentation
+docs/
+*.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+.mypy_cache/
+.tox/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data directories (too large for containers)
+data/raw/
+data/processed/
+data/synthetic/*.npz
+data/synthetic/*.h5
+data/synthetic/*.hdf5
+
+# Experiment results
+experiments/results/
+experiments/logs/
+*.log
+
+# Model files (too large)
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.pkl
+*.joblib
+
+# Cache
+.cache/
+cache/
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Large archives
+*.tar.gz
+*.zip
+*.7z
+
+# Biofield research data
+*.mat
+*.fif
+*.set
+*.bdf
+*.edf
+*.ncs
+*.nev
+*.nwb
+bioelectric_data/
+morphology_data/
+planarian_data/
+regeneration_experiments/
+
+# ML tracking
+wandb/
+mlruns/
+tensorboard_logs/
+.neptune/
+.comet/
+lightning_logs/
+
+# Julia
+.julia/
+
+# Development
+scratch/
+sandbox/
+playground/
+old/
+backup/
+experiments_old/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Node modules (if any)
+node_modules/
+
+# Environment files with secrets
+.env

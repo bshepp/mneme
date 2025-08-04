@@ -1,0 +1,117 @@
+# Claude Ignore File
+# Files and directories that Claude should avoid reading or processing
+
+# Virtual environments - too large and not relevant
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache and bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Large data files - not useful for code analysis
+data/raw/
+data/processed/
+data/synthetic/*.npz
+data/synthetic/*.h5
+data/synthetic/*.hdf5
+*.npy
+*.npz
+
+# Biofield research data files
+*.mat
+*.fif
+*.set
+*.bdf
+*.edf
+*.ncs
+*.nev
+*.nwb
+bioelectric_data/
+morphology_data/
+planarian_data/
+regeneration_experiments/
+
+# Machine learning artifacts
+*.pth
+*.pt
+*.ckpt
+*.pkl
+*.joblib
+models/trained/
+models/pretrained/
+checkpoints/
+wandb/
+mlruns/
+tensorboard_logs/
+.neptune/
+.comet/
+lightning_logs/
+
+# Build and distribution
+build/
+dist/
+*.egg
+MANIFEST
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# Git metadata
+.git/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*~
+.cache/
+cache/
+
+# Archives
+*.tar.gz
+*.zip
+*.7z
+
+# Julia (PySR dependency)
+.julia/
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Documentation builds
+docs/_build/
+docs/_generated/
+
+# Development scratch areas
+scratch/
+sandbox/
+playground/
+old/
+backup/
+experiments_old/
+
+# Large scientific files
+*.nc
+*.hdf4
+*.fits

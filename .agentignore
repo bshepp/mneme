@@ -1,0 +1,125 @@
+# Agent Ignore File
+# Files and directories that AI agents should skip when analyzing the codebase
+
+# Virtual environments and dependencies
+venv/
+.venv/
+env/
+ENV/
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Large data files
+data/raw/
+data/processed/
+data/synthetic/*.npz
+data/synthetic/*.h5
+data/synthetic/*.hdf5
+*.npy
+*.mat
+*.fif
+*.set
+*.bdf
+*.edf
+*.ncs
+*.nev
+*.nwb
+
+# Biofield research data directories
+bioelectric_data/
+morphology_data/
+planarian_data/
+regeneration_experiments/
+
+# Model files and checkpoints
+*.pth
+*.pt
+*.ckpt
+*.pkl
+*.joblib
+models/trained/
+models/pretrained/
+checkpoints/
+
+# Experiment results and logs
+experiments/results/
+experiments/logs/
+*.log
+wandb/
+mlruns/
+tensorboard_logs/
+.neptune/
+.comet/
+lightning_logs/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary and cache files
+*.tmp
+*.temp
+.cache/
+cache/
+*.cache
+
+# Archives
+*.tar.gz
+*.zip
+*.7z
+*.rar
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# Git files
+.git/
+.gitignore
+
+# Julia files
+.julia/
+Project.toml
+Manifest.toml
+
+# Coverage and test artifacts
+htmlcov/
+.coverage
+.pytest_cache/
+.tox/
+.nox/
+
+# Build artifacts
+build/
+dist/
+*.egg
+MANIFEST
+
+# Documentation builds
+docs/_build/
+docs/_generated/
+docs/build/
+
+# Development directories
+scratch/
+sandbox/
+playground/
+old/
+backup/
+experiments_old/
+
+# Large scientific computing files
+*.nc
+*.hdf4
+*.fits

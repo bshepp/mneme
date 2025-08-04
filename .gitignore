@@ -203,8 +203,51 @@ secrets/
 *.zip
 *.7z
 
+# Biofield Research Specific
+*.mat  # MATLAB files
+*.fif  # MEG/EEG data files
+*.set  # EEGLAB files
+*.bdf  # BioSemi files
+*.edf  # European Data Format
+*.ncs  # Neuralynx files
+*.nev  # Blackrock files
+*.nwb  # Neurodata Without Borders
+bioelectric_data/
+morphology_data/
+planarian_data/
+regeneration_experiments/
+
+# Machine Learning / Data Science
+wandb/
+mlruns/
+tensorboard_logs/
+.neptune/
+.comet/
+lightning_logs/
+checkpoints/
+models/trained/
+models/pretrained/
+artifacts/
+outputs/
+hydra_outputs/
+
+# Julia (for PySR)
+.julia/
+Project.toml
+Manifest.toml
+
+# Scientific Computing
+*.npy
+*.npz
+*.mat
+*.nc  # NetCDF files
+*.hdf4
+*.fits  # Astronomy FITS files
+
 # Custom
 scratch/
 sandbox/
 old/
 backup/
+playground/
+experiments_old/
