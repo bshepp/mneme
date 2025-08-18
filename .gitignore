@@ -3,251 +3,31 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
-
 # Distribution / packaging
 .Python
 build/
-develop-eggs/
 dist/
-downloads/
-eggs/
 .eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
 *.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
 
-# PyInstaller
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-docs/_generated/
-
-# PyBuilder
-.pybuilder/
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-*.ipynb_checkpoints/
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# poetry
-poetry.lock
-
-# pdm
-.pdm.toml
-
-# PEP 582
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
+# Virtual environments
 venv/
-ENV/
-env.bak/
-venv.bak/
+.env
+.venv/
 
-# Spyder project settings
-.spyderproject
-.spyproject
+# Jupyter
+.ipynb_checkpoints/
 
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# PyCharm
-.idea/
-
-# VS Code
-.vscode/
-*.code-workspace
-
-# macOS
-.DS_Store
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# Data files
-data/raw/
-data/processed/
-data/synthetic/*.npz
-data/synthetic/*.h5
-data/synthetic/*.hdf5
-
-# Results and experiments
-experiments/results/
-experiments/logs/
-*.log
+# Data and results
+/data/
+/experiments/results/
+/experiments/checkpoints/
 
 # Cache
-cache/
+.mypy_cache/
+.pytest_cache/
 .cache/
-*.cache
 
-# Temporary files
-*.tmp
-*.temp
-*.swp
-*.swo
-*~
-
-# Model checkpoints
-*.pth
-*.pt
-*.ckpt
-*.h5
-*.pkl
-*.joblib
-
-# Profiling
-*.prof
-*.lprof
-
-# Documentation builds
-docs/build/
-docs/api/
-
-# Credentials and secrets
-*.pem
-*.key
-credentials/
-secrets/
-
-# Large files
-*.tar.gz
-*.zip
-*.7z
-
-# Biofield Research Specific
-*.mat  # MATLAB files
-*.fif  # MEG/EEG data files
-*.set  # EEGLAB files
-*.bdf  # BioSemi files
-*.edf  # European Data Format
-*.ncs  # Neuralynx files
-*.nev  # Blackrock files
-*.nwb  # Neurodata Without Borders
-bioelectric_data/
-morphology_data/
-planarian_data/
-regeneration_experiments/
-
-# Machine Learning / Data Science
-wandb/
-mlruns/
-tensorboard_logs/
-.neptune/
-.comet/
-lightning_logs/
-checkpoints/
-models/trained/
-models/pretrained/
-artifacts/
-outputs/
-hydra_outputs/
-
-# Julia (for PySR)
-.julia/
-Project.toml
-Manifest.toml
-
-# Scientific Computing
-*.npy
-*.npz
-*.mat
-*.nc  # NetCDF files
-*.hdf4
-*.fits  # Astronomy FITS files
-
-# Custom
-scratch/
-sandbox/
-old/
-backup/
-playground/
-experiments_old/
+# OS
+.DS_Store
+Thumbs.db
