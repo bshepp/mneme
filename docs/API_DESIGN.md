@@ -10,7 +10,7 @@ The Mneme API follows these principles:
 
 ## Module APIs
 
-### 1. Field Theory Module (`mneme.core.field_theory`)
+### 1. Field Theory Module (`mneme.core.field_theory`) — MVP
 
 ```python
 from mneme.core import field_theory
@@ -18,7 +18,7 @@ from mneme.core import field_theory
 class FieldReconstructor:
     """Reconstruct continuous fields from discrete observations."""
     
-    def __init__(self, method='gaussian_process', resolution=(256, 256)):
+    def __init__(self, method='ift', resolution=(256, 256)):
         """
         Parameters:
             method: Reconstruction method ('gaussian_process', 'ift', 'neural_field')
@@ -41,7 +41,7 @@ field = reconstructor.reconstruct()
 uncertainty = reconstructor.uncertainty()
 ```
 
-### 2. Topology Module (`mneme.core.topology`)
+### 2. Topology Module (`mneme.core.topology`) — MVP
 
 ```python
 from mneme.core import topology
@@ -63,7 +63,7 @@ class PersistentHomology:
         """Extract topological features from diagrams."""
 
 class AttractorDetector:
-    """Detect and characterize attractors in dynamical fields."""
+    """Detect and characterize attractors in dynamical fields (basic recurrence)."""
     
     def __init__(self, method='recurrence', threshold=0.1):
         """
@@ -79,13 +79,13 @@ class AttractorDetector:
         """Compute attractor properties (dimension, stability, basin)."""
 ```
 
-### 3. Models Module (`mneme.models`)
+### 3. Models Module (`mneme.models`) — placeholders
 
 ```python
 from mneme.models import autoencoders, symbolic
 
 class FieldAutoencoder(nn.Module):
-    """Variational autoencoder for field data."""
+    """Placeholder VAE for field data (minimal)."""
     
     def __init__(self, input_shape, latent_dim=32, architecture='convolutional'):
         """
@@ -105,7 +105,7 @@ class FieldAutoencoder(nn.Module):
         """Forward pass returning reconstruction, mean, log_var."""
 
 class SymbolicRegressor:
-    """Discover symbolic equations from field dynamics."""
+    """Placeholder symbolic regression interface."""
     
     def __init__(self, operators=['+', '-', '*', '/', 'sin', 'cos'], 
                  complexity_penalty=0.001):
@@ -126,7 +126,7 @@ class SymbolicRegressor:
         """Return discovered equations as strings."""
 ```
 
-### 4. Data Module (`mneme.data`)
+### 4. Data Module (`mneme.data`) — MVP
 
 ```python
 from mneme.data import loaders, generators, preprocessors
@@ -191,7 +191,7 @@ class FieldPreprocessor:
         """Reverse preprocessing (where possible)."""
 ```
 
-### 5. Analysis Pipeline (`mneme.analysis.pipeline`)
+### 5. Analysis Pipeline (`mneme.analysis.pipeline`) — MVP
 
 ```python
 from mneme.analysis import pipeline
@@ -228,6 +228,15 @@ def create_standard_pipeline() -> MnemePipeline:
         'modeling': {'use_autoencoder': True, 'symbolic_regression': True}
     })
     return pipeline
+
+def create_bioelectric_pipeline() -> MnemePipeline:
+    """Bioelectric-focused defaults; thin wrapper over standard."""
+    return MnemePipeline({
+        'preprocessing': {'denoise': {'enabled': True}, 'normalize': {'enabled': True}, 'register': {'enabled': True}, 'interpolate': {'enabled': True}},
+        'reconstruction': {'method': 'ift', 'resolution': (256, 256)},
+        'topology': {'max_dimension': 2, 'filtration': 'sublevel'},
+        'attractors': {'method': 'recurrence', 'threshold': 0.1}
+    })
 ```
 
 ### 6. Visualization Module (`mneme.analysis.visualization`)
