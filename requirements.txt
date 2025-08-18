@@ -1,22 +1,24 @@
-# Core scientific computing
-numpy>=1.21.0,<2.0.0
-scipy>=1.7.0,<2.0.0
-pandas>=1.3.0,<2.0.0
-scikit-learn>=1.0.0,<2.0.0
+# Core scientific computing (updated to match current venv)
+numpy>=2.3.0
+scipy>=1.14.0
+pandas>=2.3.0
+scikit-learn>=1.7.0,<2.0.0
 
 # Visualization
-matplotlib>=3.4.0,<4.0.0
-seaborn>=0.11.0,<1.0.0
+matplotlib>=3.10.0,<4.0.0
+seaborn>=0.13.0,<1.0.0
 plotly>=5.0.0,<6.0.0
 
 # Deep learning
-torch>=2.0.0
-torchvision>=0.15.0
+torch>=2.7.0
+# torchvision is optional; pin compatible with torch 2.7
+torchvision>=0.22.0
 
 # Specialized scientific tools
-pysr>=0.8.0,<1.0.0  # Symbolic regression
-gudhi>=3.4.0,<4.0.0  # Topological data analysis
-scikit-image>=0.18.0,<1.0.0  # Image processing
+# These may require extra system dependencies; install as needed
+pysr>=0.8.0,<1.0.0  # Symbolic regression (optional)
+gudhi>=3.4.0,<4.0.0  # Topological data analysis (optional)
+scikit-image>=0.20.0,<1.0.0  # Image processing
 h5py>=3.0.0,<4.0.0  # HDF5 file support
 
 # Utilities

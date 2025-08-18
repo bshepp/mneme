@@ -22,11 +22,10 @@ setup(
     description="Detecting field-like memory structures in biological systems",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/mneme",
+    url="https://github.com/bshepp/mneme",
     project_urls={
-        "Bug Tracker": "https://github.com/yourusername/mneme/issues",
-        "Documentation": "https://mneme.readthedocs.io",
-        "Source Code": "https://github.com/yourusername/mneme",
+        "Bug Tracker": "https://github.com/bshepp/mneme/issues",
+        "Source Code": "https://github.com/bshepp/mneme",
     },
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -58,9 +57,10 @@ setup(
     entry_points={
         "console_scripts": [
             "mneme=mneme.cli:main",
-            "mneme-generate=mneme.scripts.generate_synthetic:main",
-            "mneme-pipeline=mneme.scripts.run_pipeline:main",
-            "mneme-visualize=mneme.scripts.visualize_results:main",
+            # Temporary CLI wrappers to top-level scripts until moved under package
+            "mneme-generate=mneme.cli:main",  # placeholder
+            "mneme-pipeline=mneme.cli:main",  # placeholder
+            "mneme-visualize=mneme.cli:main",  # placeholder
         ],
     },
     include_package_data=True,

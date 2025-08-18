@@ -1,7 +1,7 @@
 """Evaluation metrics for field analysis."""
 
 import numpy as np
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Dict, List, Any, Optional, Tuple, Union
 from scipy.spatial.distance import pdist, squareform
 from scipy.stats import pearsonr, spearmanr
 

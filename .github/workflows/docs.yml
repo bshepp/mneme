@@ -9,37 +9,27 @@ on:
 jobs:
   build-docs:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-        cache: 'pip'
-    
-    - name: Install dependencies
+    - uses: actions/checkout@v4
+
+    - name: Bundle Markdown docs
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install -e .[docs]
-    
-    - name: Build documentation
-      run: |
-        cd docs
-        make clean
-        make html
-    
+        mkdir -p site
+        cp -r docs site/
+        cp README.md site/
+        cp CLAUDE.md site/
+        cp CONTRIBUTING.md site/
+
     - name: Upload documentation artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: documentation
-        path: docs/_build/html/
-    
+        path: site/
+
     - name: Deploy to GitHub Pages
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: docs/_build/html
+        publish_dir: site/

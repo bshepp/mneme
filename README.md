@@ -43,10 +43,10 @@ For detailed setup instructions, see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMEN
 ## Quick Start
 
 ```python
-import src.mneme  # Package imports successfully
-from src.mneme.core import field_theory, topology
-from src.mneme.analysis import pipeline
-from src.mneme.data import generators
+import mneme  # Package imports successfully
+from mneme.core import field_theory, topology
+from mneme.analysis import pipeline
+from mneme.data import generators
 
 # Generate synthetic field data
 generator = generators.SyntheticFieldGenerator(seed=42)
@@ -91,7 +91,7 @@ See [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) for detailed structur
 
 ## Core Technologies
 
-- **Python 3.9+**: Primary development language
+- **Python 3.12**: Primary development language (tested)
 - **NumPy/SciPy**: Numerical computing
 - **PyTorch**: Deep learning models
 - **GUDHI**: Topological data analysis
@@ -109,7 +109,7 @@ If you use Mneme in your research, please cite:
 @software{mneme2024,
   title = {Mneme: Detecting Field-Like Memory Structures in Biological Systems},
   year = {2024},
-  url = {https://github.com/yourusername/mneme}
+  url = {https://github.com/bshepp/mneme}
 }
 ```
 
