@@ -1,8 +1,9 @@
 """Machine learning models for field analysis."""
 
-# Comment out imports for modules that don't exist yet
-# from . import autoencoders
-# from . import symbolic
-# from . import field_models
+from .autoencoders import FieldAutoencoder  # noqa: F401
+from .symbolic import SymbolicRegressor  # noqa: F401
 
-__all__ = []
+__all__ = [
+    "FieldAutoencoder",
+    "SymbolicRegressor",
+]

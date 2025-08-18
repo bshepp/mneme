@@ -7,7 +7,7 @@ name = "mneme"
 version = "0.1.0"
 description = "Detecting field-like memory structures in biological systems"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.12"
 license = {text = "MIT"}
 authors = [
     {name = "Mneme Development Team", email = "mneme@example.com"},
@@ -30,17 +30,15 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Physics",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/mneme"
-Documentation = "https://mneme.readthedocs.io"
-Repository = "https://github.com/yourusername/mneme"
-Issues = "https://github.com/yourusername/mneme/issues"
+Homepage = "https://github.com/bshepp/mneme"
+Repository = "https://github.com/bshepp/mneme"
+Issues = "https://github.com/bshepp/mneme/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -62,13 +60,13 @@ gpu = [
 
 [project.scripts]
 mneme = "mneme.cli:main"
-mneme-generate = "mneme.scripts.generate_synthetic:main"
-mneme-pipeline = "mneme.scripts.run_pipeline:main"
-mneme-visualize = "mneme.scripts.visualize_results:main"
+mneme-generate = "mneme.cli:main"
+mneme-pipeline = "mneme.cli:main"
+mneme-visualize = "mneme.cli:main"
 
 [tool.black]
 line-length = 88
-target-version = ['py38', 'py39', 'py310']
+target-version = ['py311', 'py312']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
@@ -107,7 +105,7 @@ markers = [
 ]
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true

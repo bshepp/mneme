@@ -269,3 +269,37 @@ def create_standard_pipeline(config: Optional[Dict[str, Any]] = None) -> MnemePi
         }
     
     return MnemePipeline(config)
+
+
+def create_bioelectric_pipeline(config: Optional[Dict[str, Any]] = None) -> MnemePipeline:
+    """Create a bioelectric-focused analysis pipeline.
+
+    This is a lightweight wrapper around the standard pipeline with
+    bioelectric-appropriate defaults. It can be extended later.
+    """
+    if config is None:
+        config = {
+            'preprocessing': {
+                'denoise': {'enabled': True, 'method': 'wavelet', 'threshold': 'soft'},
+                'normalize': {'enabled': True, 'method': 'z_score', 'per_frame': True},
+                'register': {'enabled': True, 'reference': 'first_frame'},
+                'interpolate': {'enabled': True, 'target_shape': (256, 256)},
+            },
+            'reconstruction': {
+                'method': 'ift',
+                'resolution': (256, 256),
+                'parameters': {}
+            },
+            'topology': {
+                'max_dimension': 2,
+                'filtration': 'sublevel',
+                'persistence_threshold': 0.05
+            },
+            'attractors': {
+                'method': 'recurrence',
+                'threshold': 0.1,
+                'parameters': {}
+            }
+        }
+
+    return MnemePipeline(config)
