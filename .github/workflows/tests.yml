@@ -68,8 +68,10 @@ jobs:
         fi
 
     - name: Upload coverage to Codecov
-      if: matrix.python-version == '3.12' && hashFiles('coverage.xml') != '' && secrets.CODECOV_TOKEN != ''
+      if: matrix.python-version == '3.12' && hashFiles('coverage.xml') != '' && env.CODECOV_TOKEN != ''
       uses: codecov/codecov-action@v4
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         file: ./coverage.xml
