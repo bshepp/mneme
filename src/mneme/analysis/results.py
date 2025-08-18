@@ -5,6 +5,7 @@ from typing import Dict, List, Any, Optional, Union
 from pathlib import Path
 import json
 from dataclasses import asdict
+from datetime import datetime
 
 from ..types import AnalysisResult, PersistenceDiagram, Attractor, Field
 from ..utils.io import save_results, load_results
