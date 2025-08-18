@@ -40,7 +40,7 @@ For detailed setup instructions, see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMEN
 - ✅ Resolved syntax errors in analysis pipeline
 - ✅ Core modules now import successfully for development
 
-## Quick Start
+## Quick Start (MVP)
 
 ```python
 import mneme  # Package imports successfully
@@ -48,25 +48,25 @@ from mneme.core import field_theory, topology
 from mneme.analysis import pipeline
 from mneme.data import generators
 
-# Generate synthetic field data
+# Generate synthetic field data (CPU-friendly)
 generator = generators.SyntheticFieldGenerator(seed=42)
-field = generator.generate_dynamic(shape=(64, 64), timesteps=10)
+field = generator.generate_dynamic(shape=(64, 64), timesteps=10, parameters={'noise_level': 0.1})
 
 # Create analysis pipeline
-config = pipeline.create_standard_pipeline()
-results = config.run({'field': field})
+pipe = pipeline.create_bioelectric_pipeline()
+results = pipe.run({'field': field})
 
 # Access results
 print("Pipeline executed successfully!")
 ```
 
-## Project Structure
+## Project Structure (MVP)
 
 ```
 mneme/
 ├── src/mneme/         # Core library code
-├── notebooks/         # Jupyter notebooks for exploration
-├── tests/            # Test suite
+├── notebooks/         # One demo notebook
+├── tests/             # Minimal smoke tests
 ├── docs/             # Documentation
 ├── data/             # Data directory (gitignored)
 └── experiments/      # Experiment tracking
@@ -83,11 +83,12 @@ See [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) for detailed structur
 - [Testing Strategy](docs/TESTING_STRATEGY.md) - Testing approach and guidelines
 - [Contributing](CONTRIBUTING.md) - How to contribute
 
-## Research Phases
+## Roadmap
 
-1. **Phase 1**: Synthetic data prototyping with planarian-inspired fields
-2. **Phase 2**: Real bioelectric and gene expression data analysis
-3. **Phase 3**: Theory development and cross-organism validation
+- Add robust reconstruction methods and validation
+- Expand topology features and distances
+- Attractor characterization beyond recurrence
+- Optional models (autoencoders, symbolic regression)
 
 ## Core Technologies
 

@@ -20,11 +20,10 @@ mneme/
 │   │   │   ├── topology.py        # TDA algorithms
 │   │   │   └── attractors.py      # Attractor detection
 │   │   │
-│   │   ├── models/            # ML models
+│   │   ├── models/            # ML models (MVP)
 │   │   │   ├── __init__.py
-│   │   │   ├── autoencoders.py    # Dimensionality reduction
-│   │   │   ├── symbolic.py         # Symbolic regression
-│   │   │   └── field_models.py    # Field reconstruction models
+│   │   │   ├── autoencoders.py    # Placeholder FieldAutoencoder
+│   │   │   └── symbolic.py         # Placeholder SymbolicRegressor
 │   │   │
 │   │   ├── data/              # Data handling
 │   │   │   ├── __init__.py
@@ -45,17 +44,13 @@ mneme/
 │   │       ├── logging.py         # Logging setup
 │   │       └── io.py              # I/O utilities
 │   │
-│   └── scripts/               # Executable scripts
-│       ├── generate_synthetic.py   # Generate synthetic data
-│       ├── run_pipeline.py         # Run full analysis pipeline
-│       └── visualize_results.py    # Visualize results
+│   └── scripts/               # Executable scripts (legacy; use CLI)
+│       ├── generate_synthetic.py
+│       ├── run_pipeline.py
+│       └── visualize_results.py
 │
-├── notebooks/                 # Jupyter notebooks
-│   ├── 01_synthetic_data_exploration.ipynb
-│   ├── 02_ift_reconstruction.ipynb
-│   ├── 03_topology_analysis.ipynb
-│   ├── 04_symbolic_regression.ipynb
-│   └── 05_bioelectric_analysis.ipynb
+├── notebooks/                 # Jupyter notebooks (MVP: one demo)
+│   └── 01_demo.ipynb
 │
 ├── tests/                     # Test suite
 │   ├── unit/                  # Unit tests
@@ -95,9 +90,8 @@ mneme/
 - **attractors.py**: Attractor detection and characterization methods
 
 ### Model Modules (`src/mneme/models/`)
-- **autoencoders.py**: VAE and autoencoder architectures for latent space analysis
-- **symbolic.py**: Symbolic regression interfaces (PySR integration)
-- **field_models.py**: Neural field models for spatiotemporal reconstruction
+- **autoencoders.py**: Placeholder `FieldAutoencoder` (future: real models)
+- **symbolic.py**: Placeholder `SymbolicRegressor` (future: PySR integration)
 
 ### Data Modules (`src/mneme/data/`)
 - **loaders.py**: Unified data loading interfaces for different data sources

@@ -9,13 +9,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Mneme is an exploratory research system designed to detect field-like, emergent memory structures embedded in biological systems, beginning with planarian regeneration and bioelectric data. The project seeks to uncover attractor states, regulatory logic, and latent architectures not captured by sequence-based models alone.
 
-## Project Architecture
+## Direction and Scope (MVP-first)
 
-The project is organized in phases:
+We will ship a minimal, reproducible end-to-end pipeline before expanding features. The MVP analyzes 2D bioelectric-like fields (synthetic or small real samples), reconstructs a continuous field, computes cubical persistence (via GUDHI with a simple fallback), detects simple attractor signals, and saves plots/metrics. Everything else is roadmap.
 
-1. **Phase 1: Synthetic Data Prototyping** - Develop and validate a modular analysis pipeline on synthetic field-like data inspired by planarian voltage maps and regenerative logic
-2. **Phase 2: Real Bioelectric + Gene Expression Data** - Test Mneme on actual biological data, starting with planarian bioelectric images, gene expression overlays, and regeneration timelines
-3. **Phase 3: Interpretation + Theory Development** - Formalize insights into a model of distributed memory encoding via fields in biological tissue
+### MVP Deliverables
+- CLI: `mneme analyze data/synthetic/planarian_demo.npz -o results/` produces figures and metrics
+- Notebook: one demo notebook that runs in <5 minutes CPU-only
+- Docs: README Quickstart that reproduces results; docs truthfully reflect implemented modules
+- CI: lint + tests green on Python 3.12 (mypy non-blocking initially)
+
+### Roadmap (post-MVP)
+- Field models (neural fields), Lyapunov metrics, richer topology (Rips/Alpha), symbolic regression (PySR), and 3D support
+- Type hygiene pass; re-enable strict mypy
 
 ## Development Environment
 
@@ -23,14 +29,9 @@ The project is organized in phases:
 - **Primary Tools**: Python, Jupyter/Colab, NumPy, SciPy, PyTorch/Keras, PySR, GUDHI (for TDA)
 - **Focus Areas**: Information Field Theory (IFT), dimensionality reduction, Topological Data Analysis (TDA), symbolic regression
 
-## Key Technical Approaches
+## Key Technical Approaches (current)
 
-- Information Field Theory (IFT) reconstruction to interpolate continuous fields
-- Dimensionality reduction (PCA, autoencoders) to uncover latent spaces
-- Topological Data Analysis (TDA) to identify persistent structures
-- Symbolic regression to extract mathematical rules governing local field behaviors
-- Bioelectric and gene expression field reconstruction
-- Attractor detection and bifurcation analysis
+Current MVP includes: simple reconstruction (IFT or interpolation), cubical persistence (GUDHI or fallback), recurrence-based attractor detection, and visualization.
 
 ## Development Commands
 
@@ -61,18 +62,14 @@ python -c "import numpy as np; import pandas as pd; import matplotlib.pyplot as 
 - Deep learning: torch, torchvision (for neural network components)
 - Specialized tools: pysr, gudhi (when fully installed)
 
-## Phase 1 Status: COMPLETE ✅
+## Current Status (2025-08-18)
 
-**Critical Import Issues Fixed (2025-01-04):**
-- ✅ **Pydantic v2 compatibility** (types.py:95-130) - Updated `Field(default_factory=list)` → `Field(default=[])` and `@validator` → `@field_validator`
-- ✅ **Missing model imports** (models/__init__.py) - Commented out non-existent modules to prevent circular import failures
-- ✅ **Import dependencies** - Added missing `Union` import to topology.py and `List` import to generators.py  
-- ✅ **Pipeline syntax errors** - Fixed malformed escape sequences in pipeline.py, created clean version without `\n` artifacts
+- Package imports cleanly on Python 3.12
+- CI: lint passes; mypy runs non-blocking; docs deploy to `gh-pages`
+- `create_bioelectric_pipeline()` stub available; minimal model placeholders added
 
-**Current Status:** Core package components (types, models, core, data, analysis.pipeline) import successfully. The Mneme system is now ready for Phase 1 synthetic data prototyping and pipeline development.
+## Contributor Guidance
 
-**Remaining Minor Issues:** 
-- Visualization.py has syntax formatting issues (non-blocking)
-- Missing model implementations (autoencoders, symbolic, field_models) - planned for future development
-
-**Next Steps:** Begin synthetic biofield data generation and test the analysis pipeline on controlled field-like structures.
+1) Prioritize MVP features that make the end-to-end run better before adding new modules
+2) Keep CI green (add tests with each feature). Mypy is non-blocking until type hygiene pass, but don’t add new untyped public APIs
+3) If adding “future” features, hide them behind flags with clear errors and update docs accordingly
