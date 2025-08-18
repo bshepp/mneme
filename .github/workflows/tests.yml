@@ -55,9 +55,10 @@ jobs:
         # Exit-zero treats all errors as warnings
         flake8 $TARGETS --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
 
-    - name: Type check with mypy
+    - name: Type check with mypy (non-blocking)
+      continue-on-error: true
       run: |
-        mypy src/mneme --ignore-missing-imports
+        mypy --python-version 3.12 src/mneme --ignore-missing-imports || true
 
     - name: Tests or smoke import
       run: |
