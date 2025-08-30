@@ -66,7 +66,7 @@ python -c "import numpy as np; import pandas as pd; import matplotlib.pyplot as 
 
 - Package imports cleanly on Python 3.12
 - CI: lint passes; mypy runs non-blocking; docs deploy to `gh-pages`
-- `create_bioelectric_pipeline()` stub available; minimal model placeholders added
+- `create_bioelectric_pipeline()` implemented with lightweight defaults; minimal model placeholders remain
 
 ## Contributor Guidance
 

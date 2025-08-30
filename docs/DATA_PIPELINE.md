@@ -1,5 +1,7 @@
 # Mneme Data Pipeline Documentation
 
+> Accuracy note (MVP): Several sections below (quality module, feature extractor, parallel pipeline, monitoring, recovery) are illustrative/roadmap and not yet implemented in `src/`. Where code references non-existent modules, treat them as examples for future work.
+
 ## Overview
 
 The Mneme data pipeline handles the flow of data from raw bioelectric measurements and synthetic generation through preprocessing, analysis, and final results. The pipeline is designed to be modular, reproducible, and scalable.
@@ -84,7 +86,7 @@ for experiment in loader:
     metadata = experiment.metadata
 ```
 
-### Stage 2: Quality Control
+### Stage 2: Quality Control (roadmap)
 
 ```python
 from mneme.data import quality
@@ -143,7 +145,7 @@ processed = preprocessor.fit_transform(voltage_field)
    - Bicubic interpolation for upsampling
    - Gaussian process interpolation for missing data
 
-### Stage 4: Feature Extraction
+### Stage 4: Feature Extraction (roadmap)
 
 ```python
 from mneme.analysis import features
@@ -171,19 +173,25 @@ reconstructor = field_theory.FieldReconstructor(method='ift')
 continuous_field = reconstructor.fit_reconstruct(processed_field)
 
 # 2. Topology analysis
+# Cubical for 2D fields (default), or use Rips/Alpha with adapter
 tda = topology.PersistentHomology()
 persistence_diagrams = tda.compute_persistence(continuous_field)
+
+# Point-cloud backends
+pc = topology.field_to_point_cloud(continuous_field, method='peaks', percentile=95.0)
+rips = topology.RipsComplex(max_dimension=1)
+rips_diagrams = rips.compute_persistence(pc)
 
 # 3. Latent space embedding
 autoencoder = autoencoders.FieldAutoencoder(latent_dim=32)
 latent_representation = autoencoder.encode(continuous_field)
 
-# 4. Attractor detection
-detector = topology.AttractorDetector()
+# 4. Attractor detection (recurrence default; lyapunov/clustering also available)
+detector = topology.AttractorDetector(method='recurrence')
 attractors = detector.detect(latent_trajectory)
 ```
 
-### Stage 6: Results Generation
+### Stage 6: Results Generation (roadmap)
 
 ```python
 from mneme.analysis import results
@@ -285,7 +293,7 @@ results = pipe.run_batch(
 )
 ```
 
-## Parallel Processing
+## Parallel Processing (MVP)
 
 ```python
 from mneme.data import parallel
@@ -293,7 +301,7 @@ from mneme.data import parallel
 # Parallel pipeline for large datasets
 parallel_pipeline = parallel.ParallelPipeline(
     pipeline=pipe,
-    backend='multiprocessing',  # or 'dask', 'ray'
+    backend='multiprocessing',  # MVP
     n_workers=8
 )
 
@@ -334,7 +342,7 @@ field_cache = cache.FieldCache(max_size="10GB")
 field_cache.put("exp_001", processed_field)
 ```
 
-## Monitoring and Logging
+## Monitoring and Logging (MVP)
 
 ```python
 from mneme.utils import monitoring
@@ -348,10 +356,10 @@ with monitor.track_stage("preprocessing"):
 
 # Get performance metrics
 metrics = monitor.get_metrics()
-print(f"Preprocessing took: {metrics['preprocessing']['duration']}s")
+print(f"Preprocessing durations: {metrics['stage_durations_s']}")
 ```
 
-## Error Handling and Recovery
+## Error Handling and Recovery (roadmap)
 
 ```python
 from mneme.data import recovery

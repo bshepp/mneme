@@ -8,11 +8,11 @@ Mneme seeks to uncover attractor states, regulatory logic, and latent architectu
 
 ## Key Features
 
-- **Field Reconstruction**: Information Field Theory implementations for continuous field interpolation
-- **Topology Analysis**: Persistent homology for identifying stable structures
-- **Attractor Detection**: Methods for finding and characterizing dynamical attractors
-- **Symbolic Regression**: Discovery of mathematical rules governing field behavior
-- **Latent Space Analysis**: Autoencoders for dimensionality reduction and pattern discovery
+- **Field Reconstruction (MVP-ready)**: Basic IFT and GP reconstruction APIs; identity fallback when sparse observations are not provided
+- **Topology Analysis (MVP-ready)**: Cubical persistence via GUDHI when installed; simple fallback otherwise
+- **Attractor Detection (experimental)**: Recurrence-based detector usable on temporal data; Lyapunov and clustering detectors are stubs with NotImplemented methods
+- **Symbolic Regression (placeholder)**: PySR is installed optionally; shipped `SymbolicRegressor` is a placeholder. Integrations are roadmap
+- **Latent Space Analysis (placeholder)**: `FieldAutoencoder` class is a minimal placeholder; not a production model
 
 ## Installation
 
@@ -52,13 +52,50 @@ from mneme.data import generators
 generator = generators.SyntheticFieldGenerator(seed=42)
 field = generator.generate_dynamic(shape=(64, 64), timesteps=10, parameters={'noise_level': 0.1})
 
-# Create analysis pipeline
+# Create analysis pipeline (lightweight defaults)
 pipe = pipeline.create_bioelectric_pipeline()
 results = pipe.run({'field': field})
 
 # Access results
 print("Pipeline executed successfully!")
 ```
+
+### CLI usage
+
+Run analysis on a saved array and choose a topology backend:
+
+```bash
+# Topology backend options: cubical (default), rips, alpha
+mneme analyze data/synthetic/test_small.npz \
+  --pipeline bioelectric \
+  --topology-backend rips \
+  -o results
+```
+
+Run analysis with clustering-based attractor detection (example):
+
+```bash
+mneme analyze data/synthetic/test_small.npz \
+  --pipeline bioelectric \
+  --attractor-method clustering \
+  --attractor-threshold 0.2 \
+  --attractor-min-samples 20 \
+  -o results_clustering
+```
+
+#### Attractor CLI flags
+
+| Flag | Description |
+|------|-------------|
+| --attractor-method {none,recurrence,lyapunov,clustering} | Choose attractor detector (use none to disable) |
+| --attractor-threshold FLOAT | Detection threshold (method-specific) |
+| --attractor-min-persistence FLOAT | Recurrence: minimum persistence fraction |
+| --attractor-embedding-dim INT | Recurrence/Clustering: embedding dimension for 1D series |
+| --attractor-time-delay INT | Recurrence/Clustering: time delay for embedding |
+| --attractor-n-neighbors INT | Lyapunov: number of neighbors |
+| --attractor-evolution-time INT | Lyapunov: evolution time steps |
+| --attractor-min-samples INT | Clustering: minimum samples per cluster |
+| --attractor-clustering-method {dbscan,kmeans} | Clustering: algorithm selection |
 
 ## Project Structure (MVP)
 
@@ -76,11 +113,16 @@ See [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) for detailed structur
 
 ## Documentation
 
-- [Project Structure](docs/PROJECT_STRUCTURE.md) - Code organization and architecture
-- [Development Setup](docs/DEVELOPMENT_SETUP.md) - Environment setup and dependencies
-- [API Design](docs/API_DESIGN.md) - Module interfaces and usage
-- [Data Pipeline](docs/DATA_PIPELINE.md) - Data processing workflows
-- [Testing Strategy](docs/TESTING_STRATEGY.md) - Testing approach and guidelines
+- [Project Structure](docs/PROJECT_STRUCTURE.md) — Code organization and architecture
+- [Development Setup](docs/DEVELOPMENT_SETUP.md) — Environment setup and dependencies
+- [API Design](docs/API_DESIGN.md) — Module interfaces and usage
+- [Data Pipeline](docs/DATA_PIPELINE.md) — MVP note: several sections are illustrative/roadmap and not yet implemented (quality, features, parallel, monitoring, recovery)
+- [Testing Strategy](docs/TESTING_STRATEGY.md) — Current suite is a smoke test; more tests are roadmap
+
+### Capabilities vs Roadmap
+
+- MVP capabilities: importable package, CLI (`mneme info`, `mneme analyze`), lightweight preprocessing, identity or basic reconstruction, cubical persistence (with GUDHI), simple recurrence attractor detection on temporal inputs, plotting utilities
+- Roadmap (not fully implemented): rich loaders/quality/feature extractors; Lyapunov/clustering attractors; real autoencoders; symbolic regression integration; parallel/distributed pipeline; monitoring/recovery utilities
 - [Contributing](CONTRIBUTING.md) - How to contribute
 
 ## Roadmap
