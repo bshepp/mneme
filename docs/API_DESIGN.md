@@ -145,24 +145,9 @@ class SymbolicRegressor:
 ```python
 from mneme.data import loaders, generators, preprocessors
 
-class BioelectricDataset(Dataset):
-    """PyTorch dataset for bioelectric imaging data."""
-    
-    def __init__(self, data_dir: str, transform=None, 
-                 time_window=None, normalize=True):
-        """
-        Parameters:
-            data_dir: Directory containing bioelectric data
-            transform: Optional data transformations
-            time_window: Time range to load
-            normalize: Whether to normalize values
-        """
-    
-    def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
-        """Return sample containing voltage field, gene expression, metadata."""
-    
-    def get_temporal_sequence(self, idx: int, length: int) -> torch.Tensor:
-        """Get temporal sequence of fields."""
+"""
+Note: The MVP provides loader utilities (`mneme.data.loaders.create_data_loader`) and generators rather than a concrete `BioelectricDataset` class. A thin dataset wrapper can be added later if needed.
+"""
 
 class SyntheticFieldGenerator:
     """Generate synthetic field data for testing."""

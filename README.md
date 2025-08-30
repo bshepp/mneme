@@ -10,7 +10,7 @@ Mneme seeks to uncover attractor states, regulatory logic, and latent architectu
 
 - **Field Reconstruction (MVP-ready)**: Basic IFT and GP reconstruction APIs; identity fallback when sparse observations are not provided
 - **Topology Analysis (MVP-ready)**: Cubical persistence via GUDHI when installed; simple fallback otherwise
-- **Attractor Detection (experimental)**: Recurrence-based detector usable on temporal data; Lyapunov and clustering detectors are stubs with NotImplemented methods
+- **Attractor Detection (experimental)**: Recurrence-based detector usable on temporal data; Lyapunov and clustering detectors have basic MVP implementations (some advanced methods like full spectra/basin estimation remain TODO)
 - **Symbolic Regression (placeholder)**: PySR is installed optionally; shipped `SymbolicRegressor` is a placeholder. Integrations are roadmap
 - **Latent Space Analysis (placeholder)**: `FieldAutoencoder` class is a minimal placeholder; not a production model
 

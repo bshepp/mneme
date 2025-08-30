@@ -108,7 +108,7 @@ mneme/
 
 ## Development Workflow
 
-> Note: Some items referenced in `docs/DATA_PIPELINE.md` (e.g., `quality`, `features`, `parallel`, `monitoring`) are roadmap and not yet implemented.
+> Note: `quality` (validation/quality checker), `parallel` (basic helper), and `monitoring` (lightweight utilities) now exist in `src/`. `features` remains minimal and broader recovery/checkpointing are still roadmap.
 
 1. **Feature Development**: Create feature branches from `main`
 2. **Testing**: Write tests alongside new features
