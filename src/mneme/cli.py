@@ -350,7 +350,8 @@ def list_experiments(base_dir):
 
 
 @cli.command()
-def info():
+@click.pass_context
+def info(ctx):
     """Show system information."""
     import platform
     import torch
@@ -379,13 +380,14 @@ def info():
             click.echo(f"  - {dep}: ✗")
 
     # Show default topology backend if present
+    topo_backend = 'cubical'
     try:
         cfg = ctx.obj.to_dict() if isinstance(ctx.obj, Config) else {}
+        if isinstance(cfg, dict):
+            if cfg.get('topology') and isinstance(cfg['topology'], dict):
+                topo_backend = cfg['topology'].get('backend', topo_backend)
     except Exception:
-        cfg = {}
-    topo_backend = None
-    if isinstance(cfg, dict):
-        topo_backend = cfg.get('topology', {}).get('backend', 'cubical') if cfg.get('topology') else 'cubical'
+        pass
     click.echo(f"\nDefault topology backend: {topo_backend}")
 
     # PySR / Julia status
