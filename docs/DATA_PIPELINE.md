@@ -1,6 +1,6 @@
 # Mneme Data Pipeline Documentation
 
-> Accuracy note (MVP): Several sections below (quality module, feature extractor, parallel pipeline, monitoring, recovery) are illustrative/roadmap and not yet implemented in `src/`. Where code references non-existent modules, treat them as examples for future work.
+> Accuracy note (MVP): The quality checker, a basic parallel pipeline helper, and lightweight monitoring utilities now exist in `src/` (see `mneme.data.validation/quality`, `mneme.data.parallel`, `mneme.utils.monitoring`). The feature extractor and recovery/checkpointing remain roadmap examples.
 
 ## Overview
 
