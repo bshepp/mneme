@@ -2,7 +2,8 @@
 
 from . import pipeline
 from . import visualization
+from . import features
 from . import metrics
 from . import results
 
-__all__ = ["pipeline", "visualization", "metrics", "results"]
+__all__ = ["pipeline", "visualization", "metrics", "results", "features"]

@@ -229,54 +229,45 @@ class PersistentHomology(BaseTopologyAnalyzer):
     def extract_features(self, diagrams: List[PersistenceDiagram]) -> np.ndarray:
         """
         Extract topological features from persistence diagrams.
-        
-        Features include:
-        - Number of significant features per dimension
-        - Total persistence per dimension
-        - Maximum persistence per dimension
-        - Persistence entropy
-        - Statistical moments
+
+        Features per dimension: count, total, max, mean, entropy, std.
+        Guards against NaN/Inf and division by zero.
         """
-        features = []
-        
+        features: list[float] = []
+
         for diagram in diagrams:
             if len(diagram.points) == 0:
-                # Empty diagram
-                dim_features = [0, 0, 0, 0, 0, 0]  # 6 features per dimension
+                dim_features = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
             else:
                 persistence_values = diagram.persistence
-                
-                # Basic features
-                n_features = len(persistence_values)
-                total_persistence = np.sum(persistence_values)
-                max_persistence = np.max(persistence_values)
-                mean_persistence = np.mean(persistence_values)
-                
-                # Persistence entropy
-                if total_persistence > 0:
-                    p_norm = persistence_values / total_persistence
-                    entropy = -np.sum(p_norm * np.log(p_norm + 1e-10))
+                # Keep only finite values
+                finite_vals = persistence_values[np.isfinite(persistence_values)]
+                if finite_vals.size == 0:
+                    dim_features = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
                 else:
-                    entropy = 0
-                
-                # Statistical moments
-                if len(persistence_values) > 1:
-                    std_persistence = np.std(persistence_values)
-                else:
-                    std_persistence = 0
-                
-                dim_features = [
-                    n_features,
-                    total_persistence,
-                    max_persistence,
-                    mean_persistence,
-                    entropy,
-                    std_persistence
-                ]
-            
+                    n_features = float(len(finite_vals))
+                    total_persistence = float(np.sum(finite_vals))
+                    max_persistence = float(np.max(finite_vals))
+                    mean_persistence = float(np.mean(finite_vals))
+                    with np.errstate(divide='ignore', invalid='ignore'):
+                        if total_persistence > 0:
+                            p_norm = finite_vals / total_persistence
+                            entropy = float(-np.sum(p_norm * np.log(p_norm + 1e-12)))
+                        else:
+                            entropy = 0.0
+                    std_persistence = float(np.std(finite_vals)) if finite_vals.size > 1 else 0.0
+                    dim_features = [
+                        n_features,
+                        total_persistence,
+                        max_persistence,
+                        mean_persistence,
+                        entropy,
+                        std_persistence,
+                    ]
+
             features.extend(dim_features)
-        
-        return np.array(features)
+
+        return np.asarray(features, dtype=float)
         
     def get_cycles(self) -> Optional[List[np.ndarray]]:
         """
@@ -435,14 +426,61 @@ class RipsComplex(BaseTopologyAnalyzer):
         self.max_edge_length = max_edge_length
         
     def compute_persistence(self, point_cloud: np.ndarray) -> List[PersistenceDiagram]:
-        """Compute persistence for point cloud data."""
-        # TODO: Implement Rips persistence
-        raise NotImplementedError("Rips persistence to be implemented")
+        """Compute persistence diagrams for a 2D/ND point cloud using GUDHI Rips.
+
+        Parameters
+        ----------
+        point_cloud : np.ndarray
+            Array of shape (n_points, n_dims)
+        """
+        try:
+            import gudhi
+        except ImportError:  # pragma: no cover
+            raise ImportError("gudhi is required for Rips persistence")
+
+        if point_cloud.ndim != 2:
+            raise ValueError("point_cloud must be 2D (n_points, n_dims)")
+
+        rips = gudhi.RipsComplex(points=point_cloud, max_edge_length=float(self.max_edge_length))
+        st = rips.create_simplex_tree(max_dimension=self.max_dimension)
+        st.compute_persistence()
+
+        diagrams: List[PersistenceDiagram] = []
+        for dim in range(self.max_dimension + 1):
+            pairs = st.persistence_intervals_in_dimension(dim)
+            if len(pairs) == 0:
+                diagrams.append(PersistenceDiagram(points=np.empty((0, 2)), dimension=dim, threshold=None))
+            else:
+                points = np.asarray(pairs)
+                diagrams.append(PersistenceDiagram(points=points, dimension=dim, threshold=None))
+        return diagrams
         
     def extract_features(self, diagrams: List[PersistenceDiagram]) -> np.ndarray:
-        """Extract features from Rips persistence."""
-        # TODO: Implement feature extraction
-        raise NotImplementedError("Feature extraction to be implemented")
+        """Extract topological features from Rips persistence (mirrors cubical)."""
+        features: list[float] = []
+        for diagram in diagrams:
+            if len(diagram.points) == 0:
+                dim_features = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            else:
+                persistence_values = diagram.persistence
+                finite_vals = persistence_values[np.isfinite(persistence_values)]
+                if finite_vals.size == 0:
+                    dim_features = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+                else:
+                    n_features = float(len(finite_vals))
+                    total_persistence = float(np.sum(finite_vals))
+                    max_persistence = float(np.max(finite_vals))
+                    mean_persistence = float(np.mean(finite_vals))
+                    with np.errstate(divide='ignore', invalid='ignore'):
+                        if total_persistence > 0:
+                            p_norm = finite_vals / total_persistence
+                            entropy = float(-np.sum(p_norm * np.log(p_norm + 1e-12)))
+                        else:
+                            entropy = 0.0
+                    std_persistence = float(np.std(finite_vals)) if finite_vals.size > 1 else 0.0
+                    dim_features = [n_features, total_persistence, max_persistence, mean_persistence, entropy, std_persistence]
+            features.extend(dim_features)
+        return np.asarray(features, dtype=float)
 
 
 class AlphaComplex(BaseTopologyAnalyzer):
@@ -460,14 +498,55 @@ class AlphaComplex(BaseTopologyAnalyzer):
         super().__init__(max_dimension)
         
     def compute_persistence(self, point_cloud: np.ndarray) -> List[PersistenceDiagram]:
-        """Compute persistence using Alpha complex."""
-        # TODO: Implement Alpha persistence
-        raise NotImplementedError("Alpha persistence to be implemented")
+        """Compute persistence using GUDHI Alpha complex."""
+        try:
+            import gudhi
+        except ImportError:  # pragma: no cover
+            raise ImportError("gudhi is required for Alpha persistence")
+
+        if point_cloud.ndim != 2 or point_cloud.shape[1] < 2:
+            raise ValueError("point_cloud must be (n_points, n_dims>=2)")
+
+        alpha = gudhi.AlphaComplex(points=point_cloud)
+        st = alpha.create_simplex_tree()
+        st.compute_persistence()
+
+        diagrams: List[PersistenceDiagram] = []
+        for dim in range(self.max_dimension + 1):
+            pairs = st.persistence_intervals_in_dimension(dim)
+            if len(pairs) == 0:
+                diagrams.append(PersistenceDiagram(points=np.empty((0, 2)), dimension=dim, threshold=None))
+            else:
+                points = np.asarray(pairs)
+                diagrams.append(PersistenceDiagram(points=points, dimension=dim, threshold=None))
+        return diagrams
         
     def extract_features(self, diagrams: List[PersistenceDiagram]) -> np.ndarray:
-        """Extract features from Alpha persistence."""
-        # TODO: Implement feature extraction
-        raise NotImplementedError("Feature extraction to be implemented")
+        """Extract topological features from Alpha persistence (mirrors cubical)."""
+        features: list[float] = []
+        for diagram in diagrams:
+            if len(diagram.points) == 0:
+                dim_features = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            else:
+                persistence_values = diagram.persistence
+                finite_vals = persistence_values[np.isfinite(persistence_values)]
+                if finite_vals.size == 0:
+                    dim_features = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+                else:
+                    n_features = float(len(finite_vals))
+                    total_persistence = float(np.sum(finite_vals))
+                    max_persistence = float(np.max(finite_vals))
+                    mean_persistence = float(np.mean(finite_vals))
+                    with np.errstate(divide='ignore', invalid='ignore'):
+                        if total_persistence > 0:
+                            p_norm = finite_vals / total_persistence
+                            entropy = float(-np.sum(p_norm * np.log(p_norm + 1e-12)))
+                        else:
+                            entropy = 0.0
+                    std_persistence = float(np.std(finite_vals)) if finite_vals.size > 1 else 0.0
+                    dim_features = [n_features, total_persistence, max_persistence, mean_persistence, entropy, std_persistence]
+            features.extend(dim_features)
+        return np.asarray(features, dtype=float)
 
 
 # Utility functions
@@ -634,3 +713,71 @@ def compute_betti_curve(
         betti_curve[i] = np.sum(alive)
         
     return betti_curve
+
+
+# Adapters and helpers
+def field_to_point_cloud(
+    field: np.ndarray,
+    method: str = 'peaks',
+    percentile: float = 95.0,
+    max_points: int = 2000,
+    normalize_coords: bool = True,
+) -> np.ndarray:
+    """Convert a 2D field into a 2D point cloud for Rips/Alpha backends.
+
+    Parameters
+    ----------
+    field : np.ndarray
+        2D array (H, W)
+    method : str
+        'peaks' (local maxima above percentile) or 'threshold' (all pixels above percentile)
+    percentile : float
+        Value percentile for thresholding
+    max_points : int
+        Maximum number of points to return (subsampled if exceeded)
+    normalize_coords : bool
+        If True, scale coordinates to [0,1]^2
+
+    Returns
+    -------
+    pc : np.ndarray
+        Point cloud of shape (N, 2)
+    """
+    if field.ndim != 2:
+        raise ValueError("field_to_point_cloud expects a 2D array")
+
+    h, w = field.shape
+    thr = float(np.percentile(field, percentile))
+
+    if method == 'peaks':
+        try:
+            from scipy.ndimage import maximum_filter
+            size = 3
+            neighborhood = maximum_filter(field, size=size)
+            mask = (field == neighborhood) & (field >= thr)
+        except Exception:
+            mask = field >= thr
+    else:
+        mask = field >= thr
+
+    coords = np.argwhere(mask)  # (y, x)
+
+    if coords.shape[0] == 0:
+        # Fallback: take top-k brightest pixels
+        flat_idx = np.argsort(field.ravel())[::-1][: max_points]
+        ys, xs = np.unravel_index(flat_idx, field.shape)
+        coords = np.column_stack([ys, xs])
+
+    # Subsample if too many
+    if coords.shape[0] > max_points:
+        choice = np.random.choice(coords.shape[0], size=max_points, replace=False)
+        coords = coords[choice]
+
+    # Convert to (x, y) and normalize if requested
+    pts = coords[:, ::-1].astype(np.float64)
+    if normalize_coords:
+        if w > 1:
+            pts[:, 0] /= (w - 1)
+        if h > 1:
+            pts[:, 1] /= (h - 1)
+    return pts

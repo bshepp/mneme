@@ -1,5 +1,7 @@
 # Mneme Testing Strategy
 
+> MVP note: Current repository includes a smoke test for imports. The sections below describe the intended testing strategy as the project grows.
+
 ## Testing Philosophy
 
 The Mneme project employs comprehensive testing to ensure:

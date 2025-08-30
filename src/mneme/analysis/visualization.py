@@ -382,7 +382,7 @@ class FieldVisualizer:
         self, result: AnalysisResult, save_path: Optional[str] = None
     ) -> plt.Figure:
         """Create comprehensive analysis dashboard."""
-        fig = plt.figure(figsize=(16, 12))
+        fig = plt.figure(figsize=(18, 12))
 
         # Create grid layout
         gs = fig.add_gridspec(3, 4, hspace=0.3, wspace=0.3)
@@ -409,11 +409,22 @@ class FieldVisualizer:
             ax4.set_title("Reconstruction Uncertainty")
             plt.colorbar(im, ax=ax4)
 
-        # Persistence diagrams
+        # Persistence diagrams and summary
         if result.topology is not None and result.topology.diagrams:
+            # Plot up to 3 diagrams
             for i, diagram in enumerate(result.topology.diagrams[:3]):
                 ax = fig.add_subplot(gs[1, i])
                 self.plot_persistence_diagram(diagram, ax=ax)
+            # Summary panel
+            ax_sum = fig.add_subplot(gs[1, 3])
+            feats = result.topology.features if result.topology.features is not None else None
+            text_lines = []
+            if feats is not None:
+                text_lines.append(f"Feature vector length: {len(feats)}")
+            # Backend hint isn't on AnalysisResult; show generic text
+            text_lines.append("Topology backend: see pipeline stage results")
+            ax_sum.axis('off')
+            ax_sum.text(0.05, 0.95, "Topology Summary\n" + "\n".join(text_lines), va='top')
 
         # Attractor analysis
         if result.attractors:
@@ -432,8 +443,19 @@ class FieldVisualizer:
 
                 self.plot_attractor_portrait(trajectory, result.attractors, ax=ax_attr)
 
+            # Attractor summary
+            ax_attr_sum = fig.add_subplot(gs[2, 2])
+            types = [a.type.value for a in result.attractors]
+            if types:
+                unique, counts = np.unique(types, return_counts=True)
+                ax_attr_sum.bar(unique, counts)
+                ax_attr_sum.set_title('Attractor Types')
+                ax_attr_sum.set_ylabel('Count')
+            else:
+                ax_attr_sum.axis('off')
+
         # Statistics
-        ax_stats = fig.add_subplot(gs[2, 2:])
+        ax_stats = fig.add_subplot(gs[2, 3:])
         if result.raw_data is not None:
             self.plot_field_statistics(result.raw_data, ax=ax_stats)
 

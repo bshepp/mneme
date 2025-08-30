@@ -85,8 +85,32 @@ def generate(output, type, shape, timesteps, seed):
               default='standard', help='Pipeline type')
 @click.option('--format', '-f', type=click.Choice(['hdf5', 'pickle']),
               default='hdf5', help='Output format')
+@click.option('--topology-backend', type=click.Choice(['cubical', 'rips', 'alpha']),
+              default=None, help='Choose topology backend (overrides config)')
+@click.option('--attractor-method', type=click.Choice(['none', 'recurrence', 'lyapunov', 'clustering']),
+              default=None, help='Choose attractor detection method (overrides config)')
+@click.option('--attractor-threshold', type=float, default=None,
+              help='Attractor detection threshold (method-specific)')
+@click.option('--attractor-min-persistence', type=float, default=None,
+              help='Recurrence: minimum persistence fraction')
+@click.option('--attractor-embedding-dim', type=int, default=None,
+              help='Recurrence/Clustering: embedding dimension for 1D series')
+@click.option('--attractor-time-delay', type=int, default=None,
+              help='Recurrence/Clustering: time delay for embedding')
+@click.option('--attractor-n-neighbors', type=int, default=None,
+              help='Lyapunov: number of neighbors')
+@click.option('--attractor-evolution-time', type=int, default=None,
+              help='Lyapunov: evolution time steps')
+@click.option('--attractor-min-samples', type=int, default=None,
+              help='Clustering: minimum samples per cluster')
+@click.option('--attractor-clustering-method', type=click.Choice(['dbscan', 'kmeans']), default=None,
+              help='Clustering: algorithm to use')
 @click.pass_context
-def analyze(ctx, data_path, output, pipeline, format):
+def analyze(ctx, data_path, output, pipeline, format, topology_backend,
+            attractor_method, attractor_threshold, attractor_min_persistence,
+            attractor_embedding_dim, attractor_time_delay,
+            attractor_n_neighbors, attractor_evolution_time,
+            attractor_min_samples, attractor_clustering_method):
     """Analyze field data."""
     click.echo(f"Analyzing data from {data_path}...")
     
@@ -111,11 +135,53 @@ def analyze(ctx, data_path, output, pipeline, format):
             click.echo(f"Error: Unsupported file format: {data_path.suffix}")
             return
     
+    # Create pipeline config and apply CLI overrides
+    config = ctx.obj.to_dict()
+    if topology_backend is not None:
+        config.setdefault('topology', {})
+        config['topology']['backend'] = topology_backend
+
+    # Attractor overrides
+    if attractor_method is not None:
+        if attractor_method == 'none':
+            # Disable attractors by removing section
+            if 'attractors' in config:
+                del config['attractors']
+        else:
+            config.setdefault('attractors', {})
+            config['attractors']['method'] = attractor_method
+            if attractor_threshold is not None:
+                config['attractors']['threshold'] = attractor_threshold
+            params = config['attractors'].get('parameters', {})
+            if attractor_method == 'recurrence':
+                if attractor_min_persistence is not None:
+                    params['min_persistence'] = attractor_min_persistence
+                if attractor_embedding_dim is not None:
+                    params['embedding_dimension'] = attractor_embedding_dim
+                if attractor_time_delay is not None:
+                    params['time_delay'] = attractor_time_delay
+            elif attractor_method == 'lyapunov':
+                if attractor_n_neighbors is not None:
+                    params['n_neighbors'] = attractor_n_neighbors
+                if attractor_evolution_time is not None:
+                    params['evolution_time'] = attractor_evolution_time
+            elif attractor_method == 'clustering':
+                if attractor_min_samples is not None:
+                    params['min_samples'] = attractor_min_samples
+                if attractor_clustering_method is not None:
+                    params['clustering_method'] = attractor_clustering_method
+                if attractor_embedding_dim is not None:
+                    params['embedding_dimension'] = attractor_embedding_dim
+                if attractor_time_delay is not None:
+                    params['time_delay'] = attractor_time_delay
+            if params:
+                config['attractors']['parameters'] = params
+
     # Create pipeline
     if pipeline == 'bioelectric':
-        pipe = create_bioelectric_pipeline(ctx.obj.to_dict())
+        pipe = create_bioelectric_pipeline(config)
     else:
-        pipe = create_standard_pipeline(ctx.obj.to_dict())
+        pipe = create_standard_pipeline(config)
     
     # Run analysis
     click.echo("Running analysis pipeline...")
@@ -311,6 +377,28 @@ def info():
             click.echo(f"  - {dep}: ✓")
         except ImportError:
             click.echo(f"  - {dep}: ✗")
+
+    # Show default topology backend if present
+    try:
+        cfg = ctx.obj.to_dict() if isinstance(ctx.obj, Config) else {}
+    except Exception:
+        cfg = {}
+    topo_backend = None
+    if isinstance(cfg, dict):
+        topo_backend = cfg.get('topology', {}).get('backend', 'cubical') if cfg.get('topology') else 'cubical'
+    click.echo(f"\nDefault topology backend: {topo_backend}")
+
+    # PySR / Julia status
+    try:
+        import pysr  # type: ignore
+        from juliacall import Base  # type: ignore
+        click.echo("PySR: ✓ (Julia available)")
+    except Exception:
+        try:
+            import pysr  # type: ignore
+            click.echo("PySR: ✓ (Julia will be installed at first use)")
+        except Exception:
+            click.echo("PySR: ✗")
 
 
 def main():

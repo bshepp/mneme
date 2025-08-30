@@ -36,6 +36,7 @@ mneme/
 │   │   │   ├── __init__.py
 │   │   │   ├── pipeline.py        # Main analysis pipeline
 │   │   │   ├── visualization.py   # Plotting and visualization
+│   │   │   ├── features.py        # Basic field feature extraction (MVP)
 │   │   │   └── metrics.py         # Evaluation metrics
 │   │   │
 │   │   └── utils/             # Utilities
@@ -100,11 +101,14 @@ mneme/
 - **bioelectric.py**: Specialized handlers for bioelectric imaging data
 
 ### Analysis Modules (`src/mneme/analysis/`)
-- **pipeline.py**: Orchestrates the complete analysis workflow
-- **visualization.py**: Publication-quality plotting and interactive visualizations
-- **metrics.py**: Coherence metrics, validation measures, and evaluation tools
+- **pipeline.py**: Orchestrates the analysis workflow (MVP-ready)
+- **visualization.py**: Plotting utilities (MVP-ready)
+- **features.py**: Basic feature extractor (MVP-ready)
+- **metrics.py**: Evaluation utilities (minimal)
 
 ## Development Workflow
+
+> Note: Some items referenced in `docs/DATA_PIPELINE.md` (e.g., `quality`, `features`, `parallel`, `monitoring`) are roadmap and not yet implemented.
 
 1. **Feature Development**: Create feature branches from `main`
 2. **Testing**: Write tests alongside new features

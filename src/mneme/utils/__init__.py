@@ -3,5 +3,6 @@
 from . import config
 from . import logging
 from . import io
+from . import monitoring
 
-__all__ = ["config", "logging", "io"]
+__all__ = ["config", "logging", "io", "monitoring"]

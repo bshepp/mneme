@@ -461,9 +461,18 @@ class LyapunovAnalysis(BaseAttractorDetector):
         return attractors
         
     def characterize(self, attractor: Attractor, trajectory: np.ndarray) -> Dict[str, Any]:
-        """Compute Lyapunov spectrum for attractor."""
-        # TODO: Implement Lyapunov characterization
-        raise NotImplementedError("Lyapunov characterization to be implemented")
+        """Compute basic Lyapunov characterization for an attractor (MVP)."""
+        if attractor.trajectory_indices is None or len(attractor.trajectory_indices) == 0:
+            return {}
+        indices = np.asarray(attractor.trajectory_indices)
+        local_exponents = self._compute_local_lyapunov_exponents(trajectory)
+        valid = indices[indices < len(local_exponents)]
+        if len(valid) == 0:
+            return {}
+        vals = local_exponents[valid]
+        mean_lyap = float(np.mean(vals))
+        stability = 'attracting' if mean_lyap < -self.threshold else 'neutral' if mean_lyap < self.threshold else 'repelling'
+        return {'mean_lyapunov': mean_lyap, 'stability': stability}
         
     def compute_lyapunov_spectrum(
         self,
@@ -625,9 +634,17 @@ class ClusteringDetector(BaseAttractorDetector):
             return AttractorType.STRANGE
         
     def characterize(self, attractor: Attractor, trajectory: np.ndarray) -> Dict[str, Any]:
-        """Characterize attractor geometry using clustering."""
-        # TODO: Implement clustering characterization
-        raise NotImplementedError("Clustering characterization to be implemented")
+        """Characterize attractor geometry using clustering (MVP)."""
+        if attractor.trajectory_indices is None or len(attractor.trajectory_indices) == 0:
+            return {}
+        pts = trajectory[np.asarray(attractor.trajectory_indices)]
+        centroid = np.mean(pts, axis=0)
+        dists = np.linalg.norm(pts - centroid, axis=1)
+        return {
+            'radius_mean': float(np.mean(dists)),
+            'radius_std': float(np.std(dists)),
+            'num_points': int(len(pts)),
+        }
 
 
 class AttractorDetector:
@@ -676,22 +693,23 @@ class AttractorDetector:
         return self._detector.characterize(attractor, trajectory)
         
     def classify_attractor(self, attractor: Attractor) -> AttractorType:
-        """
-        Classify attractor type based on properties.
-        
-        Parameters
-        ----------
-        attractor : Attractor
-            Attractor to classify
-            
-        Returns
-        -------
-        attractor_type : AttractorType
-            Classification result
-        """
-        # TODO: Implement attractor classification logic
-        # Based on Lyapunov exponents, dimension, etc.
-        raise NotImplementedError("Attractor classification to be implemented")
+        """Classify attractor type based on simple heuristics (MVP)."""
+        if attractor.dimension is not None:
+            if attractor.dimension < 0.2:
+                return AttractorType.FIXED_POINT
+            if attractor.dimension < 1.2:
+                return AttractorType.LIMIT_CYCLE
+            return AttractorType.STRANGE
+        if attractor.lyapunov_exponents is not None and len(attractor.lyapunov_exponents) > 0:
+            lyap = float(np.mean(attractor.lyapunov_exponents))
+            if lyap < -0.1:
+                return AttractorType.FIXED_POINT
+            if lyap < 0.05:
+                return AttractorType.LIMIT_CYCLE
+            return AttractorType.STRANGE
+        if attractor.basin_size < 0.02:
+            return AttractorType.FIXED_POINT
+        return AttractorType.LIMIT_CYCLE
 
 
 # Utility functions

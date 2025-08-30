@@ -10,6 +10,8 @@ The Mneme API follows these principles:
 
 ## Module APIs
 
+> MVP note: Some classes shown below (e.g., rich attractor characterization, full models) are placeholders or partially implemented. Methods explicitly marked with `NotImplementedError` are roadmap.
+
 ### 1. Field Theory Module (`mneme.core.field_theory`) — MVP
 
 ```python
@@ -77,6 +79,18 @@ class AttractorDetector:
     
     def characterize(self, attractor: Attractor) -> Dict[str, Any]:
         """Compute attractor properties (dimension, stability, basin)."""
+
+### 2b. Point-cloud topology backends — MVP
+
+```python
+from mneme.core.topology import RipsComplex, AlphaComplex, field_to_point_cloud
+
+# Convert 2D field to point cloud and run Rips
+pc = field_to_point_cloud(field2d, method='peaks', percentile=95.0)
+tda = RipsComplex(max_dimension=1)
+diagrams = tda.compute_persistence(pc)
+features = tda.extract_features(diagrams)
+```
 ```
 
 ### 3. Models Module (`mneme.models`) — placeholders
