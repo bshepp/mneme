@@ -34,6 +34,9 @@ rf = rc.extract_features(rd)
 2) Increase `percentile` in `field_to_point_cloud` and see how point density affects Rips results
 3) Plot a persistence image for H1 and interpret visually
 
+Run log (MVP)
+- Success: Cubical and Rips both produced 2 diagrams with 12-length feature vectors in a quick test.
+
 Solutions (outline)
 - Different backends produce different sensitivities; features reflect scale and sampling
 - Higher threshold → fewer points → sparser complexes

@@ -35,6 +35,11 @@ attractors = ad.detect(traj)
 2) For Lyapunov, change `evolution_time`; infer stability from mean exponents
 3) For clustering, compare DBSCAN vs KMeans (set `n_clusters` via code edit if needed)
 
+Run log (MVP)
+- Recurrence: Detected several attractors on a simple circular trajectory (expected, due to recurrence clustering). Adjust thresholds for control.
+- Lyapunov: Returned 0 attractors on the simple sinusoid with default params (expected — near-neutral exponents). Increase `evolution_time` or apply to chaotic trajectories for meaningful results.
+- Clustering: Returned 0 for the toy sinusoid with `min_samples=20` (expected). Reduce `min_samples` or use denser/recurrent trajectories to see clusters.
+
 Solutions (outline)
 - Lower threshold → denser recurrences → more/merged attractors; higher → sparser
 - Longer evolution windows smooth estimates; negative averages suggest attracting regions

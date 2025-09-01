@@ -37,6 +37,7 @@ Welcome to the comprehensive, hands-on course for Mneme: a system for detecting 
 ## Reference docs
 
 - Core project docs: [Project Structure](../PROJECT_STRUCTURE.md), [Development Setup](../DEVELOPMENT_SETUP.md), [API Design](../API_DESIGN.md), [Data Pipeline](../DATA_PIPELINE.md)
+- Run Logs: Each module will gain a short “Run log” section as we execute the exercises end-to-end, noting successes and any failures with fixes.
 - Source: `src/mneme/` (see `analysis/`, `core/`, `data/`, `utils/`)
 
 Happy exploring!
