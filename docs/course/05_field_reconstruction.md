@@ -22,7 +22,7 @@ observations = np.sin(4*np.pi*positions[:,0]) * np.cos(4*np.pi*positions[:,1]) +
 recon = FieldReconstructor(method='gaussian_process', resolution=(32, 32), length_scale=0.2, noise_level=0.05)
 result = recon.fit_reconstruct(observations, positions)
 field = result.field.data
-unc = result.uncertainty
+unc = result.uncertainty  # already an ndarray; do not call as a function
 ```
 
 ## 5.3 IFT notes
@@ -33,6 +33,10 @@ unc = result.uncertainty
 1) Reconstruct with GP over multiple `length_scale` values; inspect smoothness and uncertainty
 2) Switch to IFT; tune `correlation_length`; compare visualizations
 3) Stress test: add noise and see how uncertainty reflects confidence
+
+Run log (MVP)
+- Success: GP reconstruction returned a (32,32) field; `uncertainty` is an ndarray (don’t call it).
+- Caveat: Calling `result.uncertainty()` raises `TypeError`; fix is to treat it as a property/array (`result.uncertainty`).
 
 Solutions (outline)
 - Larger `length_scale` → smoother fields; uncertainty smaller where observations dense

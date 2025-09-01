@@ -23,6 +23,12 @@ model.fit(X, y)
 print(model.get_best())
 ```
 
+Run log (MVP)
+- On our environment, a quick smoke test raised an AttributeError (`'_validate_data'`) with `PySRRegressor` + current scikit-learn versions. This is a known API compatibility wrinkle in some PySR releases. Workarounds:
+  - Pin scikit-learn to a compatible minor version for your PySR release, or
+  - Use `model.fit(X, y)` in a clean environment where PySR installs its recommended dependencies, or
+  - Skip this optional module until we publish a pinned environment file specifically for PySR.
+
 ## Exercises
 1) Use topological features as `X` and a known morphodynamic target as `y`; see if simple expressions emerge
 2) Inspect equation complexity vs error
