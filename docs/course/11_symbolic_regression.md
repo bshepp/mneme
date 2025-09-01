@@ -7,6 +7,7 @@
 
 ## 11.1 Caveats
 - PySR is optional and may install Julia on first use
+- Recommended install: `pip install -e .[pysr]` (pins scikit-learn and juliacall compatibly)
 - MVP integrates lightly; treat this as exploratory
 
 ## 11.2 Minimal example (toy data)
@@ -24,10 +25,7 @@ print(model.get_best())
 ```
 
 Run log (MVP)
-- On our environment, a quick smoke test raised an AttributeError (`'_validate_data'`) with `PySRRegressor` + current scikit-learn versions. This is a known API compatibility wrinkle in some PySR releases. Workarounds:
-  - Pin scikit-learn to a compatible minor version for your PySR release, or
-  - Use `model.fit(X, y)` in a clean environment where PySR installs its recommended dependencies, or
-  - Skip this optional module until we publish a pinned environment file specifically for PySR.
+- With `pip install -e .[pysr]`, PySR should work with compatible scikit-learn/juliacall versions. If Julia setup is deferred, the first call may download/build Julia artifacts.
 
 ## Exercises
 1) Use topological features as `X` and a known morphodynamic target as `y`; see if simple expressions emerge
