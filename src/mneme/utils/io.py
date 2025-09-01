@@ -8,7 +8,15 @@ from pathlib import Path
 import json
 import warnings
 
-from ..types import Field, AnalysisResult
+from ..types import (
+    Field,
+    AnalysisResult,
+    ReconstructionResult,
+    TopologyResult,
+    PersistenceDiagram,
+    Attractor,
+    ReconstructionMethod,
+)
 
 
 def save_results(
@@ -257,12 +265,12 @@ def load_results(
     input_path = Path(input_path)
     
     if format is None:
-        # Auto-detect format
-        if input_path.suffix == '.h5':
+        # Auto-detect format (support both .h5 and .hdf5)
+        if input_path.suffix.lower() in ('.h5', '.hdf5'):
             format = 'hdf5'
-        elif input_path.suffix == '.pkl':
+        elif input_path.suffix.lower() in ('.pkl', '.pickle'):
             format = 'pickle'
-        elif input_path.suffix == '.json':
+        elif input_path.suffix.lower() == '.json':
             format = 'json'
         else:
             raise ValueError(f"Cannot auto-detect format for {input_path}")
@@ -277,20 +285,124 @@ def load_results(
         raise ValueError(f"Unsupported format: {format}")
 
 
-def _load_results_hdf5(input_path: Path) -> Dict[str, Any]:
-    """Load results from HDF5 format."""
-    results = {}
-    
+def _load_results_hdf5(input_path: Path) -> AnalysisResult:
+    """Load results from HDF5 format and return an AnalysisResult instance."""
     with h5py.File(input_path, 'r') as f:
-        # Load attributes
-        for key in f.attrs.keys():
-            results[key] = f.attrs[key]
-        
-        # Load datasets and groups
-        for key in f.keys():
-            results[key] = _load_hdf5_item(f[key])
-    
-    return results
+        # Top-level attributes
+        experiment_id = str(f.attrs.get('experiment_id', 'unknown'))
+        timestamp = str(f.attrs.get('timestamp', ''))
+
+        # Raw data
+        raw_data: Optional[Field] = None
+        if 'raw_data' in f:
+            raw_group = f['raw_data']
+            raw_data = _hdf5_group_to_field(raw_group)
+
+        # Processed data
+        processed_data: Optional[Field] = None
+        if 'processed_data' in f:
+            proc_group = f['processed_data']
+            processed_data = _hdf5_group_to_field(proc_group)
+
+        # Reconstruction
+        reconstruction: Optional[ReconstructionResult] = None
+        if 'reconstruction' in f:
+            recon_group = f['reconstruction']
+            field_group = recon_group.get('field')
+            recon_field = _hdf5_group_to_field(field_group) if field_group is not None else None
+            uncertainty = recon_group.get('uncertainty')
+            uncertainty_arr = uncertainty[()] if uncertainty is not None else None
+            method_attr = recon_group.attrs.get('method')
+            method = None
+            if isinstance(method_attr, (bytes, str)):
+                try:
+                    method = ReconstructionMethod(method_attr.decode() if isinstance(method_attr, bytes) else method_attr)
+                except Exception:
+                    method = None
+            comp_time = recon_group.attrs.get('computation_time')
+            if recon_field is not None:
+                reconstruction = ReconstructionResult(
+                    field=recon_field,
+                    uncertainty=uncertainty_arr,
+                    method=method,
+                    parameters=None,
+                    computation_time=float(comp_time) if comp_time is not None else None,
+                )
+
+        # Topology
+        topology: Optional[TopologyResult] = None
+        if 'topology' in f:
+            topo_group = f['topology']
+            diagrams = []
+            if 'diagrams' in topo_group:
+                diags_group = topo_group['diagrams']
+                for key in sorted(diags_group.keys()):
+                    dgrp = diags_group[key]
+                    points = dgrp['points'][()]
+                    dim = int(dgrp.attrs.get('dimension', 0))
+                    thr = dgrp.attrs.get('threshold')
+                    diag = PersistenceDiagram(points=points, dimension=dim, threshold=float(thr) if thr is not None else None)
+                    diagrams.append(diag)
+            features = topo_group['features'][()] if 'features' in topo_group else None
+            topology = TopologyResult(diagrams=diagrams, features=features)
+
+        # Attractors
+        attractors: Optional[List[Attractor]] = None
+        if 'attractors' in f:
+            attr_group = f['attractors']
+            attractors = []
+            for key in sorted(attr_group.keys()):
+                ag = attr_group[key]
+                atype = str(ag.attrs.get('type', 'fixed_point'))
+                center = ag['center'][()]
+                basin = float(ag.attrs.get('basin_size', 0.0))
+                dim = ag.attrs.get('dimension')
+                lyap = ag.get('lyapunov_exponents')
+                lyap_arr = lyap[()] if lyap is not None else None
+                idx = ag.get('trajectory_indices')
+                idx_list = idx[()].tolist() if idx is not None else None
+                attractors.append(Attractor(type=type(raw.__class__.__name__, (), {}) if False else Attractor.__annotations__['type'].__args__[0](atype),  # type: ignore
+                                           center=center,
+                                           basin_size=basin,
+                                           dimension=float(dim) if dim is not None else None,
+                                           lyapunov_exponents=lyap_arr,
+                                           trajectory_indices=idx_list))
+            if not attractors:
+                attractors = None
+
+        # Metadata (load as nested dict)
+        metadata = None
+        if 'metadata' in f:
+            metadata = _load_hdf5_item(f['metadata'])
+
+        return AnalysisResult(
+            experiment_id=experiment_id,
+            timestamp=timestamp,
+            raw_data=raw_data if raw_data is not None else Field(data=np.array([])),
+            processed_data=processed_data,
+            reconstruction=reconstruction,
+            topology=topology,
+            attractors=attractors,
+            metadata=metadata,
+        )
+
+def _hdf5_group_to_field(group: h5py.Group) -> Field:
+    """Convert HDF5 group with 'data' and optional metadata into a Field."""
+    data = group['data'][()]
+    coords = group.get('coordinates')
+    coords_arr = coords[()] if coords is not None else None
+    resolution = group.attrs.get('resolution')
+    bounds = group.attrs.get('bounds')
+    meta = None
+    if 'metadata' in group:
+        meta = _load_hdf5_item(group['metadata'])
+    return Field(
+        data=data,
+        coordinates=coords_arr,
+        resolution=tuple(resolution) if resolution is not None else None,
+        bounds=bounds if bounds is not None else None,
+        metadata=meta,
+    )
 
 
 def _load_hdf5_item(item: Union[h5py.Dataset, h5py.Group]) -> Any:
