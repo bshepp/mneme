@@ -28,6 +28,10 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 pip install -e .
+
+# Optional extras
+# Symbolic regression (PySR) with compatible pins
+pip install -e .[pysr]
 ```
 
 For detailed setup instructions, see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMENT_SETUP.md).

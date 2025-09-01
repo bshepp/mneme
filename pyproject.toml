@@ -57,6 +57,11 @@ docs = [
 gpu = [
     "cupy>=9.0.0",
 ]
+pysr = [
+    "pysr>=0.19.4,<0.20.0",
+    "scikit-learn>=1.3,<1.5",
+    "juliacall>=0.9,<1.0",
+]
 
 [project.scripts]
 mneme = "mneme.cli:main"
