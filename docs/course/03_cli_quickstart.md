@@ -25,20 +25,14 @@ mneme visualize results_cli/analysis_results.hdf5 -o plots -f png
 ```
 Expected: `plots/dashboard.png` with field, topology, and any attractor summaries.
 
-If the visualization CLI fails on your system, you can drive it from Python:
+If you prefer Python, you can also drive visualization programmatically:
 
 ```python
 from mneme.utils.io import load_results
 from mneme.analysis.visualization import FieldVisualizer
 from mneme.types import AnalysisResult, Field
 
-raw = load_results('results_cli/analysis_results.hdf5', format='hdf5')
-ar = AnalysisResult(
-    experiment_id=raw.get('experiment_id','n/a'),
-    timestamp=str(raw.get('timestamp','n/a')),
-    raw_data=Field(data=raw['raw_data']['data']) if isinstance(raw.get('raw_data'), dict) else None,
-    processed_data=Field(data=raw['processed_data']['data']) if isinstance(raw.get('processed_data'), dict) else None,
-)
+ar = load_results('results_cli/analysis_results.hdf5')  # returns AnalysisResult
 FieldVisualizer().create_analysis_dashboard(ar)
 ```
 

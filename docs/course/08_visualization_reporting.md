@@ -21,7 +21,7 @@ fig.savefig('dashboard.png', dpi=300)
 fig2 = viz.plot_pipeline_results(result.metadata.get('stage_results', {}) if isinstance(result.metadata, dict) else {})
 fig2.savefig('pipeline.png', dpi=300)
 
-Note: If you loaded results via `mneme.utils.io.load_results(..., format='hdf5')`, you will receive a dictionary; convert it to an `AnalysisResult` (as shown in Module 3) before calling `create_analysis_dashboard`.
+Note: `mneme.utils.io.load_results` now returns an `AnalysisResult` directly for HDF5 paths (both `.h5` and `.hdf5`), so you can pass it straight into `create_analysis_dashboard`.
 ```
 
 ## Exercises
@@ -29,7 +29,7 @@ Note: If you loaded results via `mneme.utils.io.load_results(..., format='hdf5')
 2) Save a persistence image for H1 using `compute_persistence_image` and place it in your report
 
 Run log (MVP)
-- The `mneme.utils.io.load_results` HDF5 loader returns a dict; `FieldVisualizer.create_analysis_dashboard` expects an `AnalysisResult`. Convert the dict to `AnalysisResult` first (see Module 3 snippet). We will improve this in a future release.
+- The HDF5 loader now returns an `AnalysisResult`; dashboards render without conversion.
 
 Solutions (outline)
 - Use Matplotlib annotations; summarize feature vector stats on the figure
