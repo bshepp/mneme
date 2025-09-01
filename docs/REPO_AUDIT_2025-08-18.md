@@ -10,8 +10,8 @@
   - Action: Update `pyproject.toml` to Python >=3.12, correct URLs, and map console scripts to `mneme.cli:main` placeholders.
 
 - **APIs vs code**
-  - CLI references `create_bioelectric_pipeline` (missing). Action: Add stub using current config schema.
-  - `models/` docs mention `autoencoders.py`, `symbolic.py`, `field_models.py`; only `__init__.py` exists. Action: Add minimal `autoencoders.py` and `symbolic.py` placeholders exporting documented classes.
+  - CLI references `create_bioelectric_pipeline` (present).
+  - `models/` docs mention `autoencoders.py`, `symbolic.py`; minimal placeholders now present and exported.
 
 - **Types/static analysis**
   - mypy reports many errors (Pydantic types used as annotations, missing return types, unions). Also `python_version` set to 3.8.
@@ -24,10 +24,12 @@
   - Core algorithms in `core/topology.py` and `core/attractors.py` include `NotImplementedError` and TODOs (Rips/Alpha persistence, Lyapunov, clustering, basins). Acceptable for roadmap; ensure API surfaces communicate experimental status.
 
 - **Next steps (implemented now)**
-  - Patch `pyproject.toml` (Python 3.12, URLs, scripts, mypy 3.12).
-  - Add `create_bioelectric_pipeline` stub.
-  - Add `types-PyYAML` to `requirements-dev.txt`.
-  - Add `models/autoencoders.py` and `models/symbolic.py` placeholders and update `models/__init__.py`.
+  - Patched `pyproject.toml` (Python 3.12, URLs, scripts, mypy 3.12) and added optional extras `[pysr]`.
+  - Implemented `create_bioelectric_pipeline` (MVP defaults) and verified CLI integration.
+  - Added `types-PyYAML` to dev requirements.
+  - Added `models/autoencoders.py` and `models/symbolic.py` placeholders and exported them.
+  - `mneme.utils.io.load_results` now returns `AnalysisResult` for HDF5; `.h5`/`.hdf5` supported.
+  - `mneme info` import order improved; PySR/Julia status reported cleanly.
 
 - **Future improvements**
   - Add concrete loaders and tests; flesh out topology/attractor features; add docs page summarizing known placeholders and roadmap.
