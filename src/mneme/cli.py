@@ -354,7 +354,6 @@ def list_experiments(base_dir):
 def info(ctx):
     """Show system information."""
     import platform
-    import torch
     
     click.echo("Mneme System Information")
     click.echo("========================")
@@ -362,7 +361,22 @@ def info(ctx):
     click.echo(f"Platform: {platform.platform()}")
     click.echo(f"NumPy version: {np.__version__}")
     
-    if torch.cuda.is_available():
+    # Import juliacall before torch to avoid warning; both are optional
+    _julia_ok = False
+    try:
+        from juliacall import Base as _JuliaBase  # type: ignore
+        _julia_ok = True
+    except Exception:
+        _julia_ok = False
+
+    # Import torch after juliacall
+    try:
+        import torch  # type: ignore
+        has_torch = True
+    except Exception:
+        has_torch = False
+
+    if has_torch and getattr(torch, 'cuda', None) and torch.cuda.is_available():
         click.echo(f"CUDA available: Yes")
         click.echo(f"CUDA device: {torch.cuda.get_device_name(0)}")
     else:
@@ -393,14 +407,12 @@ def info(ctx):
     # PySR / Julia status
     try:
         import pysr  # type: ignore
-        from juliacall import Base  # type: ignore
-        click.echo("PySR: ✓ (Julia available)")
-    except Exception:
-        try:
-            import pysr  # type: ignore
+        if _julia_ok:
+            click.echo("PySR: ✓ (Julia available)")
+        else:
             click.echo("PySR: ✓ (Julia will be installed at first use)")
-        except Exception:
-            click.echo("PySR: ✗")
+    except Exception:
+        click.echo("PySR: ✗")
 
 
 def main():
