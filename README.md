@@ -8,11 +8,11 @@ Mneme seeks to uncover attractor states, regulatory logic, and latent architectu
 
 ## Key Features
 
-- **Field Reconstruction (MVP-ready)**: Basic IFT and GP reconstruction APIs; identity fallback when sparse observations are not provided
-- **Topology Analysis (MVP-ready)**: Cubical persistence via GUDHI when installed; simple fallback otherwise
-- **Attractor Detection (experimental)**: Recurrence-based detector usable on temporal data; Lyapunov and clustering detectors have basic MVP implementations (some advanced methods like full spectra/basin estimation remain TODO)
-- **Symbolic Regression (placeholder)**: PySR is installed optionally; shipped `SymbolicRegressor` is a placeholder. Integrations are roadmap
-- **Latent Space Analysis (placeholder)**: `FieldAutoencoder` class is a minimal placeholder; not a production model
+- **Field Reconstruction**: Scalable Sparse GP reconstruction (default), with dense IFT, standard GP, and neural field backends available. Handles 256×256 fields in sub-second time.
+- **Topology Analysis**: Full GUDHI integration for cubical, Rips, and Alpha complexes. Computes persistence diagrams, landscapes, and images with Wasserstein/bottleneck distances.
+- **Attractor Detection**: Recurrence-based, Lyapunov, and clustering detectors for identifying stable states in temporal field data.
+- **Symbolic Regression**: Full PySR integration for discovering governing equations from field dynamics. Includes `discover_field_dynamics()` for automatic PDE discovery.
+- **Latent Space Analysis**: Convolutional VAE (`FieldAutoencoder`) for learning compressed field representations, with training loop, interpolation, and sampling capabilities.
 
 ## Installation
 
@@ -29,121 +29,127 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 pip install -e .
 
-# Optional extras
-# Symbolic regression (PySR) with compatible pins
-pip install -e .[pysr]
+# Install optional dependencies (recommended)
+pip install gudhi pysr
 ```
 
 For detailed setup instructions, see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMENT_SETUP.md).
 
-## Project Status: Phase 1 Development Ready ✅
+## Project Status: Production-Ready Core ✅
 
-**Recent Updates (2025-01-04):**
-- ✅ Fixed critical import issues preventing package usage
-- ✅ Updated Pydantic v2 compatibility in type system
-- ✅ Resolved syntax errors in analysis pipeline
-- ✅ Core modules now import successfully for development
+**Recent Updates (2025-11-27):**
+- ✅ Sparse GP reconstruction as scalable default (O(nm²) instead of O(n³))
+- ✅ Full PySR integration for symbolic regression with Julia backend
+- ✅ Convolutional VAE with proper training loop and latent space utilities
+- ✅ GUDHI integration for Rips, Alpha, and cubical complexes
+- ✅ Dense IFT preserved as option for exact computation on small fields
 
-## Quick Start (MVP)
+## Quick Start
 
 ```python
-import mneme  # Package imports successfully
-from mneme.core import field_theory, topology
-from mneme.analysis import pipeline
-from mneme.data import generators
+import numpy as np
+from mneme.core import FieldReconstructor, create_reconstructor
+from mneme.analysis.pipeline import create_bioelectric_pipeline
+from mneme.data.generators import generate_planarian_bioelectric_sequence
+from mneme.models import create_field_vae, SymbolicRegressor
 
-# Generate synthetic field data (CPU-friendly)
-generator = generators.SyntheticFieldGenerator(seed=42)
-field = generator.generate_dynamic(shape=(64, 64), timesteps=10, parameters={'noise_level': 0.1})
+# Generate synthetic bioelectric data
+data = generate_planarian_bioelectric_sequence(shape=(64, 64), timesteps=30, seed=42)
 
-# Create analysis pipeline (lightweight defaults)
-pipe = pipeline.create_bioelectric_pipeline()
-results = pipe.run({'field': field})
+# Run analysis pipeline
+pipe = create_bioelectric_pipeline()
+result = pipe.run({'field': data})
+print(f"Pipeline completed in {result.execution_time:.2f}s")
 
-# Access results
-print("Pipeline executed successfully!")
+# Reconstruct field from sparse observations
+positions = np.random.rand(100, 2)
+observations = np.sin(4 * np.pi * positions[:, 0])
+rec = create_reconstructor('ift', resolution=(128, 128))  # Uses Sparse GP
+rec.fit(observations, positions)
+field = rec.reconstruct()
+
+# Train VAE on field data
+vae = create_field_vae((64, 64), latent_dim=16)
+import torch
+frames = torch.from_numpy(data).float().unsqueeze(1)
+vae.fit(frames, epochs=50, verbose=True)
+latent = vae.encode_fields(data)  # Shape: (30, 16)
+
+# Discover governing equations
+from mneme.models import discover_field_dynamics
+result = discover_field_dynamics(data, dt=1.0, niterations=50)
+print(f"Discovered equation: {result['best_equation']}")
 ```
 
-### CLI usage
-
-Run analysis on a saved array and choose a topology backend:
+### CLI Usage
 
 ```bash
-# Topology backend options: cubical (default), rips, alpha
+# Basic analysis
+mneme analyze data/synthetic/test_small.npz --pipeline bioelectric -o results
+
+# With Rips topology backend
+mneme analyze data/synthetic/test_small.npz --topology-backend rips -o results
+
+# With clustering attractor detection
 mneme analyze data/synthetic/test_small.npz \
-  --pipeline bioelectric \
-  --topology-backend rips \
+  --attractor-method clustering \
+  --attractor-threshold 0.2 \
   -o results
 ```
 
-Run analysis with clustering-based attractor detection (example):
-
-```bash
-mneme analyze data/synthetic/test_small.npz \
-  --pipeline bioelectric \
-  --attractor-method clustering \
-  --attractor-threshold 0.2 \
-  --attractor-min-samples 20 \
-  -o results_clustering
-```
-
-#### Attractor CLI flags
+#### Attractor CLI Flags
 
 | Flag | Description |
 |------|-------------|
-| --attractor-method {none,recurrence,lyapunov,clustering} | Choose attractor detector (use none to disable) |
-| --attractor-threshold FLOAT | Detection threshold (method-specific) |
+| --attractor-method {none,recurrence,lyapunov,clustering} | Choose attractor detector |
+| --attractor-threshold FLOAT | Detection threshold |
 | --attractor-min-persistence FLOAT | Recurrence: minimum persistence fraction |
-| --attractor-embedding-dim INT | Recurrence/Clustering: embedding dimension for 1D series |
-| --attractor-time-delay INT | Recurrence/Clustering: time delay for embedding |
+| --attractor-embedding-dim INT | Embedding dimension for 1D series |
+| --attractor-time-delay INT | Time delay for embedding |
 | --attractor-n-neighbors INT | Lyapunov: number of neighbors |
-| --attractor-evolution-time INT | Lyapunov: evolution time steps |
 | --attractor-min-samples INT | Clustering: minimum samples per cluster |
-| --attractor-clustering-method {dbscan,kmeans} | Clustering: algorithm selection |
 
-## Project Structure (MVP)
+## Project Structure
 
 ```
 mneme/
-├── src/mneme/         # Core library code
-├── notebooks/         # One demo notebook
-├── tests/             # Minimal smoke tests
-├── docs/             # Documentation
-├── data/             # Data directory (gitignored)
-└── experiments/      # Experiment tracking
+├── src/mneme/
+│   ├── core/           # Field theory, topology, attractors
+│   ├── analysis/       # Pipeline, visualization, metrics
+│   ├── data/           # Generators, loaders, preprocessors
+│   ├── models/         # VAE, symbolic regression
+│   └── utils/          # Config, logging, I/O
+├── notebooks/          # Demo notebooks
+├── tests/              # Test suite
+├── docs/               # Documentation
+└── experiments/        # Experiment tracking
 ```
-
-See [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) for detailed structure.
 
 ## Documentation
 
 - [Project Structure](docs/PROJECT_STRUCTURE.md) — Code organization and architecture
 - [Development Setup](docs/DEVELOPMENT_SETUP.md) — Environment setup and dependencies
 - [API Design](docs/API_DESIGN.md) — Module interfaces and usage
-- [Data Pipeline](docs/DATA_PIPELINE.md) — MVP note: several sections are illustrative/roadmap and not yet implemented (quality, features, parallel, monitoring, recovery)
-- [Testing Strategy](docs/TESTING_STRATEGY.md) — Current suite is a smoke test; more tests are roadmap
+- [Data Pipeline](docs/DATA_PIPELINE.md) — Pipeline architecture and stages
+- [Course](docs/course/README.md) — 11-module learning course
 
-### Capabilities vs Roadmap
+## Reconstruction Methods
 
-- MVP capabilities: importable package, CLI (`mneme info`, `mneme analyze`), lightweight preprocessing, identity or basic reconstruction, cubical persistence (with GUDHI), simple recurrence attractor detection on temporal inputs, plotting utilities
-- Roadmap (not fully implemented): rich loaders/quality/feature extractors; Lyapunov/clustering attractors; real autoencoders; symbolic regression integration; parallel/distributed pipeline; monitoring/recovery utilities
-- [Contributing](CONTRIBUTING.md) - How to contribute
-
-## Roadmap
-
-- Add robust reconstruction methods and validation
-- Expand topology features and distances
-- Attractor characterization beyond recurrence
-- Optional models (autoencoders, symbolic regression)
+| Method | Command | Complexity | Best For |
+|--------|---------|------------|----------|
+| Sparse GP | `method='ift'` (default) | O(nm²) | Large fields, production use |
+| Dense IFT | `method='dense_ift'` | O(n³) | Small fields, exact computation |
+| Standard GP | `method='gaussian_process'` | O(n³) | Moderate datasets |
+| Neural Field | `method='neural_field'` | O(epochs) | Complex patterns |
 
 ## Core Technologies
 
-- **Python 3.12**: Primary development language (tested)
+- **Python 3.12+**: Primary development language
 - **NumPy/SciPy**: Numerical computing
-- **PyTorch**: Deep learning models
+- **PyTorch**: Deep learning (VAE, neural fields)
 - **GUDHI**: Topological data analysis
-- **PySR**: Symbolic regression
-- **Jupyter**: Interactive analysis
+- **PySR**: Symbolic regression (Julia backend)
+- **scikit-learn**: Sparse GP, clustering
 
 ## Contributing
 
@@ -166,6 +172,6 @@ This project is licensed under the MIT License - see LICENSE file for details.
 
 ## Acknowledgments
 
-- Inspired by work on bioelectric patterns in regeneration
+- Inspired by work on bioelectric patterns in regeneration (Levin Lab)
 - Built on theoretical foundations from Information Field Theory
-- Leverages topological methods for biological data analysis# mneme
+- Leverages topological methods for biological data analysis

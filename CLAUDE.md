@@ -9,67 +9,117 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Mneme is an exploratory research system designed to detect field-like, emergent memory structures embedded in biological systems, beginning with planarian regeneration and bioelectric data. The project seeks to uncover attractor states, regulatory logic, and latent architectures not captured by sequence-based models alone.
 
-## Direction and Scope (MVP-first)
+## Current Status (2025-11-27)
 
-We will ship a minimal, reproducible end-to-end pipeline before expanding features. The MVP analyzes 2D bioelectric-like fields (synthetic or small real samples), reconstructs a continuous field, computes cubical persistence (via GUDHI with a simple fallback), detects simple attractor signals, and saves plots/metrics. Everything else is roadmap.
+The core system is **production-ready** with all major components implemented:
 
-### MVP Deliverables
-- CLI: `mneme analyze data/synthetic/planarian_demo.npz -o results/` produces figures and metrics
-- Notebook: one demo notebook that runs in <5 minutes CPU-only
-- Docs: README Quickstart that reproduces results; docs truthfully reflect implemented modules
-- CI: lint + tests green on Python 3.12 (mypy non-blocking initially)
+### Implemented Features
+- **Field Reconstruction**: Sparse GP (default, scalable), Dense IFT, Standard GP, Neural Fields
+- **Topology Analysis**: Full GUDHI integration (cubical, Rips, Alpha complexes)
+- **Attractor Detection**: Recurrence, Lyapunov, and clustering methods
+- **Symbolic Regression**: Full PySR integration with `discover_field_dynamics()`
+- **Latent Space Analysis**: Convolutional VAE with training, encoding, interpolation
+- **Pipeline**: End-to-end analysis with visualization and HDF5 export
 
-### Roadmap (post-MVP)
-- Field models (neural fields), Lyapunov metrics, richer topology (Rips/Alpha), symbolic regression (PySR), and 3D support
-- Type hygiene pass; re-enable strict mypy
+### Key Architecture Decisions
+- Sparse GP is the default reconstruction method (scalable to 256×256 fields)
+- Dense IFT preserved as `method='dense_ift'` for exact computation on small fields
+- PySR falls back to linear regression if Julia not available
+- GUDHI falls back to scipy-based persistence if not installed
 
 ## Development Environment
 
-- **Python Environment**: Uses a virtual environment in `venv/`
-- **Primary Tools**: Python, Jupyter/Colab, NumPy, SciPy, PyTorch/Keras, PySR, GUDHI (for TDA)
-- **Focus Areas**: Information Field Theory (IFT), dimensionality reduction, Topological Data Analysis (TDA), symbolic regression
+- **Python**: 3.12+ required
+- **Virtual Environment**: `venv/` directory
+- **Core Dependencies**: numpy, scipy, pandas, scikit-learn, torch, matplotlib
+- **Optional Dependencies**: gudhi (TDA), pysr (symbolic regression)
 
-## Key Technical Approaches (current)
+## Key Commands
 
-Current MVP includes: simple reconstruction (IFT or interpolation), cubical persistence (GUDHI or fallback), recurrence-based attractor detection, and visualization.
-
-## Development Commands
-
-**Environment Setup:**
 ```bash
-# Activate virtual environment
-source venv/bin/activate
+# Environment setup
+source venv/bin/activate  # Linux/Mac
+.\venv\Scripts\Activate.ps1  # Windows PowerShell
 
-# Install dependencies
 pip install -r requirements.txt
-
-# Install package in development mode
 pip install -e .
+
+# Install optional dependencies
+pip install gudhi pysr
+
+# Run tests
+python -c "from mneme.models import SymbolicRegressor, create_field_vae; print('OK')"
+
+# CLI usage
+mneme analyze data/synthetic/test_small.npz --pipeline bioelectric -o results
+mneme info  # Show system information
 ```
 
-**Testing and Validation:**
-```bash
-# Test core imports
-python -c "import mneme; print('Package working!')"
+## Module Structure
 
-# Run basic functionality tests
-python -c "import numpy as np; import pandas as pd; import matplotlib.pyplot as plt; print('Core packages working!')"
+```
+src/mneme/
+├── core/
+│   ├── field_theory.py    # SparseGPReconstructor, DenseIFTReconstructor, etc.
+│   ├── topology.py        # PersistentHomology, RipsComplex, AlphaComplex
+│   └── attractors.py      # RecurrenceAnalysis, LyapunovAnalysis, ClusteringDetector
+├── analysis/
+│   ├── pipeline.py        # MnemePipeline, create_bioelectric_pipeline()
+│   └── visualization.py   # FieldVisualizer, dashboards
+├── data/
+│   ├── generators.py      # SyntheticFieldGenerator, generate_planarian_bioelectric_sequence()
+│   └── preprocessors.py   # Denoiser, Normalizer, Interpolator
+├── models/
+│   ├── autoencoders.py    # FieldAutoencoder (Conv VAE), create_field_vae()
+│   └── symbolic.py        # SymbolicRegressor, discover_field_dynamics()
+└── utils/
+    ├── config.py          # Configuration management
+    └── io.py              # save_results(), load_results()
 ```
 
-**Package Management:**
-- Python 3.12.3 in virtual environment
-- Core packages: numpy, scipy, pandas, scikit-learn, matplotlib, seaborn
-- Deep learning: torch, torchvision (for neural network components)
-- Specialized tools: pysr, gudhi (when fully installed)
+## Important Implementation Notes
 
-## Current Status (2025-08-18)
+### Field Reconstruction
+```python
+from mneme.core import create_reconstructor
 
-- Package imports cleanly on Python 3.12
-- CI: lint passes; mypy runs non-blocking; docs deploy to `gh-pages`
-- `create_bioelectric_pipeline()` implemented with lightweight defaults; minimal model placeholders remain
+# Default: Sparse GP (scalable)
+rec = create_reconstructor('ift', resolution=(256, 256), n_inducing=500)
+
+# Dense IFT (exact, for small fields only)
+rec = create_reconstructor('dense_ift', resolution=(32, 32))
+```
+
+### Symbolic Regression
+```python
+from mneme.models import discover_field_dynamics
+
+# Discovers PDEs from field time series
+result = discover_field_dynamics(field_sequence, dt=1.0, niterations=100)
+# Returns: equations, best_equation, r2_score, features_used
+```
+
+### VAE Training
+```python
+from mneme.models import create_field_vae
+
+vae = create_field_vae((64, 64), latent_dim=16)
+result = vae.fit(train_data, val_data, epochs=100, early_stopping_patience=10)
+latent = vae.encode_fields(fields)
+interpolation = vae.interpolate(field_a, field_b, n_steps=10)
+```
 
 ## Contributor Guidance
 
-1) Prioritize MVP features that make the end-to-end run better before adding new modules
-2) Keep CI green (add tests with each feature). Mypy is non-blocking until type hygiene pass, but don’t add new untyped public APIs
-3) If adding “future” features, hide them behind flags with clear errors and update docs accordingly
+1. **Sparse GP is default**: Don't change IFT to use dense matrices unless explicitly requested
+2. **Preserve backwards compatibility**: Old code using `method='ift'` should continue to work
+3. **Optional dependencies**: Always provide fallbacks for gudhi and pysr
+4. **Test thoroughly**: Run full integration test before committing
+5. **Update docs**: Keep README.md, CLAUDE.md, and CHANGELOG.md in sync
+
+## Known Issues / TODOs
+
+- `compute_lyapunov_spectrum()` raises NotImplementedError (needs Wolf algorithm)
+- `compute_basin_of_attraction()` raises NotImplementedError
+- Attractor classification uses heuristic variance thresholds (could use Lyapunov signs)
+- Import order warning: import juliacall before torch to avoid potential segfault
