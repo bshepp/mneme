@@ -15,6 +15,12 @@ from .field_theory import (
     create_grid_points,
 )
 
+from .attractors import (
+    compute_lyapunov_spectrum,
+    classify_attractor_by_lyapunov,
+    kaplan_yorke_dimension,
+)
+
 __all__ = [
     # Modules
     "field_theory",
@@ -28,4 +34,8 @@ __all__ = [
     "NeuralFieldReconstructor",
     "create_reconstructor",
     "create_grid_points",
+    # Lyapunov analysis
+    "compute_lyapunov_spectrum",
+    "classify_attractor_by_lyapunov",
+    "kaplan_yorke_dimension",
 ]

@@ -477,25 +477,43 @@ class LyapunovAnalysis(BaseAttractorDetector):
     def compute_lyapunov_spectrum(
         self,
         trajectory: np.ndarray,
-        dt: float = 1.0
+        dt: float = 1.0,
+        n_exponents: Optional[int] = None,
     ) -> np.ndarray:
         """
-        Compute Lyapunov exponent spectrum.
+        Compute Lyapunov exponent spectrum using the Wolf algorithm.
+        
+        The Lyapunov spectrum characterizes the rate of separation of
+        infinitesimally close trajectories. A positive exponent indicates
+        chaos, while all negative exponents indicate a stable attractor.
         
         Parameters
         ----------
         trajectory : np.ndarray
-            Input trajectory
+            Input trajectory, shape (n_timesteps, n_dimensions)
         dt : float
-            Time step
+            Time step between observations
+        n_exponents : int, optional
+            Number of exponents to compute. If None, computes all
+            (equal to embedding dimension).
             
         Returns
         -------
         spectrum : np.ndarray
-            Lyapunov exponents
+            Lyapunov exponents in descending order (largest first)
+            
+        Notes
+        -----
+        Uses the Wolf algorithm with QR decomposition for orthogonalization.
+        The algorithm estimates local Jacobians from the trajectory data
+        and tracks the evolution of perturbation vectors.
         """
-        # TODO: Implement Lyapunov spectrum computation
-        raise NotImplementedError("Lyapunov spectrum to be implemented")
+        return compute_lyapunov_spectrum(
+            trajectory, 
+            dt=dt, 
+            n_exponents=n_exponents,
+            n_neighbors=self.n_neighbors
+        )
 
 
 class ClusteringDetector(BaseAttractorDetector):
@@ -934,6 +952,290 @@ def compute_correlation_dimension(
         return max(0, slope)
     else:
         return 0.0
+
+
+def compute_lyapunov_spectrum(
+    trajectory: np.ndarray,
+    dt: float = 1.0,
+    n_exponents: Optional[int] = None,
+    n_neighbors: int = 10,
+    orthog_interval: int = 10,
+) -> np.ndarray:
+    """
+    Compute Lyapunov exponent spectrum from trajectory data.
+    
+    Uses the Wolf algorithm with data-driven Jacobian estimation.
+    The algorithm tracks how perturbation vectors grow or shrink
+    along the trajectory, using QR decomposition for orthogonalization.
+    
+    Parameters
+    ----------
+    trajectory : np.ndarray
+        Phase space trajectory, shape (n_timesteps, n_dimensions).
+        Can also be 1D, in which case delay embedding is applied.
+    dt : float
+        Time step between observations
+    n_exponents : int, optional
+        Number of exponents to compute. If None, computes all
+        (equal to embedding dimension).
+    n_neighbors : int
+        Number of neighbors for local Jacobian estimation
+    orthog_interval : int
+        Number of steps between QR orthogonalizations
+        
+    Returns
+    -------
+    spectrum : np.ndarray
+        Lyapunov exponents in descending order (largest first).
+        Positive values indicate chaos, negative indicate stability.
+        
+    Examples
+    --------
+    >>> import numpy as np
+    >>> # Lorenz attractor trajectory (chaotic)
+    >>> # spectrum = compute_lyapunov_spectrum(lorenz_trajectory, dt=0.01)
+    >>> # Expect: [+, 0, -] pattern for Lorenz
+    
+    >>> # Simple oscillator (non-chaotic)
+    >>> t = np.linspace(0, 100, 10000)
+    >>> trajectory = np.column_stack([np.sin(t), np.cos(t)])
+    >>> spectrum = compute_lyapunov_spectrum(trajectory, dt=0.01)
+    >>> # Expect: all exponents ≤ 0
+    
+    Notes
+    -----
+    The algorithm:
+    1. Estimates local Jacobians using least-squares on neighbors
+    2. Propagates perturbation vectors using these Jacobians
+    3. Applies QR decomposition periodically to orthogonalize
+    4. Averages log growth rates to get Lyapunov exponents
+    
+    For reliable results, trajectory should be long (>1000 points)
+    and well-sampled relative to the dynamics.
+    """
+    from scipy.spatial import cKDTree
+    
+    # Handle 1D input via delay embedding
+    if trajectory.ndim == 1:
+        trajectory = embed_trajectory(trajectory, embedding_dimension=3, time_delay=1)
+    
+    n_points, n_dims = trajectory.shape
+    
+    if n_exponents is None:
+        n_exponents = n_dims
+    n_exponents = min(n_exponents, n_dims)
+    
+    if n_points < 100:
+        raise ValueError(f"Trajectory too short ({n_points} points). Need at least 100 points.")
+    
+    # Build KD-tree for neighbor queries
+    tree = cKDTree(trajectory[:-1])  # Exclude last point (no successor)
+    
+    # Initialize perturbation vectors as orthonormal basis
+    Q = np.eye(n_dims, n_exponents)  # n_dims x n_exponents
+    
+    # Track cumulative growth for each exponent
+    lyapunov_sums = np.zeros(n_exponents)
+    n_orthog = 0
+    
+    # Process trajectory step by step, orthogonalizing periodically
+    steps_since_orthog = 0
+    
+    for i in range(n_points - 2):
+        # Estimate local Jacobian (flow map derivative)
+        J_local = _estimate_local_jacobian(trajectory, i, tree, n_neighbors, dt)
+        
+        if J_local is None:
+            continue
+        
+        # Propagate perturbation vectors: Q_new = J @ Q
+        # J is already the flow map derivative (not d/dt), so we just multiply
+        Q = J_local @ Q
+        
+        steps_since_orthog += 1
+        
+        # Periodically orthogonalize using QR
+        if steps_since_orthog >= orthog_interval:
+            Q, R = np.linalg.qr(Q)
+            
+            # Accumulate log of diagonal elements (growth factors)
+            for k in range(n_exponents):
+                r_kk = abs(R[k, k])
+                if r_kk > 1e-10:
+                    lyapunov_sums[k] += np.log(r_kk)
+            
+            n_orthog += 1
+            steps_since_orthog = 0
+    
+    if n_orthog == 0:
+        raise ValueError("Could not compute Jacobians. Check trajectory quality.")
+    
+    # Compute Lyapunov exponents
+    # Each orthogonalization covers orthog_interval time steps
+    total_time = n_orthog * orthog_interval * dt
+    spectrum = lyapunov_sums / total_time
+    
+    # Sort in descending order (largest first)
+    spectrum = np.sort(spectrum)[::-1]
+    
+    return spectrum
+
+
+def _estimate_local_jacobian(
+    trajectory: np.ndarray,
+    index: int,
+    tree: 'cKDTree',
+    n_neighbors: int,
+    dt: float,
+) -> Optional[np.ndarray]:
+    """
+    Estimate local Jacobian (flow map derivative) at a point.
+    
+    The Jacobian J describes how perturbations evolve:
+        δx(t+dt) ≈ J @ δx(t)
+    
+    We estimate J by looking at how neighboring trajectories diverge/converge
+    relative to the reference trajectory over one time step.
+    """
+    n_points, n_dims = trajectory.shape
+    
+    if index >= n_points - 1:
+        return None
+    
+    x_current = trajectory[index]
+    x_next = trajectory[index + 1]
+    
+    # Find neighbors at current time (excluding the point itself)
+    distances, neighbor_indices = tree.query(x_current, k=n_neighbors + 1)
+    neighbor_indices = neighbor_indices[1:]  # Exclude self
+    
+    # Filter valid neighbors (must have a successor)
+    valid_neighbors = [idx for idx in neighbor_indices if idx < n_points - 1]
+    
+    if len(valid_neighbors) < n_dims + 1:
+        return None
+    
+    # Build matrices for least-squares: δx_next = J @ δx_current
+    # where δx_current = x_neighbor(t) - x(t)
+    #       δx_next = x_neighbor(t+dt) - x(t+dt)
+    dX_current = []
+    dX_next = []
+    
+    for idx in valid_neighbors:
+        # Perturbation at current time
+        delta_current = trajectory[idx] - x_current
+        # Perturbation at next time
+        delta_next = trajectory[idx + 1] - x_next
+        
+        # Only use neighbors that are close enough (avoid far neighbors that
+        # might be on different parts of the attractor)
+        if np.linalg.norm(delta_current) < np.linalg.norm(distances[-1]) * 2:
+            dX_current.append(delta_current)
+            dX_next.append(delta_next)
+    
+    if len(dX_current) < n_dims:
+        return None
+    
+    dX_current = np.array(dX_current)  # (n_neighbors, n_dims)
+    dX_next = np.array(dX_next)        # (n_neighbors, n_dims)
+    
+    # Solve least-squares: J such that J @ δx_current ≈ δx_next for all neighbors
+    # This gives us: δx_next = dX_next, δx_current = dX_current
+    # We want J where dX_next.T = J @ dX_current.T
+    # Equivalently: dX_next = dX_current @ J.T
+    try:
+        JT, residuals, rank, s = np.linalg.lstsq(dX_current, dX_next, rcond=None)
+        return JT.T  # Return J (n_dims x n_dims)
+    except np.linalg.LinAlgError:
+        return None
+
+
+def classify_attractor_by_lyapunov(spectrum: np.ndarray, tolerance: float = 0.01) -> AttractorType:
+    """
+    Classify attractor type based on Lyapunov spectrum.
+    
+    Parameters
+    ----------
+    spectrum : np.ndarray
+        Lyapunov exponents (largest first)
+    tolerance : float
+        Threshold for considering an exponent as zero
+        
+    Returns
+    -------
+    attractor_type : AttractorType
+        Classification based on spectrum pattern
+        
+    Notes
+    -----
+    Classification rules:
+    - Fixed point: all exponents < -tolerance
+    - Limit cycle: one exponent ≈ 0, rest < 0
+    - Quasi-periodic (torus): two exponents ≈ 0, rest < 0
+    - Strange attractor: at least one exponent > tolerance
+    """
+    n_zero = np.sum(np.abs(spectrum) < tolerance)
+    n_positive = np.sum(spectrum > tolerance)
+    n_negative = np.sum(spectrum < -tolerance)
+    
+    if n_positive > 0:
+        return AttractorType.STRANGE
+    elif n_zero == 0:
+        return AttractorType.FIXED_POINT
+    elif n_zero == 1:
+        return AttractorType.LIMIT_CYCLE
+    elif n_zero >= 2:
+        return AttractorType.QUASI_PERIODIC
+    else:
+        return AttractorType.LIMIT_CYCLE
+
+
+def kaplan_yorke_dimension(spectrum: np.ndarray) -> float:
+    """
+    Compute Kaplan-Yorke (Lyapunov) dimension from spectrum.
+    
+    The Kaplan-Yorke dimension provides an estimate of the
+    attractor's fractal dimension based on Lyapunov exponents.
+    
+    Parameters
+    ----------
+    spectrum : np.ndarray
+        Lyapunov exponents in descending order
+        
+    Returns
+    -------
+    dimension : float
+        Kaplan-Yorke dimension estimate
+        
+    Notes
+    -----
+    D_KY = j + (λ_1 + λ_2 + ... + λ_j) / |λ_{j+1}|
+    
+    where j is the largest index such that the sum of the first j
+    exponents is non-negative.
+    """
+    spectrum = np.sort(spectrum)[::-1]  # Ensure descending order
+    
+    # Find j: largest index where cumsum is still non-negative
+    cumsum = np.cumsum(spectrum)
+    j_indices = np.where(cumsum >= 0)[0]
+    
+    if len(j_indices) == 0:
+        return 0.0
+    
+    j = j_indices[-1]
+    
+    if j >= len(spectrum) - 1:
+        # All exponents sum to non-negative (rare)
+        return float(len(spectrum))
+    
+    # D_KY = j + sum(λ_1..λ_j) / |λ_{j+1}|
+    if abs(spectrum[j + 1]) < 1e-10:
+        return float(j + 1)
+    
+    dimension = (j + 1) + cumsum[j] / abs(spectrum[j + 1])
+    
+    return max(0.0, dimension)
 
 
 def compute_basin_of_attraction(
