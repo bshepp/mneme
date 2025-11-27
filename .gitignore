@@ -18,10 +18,14 @@ venv/
 # Jupyter
 .ipynb_checkpoints/
 
-# Data and results
-/data/
+# Data and results - large files
+/data/processed/
 /experiments/results/
 /experiments/checkpoints/
+
+# Raw data - exclude large datasets but keep small reference data
+/data/raw/*
+!/data/raw/physionet/
 
 # Cache
 .mypy_cache/

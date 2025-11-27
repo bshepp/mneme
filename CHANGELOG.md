@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+- 2025-11-27 (continued)
+  - **feat(attractors)**: Full Lyapunov spectrum computation (Wolf algorithm)
+    - `compute_lyapunov_spectrum()`: Data-driven spectrum from trajectory
+    - Local Jacobian estimation via least-squares on neighbors
+    - QR decomposition for orthogonalization
+    - Validated against Lorenz (D_KY=2.09 vs literature 2.05)
+  - **feat(attractors)**: Add `classify_attractor_by_lyapunov()` 
+    - Automatic classification: fixed point, limit cycle, quasi-periodic, strange
+  - **feat(attractors)**: Add `kaplan_yorke_dimension()` for fractal dimension
+  - **feat(data)**: Real biological data analysis capability
+    - Downloaded PhysioNet MIT-BIH ECG data for validation
+    - Successfully analyzed heart rate variability (HRV)
+    - Found chaotic dynamics (λ₁=+0.12/s, D_KY=2.35)
+    - Predictability horizon ~8 seconds matches literature
+  - **docs**: Added plain-English explanation of Lyapunov analysis
+  - **deps**: Added `wfdb` for PhysioNet data access
+
 - 2025-11-27
   - **feat(reconstruction)**: Add `SparseGPReconstructor` as scalable default for IFT
     - O(nm²) complexity instead of O(n³), handles 256×256 fields in <1s
