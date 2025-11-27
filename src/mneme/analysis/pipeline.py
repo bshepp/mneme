@@ -245,17 +245,23 @@ class MnemePipeline:
         # Stage 2: Preprocessing
         if self.preprocessor is not None and 'field' in data_dict:
             field = data_dict['field']
-            processed_data = self.preprocessor.fit_transform(field.data)
+            # Allow np.ndarray as input for robustness
+            field_data = field.data if hasattr(field, 'data') else np.asarray(field)
+            processed_data = self.preprocessor.fit_transform(field_data)
+            # Preserve metadata if available
+            coordinates = getattr(field, 'coordinates', None)
+            resolution = getattr(field, 'resolution', None)
+            metadata = getattr(field, 'metadata', None)
             processed_field = Field(
                 data=processed_data,
-                coordinates=field.coordinates,
-                resolution=field.resolution,
-                metadata=field.metadata
+                coordinates=coordinates,
+                resolution=resolution,
+                metadata=metadata
             )
             data_dict['processed_field'] = processed_field
             stage_results['preprocessing'] = {
                 'parameters': self.preprocessor.get_step_parameters(),
-                'shape_change': f"{field.data.shape} -> {processed_data.shape}"
+                'shape_change': f"{np.asarray(field_data).shape} -> {processed_data.shape}"
             }
         
         return stage_results

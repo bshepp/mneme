@@ -4,4 +4,28 @@ from . import field_theory
 from . import topology
 from . import attractors
 
-__all__ = ["field_theory", "topology", "attractors"]
+# Convenience exports for common classes
+from .field_theory import (
+    FieldReconstructor,
+    SparseGPReconstructor,
+    DenseIFTReconstructor,
+    GaussianProcessReconstructor,
+    NeuralFieldReconstructor,
+    create_reconstructor,
+    create_grid_points,
+)
+
+__all__ = [
+    # Modules
+    "field_theory",
+    "topology", 
+    "attractors",
+    # Reconstructors
+    "FieldReconstructor",
+    "SparseGPReconstructor",
+    "DenseIFTReconstructor",
+    "GaussianProcessReconstructor",
+    "NeuralFieldReconstructor",
+    "create_reconstructor",
+    "create_grid_points",
+]
