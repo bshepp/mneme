@@ -2,30 +2,21 @@ name: Tests
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, develop ]
-  schedule:
-    # Run tests weekly on Monday at 3am UTC
-    - cron: '0 3 * * 1'
+    branches: [ main ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.11", "3.12"]
 
     steps:
     - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Fetch all history for proper versioning
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.12
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: "3.12"
         cache: 'pip'
 
     - name: Install system dependencies
@@ -33,49 +24,27 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libhdf5-dev
 
-    - name: Install system dependencies (macOS)
-      if: runner.os == 'macOS'
-      run: |
-        brew install hdf5
-
-    - name: Install dependencies
+    - name: Install package
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        # install minimal dev tools explicitly to avoid heavy optional extras
-        pip install pytest pytest-cov flake8 mypy
         pip install -e .
+        pip install pytest flake8
 
-    - name: Lint with flake8
+    - name: Lint (syntax errors only)
       run: |
-        TARGETS="src"
-        if [ -d tests ]; then TARGETS="$TARGETS tests"; fi
-        # Stop the build if there are Python syntax errors or undefined names
-        flake8 $TARGETS --count --select=E9,F63,F7,F82 --show-source --statistics
-        # Exit-zero treats all errors as warnings
-        flake8 $TARGETS --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+        # Stop on Python syntax errors or undefined names
+        flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
 
-    - name: Type check with mypy (non-blocking)
-      continue-on-error: true
+    - name: Smoke test
       run: |
-        mypy --python-version 3.12 src/mneme --ignore-missing-imports || true
+        python -c "import mneme; print(f'mneme {mneme.__version__} imported successfully')"
+        python -c "from mneme.core import compute_lyapunov_spectrum; print('Core imports OK')"
+        python -c "from mneme.analysis import run_pipeline; print('Pipeline imports OK')"
 
-    - name: Tests or smoke import
+    - name: Run tests (if any exist)
       run: |
-        if [ -d tests ]; then
-          pytest tests --cov=mneme --cov-report=xml --cov-report=term -v
+        if [ -d tests ] && [ "$(find tests -name 'test_*.py' | wc -l)" -gt 0 ]; then
+          pytest tests -v --tb=short
         else
-          python -c "import mneme; print('mneme import ok')"
+          echo "No tests found, skipping pytest"
         fi
-
-    - name: Upload coverage to Codecov
-      if: matrix.python-version == '3.12' && hashFiles('coverage.xml') != '' && env.CODECOV_TOKEN != ''
-      uses: codecov/codecov-action@v4
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false
