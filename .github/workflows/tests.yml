@@ -40,7 +40,7 @@ jobs:
       run: |
         python -c "import mneme; print(f'mneme {mneme.__version__} imported successfully')"
         python -c "from mneme.core import compute_lyapunov_spectrum; print('Core imports OK')"
-        python -c "from mneme.analysis.pipeline import run_pipeline; print('Pipeline imports OK')"
+        python -c "from mneme.analysis.pipeline import MnemePipeline; print('Pipeline imports OK')"
 
     - name: Run tests (if any exist)
       run: |
