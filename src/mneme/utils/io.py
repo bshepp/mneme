@@ -15,6 +15,7 @@ from ..types import (
     TopologyResult,
     PersistenceDiagram,
     Attractor,
+    AttractorType,
     ReconstructionMethod,
 )
 
@@ -361,12 +362,14 @@ def _load_results_hdf5(input_path: Path) -> AnalysisResult:
                 lyap_arr = lyap[()] if lyap is not None else None
                 idx = ag.get('trajectory_indices')
                 idx_list = idx[()].tolist() if idx is not None else None
-                attractors.append(Attractor(type=type(raw.__class__.__name__, (), {}) if False else Attractor.__annotations__['type'].__args__[0](atype),  # type: ignore
-                                           center=center,
-                                           basin_size=basin,
-                                           dimension=float(dim) if dim is not None else None,
-                                           lyapunov_exponents=lyap_arr,
-                                           trajectory_indices=idx_list))
+                attractors.append(Attractor(
+                    type=AttractorType(atype),
+                    center=center,
+                    basin_size=basin,
+                    dimension=float(dim) if dim is not None else None,
+                    lyapunov_exponents=lyap_arr,
+                    trajectory_indices=idx_list,
+                ))
             if not attractors:
                 attractors = None
 

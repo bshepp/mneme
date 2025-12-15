@@ -1,6 +1,6 @@
 """Attractor detection and characterization methods."""
 
-from typing import List, Optional, Dict, Any, Tuple
+from typing import List, Optional, Dict, Any, Tuple, TYPE_CHECKING
 import numpy as np
 from abc import ABC, abstractmethod
 
@@ -1084,7 +1084,7 @@ def compute_lyapunov_spectrum(
 def _estimate_local_jacobian(
     trajectory: np.ndarray,
     index: int,
-    tree: 'cKDTree',
+    tree: Any,  # scipy.spatial.cKDTree
     n_neighbors: int,
     dt: float,
 ) -> Optional[np.ndarray]:
