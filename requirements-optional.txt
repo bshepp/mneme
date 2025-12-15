@@ -1,0 +1,12 @@
+# Optional dependencies for extended functionality
+# Install with: pip install -r requirements-optional.txt
+
+# Symbolic regression (requires Julia runtime)
+pysr>=0.8.0
+
+# Topological data analysis (requires C++ build)
+gudhi>=3.4.0
+
+# Extended deep learning
+torchvision>=0.15.0
+
