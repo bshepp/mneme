@@ -20,8 +20,10 @@ venv/
 
 # Data and results - large files
 /data/processed/
-/experiments/results/
-/experiments/checkpoints/
+/data/synthetic/
+/experiments/
+/results/
+/results_*/
 
 # Raw data - exclude large datasets but keep small reference data
 /data/raw/*
