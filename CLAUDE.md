@@ -11,7 +11,7 @@ Mneme is an exploratory research system designed to detect field-like, emergent 
 
 ## Current Status (2025-11-27)
 
-The core system is **production-ready** with all major components implemented:
+The core system is in **active development** with all major components implemented but limited test coverage:
 
 ### Implemented Features
 - **Field Reconstruction**: Sparse GP (default, scalable), Dense IFT, Standard GP, Neural Fields
