@@ -1,12 +1,12 @@
 # Git
 .git
 .gitignore
-README.md
 .github/
 
 # Documentation
 docs/
 *.md
+!requirements.txt
 
 # Python
 __pycache__/
@@ -15,6 +15,8 @@ __pycache__/
 *.egg-info/
 .pytest_cache/
 .coverage
+coverage.xml
+htmlcov/
 .mypy_cache/
 .tox/
 
@@ -33,6 +35,7 @@ ENV/
 # OS
 .DS_Store
 Thumbs.db
+Desktop.ini
 
 # Data directories (too large for containers)
 data/raw/
@@ -42,15 +45,15 @@ data/synthetic/*.h5
 data/synthetic/*.hdf5
 
 # Experiment results
-experiments/results/
-experiments/logs/
+experiments/
+results/
 *.log
+logs/
 
 # Model files (too large)
 *.pth
 *.pt
 *.ckpt
-*.h5
 *.pkl
 *.joblib
 
@@ -109,3 +112,6 @@ node_modules/
 
 # Environment files with secrets
 .env
+
+# Pre-commit
+.pre-commit-config.yaml

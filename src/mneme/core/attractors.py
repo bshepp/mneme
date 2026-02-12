@@ -6,6 +6,36 @@ from abc import ABC, abstractmethod
 
 from ..types import Attractor, AttractorType, TimeSeries
 
+# ---------------------------------------------------------------------------
+# Module constants — classification thresholds
+# ---------------------------------------------------------------------------
+
+#: Variance threshold below which an attractor is classified as a fixed point
+#: (used in RecurrenceAnalysis._classify_attractor_simple).
+SIMPLE_FIXED_POINT_VARIANCE: float = 0.01
+
+#: Variance threshold below which an attractor is classified as a limit cycle
+#: (used in RecurrenceAnalysis._classify_attractor_simple).
+SIMPLE_LIMIT_CYCLE_VARIANCE: float = 0.1
+
+#: Lyapunov exponent threshold for fixed-point classification.
+LYAPUNOV_FIXED_POINT_THRESHOLD: float = -0.1
+
+#: Coefficient-of-variation threshold for fixed-point in clustering detector.
+CLUSTERING_CV_FIXED_POINT: float = 0.1
+
+#: Coefficient-of-variation threshold for limit-cycle in clustering detector.
+CLUSTERING_CV_LIMIT_CYCLE: float = 0.5
+
+#: Minimum trajectory length required by compute_lyapunov_spectrum.
+MIN_TRAJECTORY_LENGTH: int = 100
+
+#: False-nearest-neighbour threshold ratio used in _estimate_dimension_fnn.
+FNN_THRESHOLD_RATIO: float = 2.0
+
+#: FNN percentage below which the embedding dimension is accepted.
+FNN_ACCEPT_PERCENTAGE: float = 0.1
+
 
 class BaseAttractorDetector(ABC):
     """Abstract base class for attractor detection methods."""
@@ -179,9 +209,9 @@ class RecurrenceAnalysis(BaseAttractorDetector):
         variance = np.var(points, axis=0)
         total_variance = np.sum(variance)
         
-        if total_variance < 0.01:
+        if total_variance < SIMPLE_FIXED_POINT_VARIANCE:
             return AttractorType.FIXED_POINT
-        elif total_variance < 0.1:
+        elif total_variance < SIMPLE_LIMIT_CYCLE_VARIANCE:
             return AttractorType.LIMIT_CYCLE
         else:
             return AttractorType.STRANGE
@@ -441,7 +471,7 @@ class LyapunovAnalysis(BaseAttractorDetector):
             avg_lyapunov = np.mean(lyapunov_exponents[cluster_indices])
             
             # Classify attractor type based on Lyapunov exponent
-            if avg_lyapunov < -0.1:
+            if avg_lyapunov < LYAPUNOV_FIXED_POINT_THRESHOLD:
                 attractor_type = AttractorType.FIXED_POINT
             elif avg_lyapunov < 0:
                 attractor_type = AttractorType.LIMIT_CYCLE
@@ -644,9 +674,9 @@ class ClusteringDetector(BaseAttractorDetector):
         cv = np.std(distances_to_centroid) / (np.mean(distances_to_centroid) + 1e-10)
         
         # Classify based on coefficient of variation
-        if cv < 0.1:
+        if cv < CLUSTERING_CV_FIXED_POINT:
             return AttractorType.FIXED_POINT
-        elif cv < 0.5:
+        elif cv < CLUSTERING_CV_LIMIT_CYCLE:
             return AttractorType.LIMIT_CYCLE
         else:
             return AttractorType.STRANGE
@@ -874,7 +904,7 @@ def _estimate_dimension_fnn(time_series: np.ndarray, time_delay: int, max_dimens
                 next_dist = abs(next_point_i - next_point_j)
                 
                 # Check if neighbor becomes false
-                if current_dist > 0 and next_dist / current_dist > 2.0:
+                if current_dist > 0 and next_dist / current_dist > FNN_THRESHOLD_RATIO:
                     false_neighbors += 1
                 
                 total_neighbors += 1
@@ -883,7 +913,7 @@ def _estimate_dimension_fnn(time_series: np.ndarray, time_delay: int, max_dimens
         fnn_percentages.append(fnn_percentage)
         
         # Stop if percentage is low enough
-        if fnn_percentage < 0.1:
+        if fnn_percentage < FNN_ACCEPT_PERCENTAGE:
             return dim
     
     # Return dimension with minimum false neighbors
@@ -1025,8 +1055,11 @@ def compute_lyapunov_spectrum(
         n_exponents = n_dims
     n_exponents = min(n_exponents, n_dims)
     
-    if n_points < 100:
-        raise ValueError(f"Trajectory too short ({n_points} points). Need at least 100 points.")
+    if n_points < MIN_TRAJECTORY_LENGTH:
+        raise ValueError(
+            f"Trajectory too short ({n_points} points). "
+            f"Need at least {MIN_TRAJECTORY_LENGTH} points."
+        )
     
     # Build KD-tree for neighbor queries
     tree = cKDTree(trajectory[:-1])  # Exclude last point (no successor)

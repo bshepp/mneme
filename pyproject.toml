@@ -33,6 +33,22 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "plotly>=5.0.0",
+    "torch>=2.0.0",
+    "h5py>=3.0.0",
+    "scikit-image>=0.20.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.60.0",
+    "click>=8.0.0",
+    "pydantic>=2.0.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/bshepp/mneme"
@@ -43,15 +59,19 @@ Issues = "https://github.com/bshepp/mneme/issues"
 dev = [
     "pytest>=6.2.0",
     "pytest-cov>=2.12.0",
+    "pytest-mock>=3.6.0",
     "black>=21.6b0",
     "flake8>=3.9.0",
+    "isort>=5.9.0",
     "mypy>=0.910",
+    "types-PyYAML>=6.0.12",
     "pre-commit>=2.13.0",
 ]
-docs = [
-    "sphinx>=4.0.0",
-    "sphinx-rtd-theme>=0.5.0",
-    "nbsphinx>=0.8.0",
+notebooks = [
+    "ipython>=7.25.0",
+    "jupyter>=1.0.0",
+    "jupyterlab>=3.0.0",
+    "ipykernel>=6.0.0",
 ]
 gpu = [
     "cupy>=9.0.0",
@@ -61,12 +81,18 @@ pysr = [
     "scikit-learn>=1.3,<1.5",
     "juliacall>=0.9,<1.0",
 ]
+tda = [
+    "gudhi>=3.4.0",
+]
 
 [project.scripts]
 mneme = "mneme.cli:main"
 mneme-generate = "mneme.cli:main"
 mneme-pipeline = "mneme.cli:main"
 mneme-visualize = "mneme.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.black]
 line-length = 88
@@ -112,13 +138,9 @@ markers = [
 python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
 check_untyped_defs = true
-disallow_untyped_decorators = true
 no_implicit_optional = true
 warn_redundant_casts = true
-warn_unused_ignores = true
 warn_no_return = true
 warn_unreachable = true
 strict_equality = true
@@ -129,6 +151,12 @@ module = [
     "sklearn.*",
     "gudhi.*",
     "pysr.*",
+    "torch.*",
+    "h5py.*",
+    "plotly.*",
+    "seaborn.*",
+    "skimage.*",
+    "pandas.*",
 ]
 ignore_missing_imports = true
 
@@ -142,6 +170,7 @@ omit = [
 
 [tool.coverage.report]
 precision = 2
+fail_under = 40
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",

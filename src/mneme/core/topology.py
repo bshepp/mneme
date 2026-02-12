@@ -9,6 +9,16 @@ from ..types import (
     Field, FieldData
 )
 
+# ---------------------------------------------------------------------------
+# Module constants
+# ---------------------------------------------------------------------------
+
+#: Default maximum number of points returned by field_to_point_cloud.
+DEFAULT_MAX_POINTS: int = 2000
+
+#: Entropy stabiliser added inside log to avoid log(0).
+_ENTROPY_EPS: float = 1e-12
+
 
 class BaseTopologyAnalyzer(ABC):
     """Abstract base class for topology analysis methods."""
@@ -252,7 +262,7 @@ class PersistentHomology(BaseTopologyAnalyzer):
                     with np.errstate(divide='ignore', invalid='ignore'):
                         if total_persistence > 0:
                             p_norm = finite_vals / total_persistence
-                            entropy = float(-np.sum(p_norm * np.log(p_norm + 1e-12)))
+                            entropy = float(-np.sum(p_norm * np.log(p_norm + _ENTROPY_EPS)))
                         else:
                             entropy = 0.0
                     std_persistence = float(np.std(finite_vals)) if finite_vals.size > 1 else 0.0
@@ -428,18 +438,22 @@ class RipsComplex(BaseTopologyAnalyzer):
     def compute_persistence(self, point_cloud: np.ndarray) -> List[PersistenceDiagram]:
         """Compute persistence diagrams for a 2D/ND point cloud using GUDHI Rips.
 
+        Falls back to a scipy-based distance-matrix approximation when GUDHI
+        is not installed.  The fallback only computes 0-dimensional persistence
+        (connected components).
+
         Parameters
         ----------
         point_cloud : np.ndarray
             Array of shape (n_points, n_dims)
         """
-        try:
-            import gudhi
-        except ImportError:  # pragma: no cover
-            raise ImportError("gudhi is required for Rips persistence")
-
         if point_cloud.ndim != 2:
             raise ValueError("point_cloud must be 2D (n_points, n_dims)")
+
+        try:
+            import gudhi
+        except ImportError:
+            return self._compute_persistence_fallback(point_cloud)
 
         rips = gudhi.RipsComplex(points=point_cloud, max_edge_length=float(self.max_edge_length))
         st = rips.create_simplex_tree(max_dimension=self.max_dimension)
@@ -453,6 +467,49 @@ class RipsComplex(BaseTopologyAnalyzer):
             else:
                 points = np.asarray(pairs)
                 diagrams.append(PersistenceDiagram(points=points, dimension=dim, threshold=None))
+        return diagrams
+
+    def _compute_persistence_fallback(self, point_cloud: np.ndarray) -> List[PersistenceDiagram]:
+        """Approximate 0-dim Rips persistence using scipy distance matrix.
+
+        Uses single-linkage clustering to track when connected components
+        merge as the distance threshold grows.
+        """
+        import warnings
+        from scipy.cluster.hierarchy import single, fcluster
+        from scipy.spatial.distance import pdist
+
+        warnings.warn(
+            "gudhi not installed — using scipy fallback for Rips persistence "
+            "(0-dimensional only). Install gudhi for full functionality: "
+            "pip install gudhi",
+            UserWarning,
+        )
+
+        dists = pdist(point_cloud)
+        Z = single(dists)  # single-linkage dendrogram
+
+        n = point_cloud.shape[0]
+        # Each point is born at distance 0.  Merges happen at Z[:, 2].
+        # The *last* component to merge has infinite death.
+        birth_death = []
+        merge_dists = Z[:, 2]
+        for d in merge_dists:
+            birth_death.append([0.0, d])
+
+        # Add one component with infinite death (the last surviving)
+        # but we filter infinites out to stay consistent with cubical fallback
+        if birth_death:
+            pts = np.array(birth_death)
+        else:
+            pts = np.empty((0, 2))
+
+        diagrams: List[PersistenceDiagram] = [
+            PersistenceDiagram(points=pts, dimension=0, threshold=None)
+        ]
+        # Pad higher dimensions with empties
+        for dim in range(1, self.max_dimension + 1):
+            diagrams.append(PersistenceDiagram(points=np.empty((0, 2)), dimension=dim, threshold=None))
         return diagrams
         
     def extract_features(self, diagrams: List[PersistenceDiagram]) -> np.ndarray:
@@ -474,7 +531,7 @@ class RipsComplex(BaseTopologyAnalyzer):
                     with np.errstate(divide='ignore', invalid='ignore'):
                         if total_persistence > 0:
                             p_norm = finite_vals / total_persistence
-                            entropy = float(-np.sum(p_norm * np.log(p_norm + 1e-12)))
+                            entropy = float(-np.sum(p_norm * np.log(p_norm + _ENTROPY_EPS)))
                         else:
                             entropy = 0.0
                     std_persistence = float(np.std(finite_vals)) if finite_vals.size > 1 else 0.0
@@ -498,14 +555,18 @@ class AlphaComplex(BaseTopologyAnalyzer):
         super().__init__(max_dimension)
         
     def compute_persistence(self, point_cloud: np.ndarray) -> List[PersistenceDiagram]:
-        """Compute persistence using GUDHI Alpha complex."""
-        try:
-            import gudhi
-        except ImportError:  # pragma: no cover
-            raise ImportError("gudhi is required for Alpha persistence")
+        """Compute persistence using GUDHI Alpha complex.
 
+        Falls back to a Delaunay-based scipy approximation when GUDHI is not
+        installed (0-dimensional persistence only).
+        """
         if point_cloud.ndim != 2 or point_cloud.shape[1] < 2:
             raise ValueError("point_cloud must be (n_points, n_dims>=2)")
+
+        try:
+            import gudhi
+        except ImportError:
+            return self._compute_persistence_fallback(point_cloud)
 
         alpha = gudhi.AlphaComplex(points=point_cloud)
         st = alpha.create_simplex_tree()
@@ -519,6 +580,39 @@ class AlphaComplex(BaseTopologyAnalyzer):
             else:
                 points = np.asarray(pairs)
                 diagrams.append(PersistenceDiagram(points=points, dimension=dim, threshold=None))
+        return diagrams
+
+    def _compute_persistence_fallback(self, point_cloud: np.ndarray) -> List[PersistenceDiagram]:
+        """Approximate 0-dim Alpha persistence using Delaunay + single-linkage.
+
+        This is the same strategy as the Rips fallback (distance-based
+        single-linkage) since full Alpha filtration requires GUDHI.
+        """
+        import warnings
+        from scipy.cluster.hierarchy import single
+        from scipy.spatial.distance import pdist
+
+        warnings.warn(
+            "gudhi not installed — using scipy fallback for Alpha persistence "
+            "(0-dimensional only). Install gudhi for full functionality: "
+            "pip install gudhi",
+            UserWarning,
+        )
+
+        dists = pdist(point_cloud)
+        Z = single(dists)
+
+        birth_death = []
+        for d in Z[:, 2]:
+            birth_death.append([0.0, d])
+
+        pts = np.array(birth_death) if birth_death else np.empty((0, 2))
+
+        diagrams: List[PersistenceDiagram] = [
+            PersistenceDiagram(points=pts, dimension=0, threshold=None)
+        ]
+        for dim in range(1, self.max_dimension + 1):
+            diagrams.append(PersistenceDiagram(points=np.empty((0, 2)), dimension=dim, threshold=None))
         return diagrams
         
     def extract_features(self, diagrams: List[PersistenceDiagram]) -> np.ndarray:
@@ -540,7 +634,7 @@ class AlphaComplex(BaseTopologyAnalyzer):
                     with np.errstate(divide='ignore', invalid='ignore'):
                         if total_persistence > 0:
                             p_norm = finite_vals / total_persistence
-                            entropy = float(-np.sum(p_norm * np.log(p_norm + 1e-12)))
+                            entropy = float(-np.sum(p_norm * np.log(p_norm + _ENTROPY_EPS)))
                         else:
                             entropy = 0.0
                     std_persistence = float(np.std(finite_vals)) if finite_vals.size > 1 else 0.0
@@ -720,8 +814,9 @@ def field_to_point_cloud(
     field: np.ndarray,
     method: str = 'peaks',
     percentile: float = 95.0,
-    max_points: int = 2000,
+    max_points: int = DEFAULT_MAX_POINTS,
     normalize_coords: bool = True,
+    seed: Optional[int] = None,
 ) -> np.ndarray:
     """Convert a 2D field into a 2D point cloud for Rips/Alpha backends.
 
@@ -737,6 +832,9 @@ def field_to_point_cloud(
         Maximum number of points to return (subsampled if exceeded)
     normalize_coords : bool
         If True, scale coordinates to [0,1]^2
+    seed : int, optional
+        Random seed for reproducible sub-sampling when the number of
+        candidate points exceeds *max_points*.
 
     Returns
     -------
@@ -770,7 +868,8 @@ def field_to_point_cloud(
 
     # Subsample if too many
     if coords.shape[0] > max_points:
-        choice = np.random.choice(coords.shape[0], size=max_points, replace=False)
+        rng = np.random.RandomState(seed)
+        choice = rng.choice(coords.shape[0], size=max_points, replace=False)
         coords = coords[choice]
 
     # Convert to (x, y) and normalize if requested

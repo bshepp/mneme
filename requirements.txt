@@ -1,25 +1,23 @@
-# Core scientific computing
-numpy>=2.0.0
+# Core dependencies are declared in pyproject.toml.
+# Install with: pip install -e .
+# Install with dev tools: pip install -e ".[dev]"
+# Install with optional TDA: pip install -e ".[tda]"
+# Install with notebooks: pip install -e ".[notebooks]"
+#
+# This file pins core deps for reproducible installs.
+# Regenerate with: pip-compile pyproject.toml -o requirements.txt
+
+numpy>=1.24.0
 scipy>=1.10.0
 pandas>=2.0.0
 scikit-learn>=1.3.0
-
-# Visualization
 matplotlib>=3.7.0
 seaborn>=0.12.0
 plotly>=5.0.0
-
-# Deep learning (core)
 torch>=2.0.0
-
-# Data storage
 h5py>=3.0.0
 scikit-image>=0.20.0
-
-# Utilities
 pyyaml>=6.0
 tqdm>=4.60.0
 click>=8.0.0
-
-# Data validation
 pydantic>=2.0.0

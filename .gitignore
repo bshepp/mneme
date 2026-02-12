@@ -9,11 +9,14 @@ build/
 dist/
 .eggs/
 *.egg-info/
+*.egg
 
 # Virtual environments
 venv/
 .env
 .venv/
+env/
+ENV/
 
 # Jupyter
 .ipynb_checkpoints/
@@ -29,11 +32,41 @@ venv/
 /data/raw/*
 !/data/raw/physionet/
 
-# Cache
+# Model artifacts
+*.pth
+*.pt
+*.ckpt
+*.pkl
+*.joblib
+
+# ML tracking
+wandb/
+mlruns/
+tensorboard_logs/
+lightning_logs/
+
+# Cache and test artifacts
 .mypy_cache/
 .pytest_cache/
 .cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+
+# Logs
+logs/
+*.log
 
 # OS
 .DS_Store
 Thumbs.db
+Desktop.ini
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Julia
+.julia/

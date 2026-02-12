@@ -28,24 +28,23 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install -e .
-        pip install pytest flake8
+        pip install -e ".[dev]"
 
-    - name: Lint (syntax errors only)
+    - name: Lint with flake8
       run: |
-        # Stop on Python syntax errors or undefined names
+        # Syntax errors and undefined names (always fail)
         flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Style checks aligned with black (warn but don't fail for now)
+        flake8 src --count --max-line-length=88 --extend-ignore=E203,W503 --statistics --exit-zero
 
-    - name: Smoke test
+    - name: Type check with mypy
       run: |
-        python -c "import mneme; print(f'mneme {mneme.__version__} imported successfully')"
-        python -c "from mneme.core import compute_lyapunov_spectrum; print('Core imports OK')"
-        python -c "from mneme.analysis.pipeline import MnemePipeline; print('Pipeline imports OK')"
+        mypy src/mneme --ignore-missing-imports || true
 
-    - name: Run tests (if any exist)
+    - name: Run tests with coverage
       run: |
-        if [ -d tests ] && [ "$(find tests -name 'test_*.py' | wc -l)" -gt 0 ]; then
-          pytest tests -v --tb=short
-        else
-          echo "No tests found, skipping pytest"
-        fi
+        pytest tests -v --tb=short --cov=src/mneme --cov-report=term-missing --cov-report=xml
+
+    - name: Check coverage threshold
+      run: |
+        coverage report --fail-under=40

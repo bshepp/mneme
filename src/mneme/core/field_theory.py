@@ -14,6 +14,18 @@ from ..types import (
     Coordinates, FieldData
 )
 
+# ---------------------------------------------------------------------------
+# Module constants
+# ---------------------------------------------------------------------------
+
+#: Number of grid points to predict per batch in SparseGPReconstructor.
+#: Controls the memory/speed trade-off when evaluating the GP on a dense grid.
+GP_PREDICTION_BATCH_SIZE: int = 10_000
+
+#: Maximum grid size (height*width) before DenseIFTReconstructor emits a
+#: memory warning.  64x64 = 4096 points → covariance matrix is ~128 MB.
+DENSE_IFT_MAX_RECOMMENDED_SIZE: int = 64 * 64
+
 
 class BaseFieldReconstructor(ABC):
     """Abstract base class for field reconstruction methods."""
@@ -388,7 +400,7 @@ class SparseGPReconstructor(BaseFieldReconstructor):
         grid_norm = (grid_points - self._pos_min) / self._pos_range
         
         # Predict in batches for memory efficiency
-        batch_size = 10000
+        batch_size = GP_PREDICTION_BATCH_SIZE
         n_points = len(grid_norm)
         
         predictions = np.zeros(n_points)
@@ -456,8 +468,7 @@ class DenseIFTReconstructor(BaseFieldReconstructor):
         Observation noise variance
     """
     
-    # Maximum recommended grid size
-    MAX_RECOMMENDED_SIZE = 64 * 64
+    MAX_RECOMMENDED_SIZE = DENSE_IFT_MAX_RECOMMENDED_SIZE
     
     def __init__(
         self,

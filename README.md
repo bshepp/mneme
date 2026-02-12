@@ -36,7 +36,7 @@ pip install gudhi pysr
 
 For detailed setup instructions, see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMENT_SETUP.md).
 
-## Project Status: Production-Ready Core ✅
+## Project Status: Active Development (Core Implemented)
 
 **Recent Updates (2025-11-27):**
 - ✅ Sparse GP reconstruction as scalable default (O(nm²) instead of O(n³))

@@ -20,6 +20,20 @@ from ..core.attractors import AttractorDetector
 from ..data.preprocessors import FieldPreprocessor
 from ..data.validation import DataValidator, QualityChecker
 
+# ---------------------------------------------------------------------------
+# Module constants
+# ---------------------------------------------------------------------------
+
+#: Maximum field dimension (height or width) before cubical-complex
+#: persistence is downsampled with striding for memory reasons.
+TOPOLOGY_DOWNSAMPLE_THRESHOLD: int = 128
+
+#: Target max dimension after downsampling for topology analysis.
+TOPOLOGY_TARGET_MAX_DIM: int = 128
+
+#: Maximum point-cloud size passed to Rips / Alpha topology backends.
+TOPOLOGY_MAX_POINT_CLOUD: int = 2000
+
 
 @dataclass
 class PipelineResult:
@@ -334,11 +348,11 @@ class MnemePipeline:
                 backend_name = getattr(self.topology_analyzer.__class__, '__name__', '').lower()
                 if 'rips' in backend_name or 'alpha' in backend_name:
                     # Convert field to point cloud for point-cloud backends
-                    pc = field_to_point_cloud(field_for_tda, method='peaks', percentile=95.0, max_points=2000)
+                    pc = field_to_point_cloud(field_for_tda, method='peaks', percentile=95.0, max_points=TOPOLOGY_MAX_POINT_CLOUD)
                     diagrams = self.topology_analyzer.compute_persistence(pc)
                 else:
-                    if max_dim > 128:
-                        stride = int(np.ceil(max_dim / 128))
+                    if max_dim > TOPOLOGY_DOWNSAMPLE_THRESHOLD:
+                        stride = int(np.ceil(max_dim / TOPOLOGY_TARGET_MAX_DIM))
                         field_for_tda = field_for_tda[::stride, ::stride]
                     diagrams = self.topology_analyzer.compute_persistence(field_for_tda)
                 features = self.topology_analyzer.extract_features(diagrams) if diagrams is not None else None
