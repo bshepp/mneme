@@ -3,12 +3,13 @@
 .gitignore
 .github/
 
-# Documentation
+# Documentation (keep README for reference in container)
 docs/
 *.md
+!README.md
 !requirements.txt
 
-# Python
+# Python build artifacts
 __pycache__/
 *.py[cod]
 *$py.class
@@ -19,12 +20,16 @@ coverage.xml
 htmlcov/
 .mypy_cache/
 .tox/
+sdist/
+build/
+dist/
 
 # Virtual environments
 venv/
 .venv/
 env/
 ENV/
+win_venv/
 
 # IDEs
 .vscode/
@@ -43,6 +48,10 @@ data/processed/
 data/synthetic/*.npz
 data/synthetic/*.h5
 data/synthetic/*.hdf5
+
+# BETSE simulation output
+**/RESULTS/
+betse-results/
 
 # Experiment results
 experiments/
@@ -71,7 +80,7 @@ cache/
 *.zip
 *.7z
 
-# Biofield research data
+# Biofield research data formats
 *.mat
 *.fif
 *.set
@@ -80,10 +89,6 @@ cache/
 *.ncs
 *.nev
 *.nwb
-bioelectric_data/
-morphology_data/
-planarian_data/
-regeneration_experiments/
 
 # ML tracking
 wandb/
@@ -96,22 +101,27 @@ lightning_logs/
 # Julia
 .julia/
 
-# Development
+# Development scratch
 scratch/
 sandbox/
 playground/
 old/
 backup/
-experiments_old/
 
 # Jupyter checkpoints
 .ipynb_checkpoints/
 
-# Node modules (if any)
+# Node modules
 node_modules/
 
 # Environment files with secrets
 .env
+*.pem
 
-# Pre-commit
+# Pre-commit config
 .pre-commit-config.yaml
+
+# AWS temp files
+spot-options.json
+block-device-mappings.json
+*-userdata.sh

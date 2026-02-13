@@ -9,9 +9,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Mneme is an exploratory research system designed to detect field-like, emergent memory structures embedded in biological systems, beginning with planarian regeneration and bioelectric data. The project seeks to uncover attractor states, regulatory logic, and latent architectures not captured by sequence-based models alone.
 
-## Current Status (2025-11-27)
+## Current Status (2026-02-12)
 
-The core system is in **active development** with all major components implemented but limited test coverage:
+The core system is in **active development** with all major components implemented:
 
 ### Implemented Features
 - **Field Reconstruction**: Sparse GP (default, scalable), Dense IFT, Standard GP, Neural Fields
@@ -22,6 +22,8 @@ The core system is in **active development** with all major components implement
 - **Latent Space Analysis**: Convolutional VAE with training, encoding, interpolation
 - **Pipeline**: End-to-end analysis with visualization and HDF5 export
 - **Real Data Validation**: Tested on PhysioNet ECG/HRV data with results matching literature
+- **BETSE Integration**: Loader for BETSE bioelectric tissue simulation output (`betse_loader.py`)
+- **Test Suite**: Unit and integration tests with CI via GitHub Actions
 
 ### Key Architecture Decisions
 - Sparse GP is the default reconstruction method (scalable to 256×256 fields)
@@ -70,13 +72,19 @@ src/mneme/
 │   └── visualization.py   # FieldVisualizer, dashboards
 ├── data/
 │   ├── generators.py      # SyntheticFieldGenerator, generate_planarian_bioelectric_sequence()
-│   └── preprocessors.py   # Denoiser, Normalizer, Interpolator
+│   ├── preprocessors.py   # Denoiser, Normalizer, Interpolator
+│   └── betse_loader.py    # BETSE simulation CSV → Mneme Field objects
 ├── models/
 │   ├── autoencoders.py    # FieldAutoencoder (Conv VAE), create_field_vae()
 │   └── symbolic.py        # SymbolicRegressor, discover_field_dynamics()
 └── utils/
     ├── config.py          # Configuration management
     └── io.py              # save_results(), load_results()
+
+scripts/
+├── analyze_betse.py       # Run Mneme pipeline on BETSE simulation output
+├── analyze_physionet.py   # PhysioNet ECG/HRV analysis
+└── validate_installation.py
 ```
 
 ## Important Implementation Notes
@@ -119,10 +127,29 @@ interpolation = vae.interpolate(field_a, field_b, n_steps=10)
 4. **Test thoroughly**: Run full integration test before committing
 5. **Update docs**: Keep README.md, CLAUDE.md, and CHANGELOG.md in sync
 
+## BETSE Integration
+
+```python
+from mneme.data.betse_loader import betse_to_field, load_betse_timeseries
+
+# Load BETSE Vmem2D CSV exports into a Mneme Field object
+field = betse_to_field("path/to/Vmem2D_TextExport/", resolution=(64, 64))
+
+# Or load raw time series for custom analysis
+field_sequence, metadata = load_betse_timeseries("path/to/Vmem2D_TextExport/")
+# field_sequence: shape (n_timesteps, rows, cols), values in mV
+```
+
+There is also a standalone analysis script:
+```bash
+python scripts/analyze_betse.py path/to/Vmem2D_TextExport/ --resolution 64 --output results/betse
+```
+
 ## Known Issues / TODOs
 
 - `compute_basin_of_attraction()` raises NotImplementedError (last remaining placeholder)
 - Import order warning: import juliacall before torch to avoid potential segfault
+- Lyapunov analysis requires >100 timesteps; short simulations (e.g. `betse try`) will fail this check
 
 ## Lyapunov Spectrum Usage
 

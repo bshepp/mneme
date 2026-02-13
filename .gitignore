@@ -10,6 +10,7 @@ dist/
 .eggs/
 *.egg-info/
 *.egg
+sdist/
 
 # Virtual environments
 venv/
@@ -17,6 +18,7 @@ venv/
 .venv/
 env/
 ENV/
+win_venv/
 
 # Jupyter
 .ipynb_checkpoints/
@@ -31,6 +33,11 @@ ENV/
 # Raw data - exclude large datasets but keep small reference data
 /data/raw/*
 !/data/raw/physionet/
+
+# BETSE simulation output (large, regeneratable)
+**/RESULTS/
+betse-results/
+betse-results.tar.gz
 
 # Model artifacts
 *.pth
@@ -65,8 +72,15 @@ Desktop.ini
 
 # IDE
 .idea/
+.vscode/
 *.swp
 *.swo
 
 # Julia
 .julia/
+
+# AWS temp files
+*.pem
+spot-options.json
+block-device-mappings.json
+*-userdata.sh

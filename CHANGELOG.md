@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+- 2026-02-12
+  - **feat(data)**: BETSE bioelectric simulation loader (`betse_loader.py`)
+    - `load_betse_vmem_csv()`: parse single Vmem2D CSV files
+    - `load_betse_timeseries()`: load multi-frame time series onto regular grid
+    - `betse_to_field()`: full pipeline from BETSE CSV directory to Mneme `Field` object
+    - `load_betse_exported_data()`: parse single-cell ExportedData.csv time series
+    - Handles irregular cell-center data → cubic interpolation → regular grid
+  - **feat(scripts)**: `scripts/analyze_betse.py` for end-to-end BETSE analysis
+    - Topology analysis (persistent homology) on individual frames
+    - Temporal dynamics: time-delay embedding, Lyapunov spectrum, recurrence analysis
+    - Topology evolution tracking across simulation timesteps
+    - JSON result export and console summary
+  - **infra**: Consolidated `.gitignore` and `.dockerignore`
+    - Added BETSE output patterns, Windows venv, AWS temp files
+  - **infra**: Updated documentation (README, CLAUDE.md, CHANGELOG)
+
 - 2025-11-27 (continued)
   - **feat(attractors)**: Full Lyapunov spectrum computation (Wolf algorithm)
     - `compute_lyapunov_spectrum()`: Data-driven spectrum from trajectory
