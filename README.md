@@ -38,7 +38,13 @@ For detailed setup instructions, see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMEN
 
 ## Project Status: Active Development (Core Implemented)
 
-**Recent Updates (2025-11-27):**
+**Recent Updates (2026-02-12):**
+- ✅ BETSE integration: load bioelectric tissue simulation data directly into Mneme
+- ✅ Analysis script for running full pipeline on BETSE output
+- ✅ Unit and integration test suite with GitHub Actions CI
+- ✅ Consolidated infrastructure (pyproject.toml, pre-commit, coverage)
+
+**Previous milestones (2025-11-27):**
 - ✅ Sparse GP reconstruction as scalable default (O(nm²) instead of O(n³))
 - ✅ Full Lyapunov spectrum computation (Wolf algorithm) with real data validation
 - ✅ Full PySR integration for symbolic regression with Julia backend
@@ -135,6 +141,26 @@ mneme analyze data/synthetic/test_small.npz \
 | --attractor-n-neighbors INT | Lyapunov: number of neighbors |
 | --attractor-min-samples INT | Clustering: minimum samples per cluster |
 
+## BETSE Integration
+
+Mneme can directly ingest output from [BETSE](https://github.com/betsee/betse) (BioElectric Tissue Simulation Engine), the 2D bioelectric simulator used in Levin Lab research:
+
+```python
+from mneme.data.betse_loader import betse_to_field
+
+# Load BETSE CSV exports into a Mneme Field object
+field = betse_to_field("path/to/Vmem2D_TextExport/", resolution=(64, 64))
+
+# Or run the standalone analysis script
+# python scripts/analyze_betse.py path/to/Vmem2D_TextExport/ --resolution 64 --output results/betse
+```
+
+The loader handles:
+- Irregular cell-center data → regular grid interpolation
+- Multi-frame time series stacking
+- Metadata extraction (spatial bounds, units, cell count)
+- Single-cell `ExportedData.csv` time series
+
 ## Project Structure
 
 ```
@@ -142,9 +168,10 @@ mneme/
 ├── src/mneme/
 │   ├── core/           # Field theory, topology, attractors
 │   ├── analysis/       # Pipeline, visualization, metrics
-│   ├── data/           # Generators, loaders, preprocessors
+│   ├── data/           # Generators, loaders, preprocessors, BETSE loader
 │   ├── models/         # VAE, symbolic regression
 │   └── utils/          # Config, logging, I/O
+├── scripts/            # Analysis scripts (BETSE, PhysioNet)
 ├── notebooks/          # Demo notebooks
 ├── tests/              # Test suite
 ├── docs/               # Documentation
