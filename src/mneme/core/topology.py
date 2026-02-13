@@ -192,7 +192,14 @@ class PersistentHomology(BaseTopologyAnalyzer):
         # Extract 0-dimensional persistence (connected components)
         birth_death_pairs = []
         
-        # Simple birth-death tracking
+        # Initialise births for components already present at the first
+        # threshold level (these are the global minima of the work field).
+        if components_history:
+            first_threshold, first_num, _ = components_history[0]
+            for _ in range(first_num):
+                birth_death_pairs.append([first_threshold, np.inf])
+        
+        # Track births and deaths across subsequent threshold transitions
         for i in range(len(components_history) - 1):
             curr_threshold, curr_num, curr_labeled = components_history[i]
             next_threshold, next_num, next_labeled = components_history[i + 1]
@@ -200,23 +207,30 @@ class PersistentHomology(BaseTopologyAnalyzer):
             if next_num > curr_num:
                 # New components born
                 for _ in range(next_num - curr_num):
-                    birth_death_pairs.append([curr_threshold, np.inf])
+                    birth_death_pairs.append([next_threshold, np.inf])
             elif next_num < curr_num:
-                # Components died
+                # Components merged (younger ones die)
                 for _ in range(curr_num - next_num):
-                    if birth_death_pairs:
-                        # Find the youngest component and kill it
-                        for j in range(len(birth_death_pairs)):
-                            if birth_death_pairs[j][1] == np.inf:
-                                birth_death_pairs[j][1] = curr_threshold
-                                break
+                    # Kill the most recently born still-alive component
+                    for j in range(len(birth_death_pairs) - 1, -1, -1):
+                        if birth_death_pairs[j][1] == np.inf:
+                            birth_death_pairs[j][1] = next_threshold
+                            break
         
-        # Convert to numpy array
+        # Convert to numpy array — keep features with finite death.
+        # The single component that survives to infinity is the
+        # "essential" feature; include it as well for dim-0.
         if birth_death_pairs:
             points = np.array(birth_death_pairs)
-            # Filter infinite persistence
-            finite_mask = np.isfinite(points[:, 1])
-            points = points[finite_mask]
+            # Remove only zero-persistence features (birth == death)
+            persistence = points[:, 1] - points[:, 0]
+            # Keep infinite-death features and features with positive persistence
+            mask = np.isfinite(points[:, 1]) & (persistence > 0) | ~np.isfinite(points[:, 1])
+            points = points[mask]
+            # Replace inf deaths with the maximum threshold for a finite diagram
+            inf_mask = ~np.isfinite(points[:, 1])
+            if np.any(inf_mask) and len(thresholds) > 0:
+                points[inf_mask, 1] = thresholds[-1]
         else:
             points = np.empty((0, 2))
         
