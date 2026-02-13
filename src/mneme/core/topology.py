@@ -167,8 +167,15 @@ class PersistentHomology(BaseTopologyAnalyzer):
         if field.ndim != 2:
             raise ValueError("Simple persistence only supports 2D fields")
         
+        # Match GUDHI behaviour: for sublevel filtration, negate the field
+        # so that we track superlevel sets of the original (i.e. detect peaks).
+        if self.filtration == FiltrationMethod.SUBLEVEL:
+            work_field = -field
+        else:
+            work_field = field
+        
         # Create binary images at different thresholds
-        min_val, max_val = field.min(), field.max()
+        min_val, max_val = work_field.min(), work_field.max()
         n_levels = 50
         thresholds = np.linspace(min_val, max_val, n_levels)
         
@@ -176,10 +183,7 @@ class PersistentHomology(BaseTopologyAnalyzer):
         components_history = []
         
         for threshold in thresholds:
-            if self.filtration == FiltrationMethod.SUBLEVEL:
-                binary = field <= threshold
-            else:
-                binary = field >= threshold
+            binary = work_field <= threshold
             
             # Find connected components
             labeled, num_features = ndimage.label(binary)
