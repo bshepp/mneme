@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Mneme is an exploratory research system designed to detect field-like, emergent memory structures embedded in biological systems, beginning with planarian regeneration and bioelectric data. The project seeks to uncover attractor states, regulatory logic, and latent architectures not captured by sequence-based models alone.
 
-## Current Status (2026-02-12)
+## Current Status (2026-02-14)
 
 The core system is in **active development** with all major components implemented:
 
@@ -55,7 +55,8 @@ pip install gudhi pysr
 python -c "from mneme.models import SymbolicRegressor, create_field_vae; print('OK')"
 
 # CLI usage
-mneme analyze data/synthetic/test_small.npz --pipeline bioelectric -o results
+mneme generate -o sample_data.npz  # Generate synthetic data first
+mneme analyze sample_data.npz --pipeline bioelectric -o results
 mneme info  # Show system information
 ```
 
@@ -83,6 +84,7 @@ src/mneme/
 
 scripts/
 ├── analyze_betse.py       # Run Mneme pipeline on BETSE simulation output
+├── deep_analysis.py       # PCA, Wasserstein matrix, VAE, symbolic regression
 ├── analyze_physionet.py   # PhysioNet ECG/HRV analysis
 └── validate_installation.py
 ```
@@ -150,6 +152,8 @@ python scripts/analyze_betse.py path/to/Vmem2D_TextExport/ --resolution 64 --out
 - `compute_basin_of_attraction()` raises NotImplementedError (last remaining placeholder)
 - Import order warning: import juliacall before torch to avoid potential segfault
 - Lyapunov analysis requires >100 timesteps; short simulations (e.g. `betse try`) will fail this check
+- GUDHI Wasserstein distance requires the `POT` package (`pip install POT`); bottleneck distance works without it
+- Test coverage is 38.4% (113 tests); target is 70%+ for JOSS submission
 
 ## Lyapunov Spectrum Usage
 
