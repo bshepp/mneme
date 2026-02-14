@@ -117,9 +117,9 @@ Hardware: 2x AD8232 Single-Lead ECG sensor modules (acquired).
 | Requirement | Status | Gap |
 |-------------|--------|-----|
 | Open source repo | Done | None |
-| Documentation sufficient for new users | Mostly done | API reference docs not yet generated |
+| Documentation sufficient for new users | Done | MkDocs site with API reference from docstrings |
 | Tests that can be run | Done (113 tests, 38.4% coverage) | Push coverage toward 70%+ |
-| Community guidelines (CONTRIBUTING, CODE_OF_CONDUCT) | Not done | Straightforward to add |
+| Community guidelines (CONTRIBUTING, CODE_OF_CONDUCT) | Done | Contributor Covenant v2.1 |
 | Statement of need (why this software matters) | Not written | Draft from validation results |
 | Example usage | Partial | Scripts exist; need a clean tutorial/notebook |
 | Validation on real data | Done | BETSE (4 configs analyzed) + PhysioNet ECG = multi-system validation |
@@ -130,8 +130,8 @@ Hardware: 2x AD8232 Single-Lead ECG sensor modules (acquired).
 |------|--------|-------|
 | Write per-paper validation docs | Not started | For each BETSE config: paper citation, their values, your values, percent error, caveats |
 | Push test coverage to 70%+ | Not started | Focus on BETSE loader, pipeline orchestration, edge cases |
-| Generate API reference docs | Not started | Sphinx or mkdocs from existing docstrings |
-| Add CONTRIBUTING.md and CODE_OF_CONDUCT.md | Not started | Standard templates, adapted |
+| Generate API reference docs | Done | MkDocs + mkdocstrings; `mkdocs build` generates site/ |
+| Add CONTRIBUTING.md and CODE_OF_CONDUCT.md | Done | Contributor Covenant v2.1; CONTRIBUTING.md updated |
 | Create a clean Jupyter notebook walkthrough | Not started | End-to-end: load data, reconstruct field, analyze, visualize |
 | Draft JOSS paper (1-2 pages) | Not started | Statement of need, summary, validation highlights, references |
 | Submit to JOSS | Not started | After all above; expect 1-3 month review cycle |
@@ -195,7 +195,7 @@ The pitch: "I ran your published simulation configs through a peer-reviewed anal
 | Test suite | Done | pytest with unit + integration tests, coverage reporting |
 | CI/CD | Done | GitHub Actions: pytest, mypy, flake8, coverage |
 | Code quality | Done | Black, isort, flake8, mypy, pre-commit hooks |
-| Documentation | Partial | README, CLAUDE.md, CHANGELOG, course modules; API docs not yet generated |
+| Documentation | Done | README, CLAUDE.md, CHANGELOG, course, MkDocs API reference, CODE_OF_CONDUCT |
 | Cloud compute | Active | AWS EC2 spot instances for BETSE simulations |
 | Data loaders | Active | BETSE loader done; ECG loader needs work; PhysioNet validated |
 

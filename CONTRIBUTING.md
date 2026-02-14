@@ -4,10 +4,7 @@ Thank you for your interest in contributing to Mneme! This document provides gui
 
 ## Code of Conduct
 
-- Be respectful and inclusive
-- Welcome newcomers and help them get started
-- Focus on constructive criticism
-- Respect differing viewpoints and experiences
+This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to bshepp@gmail.com.
 
 ## Getting Started
 

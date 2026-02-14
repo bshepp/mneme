@@ -1,0 +1,100 @@
+site_name: Mneme
+site_description: Detecting field-like memory structures in biological systems
+site_url: https://bshepp.github.io/mneme/
+repo_url: https://github.com/bshepp/mneme
+repo_name: bshepp/mneme
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+    - toc.follow
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_source: true
+            show_root_heading: true
+            show_root_full_path: false
+            members_order: source
+            merge_init_into_class: true
+            show_signature_annotations: true
+            separate_signature: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+  - attr_list
+  - md_in_html
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Development Setup: DEVELOPMENT_SETUP.md
+    - Project Structure: PROJECT_STRUCTURE.md
+  - User Guide:
+    - Data Pipeline: DATA_PIPELINE.md
+    - API Design: API_DESIGN.md
+    - BETSE Analysis Report: BETSE_ANALYSIS_REPORT.md
+  - API Reference:
+    - Overview: api/index.md
+    - Core:
+      - Field Theory: api/core/field_theory.md
+      - Topology: api/core/topology.md
+      - Attractors: api/core/attractors.md
+    - Models:
+      - Autoencoders: api/models/autoencoders.md
+      - Symbolic Regression: api/models/symbolic.md
+    - Data:
+      - Generators: api/data/generators.md
+      - Preprocessors: api/data/preprocessors.md
+      - BETSE Loader: api/data/betse_loader.md
+    - Analysis:
+      - Pipeline: api/analysis/pipeline.md
+      - Visualization: api/analysis/visualization.md
+  - Course:
+    - Overview: course/README.md
+    - 1. First Principles: course/01_first_principles.md
+    - 2. Environment Setup: course/02_environment_setup.md
+    - 3. CLI Quickstart: course/03_cli_quickstart.md
+    - 4. Pipeline Anatomy: course/04_pipeline_anatomy.md
+    - 5. Field Reconstruction: course/05_field_reconstruction.md
+    - 6. Topology and TDA: course/06_topology_tda.md
+    - 7. Attractor Detection: course/07_attractor_detection.md
+    - 8. Visualization: course/08_visualization_reporting.md
+    - 9. Experiments: course/09_experiments_reproducibility.md
+    - 10. Performance: course/10_performance_monitoring.md
+    - 11. Symbolic Regression: course/11_symbolic_regression.md
+  - Contributing: contributing.md
+  - Code of Conduct: code_of_conduct.md

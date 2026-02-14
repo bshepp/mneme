@@ -79,6 +79,9 @@ Desktop.ini
 # Julia
 .julia/
 
+# MkDocs build output
+site/
+
 # AWS temp files
 *.pem
 spot-options.json

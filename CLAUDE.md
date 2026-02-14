@@ -185,9 +185,9 @@ d_ky = kaplan_yorke_dimension(spectrum)  # Fractal dimension
 
 2. **Push test coverage from 38.4% to 70%+** -- Focus areas: `analysis/pipeline.py` (orchestration logic), `analysis/visualization.py` (plot generation), `core/field_theory.py` (reconstructor edge cases), `data/preprocessors.py`, `utils/io.py`. The betse_loader, topology distances, and symbolic regression edge cases are already covered.
 
-3. **Generate API reference docs** -- Sphinx or mkdocs from existing docstrings. Most public functions have docstrings already.
+3. ~~**Generate API reference docs**~~ -- Done. MkDocs + mkdocstrings configured (`mkdocs.yml`). Build with `mkdocs build` or `mkdocs serve`. All public modules documented.
 
-4. **Add CONTRIBUTING.md and CODE_OF_CONDUCT.md** -- Standard templates, adapted to this project.
+4. ~~**Add CONTRIBUTING.md and CODE_OF_CONDUCT.md**~~ -- Done. Contributor Covenant v2.1.
 
 5. **Create a clean Jupyter notebook walkthrough** -- End-to-end: generate or load data, reconstruct field, analyze topology, compute Lyapunov, visualize. Use `notebooks/` directory.
 
