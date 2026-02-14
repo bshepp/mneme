@@ -174,3 +174,36 @@ d_ky = kaplan_yorke_dimension(spectrum)  # Fractal dimension
 ```
 
 **Validated on real data:** PhysioNet ECG heart rate variability shows λ₁=+0.12/s, D_KY=2.35, matching published literature on cardiac chaos.
+
+## Next Session Priorities (as of 2026-02-14)
+
+**Context:** Deep analysis of 4 BETSE configs is complete (attractors x2, physiology, patterns). All results in `results/deep_analysis/`. Full report in `docs/BETSE_ANALYSIS_REPORT.md`. Project plan at `project_plan.md`. 113 tests passing, CI green.
+
+### Near-term (JOSS blockers)
+
+1. **Per-paper validation docs** -- For each BETSE config: cite the original paper, extract their published values (Vmem ranges, steady states, pattern wavelengths), compare to Mneme's computed values, report percent error and caveats. This is the strongest JOSS evidence. Papers: Pietak & Levin 2016 (Frontiers), Pietak & Levin 2018 (PBMB).
+
+2. **Push test coverage from 38.4% to 70%+** -- Focus areas: `analysis/pipeline.py` (orchestration logic), `analysis/visualization.py` (plot generation), `core/field_theory.py` (reconstructor edge cases), `data/preprocessors.py`, `utils/io.py`. The betse_loader, topology distances, and symbolic regression edge cases are already covered.
+
+3. **Generate API reference docs** -- Sphinx or mkdocs from existing docstrings. Most public functions have docstrings already.
+
+4. **Add CONTRIBUTING.md and CODE_OF_CONDUCT.md** -- Standard templates, adapted to this project.
+
+5. **Create a clean Jupyter notebook walkthrough** -- End-to-end: generate or load data, reconstruct field, analyze topology, compute Lyapunov, visualize. Use `notebooks/` directory.
+
+### Medium-term (science)
+
+6. **ECG data acquisition** -- Wire up the two AD8232 modules to Arduino/RPi, build a serial data acquisition script, record baseline resting data, compare to PhysioNet HRV results.
+
+7. **Cross-method validation report** -- Formal document answering: do topology (Wasserstein), Lyapunov, recurrence, PCA, and VAE latent space tell consistent stories across the 4 BETSE configs? The data is all in `deep_analysis_results.json`.
+
+8. **2D Lyapunov analysis on attractor configs** -- The rank-2 attractor/physiology data saturated the Lyapunov spectrum. Restrict to the 2D PCA subspace and compute proper exponents.
+
+9. **Parameter sweep experiments** -- Vary gap junction conductance and ion channel expression in BETSE; track how Wasserstein drift and PCA rank change at bifurcation points.
+
+### AWS cleanup status (2026-02-14)
+- All BETSE instances terminated
+- No orphaned EBS volumes
+- No orphaned key pairs
+- BETSE security group deleted
+- One unrelated instance still running: `storm-water-graphrag-neo4j` (t3.micro, ~$0.0104/hr, since 2025-12-23)
