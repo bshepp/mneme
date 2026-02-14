@@ -79,6 +79,9 @@ Desktop.ini
 # Julia
 .julia/
 
+# Cursor IDE (session context, local rules)
+.cursor/
+
 # MkDocs build output
 site/
 
