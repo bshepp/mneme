@@ -683,10 +683,10 @@ def compute_wasserstein_distance(
         Wasserstein distance
     """
     try:
-        import gudhi
+        from gudhi.wasserstein import wasserstein_distance as _gudhi_wasserstein
         # Use GUDHI implementation if available
-        return gudhi.wasserstein_distance(diagram1.points, diagram2.points, order=p)
-    except ImportError:
+        return _gudhi_wasserstein(diagram1.points, diagram2.points, order=p)
+    except (ImportError, ModuleNotFoundError):
         # Simple approximation using Hungarian algorithm
         from scipy.optimize import linear_sum_assignment
         
@@ -738,7 +738,7 @@ def compute_bottleneck_distance(
         import gudhi
         # Use GUDHI implementation if available
         return gudhi.bottleneck_distance(diagram1.points, diagram2.points)
-    except ImportError:
+    except (ImportError, ModuleNotFoundError):
         # Simple approximation
         from scipy.optimize import linear_sum_assignment
         

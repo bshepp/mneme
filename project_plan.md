@@ -152,6 +152,16 @@ Hardware: 2x AD8232 Single-Lead ECG sensor modules (acquired).
 - Cross-post to relevant communities (computational biology, bioelectric signaling)
 - The DOI and peer review convert "random person's GitHub repo" into "published research software"
 
+**Compute-for-collaboration (ongoing after JOSS):**
+
+Troll arXiv and journals for papers with open computational questions Mneme can answer. Target:
+- Papers citing BETSE/PLIMBO that lack topology or attractor analysis
+- Bioelectric patterning studies that describe "stability" or "robustness" qualitatively but don't quantify (Lyapunov spectrum answers this)
+- Regeneration papers with spatiotemporal voltage data and uncharacterized pattern memory
+- Gap junction perturbation studies observing bistability without attractor landscape characterization
+
+The pitch: "I ran your published simulation configs through a peer-reviewed analysis toolkit. Here are the topological signatures and Lyapunov spectra. Want to co-author a follow-up?" This converts compute time into co-authorships and builds the collaborative network needed for Phase 3 theory work.
+
 ---
 
 ## Phase 3: Interpretation + Theory Development -- NOT STARTED

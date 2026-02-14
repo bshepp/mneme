@@ -121,3 +121,73 @@ class TestDiscoverFieldDynamics:
         assert "equations" in result
         assert "best_equation" in result
         assert "r2_score" in result
+
+    def test_small_field_sequence(self):
+        """5 frames of 8x8 — minimum viable input."""
+        rng = np.random.RandomState(0)
+        field_seq = rng.rand(5, 8, 8)
+        result = discover_field_dynamics(field_seq, dt=0.5, niterations=2)
+
+        assert isinstance(result["best_equation"], str)
+        assert len(result["best_equation"]) > 0
+        assert isinstance(result["r2_score"], float)
+
+    def test_spatial_features_included(self):
+        rng = np.random.RandomState(42)
+        field_seq = rng.rand(8, 8, 8)
+        result = discover_field_dynamics(
+            field_seq, dt=1.0, spatial_features=True, niterations=2
+        )
+
+        assert "laplacian_u" in result["features_used"]
+        assert "du_dx" in result["features_used"]
+        assert "du_dy" in result["features_used"]
+
+    def test_no_spatial_features(self):
+        rng = np.random.RandomState(42)
+        field_seq = rng.rand(8, 8, 8)
+        result = discover_field_dynamics(
+            field_seq, dt=1.0, spatial_features=False, niterations=2
+        )
+
+        assert result["features_used"] == ["u"]
+
+    def test_2d_input_raises(self):
+        with pytest.raises(ValueError, match="3D"):
+            discover_field_dynamics(np.zeros((10, 10)), dt=1.0)
+
+    def test_regressor_is_returned(self):
+        rng = np.random.RandomState(42)
+        result = discover_field_dynamics(rng.rand(5, 8, 8), niterations=2)
+        assert result["regressor"] is not None
+
+
+class TestSymbolicRegressorEdgeCases:
+    """Additional edge-case tests for SymbolicRegressor."""
+
+    def test_1d_input(self):
+        """Single-feature input should be reshaped automatically."""
+        x = np.linspace(0, 10, 50)
+        y = 2.0 * x + 1.0
+        sr = SymbolicRegressor(niterations=2)
+        sr.fit(x, y, variable_names=["t"])
+        pred = sr.predict(x)
+        assert pred.shape == (50,)
+
+    def test_get_best_equation_before_fit(self):
+        sr = SymbolicRegressor()
+        assert sr.get_best_equation() == "<no_equation_found>"
+
+    def test_latex_output(self):
+        rng = np.random.RandomState(0)
+        X = rng.rand(50, 2)
+        y = X[:, 0] + X[:, 1]
+        sr = SymbolicRegressor(niterations=2)
+        sr.fit(X, y)
+        latex_str = sr.latex()
+        assert isinstance(latex_str, str)
+        assert len(latex_str) > 0
+
+    def test_is_available_property(self):
+        sr = SymbolicRegressor()
+        assert isinstance(sr.is_available, bool)

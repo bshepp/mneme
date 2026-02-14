@@ -6,6 +6,8 @@ import pytest
 from mneme.core.topology import (
     PersistentHomology,
     compute_betti_curve,
+    compute_wasserstein_distance,
+    compute_bottleneck_distance,
     field_to_point_cloud,
     filter_persistence_diagram,
 )
@@ -157,3 +159,85 @@ class TestFieldToPointCloud:
     def test_3d_raises(self):
         with pytest.raises(ValueError, match="2D"):
             field_to_point_cloud(np.zeros((4, 4, 4)))
+
+
+# ---------------------------------------------------------------------------
+# Wasserstein / Bottleneck distance
+# ---------------------------------------------------------------------------
+
+class TestWassersteinDistance:
+    """Tests for Wasserstein distance between persistence diagrams."""
+
+    def test_identical_diagrams_zero(self):
+        pts = np.array([[0.0, 1.0], [0.5, 2.0], [1.0, 3.0]])
+        d1 = PersistenceDiagram(points=pts, dimension=0)
+        d2 = PersistenceDiagram(points=pts.copy(), dimension=0)
+        dist = compute_wasserstein_distance(d1, d2, p=2.0)
+        assert dist == pytest.approx(0.0, abs=1e-6)
+
+    def test_different_diagrams_positive(self):
+        pts1 = np.array([[0.0, 1.0], [0.5, 2.0]])
+        pts2 = np.array([[0.0, 1.5], [0.5, 3.0]])
+        d1 = PersistenceDiagram(points=pts1, dimension=0)
+        d2 = PersistenceDiagram(points=pts2, dimension=0)
+        dist = compute_wasserstein_distance(d1, d2, p=2.0)
+        assert dist > 0.0
+
+    def test_empty_diagrams_zero(self):
+        d1 = PersistenceDiagram(points=np.empty((0, 2)), dimension=0)
+        d2 = PersistenceDiagram(points=np.empty((0, 2)), dimension=0)
+        dist = compute_wasserstein_distance(d1, d2)
+        assert dist == 0.0
+
+    def test_symmetry(self):
+        pts1 = np.array([[0.0, 1.0], [1.0, 2.5]])
+        pts2 = np.array([[0.0, 2.0]])
+        d1 = PersistenceDiagram(points=pts1, dimension=0)
+        d2 = PersistenceDiagram(points=pts2, dimension=0)
+        assert compute_wasserstein_distance(d1, d2) == pytest.approx(
+            compute_wasserstein_distance(d2, d1), abs=1e-6
+        )
+
+    def test_from_computed_persistence(self, gaussian_blob_field, two_peak_field):
+        """Wasserstein between persistence of two different fields should be > 0."""
+        ph = PersistentHomology(max_dimension=0, persistence_threshold=0.0)
+        diags1 = ph.compute_persistence(gaussian_blob_field)
+        diags2 = ph.compute_persistence(two_peak_field)
+        dist = compute_wasserstein_distance(diags1[0], diags2[0])
+        assert dist > 0.0
+
+
+class TestBottleneckDistance:
+    """Tests for bottleneck distance between persistence diagrams."""
+
+    def test_identical_diagrams_zero(self):
+        pts = np.array([[0.0, 1.0], [0.5, 2.0]])
+        d1 = PersistenceDiagram(points=pts, dimension=0)
+        d2 = PersistenceDiagram(points=pts.copy(), dimension=0)
+        dist = compute_bottleneck_distance(d1, d2)
+        assert dist == pytest.approx(0.0, abs=1e-6)
+
+    def test_different_diagrams_positive(self):
+        pts1 = np.array([[0.0, 1.0]])
+        pts2 = np.array([[0.0, 5.0]])
+        d1 = PersistenceDiagram(points=pts1, dimension=0)
+        d2 = PersistenceDiagram(points=pts2, dimension=0)
+        dist = compute_bottleneck_distance(d1, d2)
+        assert dist > 0.0
+
+    def test_empty_diagrams_zero(self):
+        d1 = PersistenceDiagram(points=np.empty((0, 2)), dimension=0)
+        d2 = PersistenceDiagram(points=np.empty((0, 2)), dimension=0)
+        dist = compute_bottleneck_distance(d1, d2)
+        assert dist == 0.0
+
+    def test_bottleneck_leq_wasserstein(self):
+        """Bottleneck distance is always <= Wasserstein-infinity."""
+        pts1 = np.array([[0.0, 1.0], [0.5, 2.0], [1.0, 3.0]])
+        pts2 = np.array([[0.0, 1.5], [0.5, 3.0], [1.0, 4.0]])
+        d1 = PersistenceDiagram(points=pts1, dimension=0)
+        d2 = PersistenceDiagram(points=pts2, dimension=0)
+        b = compute_bottleneck_distance(d1, d2)
+        w = compute_wasserstein_distance(d1, d2, p=2.0)
+        # Bottleneck is max matching cost; Wasserstein is sum — bottleneck <= wasserstein
+        assert b <= w + 1e-6
