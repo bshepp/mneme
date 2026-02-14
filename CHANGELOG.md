@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+- 2026-02-14
+  - **feat(analysis)**: Deep analysis pipeline (`scripts/deep_analysis.py`)
+    - PCA mode extraction with effective rank estimation
+    - Cross-frame NxN Wasserstein distance matrix (H0 + H1 via GUDHI)
+    - PySR symbolic regression on PCA mode dynamics (ODE discovery)
+    - Spatial PDE discovery on raw field sequences via `discover_field_dynamics()`
+    - Convolutional VAE latent-space embedding across all datasets
+  - **feat(topology)**: Full GUDHI Wasserstein/Bottleneck distance support
+    - Import from `gudhi.wasserstein` submodule (not top-level API)
+    - Requires `POT` package for Wasserstein; bottleneck works without it
+    - Scipy fallback preserved when GUDHI not installed
+  - **test**: Expanded test suite to 113 tests (38.4% coverage)
+    - New: `test_betse_loader.py` (12 tests, 91% module coverage)
+    - New: Wasserstein/Bottleneck distance tests (9 tests)
+    - New: `discover_field_dynamics` and `SymbolicRegressor` edge-case tests (10 tests)
+  - **data**: Analyzed 4 BETSE simulation configs (attractors x2, physiology, patterns)
+    - Patterns config: 824-cell elliptical tissue with GRN-driven pattern formation
+    - Discovered 5-mode PCA structure (vs rank-2 for attractor/physiology configs)
+    - Wasserstein total drift 84.1 mV (2.6x nearest comparator)
+  - **docs**: Updated BETSE analysis report with patterns findings
+
 - 2026-02-12
   - **feat(data)**: BETSE bioelectric simulation loader (`betse_loader.py`)
     - `load_betse_vmem_csv()`: parse single Vmem2D CSV files

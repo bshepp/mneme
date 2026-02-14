@@ -55,18 +55,18 @@ BETSE (BioElectric Tissue Simulation Engine) is a 2D bioelectric tissue simulato
 | Install and validate BETSE | Done | Ran `betse try` locally; confirmed CSV output format |
 | Build BETSE data loader | Done | `betse_loader.py`: handles irregular cell data, multi-frame time series, metadata |
 | Build BETSE analysis script | Done | `scripts/analyze_betse.py`: topology, attractors, recurrence, Lyapunov |
-| Run paper simulation configs on AWS | In progress | c6i.xlarge spot instance running 5 configs in parallel (est. 8-14h) |
-| Analyze attractor configs (2016 Frontiers) | Pending | `attractors_2016_1.yaml`, `attractors_2016_2.yaml`, `BETSE_test_sim_3.yaml` |
-| Analyze pattern configs (2018 PBMB) | Pending | `patterns_2018.yaml` |
-| Analyze physiology configs (2018 PBMB) | Pending | `physiology_2018.yaml` |
-| Cross-simulation comparison | Pending | Compare topological signatures, attractor types, and Lyapunov spectra across configs |
+| Run paper simulation configs on AWS | Done | c6i.xlarge on-demand instance; 4 configs completed (attractors x2, physiology, patterns) |
+| Analyze attractor configs (2016 Frontiers) | Done | sim_1 and sim_2 analyzed: rank-2 PCA, distinct Wasserstein profiles, VAE basin separation |
+| Analyze pattern configs (2018 PBMB) | Done | 824-cell elliptical tissue, 5-mode PCA (vs rank-2), Wasserstein drift 84.1, symbolic regression |
+| Analyze physiology configs (2018 PBMB) | Done | 7-cell cluster, topology-preserving 56 mV voltage excursion |
+| Cross-simulation comparison | Done | Full comparison in `docs/BETSE_ANALYSIS_REPORT.md`: topology, Wasserstein, PCA, VAE, recurrence |
 | Parameter sweep experiments | Not started | Vary gap junction conductance, ion channel expression; track attractor bifurcations |
 
 **AWS compute details:**
-- Instance: c6i.xlarge (4 vCPU, 8 GB), spot pricing ~$0.067/hr
-- All 5 paper configs running in parallel
-- Results auto-packaged as `betse-results.tar.gz`
-- Estimated cost: $0.50-$1.00
+- Instance: c6i.xlarge (4 vCPU, 8 GB), on-demand ~$0.17/hr (switched from spot after termination)
+- 4 configs completed: attractors_1 (sim_1+sim_2), physiology, patterns
+- Patterns re-run with Vmem CSV export enabled (26 min)
+- Total AWS cost: ~$2-3
 
 ### 2B. Self-Collected ECG Data (Next)
 
@@ -93,8 +93,8 @@ Hardware: 2x AD8232 Single-Lead ECG sensor modules (acquired).
 
 ### Phase 2 Deliverables
 
-- [ ] Reproducible analysis of all 5 BETSE paper simulation configs
-- [ ] Topological comparison across simulation conditions (attractors vs patterns vs physiology)
+- [x] Reproducible analysis of 4 BETSE paper simulation configs (attractors x2, physiology, patterns)
+- [x] Topological comparison across simulation conditions (attractors vs patterns vs physiology)
 - [ ] Self-collected ECG data with Lyapunov/attractor analysis
 - [ ] Cross-method validation report: do topology, Lyapunov, recurrence, and VAE latent space tell consistent stories?
 - [ ] Cleaned dataset repository with provenance metadata
@@ -118,11 +118,11 @@ Hardware: 2x AD8232 Single-Lead ECG sensor modules (acquired).
 |-------------|--------|-----|
 | Open source repo | Done | None |
 | Documentation sufficient for new users | Mostly done | API reference docs not yet generated |
-| Tests that can be run | Done (~80 tests) | Push coverage from 40% toward 70%+ |
+| Tests that can be run | Done (113 tests, 38.4% coverage) | Push coverage toward 70%+ |
 | Community guidelines (CONTRIBUTING, CODE_OF_CONDUCT) | Not done | Straightforward to add |
 | Statement of need (why this software matters) | Not written | Draft from validation results |
 | Example usage | Partial | Scripts exist; need a clean tutorial/notebook |
-| Validation on real data | In progress | BETSE runs + PhysioNet = multi-system validation |
+| Validation on real data | Done | BETSE (4 configs analyzed) + PhysioNet ECG = multi-system validation |
 
 **Tasks:**
 
@@ -203,11 +203,13 @@ The pitch: "I ran your published simulation configs through a peer-reviewed anal
 
 ## Current Priorities (February 2026)
 
-1. **Retrieve AWS simulation results** -- Pull `betse-results.tar.gz` when the 5 configs finish, terminate instance
-2. **Run full Mneme analysis on each config** -- Topology, Lyapunov spectrum, recurrence, VAE encoding
-3. **Cross-simulation comparison** -- Do different biological conditions produce distinguishable topological signatures?
+1. ~~**Retrieve AWS simulation results**~~ -- Done. 4 configs retrieved and analyzed.
+2. ~~**Run full Mneme analysis on each config**~~ -- Done. PCA, Wasserstein, Lyapunov, recurrence, VAE, symbolic regression.
+3. ~~**Cross-simulation comparison**~~ -- Done. See `docs/BETSE_ANALYSIS_REPORT.md`.
 4. **ECG data acquisition setup** -- Get the AD8232 sensors producing clean data
 5. **Cross-method validation** -- Formal report on whether topology, Lyapunov, recurrence, and latent space analysis agree
+6. **Push test coverage to 70%+** -- Currently 38.4% (113 tests); focus on pipeline, visualization, edge cases
+7. **Per-paper validation docs** -- For each BETSE config: compare Mneme results to published values
 
 ---
 

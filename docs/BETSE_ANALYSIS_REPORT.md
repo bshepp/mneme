@@ -3,7 +3,7 @@
 **Date:** 2026-02-13 (updated 2026-02-14 with patterns results)
 **Analyst:** Mneme pipeline (automated) + manual interpretation
 **Data source:** BETSE paper configurations (`attractors_2018`, `physiology_2018`, `patterns_2018`) run on AWS EC2 c6i.xlarge
-**Pipeline version:** Mneme 0.1.x (scipy fallback TDA, PyTorch VAE)
+**Pipeline version:** Mneme 0.1.x (GUDHI TDA for H0+H1, PySR symbolic regression, PyTorch VAE)
 
 ---
 
@@ -324,31 +324,35 @@ Wasserstein distance tracking emerged as the single most informative method for 
 
 ## 5. Limitations and Caveats
 
-1. **Scipy fallback TDA.** These analyses used the scipy-based persistence computation (GUDHI was not installed in the analysis environment). This computes H0 (connected components) accurately but does not produce H1 (loops) or H2 (voids) features. Pattern-forming tissues are expected to have significant H1 structure that we cannot yet detect.
+1. **Initial analysis used scipy fallback TDA.** Sections 2-3 (initial analysis, deep analysis of attractor/physiology configs) used the scipy-based persistence computation, which computes H0 (connected components) only. The later patterns analysis (Section 7) and the cross-frame Wasserstein matrix used full GUDHI with H0+H1 support. H1 results are available only for the patterns dataset.
 
-2. **Interpolation artifacts.** The 153-156 cell positions were interpolated to a 64x64 regular grid using cubic interpolation. This creates smooth inter-cell fields that do not exist in the discrete BETSE model. Topological features near the interpolation boundary should be treated with caution.
+2. **Interpolation artifacts.** The 153-824 cell positions were interpolated to a 64x64 regular grid using cubic interpolation. This creates smooth inter-cell fields that do not exist in the discrete BETSE model. Topological features near the interpolation boundary should be treated with caution.
 
-3. **Lyapunov saturation.** No meaningful Lyapunov exponents or Kaplan-Yorke dimensions were obtained due to the rank-2 data structure. A specialized 2D Lyapunov analysis or higher-rank data is needed.
+3. **Lyapunov saturation on rank-2 data.** No meaningful Lyapunov exponents or Kaplan-Yorke dimensions were obtained for the attractor/physiology configs due to their rank-2 structure. The patterns config (rank-5) should produce meaningful 5D Lyapunov spectra, though this has not yet been run with rank restriction.
 
-4. **Single tissue geometry.** All attractor results come from one tissue configuration with the same cell count and coupling. Generalization to other tissue geometries requires additional simulations.
+4. **Single tissue geometry per condition.** The attractor configs share one tissue mesh (153-156 cells), patterns uses a larger elliptical mesh (824 cells), and physiology uses a tiny cluster (7 cells). Generalization to other tissue geometries requires additional simulations.
 
-5. **No H1 analysis.** We detected only connected components (H0). Loops and holes (H1) would reveal gap junction boundaries, isolated voltage domains, and ring-like structures critical for pattern memory. This requires GUDHI installation.
+5. **Symbolic regression R-squared is moderate.** PySR symbolic regression on the patterns PCA modes produced R-squared values ranging from 0.24 to 0.59. The discovered equations capture qualitative dynamics but are not quantitatively precise -- expected given the complexity of GRN-driven pattern formation.
 
 ---
 
 ## 6. Next Steps
 
-1. **Analyze the patterns configuration** when it completes. This is explicitly a pattern-formation simulation and should produce higher-rank spatial modes and H1 topological features.
+1. ~~**Analyze the patterns configuration.**~~ Done -- see Section 7 below. Confirmed higher-rank (5-mode) PCA and massive topological reorganization.
 
-2. **Install GUDHI** for full persistence computation including H1 and H2 dimensions.
+2. ~~**Install GUDHI.**~~ Done -- full H0+H1 persistence computation now available. Used for cross-frame Wasserstein matrix on patterns data.
 
-3. **2D Lyapunov analysis.** Restrict to the 2-component PCA trajectory and compute proper 2D Lyapunov exponents to determine whether the attractor dynamics are truly chaotic, quasi-periodic, or convergent.
+3. **2D Lyapunov analysis.** Restrict to the 2-component PCA trajectory for attractor configs and compute proper 2D Lyapunov exponents to determine whether the dynamics are chaotic, quasi-periodic, or convergent.
 
-4. **Symbolic regression** on the PCA coefficient time series c_1(t), c_2(t) to discover the governing equations of the attractor dynamics.
+4. ~~**Symbolic regression on PCA coefficients.**~~ Done -- PySR discovered ODEs for 5 PCA modes of patterns data (R-squared 0.24-0.59). Also ran spatial PDE discovery via `discover_field_dynamics()`.
 
-5. **Cross-attractor Wasserstein analysis.** Compute Wasserstein distances between sim_1 and sim_2 at corresponding timesteps to quantify how the two basins diverge over time.
+5. ~~**Cross-frame Wasserstein analysis.**~~ Done -- computed full 60x60 NxN Wasserstein matrix for patterns data (H0+H1). Saved to `results/deep_analysis/wasserstein_cross_matrix_patterns.npz`.
 
 6. **ECG data comparison.** Apply the same pipeline to self-collected AD8232 ECG data to compare biological vs. simulated bioelectric field structure.
+
+7. **Parameter sweep experiments.** Vary gap junction conductance and ion channel expression in BETSE; track attractor bifurcations using Mneme's Wasserstein and PCA analysis.
+
+8. **Per-paper validation.** Compare Mneme's topological signatures and Lyapunov values to quantitative results reported in the original BETSE papers.
 
 ---
 
@@ -451,9 +455,10 @@ The patterns dataset confirms every prediction from the earlier analysis:
 | `results/attractors_1_sim2/betse_field_sequence.npz` | Interpolated 64x64 field sequence (635 frames) |
 | `results/physiology_sim1/analysis_results.json` | Initial analysis of physiology |
 | `results/physiology_sim1/betse_field_sequence.npz` | Interpolated 64x64 field sequence (190 frames) |
-| `results/deep_analysis/deep_analysis_results.json` | Full deep analysis results (PCA, Wasserstein, VAE, recurrence) |
-| `scripts/analyze_betse.py` | Initial analysis script |
-| `scripts/deep_analysis.py` | Deep analysis script |
 | `results/patterns_sim/analysis_results.json` | Initial analysis of patterns |
 | `results/patterns_sim/betse_field_sequence.npz` | Interpolated 64x64 field sequence (119 frames) |
+| `results/deep_analysis/deep_analysis_results.json` | Full deep analysis results (PCA, Wasserstein, VAE, recurrence, symbolic regression) |
+| `results/deep_analysis/wasserstein_cross_matrix_patterns.npz` | 60x60 H0+H1 Wasserstein distance matrices for patterns |
+| `scripts/analyze_betse.py` | Initial analysis script |
+| `scripts/deep_analysis.py` | Deep analysis script (PCA, VAE, Wasserstein, symbolic regression) |
 | `src/mneme/data/betse_loader.py` | BETSE data loader and interpolation |

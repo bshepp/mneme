@@ -38,11 +38,11 @@ For detailed setup instructions, see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMEN
 
 ## Project Status: Active Development (Core Implemented)
 
-**Recent Updates (2026-02-12):**
+**Recent Updates (2026-02-14):**
+- ✅ Deep analysis pipeline: PCA mode extraction, cross-frame Wasserstein matrix, symbolic regression on PCA dynamics
+- ✅ GUDHI integration for H0+H1 persistence computation; PySR/Julia for symbolic regression
 - ✅ BETSE integration: load bioelectric tissue simulation data directly into Mneme
-- ✅ Analysis script for running full pipeline on BETSE output
-- ✅ Unit and integration test suite with GitHub Actions CI
-- ✅ Consolidated infrastructure (pyproject.toml, pre-commit, coverage)
+- ✅ 113 unit/integration tests with GitHub Actions CI (38.4% coverage)
 
 **Previous milestones (2025-11-27):**
 - ✅ Sparse GP reconstruction as scalable default (O(nm²) instead of O(n³))
@@ -95,9 +95,7 @@ field = rec.reconstruct()
 
 # Train VAE on field data
 vae = create_field_vae((64, 64), latent_dim=16)
-import torch
-frames = torch.from_numpy(data).float().unsqueeze(1)
-vae.fit(frames, epochs=50, verbose=True)
+vae.fit(data, epochs=50, verbose=True)  # Accepts numpy arrays directly
 latent = vae.encode_fields(data)  # Shape: (30, 16)
 
 # Discover governing equations
@@ -116,14 +114,17 @@ print(f"Kaplan-Yorke dimension: {kaplan_yorke_dimension(spectrum):.2f}")
 ### CLI Usage
 
 ```bash
+# Generate synthetic data first
+mneme generate -o sample_data.npz
+
 # Basic analysis
-mneme analyze data/synthetic/test_small.npz --pipeline bioelectric -o results
+mneme analyze sample_data.npz --pipeline bioelectric -o results
 
 # With Rips topology backend
-mneme analyze data/synthetic/test_small.npz --topology-backend rips -o results
+mneme analyze sample_data.npz --topology-backend rips -o results
 
 # With clustering attractor detection
-mneme analyze data/synthetic/test_small.npz \
+mneme analyze sample_data.npz \
   --attractor-method clustering \
   --attractor-threshold 0.2 \
   -o results
@@ -171,11 +172,11 @@ mneme/
 │   ├── data/           # Generators, loaders, preprocessors, BETSE loader
 │   ├── models/         # VAE, symbolic regression
 │   └── utils/          # Config, logging, I/O
-├── scripts/            # Analysis scripts (BETSE, PhysioNet)
+├── scripts/            # Analysis scripts (BETSE, PhysioNet, deep analysis)
 ├── notebooks/          # Demo notebooks
-├── tests/              # Test suite
+├── tests/              # Test suite (113 tests)
 ├── docs/               # Documentation
-└── experiments/        # Experiment tracking
+└── results/            # Analysis output (JSON, NPZ, reports)
 ```
 
 ## Documentation
