@@ -166,6 +166,20 @@ module = [
 ]
 ignore_missing_imports = true
 
+# Strict mypy is staged: enable on clean modules first, expand as code is hardened.
+# To check locally: `mypy --strict --follow-imports=silent src/mneme/utils/logging.py src/mneme/utils/config.py`
+[[tool.mypy.overrides]]
+module = [
+    "mneme.utils.logging",
+    "mneme.utils.config",
+]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+disallow_any_generics = true
+no_implicit_reexport = true
+warn_unused_ignores = true
+
 [tool.coverage.run]
 source = ["src/mneme"]
 omit = [
@@ -176,7 +190,7 @@ omit = [
 
 [tool.coverage.report]
 precision = 2
-fail_under = 35
+fail_under = 60
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",

@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+- Unreleased
+  - **fix(data.loaders)**: `BaseDataLoader.get_info()` now reads dtype from `Field.data` (numpy ndarray) instead of attempting `Field.dtype` (which does not exist).
+  - **fix(analysis.results)**: `_create_html_report()` switched to f-string with escaped CSS braces, fixing `KeyError` on report generation; previously skipped test re-enabled.
+  - **refactor(core.attractors)**: Removed unused `compute_basin_of_attraction()` placeholder. Design notes and a suggested signature for a future re-implementation are preserved in [docs/FUTURE_IDEAS.md](docs/FUTURE_IDEAS.md).
+  - **feat(core.attractors)**: `compute_lyapunov_spectrum()` now emits a `RuntimeWarning` when called on trajectories shorter than `RECOMMENDED_TRAJECTORY_LENGTH` (1000 points). The hard `MIN_TRAJECTORY_LENGTH` (100 points) `ValueError` is unchanged.
+  - **chore(typing)**: Re-enabled strict mypy on a curated, clean subset (`mneme.utils.logging`, `mneme.utils.config`) via `[[tool.mypy.overrides]]`. Remaining modules will be staged in as they are hardened.
+  - **docs**: Consolidated duplicated root/docs files (`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`); `docs/contributing.md` and `docs/code_of_conduct.md` are now thin pointers to the canonical root files.
+  - **docs**: Refreshed CLAUDE.md (test coverage 38.4 → 63.92%, removed basin TODO, added FUTURE_IDEAS pointer).
+
 - 2026-02-14
   - **feat(analysis)**: Deep analysis pipeline (`scripts/deep_analysis.py`)
     - PCA mode extraction with effective rank estimation

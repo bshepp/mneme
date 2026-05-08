@@ -207,7 +207,7 @@ class Config:
         """Return configuration as dictionary."""
         return self._config.copy()
     
-    def keys(self) -> list:
+    def keys(self) -> list[str]:
         """Return top-level configuration keys."""
         return list(self._config.keys())
     
@@ -267,7 +267,7 @@ def merge_configs(*configs: Union[Config, Dict[str, Any]]) -> Config:
     return merged
 
 
-def validate_config(config: Config, schema: Dict[str, Any]) -> tuple:
+def validate_config(config: Config, schema: Dict[str, Any]) -> tuple[bool, list[str]]:
     """
     Validate configuration against schema.
     
@@ -287,7 +287,7 @@ def validate_config(config: Config, schema: Dict[str, Any]) -> tuple:
     """
     errors = []
     
-    def validate_recursive(config_dict: Dict[str, Any], schema_dict: Dict[str, Any], path: str = ""):
+    def validate_recursive(config_dict: Dict[str, Any], schema_dict: Dict[str, Any], path: str = "") -> None:
         for key, schema_value in schema_dict.items():
             full_key = f"{path}.{key}" if path else key
             

@@ -387,28 +387,31 @@ def create_results_report(
 
 def _create_html_report(results: List[AnalysisResult], output_path: Path) -> None:
     """Create HTML report."""
-    html_content = """
+    from datetime import datetime
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    n_results = len(results)
+    html_content = f"""
     <!DOCTYPE html>
     <html>
     <head>
         <title>Mneme Analysis Report</title>
         <style>
-            body { font-family: Arial, sans-serif; margin: 20px; }
-            h1, h2, h3 { color: #333; }
-            table { border-collapse: collapse; width: 100%; }
-            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; }
-            .summary { background-color: #f9f9f9; padding: 15px; margin: 10px 0; }
+            body {{ font-family: Arial, sans-serif; margin: 20px; }}
+            h1, h2, h3 {{ color: #333; }}
+            table {{ border-collapse: collapse; width: 100%; }}
+            th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+            th {{ background-color: #f2f2f2; }}
+            .summary {{ background-color: #f9f9f9; padding: 15px; margin: 10px 0; }}
         </style>
     </head>
     <body>
         <h1>Mneme Analysis Report</h1>
         <div class="summary">
             <h2>Summary</h2>
-            <p>Total experiments: {}</p>
-            <p>Generated on: {}</p>
+            <p>Total experiments: {n_results}</p>
+            <p>Generated on: {timestamp}</p>
         </div>
-    """.format(len(results), datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    """
     
     # Add individual experiment results
     for i, result in enumerate(results):

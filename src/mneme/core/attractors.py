@@ -1,5 +1,6 @@
 """Attractor detection and characterization methods."""
 
+import warnings
 from typing import List, Optional, Dict, Any, Tuple, TYPE_CHECKING
 import numpy as np
 from abc import ABC, abstractmethod
@@ -29,6 +30,10 @@ CLUSTERING_CV_LIMIT_CYCLE: float = 0.5
 
 #: Minimum trajectory length required by compute_lyapunov_spectrum.
 MIN_TRAJECTORY_LENGTH: int = 100
+
+#: Trajectory length below which Lyapunov estimates are flagged as unreliable
+#: (warning emitted, computation still proceeds).
+RECOMMENDED_TRAJECTORY_LENGTH: int = 1000
 
 #: False-nearest-neighbour threshold ratio used in _estimate_dimension_fnn.
 FNN_THRESHOLD_RATIO: float = 2.0
@@ -1060,6 +1065,15 @@ def compute_lyapunov_spectrum(
             f"Trajectory too short ({n_points} points). "
             f"Need at least {MIN_TRAJECTORY_LENGTH} points."
         )
+
+    if n_points < RECOMMENDED_TRAJECTORY_LENGTH:
+        warnings.warn(
+            f"Lyapunov spectrum computed from a short trajectory "
+            f"({n_points} points; recommended >= {RECOMMENDED_TRAJECTORY_LENGTH}). "
+            f"Estimates may be biased or noisy. Treat results as exploratory.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
     
     # Build KD-tree for neighbor queries
     tree = cKDTree(trajectory[:-1])  # Exclude last point (no successor)
@@ -1269,29 +1283,3 @@ def kaplan_yorke_dimension(spectrum: np.ndarray) -> float:
     dimension = (j + 1) + cumsum[j] / abs(spectrum[j + 1])
     
     return max(0.0, dimension)
-
-
-def compute_basin_of_attraction(
-    attractor: Attractor,
-    trajectory: np.ndarray,
-    grid_resolution: int = 50
-) -> np.ndarray:
-    """
-    Estimate basin of attraction.
-    
-    Parameters
-    ----------
-    attractor : Attractor
-        Target attractor
-    trajectory : np.ndarray
-        Full trajectory data
-    grid_resolution : int
-        Resolution for basin estimation
-        
-    Returns
-    -------
-    basin : np.ndarray
-        Basin of attraction indicator
-    """
-    # TODO: Implement basin computation
-    raise NotImplementedError("Basin of attraction to be implemented")

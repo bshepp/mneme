@@ -69,12 +69,18 @@ class BaseDataLoader:
         # Load first file to get shape and dtype info
         sample = self.load_file(self.file_list[0])
         
-        if hasattr(sample, 'shape'):
-            shape = sample.shape
-            dtype = str(sample.dtype)
-        elif hasattr(sample, 'data'):
+        # Prefer underlying ndarray (.data) when present so wrappers like
+        # mneme.types.Field — which expose .shape but not .dtype — still report
+        # a meaningful dtype.
+        if hasattr(sample, 'data') and hasattr(sample.data, 'dtype'):
             shape = sample.data.shape
             dtype = str(sample.data.dtype)
+        elif hasattr(sample, 'shape') and hasattr(sample, 'dtype'):
+            shape = sample.shape
+            dtype = str(sample.dtype)
+        elif hasattr(sample, 'shape'):
+            shape = sample.shape
+            dtype = "unknown"
         else:
             shape = ()
             dtype = "unknown"

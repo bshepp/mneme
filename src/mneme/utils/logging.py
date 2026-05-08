@@ -2,7 +2,7 @@
 
 import logging
 import sys
-from typing import Optional, Union
+from typing import Any, Dict, Optional, Union
 from pathlib import Path
 import os
 
@@ -68,6 +68,7 @@ def setup_logging(
         # Create log directory if it doesn't exist
         log_file.parent.mkdir(parents=True, exist_ok=True)
         
+        file_handler: logging.FileHandler
         if rotation:
             from logging.handlers import RotatingFileHandler
             file_handler = RotatingFileHandler(
@@ -111,9 +112,9 @@ class LoggerMixin:
         return get_logger(self.__class__.__name__)
 
 
-def log_function_call(func):
+def log_function_call(func: Any) -> Any:
     """Decorator to log function calls."""
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
         logger = get_logger('function_calls')
         logger.debug(f"Calling {func.__name__} with args={args}, kwargs={kwargs}")
         
@@ -128,11 +129,11 @@ def log_function_call(func):
     return wrapper
 
 
-def log_execution_time(func):
+def log_execution_time(func: Any) -> Any:
     """Decorator to log function execution time."""
     import time
     
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
         logger = get_logger('performance')
         start_time = time.time()
         
@@ -149,7 +150,7 @@ def log_execution_time(func):
     return wrapper
 
 
-def configure_logging_from_config(config: dict) -> None:
+def configure_logging_from_config(config: Dict[str, Any]) -> None:
     """
     Configure logging from configuration dictionary.
     

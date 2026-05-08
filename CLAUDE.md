@@ -146,11 +146,11 @@ python scripts/analyze_betse.py path/to/Vmem2D_TextExport/ --resolution 64 --out
 
 ## Known Issues / TODOs
 
-- `compute_basin_of_attraction()` raises NotImplementedError (last remaining placeholder)
 - Import order warning: import juliacall before torch to avoid potential segfault
-- Lyapunov analysis requires >100 timesteps; short simulations (e.g. `betse try`) will fail this check
+- Lyapunov spectrum requires >100 timesteps (hard error) and emits a `RuntimeWarning` below 1000 (recommended); short BETSE simulations (e.g. `betse try`) will fail this check
 - GUDHI Wasserstein distance requires the `POT` package (`pip install POT`); bottleneck distance works without it
-- Test coverage is 38.4% (113 tests); target is 70%+ for JOSS submission
+- Test coverage is 63.92%; target is 70%+ for JOSS submission
+- `compute_basin_of_attraction()` was removed in this revision; design notes preserved in [docs/FUTURE_IDEAS.md](docs/FUTURE_IDEAS.md) for future re-implementation
 
 ## Lyapunov Spectrum Usage
 
