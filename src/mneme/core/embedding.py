@@ -105,13 +105,13 @@ def mutual_information_delay(time_series: np.ndarray, max_delay: int = 100) -> i
     mis = []
     for d in range(1, upper + 1):
         mis.append(_mutual_information(x[:-d], x[d:], n_bins))
-    mis = np.asarray(mis)
-    if len(mis) < 3:
+    mis_arr = np.asarray(mis)
+    if len(mis_arr) < 3:
         return 1
-    for i in range(1, len(mis) - 1):
-        if mis[i] < mis[i - 1] and mis[i] <= mis[i + 1]:
+    for i in range(1, len(mis_arr) - 1):
+        if mis_arr[i] < mis_arr[i - 1] and mis_arr[i] <= mis_arr[i + 1]:
             return i + 1
-    return int(np.argmin(mis)) + 1
+    return int(np.argmin(mis_arr)) + 1
 
 
 def cao_embedding_dimension(
