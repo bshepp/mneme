@@ -27,12 +27,14 @@ from mneme.core.topology import (
     compute_bottleneck_distance,
 )
 from mneme.core.attractors import (
-    compute_lyapunov_spectrum,
-    classify_attractor_by_lyapunov,
-    kaplan_yorke_dimension,
     RecurrenceAnalysis,
-    embed_trajectory,
 )
+from mneme.core import (
+    largest_lyapunov, lyapunov_spectrum, surrogate_test,
+    classify_attractor, kaplan_yorke_dimension, embed_trajectory,
+)
+
+SURROGATE_N = 30
 from mneme.models.autoencoders import create_field_vae
 from mneme.models.symbolic import SymbolicRegressor, discover_field_dynamics
 
@@ -113,10 +115,10 @@ def lyapunov_from_pca(pca_coeffs: np.ndarray, label: str = "") -> dict:
         return {"error": f"Trajectory too short ({t} points)"}
 
     try:
-        spectrum = compute_lyapunov_spectrum(
-            pca_coeffs, dt=1.0, n_neighbors=min(15, t // 10)
-        )
-        atype = classify_attractor_by_lyapunov(spectrum)
+        lyap = largest_lyapunov(pca_coeffs, dt=1.0)
+        sur = surrogate_test(pca_coeffs, statistic="lambda1", n=SURROGATE_N, dt=1.0)
+        atype = classify_attractor(lyap.lambda1, surrogate=sur)
+        spectrum = lyapunov_spectrum(pca_coeffs, dt=1.0)   # exploratory; for D_KY only
         dky = kaplan_yorke_dimension(spectrum)
 
         n_positive = int(np.sum(spectrum > 0))
@@ -125,10 +127,13 @@ def lyapunov_from_pca(pca_coeffs: np.ndarray, label: str = "") -> dict:
 
         result = {
             "spectrum": [float(s) for s in spectrum],
-            "max_exponent": float(spectrum[0]),
+            "max_exponent": float(lyap.lambda1),
             "min_exponent": float(spectrum[-1]),
             "attractor_type": str(atype),
             "kaplan_yorke_dimension": float(dky),
+            "lambda1": float(lyap.lambda1),
+            "surrogate_p": float(sur.p_value),
+            "surrogate_significant": bool(sur.significant),
             "n_positive": n_positive,
             "n_zero": n_zero,
             "n_negative": n_negative,
@@ -136,7 +141,7 @@ def lyapunov_from_pca(pca_coeffs: np.ndarray, label: str = "") -> dict:
         }
         logger.info(
             "  Spectrum: max=%.4f, min=%.4f, D_KY=%.3f, type=%s",
-            spectrum[0], spectrum[-1], dky, atype,
+            lyap.lambda1, spectrum[-1], dky, atype,
         )
         logger.info(
             "  Exponent signs: %d+, %d~0, %d-",
@@ -557,26 +562,29 @@ def vae_analysis(
         # Lyapunov from latent trajectory
         if latent_seq.shape[0] >= 100:
             try:
-                spectrum = compute_lyapunov_spectrum(
-                    latent_seq, dt=1.0, n_neighbors=min(15, latent_seq.shape[0] // 10)
-                )
-                atype = classify_attractor_by_lyapunov(spectrum)
+                lyap = largest_lyapunov(latent_seq, dt=1.0)
+                sur = surrogate_test(latent_seq, statistic="lambda1", n=SURROGATE_N, dt=1.0)
+                atype = classify_attractor(lyap.lambda1, surrogate=sur)
+                spectrum = lyapunov_spectrum(latent_seq, dt=1.0)   # exploratory; for D_KY only
                 dky = kaplan_yorke_dimension(spectrum)
                 n_pos = int(np.sum(spectrum > 0))
                 n_neg = int(np.sum(spectrum < -0.01))
 
                 seq_result["lyapunov"] = {
                     "spectrum": [float(s) for s in spectrum],
-                    "max_exponent": float(spectrum[0]),
+                    "max_exponent": float(lyap.lambda1),
                     "min_exponent": float(spectrum[-1]),
                     "attractor_type": str(atype),
                     "kaplan_yorke_dimension": float(dky),
+                    "lambda1": float(lyap.lambda1),
+                    "surrogate_p": float(sur.p_value),
+                    "surrogate_significant": bool(sur.significant),
                     "n_positive": n_pos,
                     "n_negative": n_neg,
                 }
                 logger.info(
                     "  %s Lyapunov (VAE): max=%.4f, D_KY=%.3f, type=%s, %d+/%d-",
-                    label, spectrum[0], dky, atype, n_pos, n_neg,
+                    label, lyap.lambda1, dky, atype, n_pos, n_neg,
                 )
             except Exception as exc:
                 logger.warning("  %s Lyapunov (VAE) failed: %s", label, exc)

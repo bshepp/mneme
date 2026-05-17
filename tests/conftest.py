@@ -82,26 +82,58 @@ def fixed_point_trajectory():
     return np.column_stack([x, y])
 
 
-@pytest.fixture
-def lorenz_trajectory():
-    """Short Lorenz attractor trajectory (chaotic).
+# pure RK4 integrator helper, not a pytest fixture
+def _rk4(deriv, state0, dt, n_steps):
+    states = np.empty((n_steps, len(state0)))
+    s = np.asarray(state0, dtype=float)
+    for i in range(n_steps):
+        states[i] = s
+        k1 = deriv(s)
+        k2 = deriv(s + 0.5 * dt * k1)
+        k3 = deriv(s + 0.5 * dt * k2)
+        k4 = deriv(s + dt * k3)
+        s = s + (dt / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4)
+    return states
 
-    Integrated with simple Euler steps — not publication-grade but
-    sufficient for testing that Lyapunov exponent code detects chaos.
+
+@pytest.fixture
+def lorenz_rk4():
+    """RK4-integrated Lorenz attractor. Returns (trajectory (N,3), dt).
+
+    100-step transient discarded. Standard params -> lambda1 ~ 0.906.
     """
-    dt = 0.01
-    n_steps = 5000
     sigma, rho, beta = 10.0, 28.0, 8.0 / 3.0
-    xyz = np.zeros((n_steps, 3))
-    xyz[0] = [1.0, 1.0, 1.0]
-    for i in range(n_steps - 1):
-        x, y, z = xyz[i]
-        xyz[i + 1] = xyz[i] + dt * np.array([
-            sigma * (y - x),
-            x * (rho - z) - y,
-            x * y - beta * z,
-        ])
-    return xyz
+
+    def deriv(s):
+        x, y, z = s
+        return np.array([sigma * (y - x), x * (rho - z) - y, x * y - beta * z])
+
+    dt = 0.01
+    traj = _rk4(deriv, [1.0, 1.0, 1.0], dt, 6500)
+    return traj[100:], dt
+
+
+@pytest.fixture
+def lorenz_trajectory(lorenz_rk4):
+    """Back-compat alias used by existing recurrence tests: (N,3) array only."""
+    return lorenz_rk4[0]
+
+
+@pytest.fixture
+def rossler_rk4():
+    """RK4-integrated Rössler attractor. Returns (trajectory (N,3), dt).
+
+    a=b=0.2, c=5.7 -> lambda1 ~ 0.071.
+    """
+    a, b, c = 0.2, 0.2, 5.7
+
+    def deriv(s):
+        x, y, z = s
+        return np.array([-y - z, x + a * y, b + z * (x - c)])
+
+    dt = 0.05
+    traj = _rk4(deriv, [1.0, 1.0, 1.0], dt, 8000)
+    return traj[500:], dt
 
 
 @pytest.fixture

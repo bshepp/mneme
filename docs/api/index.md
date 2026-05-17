@@ -8,7 +8,11 @@ The foundation of Mneme's analysis capabilities:
 
 - [**Field Theory**](core/field_theory.md) -- Field reconstruction from sparse observations (Sparse GP, Dense IFT, Neural Fields)
 - [**Topology**](core/topology.md) -- Persistent homology, persistence diagrams, Wasserstein/bottleneck distances
-- [**Attractors**](core/attractors.md) -- Recurrence analysis, Lyapunov spectrum, clustering-based attractor detection
+- [**Attractors**](core/attractors.md) -- Recurrence- and clustering-based attractor detection
+- [**Lyapunov**](core/lyapunov.md) -- Largest Lyapunov exponent (Rosenstein 1993) and exploratory spectrum
+- [**Surrogates**](core/surrogates.md) -- IAAFT surrogate-data significance testing
+- [**Classification**](core/classify.md) -- Surrogate-gated attractor classification, Kaplan-Yorke dimension
+- [**Embedding**](core/embedding.md) -- Delay/dimension selection (MI delay, Cao 1997, Theiler window)
 
 ## Models
 

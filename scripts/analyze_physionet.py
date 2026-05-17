@@ -10,42 +10,52 @@ from scipy.signal import butter, filtfilt, find_peaks
 import os
 
 # Import Mneme tools
-from mneme.core import compute_lyapunov_spectrum, kaplan_yorke_dimension
-from mneme.core.attractors import classify_attractor_by_lyapunov, embed_trajectory
+from mneme.core import (
+    largest_lyapunov, lyapunov_spectrum, surrogate_test,
+    classify_attractor, kaplan_yorke_dimension, embed_trajectory,
+)
+
+SURROGATE_N = 30
 
 
 def analyze_ecg_hrv(signal, fs, description):
     """Extract HRV from ECG and compute Lyapunov spectrum."""
     nyq = fs / 2
-    
+
     # Bandpass filter for QRS detection
     low = 5 / nyq
     high = min(15, nyq - 0.1) / nyq
     b_qrs, a_qrs = butter(4, [low, high], btype='band')
     ecg_qrs = filtfilt(b_qrs, a_qrs, signal)
-    
+
     # Find R peaks
     peaks, _ = find_peaks(ecg_qrs, distance=int(0.5*fs), height=0.3*np.max(np.abs(ecg_qrs)))
-    
+
     if len(peaks) < 50:
         return None
-    
+
     # RR intervals in milliseconds
     rr_intervals = np.diff(peaks) / fs * 1000
-    
+
     # Embed and analyze
     trajectory = embed_trajectory(rr_intervals, embedding_dimension=4, time_delay=1)
     dt_hrv = np.mean(rr_intervals) / 1000  # Average beat interval in seconds
-    
-    spectrum = compute_lyapunov_spectrum(trajectory, dt=dt_hrv, n_neighbors=10, orthog_interval=5)
+
+    lyap = largest_lyapunov(trajectory, dt=dt_hrv)
+    sur = surrogate_test(trajectory, statistic="lambda1", n=SURROGATE_N, dt=dt_hrv)
+    atype = classify_attractor(lyap.lambda1, surrogate=sur)
+    spectrum = lyapunov_spectrum(trajectory, dt=dt_hrv)   # exploratory; for D_KY only
     d_ky = kaplan_yorke_dimension(spectrum)
-    atype = classify_attractor_by_lyapunov(spectrum)
-    
+
     return {
         'n_beats': len(peaks),
         'mean_hr': 60000 / np.mean(rr_intervals),
         'rr_std': np.std(rr_intervals),
         'spectrum': spectrum,
+        'max_exponent': float(lyap.lambda1),
+        'lambda1': float(lyap.lambda1),
+        'surrogate_p': float(sur.p_value),
+        'surrogate_significant': bool(sur.significant),
         'd_ky': d_ky,
         'type': str(atype)
     }

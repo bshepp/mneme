@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 
 - Unreleased
+  - ### Changed (Tier 0 — scientific core repair)
+  - **BREAKING:** removed `compute_lyapunov_spectrum` and `classify_attractor_by_lyapunov`.
+  - Added `largest_lyapunov` (Rosenstein 1993), exploratory `lyapunov_spectrum`
+    (corrected Sano-Sawada), `surrogate_test` (IAAFT, two-sided rank + effect-size
+    gate, shared embedding), and surrogate-gated `classify_attractor` with the new
+    `AttractorType.UNDETERMINED`.
+  - Added `mneme.core.embedding` (true-MI delay, Cao-1997 dimension, Theiler window).
+  - Chaos / strange-attractor labels now require a passed surrogate test.
+  - Discrete maps are out of scope for `largest_lyapunov` (continuous flows only).
+  - Previous PhysioNet headline numbers (λ₁≈0.12, D_KY≈2.35) are withdrawn pending
+    re-validation under the corrected estimators.
   - **fix(data.loaders)**: `BaseDataLoader.get_info()` now reads dtype from `Field.data` (numpy ndarray) instead of attempting `Field.dtype` (which does not exist).
   - **fix(analysis.results)**: `_create_html_report()` switched to f-string with escaped CSS braces, fixing `KeyError` on report generation; previously skipped test re-enabled.
   - **refactor(core.attractors)**: Removed unused `compute_basin_of_attraction()` placeholder. Design notes and a suggested signature for a future re-implementation are preserved in [docs/FUTURE_IDEAS.md](docs/FUTURE_IDEAS.md).

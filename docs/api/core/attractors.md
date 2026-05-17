@@ -1,22 +1,21 @@
 # Attractors
 
-Attractor detection and dynamical systems analysis for field time series.
+Recurrence- and clustering-based attractor detection for field time series.
+
+(For the corrected Lyapunov estimator and surrogate-significance gate, see
+[Lyapunov](lyapunov.md), [Surrogates](surrogates.md), and
+[Classification](classify.md). For embedding-parameter selection see
+[Embedding](embedding.md).)
 
 ## Recurrence Analysis
 
 ::: mneme.core.attractors.RecurrenceAnalysis
 
-## Lyapunov Analysis
+## Lyapunov Analysis (detector)
 
 ::: mneme.core.attractors.LyapunovAnalysis
 
-## Convenience Functions
-
-::: mneme.core.attractors.compute_lyapunov_spectrum
-
-::: mneme.core.attractors.classify_attractor_by_lyapunov
-
-::: mneme.core.attractors.kaplan_yorke_dimension
+## Correlation Dimension
 
 ::: mneme.core.attractors.compute_correlation_dimension
 
@@ -27,9 +26,3 @@ Attractor detection and dynamical systems analysis for field time series.
 ## Dispatcher
 
 ::: mneme.core.attractors.AttractorDetector
-
-## Embedding Utilities
-
-::: mneme.core.attractors.embed_trajectory
-
-::: mneme.core.attractors.estimate_embedding_parameters

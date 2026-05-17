@@ -73,6 +73,10 @@ nav:
       - Field Theory: api/core/field_theory.md
       - Topology: api/core/topology.md
       - Attractors: api/core/attractors.md
+      - Lyapunov: api/core/lyapunov.md
+      - Surrogates: api/core/surrogates.md
+      - Classification: api/core/classify.md
+      - Embedding: api/core/embedding.md
     - Models:
       - Autoencoders: api/models/autoencoders.md
       - Symbolic Regression: api/models/symbolic.md
