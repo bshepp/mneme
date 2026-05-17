@@ -37,12 +37,14 @@ from mneme.data.betse_loader import (
 from mneme.types import Field
 from mneme.core.topology import PersistentHomology, field_to_point_cloud
 from mneme.core.attractors import (
-    embed_trajectory,
-    compute_lyapunov_spectrum,
-    classify_attractor_by_lyapunov,
-    kaplan_yorke_dimension,
     RecurrenceAnalysis,
 )
+from mneme.core import (
+    largest_lyapunov, lyapunov_spectrum, surrogate_test,
+    classify_attractor, kaplan_yorke_dimension, embed_trajectory,
+)
+
+SURROGATE_N = 30
 from mneme.utils.io import save_results
 
 logging.basicConfig(
@@ -140,20 +142,23 @@ def analyze_temporal(field_seq: np.ndarray, metadata: dict) -> dict:
 
     # --- Lyapunov spectrum ---
     try:
-        spectrum = compute_lyapunov_spectrum(
-            trajectory, dt=1.0, n_neighbors=min(10, t - 1)
-        )
-        attractor_type = classify_attractor_by_lyapunov(spectrum)
+        lyap = largest_lyapunov(trajectory, dt=1.0)
+        sur = surrogate_test(trajectory, statistic="lambda1", n=SURROGATE_N, dt=1.0)
+        attractor_type = classify_attractor(lyap.lambda1, surrogate=sur)
+        spectrum = lyapunov_spectrum(trajectory, dt=1.0)   # exploratory; for D_KY only
         d_ky = kaplan_yorke_dimension(spectrum)
         results["lyapunov"] = {
             "spectrum": [float(s) for s in spectrum],
-            "max_exponent": float(spectrum[0]),
-            "attractor_type": attractor_type,
+            "max_exponent": float(lyap.lambda1),
+            "attractor_type": str(attractor_type),
             "kaplan_yorke_dimension": float(d_ky),
+            "lambda1": float(lyap.lambda1),
+            "surrogate_p": float(sur.p_value),
+            "surrogate_significant": bool(sur.significant),
         }
         logger.info(
             "  Lyapunov: max=%.4f, type=%s, D_KY=%.3f",
-            spectrum[0], attractor_type, d_ky,
+            lyap.lambda1, attractor_type, d_ky,
         )
     except Exception as exc:
         logger.warning("  Lyapunov analysis failed: %s", exc)
@@ -325,10 +330,11 @@ def main():
             vmem_ts = ts_data[:, vmem_idx]
 
             try:
-                spectrum = compute_lyapunov_spectrum(
-                    vmem_ts.reshape(-1, 1), dt=1.0
-                )
-                atype = classify_attractor_by_lyapunov(spectrum)
+                vmem_traj = vmem_ts.reshape(-1, 1)
+                lyap = largest_lyapunov(vmem_traj, dt=1.0)
+                sur = surrogate_test(vmem_traj, statistic="lambda1", n=SURROGATE_N, dt=1.0)
+                atype = classify_attractor(lyap.lambda1, surrogate=sur)
+                spectrum = lyapunov_spectrum(vmem_traj, dt=1.0)   # exploratory; for D_KY only
                 d_ky = kaplan_yorke_dimension(spectrum)
                 all_results["single_cell"] = {
                     "n_timesteps": ts_data.shape[0],
@@ -336,12 +342,15 @@ def main():
                     "vmem_range": [float(vmem_ts.min()), float(vmem_ts.max())],
                     "vmem_mean": float(vmem_ts.mean()),
                     "lyapunov_spectrum": [float(s) for s in spectrum],
-                    "attractor_type": atype,
+                    "attractor_type": str(atype),
                     "kaplan_yorke_dim": float(d_ky),
+                    "lambda1": float(lyap.lambda1),
+                    "surrogate_p": float(sur.p_value),
+                    "surrogate_significant": bool(sur.significant),
                 }
                 logger.info(
                     "  Single-cell Lyapunov: max=%.4f, type=%s",
-                    spectrum[0], atype,
+                    lyap.lambda1, atype,
                 )
             except Exception as exc:
                 logger.warning("  Single-cell Lyapunov failed: %s", exc)
