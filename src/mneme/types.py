@@ -40,6 +40,7 @@ class AttractorType(str, Enum):
     LIMIT_CYCLE = "limit_cycle"
     STRANGE = "strange"
     QUASI_PERIODIC = "quasi_periodic"
+    UNDETERMINED = "undetermined"
 
 # Data classes
 @dataclass
