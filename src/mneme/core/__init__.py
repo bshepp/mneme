@@ -15,16 +15,15 @@ from .field_theory import (
     create_grid_points,
 )
 
-from .attractors import (
-    compute_lyapunov_spectrum,
-    classify_attractor_by_lyapunov,
-    kaplan_yorke_dimension,
-)
+from .embedding import embed_trajectory, estimate_embedding_parameters
+from .lyapunov import LyapunovResult, largest_lyapunov, lyapunov_spectrum
+from .surrogates import SurrogateResult, iaaft_surrogates, surrogate_test
+from .classify import classify_attractor, kaplan_yorke_dimension
 
 __all__ = [
     # Modules
     "field_theory",
-    "topology", 
+    "topology",
     "attractors",
     # Reconstructors
     "FieldReconstructor",
@@ -34,8 +33,18 @@ __all__ = [
     "NeuralFieldReconstructor",
     "create_reconstructor",
     "create_grid_points",
+    # Embedding
+    "embed_trajectory",
+    "estimate_embedding_parameters",
     # Lyapunov analysis
-    "compute_lyapunov_spectrum",
-    "classify_attractor_by_lyapunov",
+    "LyapunovResult",
+    "largest_lyapunov",
+    "lyapunov_spectrum",
+    # Surrogate testing
+    "SurrogateResult",
+    "iaaft_surrogates",
+    "surrogate_test",
+    # Classification
+    "classify_attractor",
     "kaplan_yorke_dimension",
 ]
