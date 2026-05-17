@@ -91,7 +91,7 @@ def _mutual_information(x: np.ndarray, y: np.ndarray, n_bins: int) -> float:
 def mutual_information_delay(time_series: np.ndarray, max_delay: int = 100) -> int:
     """Time delay = first local minimum of time-delayed mutual information.
 
-    Fraser–Swinney method. Bin count via a Freedman–Diaconis-like rule.
+    Fraser–Swinney method. Bin count via a sqrt-of-sample-size rule.
     If no local minimum is found, returns the delay of the global minimum
     within [1, max_delay]; if MI is monotone/degenerate, returns 1.
     """
@@ -103,7 +103,7 @@ def mutual_information_delay(time_series: np.ndarray, max_delay: int = 100) -> i
     n_bins = max(8, int(np.sqrt(n / 5.0)))
 
     mis = []
-    for d in range(1, upper):
+    for d in range(1, upper + 1):
         mis.append(_mutual_information(x[:-d], x[d:], n_bins))
     mis = np.asarray(mis)
     if len(mis) < 3:
@@ -122,7 +122,8 @@ def cao_embedding_dimension(
     """Minimum embedding dimension via Cao's (1997) E1 statistic.
 
     E1(d) saturates near 1 once the attractor is unfolded. Returns the
-    smallest d where the relative change in E1 drops below 5% (or max_dim).
+    smallest d where E1(d) saturates near 1 (threshold 0.90), else a
+    relative-change fallback, capped at max_dim.
     """
     x = np.asarray(time_series, dtype=float)
     if x.ndim > 1:
@@ -151,10 +152,17 @@ def cao_embedding_dimension(
     if len(e_values) < 2:
         return min(3, max_dim)
     e = np.asarray(e_values)
-    e1 = e[1:] / e[:-1]
+    e1 = e[1:] / e[:-1]  # E1(d) for d = 1 .. len(e1)
+    # Cao (1997): minimum embedding dimension is the smallest d where
+    # E1(d) has saturated near 1 (recommended threshold ~0.85-0.95).
+    saturation = 0.90
+    for d in range(len(e1)):
+        if e1[d] >= saturation:
+            return min(d + 1, max_dim)
+    # Fallback: relative-change plateau, then max_dim.
     for d in range(1, len(e1)):
         if abs(e1[d] - e1[d - 1]) < 0.05:
-            return d + 1
+            return min(d + 1, max_dim)
     return min(len(e1) + 1, max_dim)
 
 
@@ -166,7 +174,7 @@ def estimate_embedding_parameters(
     """Estimate (embedding_dimension, time_delay) via MI delay + Cao dimension."""
     x = np.asarray(time_series, dtype=float)
     if x.ndim > 1:
-        x = x.flatten()
+        x = x[:, 0]
     delay = mutual_information_delay(x, max_delay)
     dim = cao_embedding_dimension(x, delay, max_dimension)
     return int(dim), int(delay)
