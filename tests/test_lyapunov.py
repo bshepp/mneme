@@ -187,18 +187,52 @@ class TestNoisyPeriodicNotChaotic:
     must come from a SUSTAINED linear divergence region — never from a
     single-step jump — so these must now estimate λ₁ ≈ 0. This is the
     precise "noise labelled chaotic" failure Tier 0 exists to eliminate.
+
+    An independent probe confirmed the fix generalises broadly: worst
+    |λ₁| ≈ 0.0023 across many period × noise-fraction combos including
+    pure white noise. The parametrised cases below widen the regression
+    gate to catch future regressions across that range.
     """
 
-    def test_sine_period_47p3_plus_1pct_noise(self):
-        rng = np.random.RandomState(7)
+    @pytest.mark.parametrize(
+        "period,noise",
+        [
+            (31.7, 0.005),
+            (31.7, 0.01),
+            (31.7, 0.05),
+            (47.3, 0.005),
+            (47.3, 0.01),
+            (47.3, 0.05),
+            (50.0, 0.005),
+            (50.0, 0.01),
+            (50.0, 0.05),
+            (63.0, 0.005),
+            (63.0, 0.01),
+            (63.0, 0.05),
+            (120.0, 0.005),
+            (120.0, 0.01),
+            (120.0, 0.05),
+        ],
+    )
+    def test_noisy_sine_not_chaotic(self, period, noise):
         t = np.arange(6000)
-        sig = np.sin(2 * np.pi * t / 47.3) + 0.01 * rng.randn(6000)
+        sig = np.sin(2 * np.pi * t / period) + noise * np.random.RandomState(7).randn(6000)
+        res = largest_lyapunov(sig, dt=1.0)
+        assert abs(res.lambda1) < 0.05, f"period={period}, noise={noise} -> {res.lambda1}"
+
+    def test_quasiperiodic_not_chaotic(self):
+        """Two incommensurate sine waves (quasiperiodic) must not be flagged chaotic."""
+        t = np.arange(6000)
+        sig = (
+            np.sin(2 * np.pi * t / 31.0)
+            + np.sin(2 * np.pi * t / (31.0 * np.sqrt(2)))
+            + 0.01 * np.random.RandomState(7).randn(6000)
+        )
         res = largest_lyapunov(sig, dt=1.0)
         assert abs(res.lambda1) < 0.05, res.lambda1
 
-    def test_sine_period_50_plus_1pct_noise(self):
-        rng = np.random.RandomState(7)
-        t = np.arange(6000)
-        sig = np.sin(2 * np.pi * t / 50.0) + 0.01 * rng.randn(6000)
+    def test_pure_white_noise_not_chaotic(self):
+        """Pure white noise has no sustained divergence and must not be flagged chaotic."""
+        sig = np.random.RandomState(7).randn(6000)
         res = largest_lyapunov(sig, dt=1.0)
         assert abs(res.lambda1) < 0.05, res.lambda1

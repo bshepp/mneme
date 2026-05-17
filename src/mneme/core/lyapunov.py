@@ -94,14 +94,16 @@ _WMIN_DIV = 8      # w_min = max(5, region // _WMIN_DIV)
 _W_DIV = 8         # fixed window length = max(w_min, region // _W_DIV)
 _S0 = 0            # transient skip (kept at 0; the window position is
                    # data-selected so flows are unaffected)
-_FLAT_LEN = 80     # minimum SUSTAINED rising-region length: a genuine
-                   # chaotic flow has a long (>= a few hundred sample)
-                   # rising region, whereas a regular/periodic signal
-                   # collapses to a lone step-0->1 jump then flat
-                   # (rising region only tens of samples). Also the
-                   # length of the honest flat-fit window used for the
-                   # collapsed/degenerate case, taken AFTER the initial
-                   # noise-floor jump. Read ONLY off the curve.
+_FLAT_LEN = 80     # minimum SUSTAINED rising-region length required to
+                   # attempt a scaling-region fit. The degenerate flat-fit
+                   # path is reached whenever no SUSTAINED positive-slope
+                   # rising region of sufficient length exists — this covers
+                   # both the short-region case (region < _FLAT_LEN) and the
+                   # no-positive-window case (w >= region or best_a < 0),
+                   # both of which are typical of regular/periodic signals.
+                   # Also the length of the honest flat-fit window used in
+                   # that degenerate case, taken AFTER the initial noise-floor
+                   # jump. Read ONLY off the curve.
 
 
 def _ols_r2_slope(y: np.ndarray) -> Tuple[float, float]:
