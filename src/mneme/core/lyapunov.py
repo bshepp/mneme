@@ -3,6 +3,15 @@
 `largest_lyapunov` is the headline, robust estimator. `lyapunov_spectrum`
 (corrected Sano-Sawada) is explicitly exploratory and emits a RuntimeWarning.
 Pure numpy/scipy; no new dependencies.
+
+Scope
+-----
+Designed for continuous (sampled-flow) time series. Discrete maps are out
+of scope — delay-embedded scalar maps are not reliably estimated by this
+method: a map carries essentially all of its divergence in the very first
+step, which is indistinguishable from the single-step noise-floor artifact
+that this estimator must reject to avoid labelling noisy periodic signals
+as chaotic. Use a map-specific estimator for logistic/Hénon-type systems.
 """
 
 from __future__ import annotations
@@ -74,15 +83,25 @@ def _resolve_embedding(
 #
 # Tunable constants. Their VALUES were chosen to satisfy a broad
 # generalisation suite (multiple Lorenz initial conditions and
-# observables, Rössler, the logistic and Hénon maps, Van der Pol); the
-# detector itself reads ONLY the divergence curve — never the system,
-# the fixture parameters, or the trajectory.
-_SAT_LEVEL = 0.94  # saturation-onset fraction that bounds the rising part
+# observables, Rössler, Van der Pol, and a noisy-periodic rejection
+# gate); the detector itself reads ONLY the divergence curve — never
+# the system, the fixture parameters, or the trajectory. Discrete maps
+# are intentionally out of scope (see the module docstring).
+_SAT_LEVEL = 0.94  # saturation-onset fraction; must be SUSTAINED, not
+                   # a single step (a lone 0->1 jump is a noise-floor
+                   # artifact, never a Lyapunov scaling region)
 _WMIN_DIV = 8      # w_min = max(5, region // _WMIN_DIV)
 _W_DIV = 8         # fixed window length = max(w_min, region // _W_DIV)
-_S0 = 0            # transient skip (kept at 0: fast maps put the
-                   # dominant divergence in step 0; the window position
-                   # is data-selected so flows are unaffected)
+_S0 = 0            # transient skip (kept at 0; the window position is
+                   # data-selected so flows are unaffected)
+_FLAT_LEN = 80     # minimum SUSTAINED rising-region length: a genuine
+                   # chaotic flow has a long (>= a few hundred sample)
+                   # rising region, whereas a regular/periodic signal
+                   # collapses to a lone step-0->1 jump then flat
+                   # (rising region only tens of samples). Also the
+                   # length of the honest flat-fit window used for the
+                   # collapsed/degenerate case, taken AFTER the initial
+                   # noise-floor jump. Read ONLY off the curve.
 
 
 def _ols_r2_slope(y: np.ndarray) -> Tuple[float, float]:
@@ -115,29 +134,51 @@ def _linear_region(curve: np.ndarray) -> Tuple[int, int, float]:
     assumed as a fixed fraction of the curve — which is what makes the
     estimate generalise across systems, initial conditions, observables
     and sample rates. There is NO assumption of a flat plateau: a
-    Rosenstein divergence curve is a rising, gently concave ramp that
-    saturates; the scaling region is the early portion that is most
-    linear (highest OLS R²) with a strictly positive slope.
+    Rosenstein divergence curve for a chaotic flow is a rising, gently
+    concave ramp that saturates; the scaling region is the early
+    portion that is most linear (highest OLS R²) with a strictly
+    positive slope.
+
+    A Lyapunov exponent must come from a SUSTAINED linear divergence
+    region — never from a single-step jump. A regular/periodic signal
+    (with or without measurement noise) produces a *collapsed* curve:
+    one big step 0->1 (noise-floor -> signal-spacing artifact) and then
+    flat. Treating that lone step as a scaling region is exactly the
+    "noise labelled chaotic" failure this estimator must avoid, so the
+    saturation onset must be SUSTAINED (not a single step), the rising
+    region must be long enough to host a genuine scaling window, and the
+    2-point ``curve[0:2]`` jump is NEVER fitted.
 
     Algorithm
     ---------
-    1. Skip a tiny transient: ``s0 = _S0`` (0 by default — fast maps
-       carry their dominant divergence in the first step).
+    1. Skip a tiny transient: ``s0 = _S0`` (0 by default).
     2. Bound the search to the *rising* part: ``s_sat`` is the first
-       index >= ``s0`` where ``curve`` reaches
-       ``min + _SAT_LEVEL*(max-min)`` (the saturation onset); if it
-       never does, ``s_sat = len(curve)``. The scaling region lies in
-       ``[s0, s_sat]``.
-    3. Slide a FIXED-length window
-       ``w = max(w_min, region // _W_DIV)`` (with
-       ``w_min = max(5, region // _WMIN_DIV)``) by step 1 over
+       index >= ``s0`` at which ``curve`` reaches
+       ``min + _SAT_LEVEL*(max-min)`` AND stays at/above it for the
+       next ``hold_min = max(5, avail // _WMIN_DIV)`` samples (SUSTAINED
+       saturation — a lone step does not count; ``hold_min`` is derived
+       from the FULL available horizon, never a single step). If it
+       never sustains, ``s_sat = len(curve)``. ``region = s_sat - s0``.
+    3. Collapsed/degenerate test: a chaotic flow rises for hundreds of
+       samples before saturating, whereas a regular/periodic signal
+       collapses to the lone step-0->1 jump then flat (rising region
+       only tens of samples). If ``region < max(w_min, _FLAT_LEN)``
+       (with ``w_min = max(5, region // _WMIN_DIV)``) or no contiguous
+       window of length >= ``w_min`` within ``[s0, s_sat]`` has a
+       strictly positive slope, fit an HONEST flat window of length
+       ``max(w_min, _FLAT_LEN)`` taken AFTER the initial jump:
+       ``curve[s_flat:...]`` with ``s_flat = min(s0 + 1, n - 2)``. For
+       a regular/periodic signal this window is flat -> slope ~= 0 ->
+       λ₁ ~= 0 (correct). ``curve[0:2]`` is NEVER fitted.
+    4. Otherwise (genuine sustained rising region): slide a FIXED-length
+       window ``w = max(w_min, region // _W_DIV)`` by step 1 over
        ``[s0, s_sat - w]`` and pick the window with the maximum R²
        among those with a strictly positive slope. The window length
-       is fixed; only its *position* is data-selected, keeping the
-       search O(n).
-    4. Fallbacks: if ``region < w_min`` or no positive-slope window
-       exists, fit the whole ``[s0, s_sat]``. ``len(curve) < 4`` is
-       handled by the caller (returns λ₁ = 0).
+       is fixed (>= ``w_min``); only its *position* is data-selected,
+       keeping the search O(n). The ``region``-derived ``w``/``w_min``
+       are identical to the pre-fix detector so chaotic flows fit the
+       identical window. ``len(curve) < 4`` is handled by the caller
+       (returns λ₁ = 0).
 
     Returns
     -------
@@ -153,27 +194,75 @@ def _linear_region(curve: np.ndarray) -> Tuple[int, int, float]:
     hi = float(curve.max())
     span = hi - lo
 
+    # ``hold_min`` is a stable saturation-hold length derived from the
+    # FULL available horizon (never a single step). It only governs the
+    # SUSTAINED-saturation test below; it deliberately does NOT feed the
+    # rising-region window length so chaotic flows fit exactly the same
+    # region as before this fix.
+    avail = n - s0
+    hold_min = max(5, avail // _WMIN_DIV)
+
+    # Saturation onset: first index that reaches the saturation level
+    # AND stays at/above it for >= hold_min consecutive samples. A lone
+    # step that touches the level (the noise-floor artifact of a
+    # regular/periodic signal) is NOT a saturation and does not bound
+    # the rising region; in that case s_sat falls through to n and the
+    # collapsed/degenerate path is taken.
     s_sat = n
     if span > 1e-12:
         threshold = lo + _SAT_LEVEL * span
         for idx in range(s0, n):
             if curve[idx] >= threshold:
-                s_sat = idx
-                break
+                hold_end = min(n, idx + hold_min)
+                if (hold_end - idx) >= hold_min and np.all(
+                    curve[idx:hold_end] >= threshold
+                ):
+                    s_sat = idx
+                    break
     s_sat = max(s_sat, s0)
 
     region = s_sat - s0
+    # Rising-region window sizing — identical formulae to the original
+    # detector so chaotic flows are unaffected.
     w_min = max(5, region // _WMIN_DIV)
 
-    if region < w_min:
-        end = max(s_sat, min(s0 + 2, n))
-        r2, _ = _ols_r2_slope(curve[s0:end])
-        return s0, end, r2
+    def _degenerate_flat() -> Tuple[int, int, float]:
+        """Honest flat fit AFTER the initial noise-floor jump.
+
+        Never fits ``curve[0:2]``: the step-0->1 jump is excluded by
+        starting at ``s_flat = min(s0 + 1, n - 2)`` and the window is
+        ``max(w_min, _FLAT_LEN)`` long (clipped to what is available).
+        For a regular/periodic signal this window is flat so the slope
+        — and therefore λ₁ — is ~= 0; ``fit_r2`` is the OLS R² of that
+        flat window (low, correctly flagging it is not a linear scaling
+        region).
+        """
+        s_flat = min(s0 + 1, n - 2)
+        length = max(w_min, _FLAT_LEN)
+        end = min(n, s_flat + length)
+        if end - s_flat < 2:  # pathological tiny curve
+            s_flat = max(0, n - 2)
+            end = n
+        r2, _ = _ols_r2_slope(curve[s_flat:end])
+        return s_flat, end, r2
+
+    # A Lyapunov exponent must come from a SUSTAINED rising region. A
+    # genuine chaotic flow rises for hundreds of samples before it
+    # saturates; a regular/periodic signal (with or without measurement
+    # noise) collapses to a lone step-0->1 jump and is then flat, so its
+    # "rising region" before the sustained plateau is only tens of
+    # samples. Requiring ``region >= max(w_min, _FLAT_LEN)`` rejects
+    # that collapsed case and routes it to the honest flat fit. This
+    # bound is read ONLY off the curve and does NOT alter ``w``/``w_min``
+    # (still region-derived) so chaotic flows fit the identical window
+    # as before. (Replaces the old ``curve[0:2]`` 2-point-jump fallback,
+    # which is exactly the noise-floor artifact a fit must never use.)
+    if region < max(w_min, _FLAT_LEN):
+        return _degenerate_flat()
 
     w = max(w_min, region // _W_DIV)
-    if w >= region:
-        r2, _ = _ols_r2_slope(curve[s0:s_sat])
-        return s0, s_sat, r2
+    if w >= region:  # no room for a >= w_min rising window -> collapsed
+        return _degenerate_flat()
 
     best_r2 = -np.inf
     best_a = -1
@@ -183,9 +272,11 @@ def _linear_region(curve: np.ndarray) -> Tuple[int, int, float]:
             best_r2 = r2
             best_a = a
 
+    # No sustained positive-slope window of length >= w_min anywhere in
+    # the rising region: the curve is flat (regular/periodic) -> honest
+    # flat fit, never the 2-point jump.
     if best_a < 0:
-        r2, _ = _ols_r2_slope(curve[s0:s_sat])
-        return s0, s_sat, r2
+        return _degenerate_flat()
 
     r2, _ = _ols_r2_slope(curve[best_a : best_a + w])
     return best_a, best_a + w, r2
@@ -207,7 +298,20 @@ def largest_lyapunov(
     the linear scaling region whose *position* is selected from the data
     by :func:`_linear_region` (highest OLS R², strictly positive slope).
     The fit R² is returned in ``LyapunovResult.fit_r2`` as a fit-quality
-    metric; there is no plateau assumption.
+    metric; there is no plateau assumption. A regular/periodic signal
+    (with or without measurement noise) has no sustained rising region
+    and is correctly estimated at λ₁ ≈ 0 — a lone step-0->1 jump is a
+    noise-floor artifact and is never fitted as a scaling region.
+
+    Scope
+    -----
+    Designed for continuous (sampled-flow) time series. Discrete maps
+    are out of scope — delay-embedded scalar maps are not reliably
+    estimated by this method: a map puts essentially all of its
+    divergence in the single first step, which is indistinguishable
+    from the single-step noise-floor artifact this estimator must
+    reject. Use a map-specific estimator for logistic/Hénon-type
+    systems.
 
     Parameters
     ----------
