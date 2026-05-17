@@ -78,4 +78,4 @@ def kaplan_yorke_dimension(spectrum: np.ndarray) -> float:
         return float(len(spectrum))
     if abs(spectrum[j + 1]) < 1e-10:
         return float(j + 1)
-    return max(0.0, (j + 1) + cumsum[j] / abs(spectrum[j + 1]))
+    return float(max(0.0, (j + 1) + cumsum[j] / abs(spectrum[j + 1])))
