@@ -11,7 +11,7 @@ Mneme seeks to uncover attractor states, regulatory logic, and latent architectu
 - **Field Reconstruction**: Scalable Sparse GP reconstruction (default), with dense IFT, standard GP, and neural field backends available. Handles 256×256 fields in sub-second time.
 - **Topology Analysis**: Full GUDHI integration for cubical, Rips, and Alpha complexes. Computes persistence diagrams, landscapes, and images with Wasserstein/bottleneck distances.
 - **Attractor Detection**: Recurrence-based, Lyapunov, and clustering detectors for identifying stable states in temporal field data.
-- **Lyapunov Spectrum**: Full Wolf algorithm implementation for computing Lyapunov exponents from trajectory data. Includes `kaplan_yorke_dimension()` for fractal dimension and automatic attractor classification.
+- **Lyapunov Spectrum**: Rosenstein-1993 `largest_lyapunov()` for robust λ₁, exploratory `lyapunov_spectrum()`, surrogate significance testing via `surrogate_test()`, and surrogate-gated `classify_attractor()`. Includes `kaplan_yorke_dimension()` for fractal dimension.
 - **Symbolic Regression**: Full PySR integration for discovering governing equations from field dynamics. Includes `discover_field_dynamics()` for automatic PDE discovery.
 - **Latent Space Analysis**: Convolutional VAE (`FieldAutoencoder`) for learning compressed field representations, with training loop, interpolation, and sampling capabilities.
 
@@ -46,28 +46,13 @@ For detailed setup instructions, see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMEN
 
 **Previous milestones (2025-11-27):**
 - ✅ Sparse GP reconstruction as scalable default (O(nm²) instead of O(n³))
-- ✅ Full Lyapunov spectrum computation (Wolf algorithm) with real data validation
+- ✅ Lyapunov analysis (Rosenstein λ₁, exploratory spectrum, surrogate gating) — re-validation pending under Tier 0 estimators
 - ✅ Full PySR integration for symbolic regression with Julia backend
 - ✅ Convolutional VAE with proper training loop and latent space utilities
 - ✅ GUDHI integration for Rips, Alpha, and cubical complexes
 - ✅ Dense IFT preserved as option for exact computation on small fields
 
-### Validated on Real Biological Data
-
-The Lyapunov spectrum implementation has been tested on real ECG data from PhysioNet:
-
-```
-Heart Rate Variability Analysis (MIT-BIH Record 100):
-  λ₁ = +0.123 /s  (chaos - healthy!)
-  λ₂ = -0.007 /s  (near-zero)
-  λ₃ = -0.330 /s  (contraction)
-  λ₄ = -0.953 /s  (contraction)
-  
-  Kaplan-Yorke Dimension: 2.35
-  Predictability Horizon: ~8 seconds
-```
-
-This matches published literature on HRV chaos and validates the algorithm for biological time series.
+Lyapunov and attractor results are **pending re-validation** under the Tier 0 corrected estimators. Chaos/strange-attractor labels are gated behind a surrogate-significance test (IAAFT, two-sided) — the tool does not report chaos without passed surrogate evidence.
 
 ## Quick Start
 
@@ -103,11 +88,17 @@ from mneme.models import discover_field_dynamics
 result = discover_field_dynamics(data, dt=1.0, niterations=50)
 print(f"Discovered equation: {result['best_equation']}")
 
-# Compute Lyapunov spectrum (chaos analysis)
-from mneme.core import compute_lyapunov_spectrum, kaplan_yorke_dimension
+# Compute Lyapunov exponent (chaos analysis)
+from mneme.core import (
+    largest_lyapunov, surrogate_test, classify_attractor,
+    lyapunov_spectrum, kaplan_yorke_dimension,
+)
 trajectory = latent  # Use VAE latent space as phase space
-spectrum = compute_lyapunov_spectrum(trajectory, dt=1.0)
-print(f"Lyapunov spectrum: {spectrum}")
+res = largest_lyapunov(trajectory, dt=1.0)
+sur = surrogate_test(trajectory, statistic="lambda1", n=200, dt=1.0)
+attractor_type = classify_attractor(res.lambda1, surrogate=sur)  # STRANGE only if sur.significant
+spectrum = lyapunov_spectrum(trajectory, dt=1.0)      # EXPLORATORY full spectrum (RuntimeWarning)
+print(f"λ₁ = {res.lambda1:.4f}, attractor = {attractor_type}")
 print(f"Kaplan-Yorke dimension: {kaplan_yorke_dimension(spectrum):.2f}")
 ```
 

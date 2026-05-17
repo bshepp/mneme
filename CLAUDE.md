@@ -14,11 +14,11 @@ The core system is in **active development** with all major components implement
 - **Field Reconstruction**: Sparse GP (default, scalable), Dense IFT, Standard GP, Neural Fields
 - **Topology Analysis**: Full GUDHI integration (cubical, Rips, Alpha complexes)
 - **Attractor Detection**: Recurrence, Lyapunov, and clustering methods
-- **Lyapunov Spectrum**: Full Wolf algorithm with `compute_lyapunov_spectrum()`, `kaplan_yorke_dimension()`, `classify_attractor_by_lyapunov()`
+- **Lyapunov Spectrum**: Rosenstein-1993 `largest_lyapunov()`, exploratory `lyapunov_spectrum()`, `surrogate_test()`, surrogate-gated `classify_attractor()`, `kaplan_yorke_dimension()`
 - **Symbolic Regression**: Full PySR integration with `discover_field_dynamics()`
 - **Latent Space Analysis**: Convolutional VAE with training, encoding, interpolation
 - **Pipeline**: End-to-end analysis with visualization and HDF5 export
-- **Real Data Validation**: Tested on PhysioNet ECG/HRV data with results matching literature
+- **Real Data Validation**: PhysioNet ECG/HRV validation pending re-run under Tier 0 corrected estimators
 - **BETSE Integration**: Loader for BETSE bioelectric tissue simulation output (`betse_loader.py`)
 - **Test Suite**: Unit and integration tests with CI via GitHub Actions
 
@@ -147,7 +147,7 @@ python scripts/analyze_betse.py path/to/Vmem2D_TextExport/ --resolution 64 --out
 ## Known Issues / TODOs
 
 - Import order warning: import juliacall before torch to avoid potential segfault
-- Lyapunov spectrum requires >100 timesteps (hard error) and emits a `RuntimeWarning` below 1000 (recommended); short BETSE simulations (e.g. `betse try`) will fail this check
+- `lyapunov_spectrum()` (exploratory) requires >100 timesteps (hard error) and emits a `RuntimeWarning` below 1000 (recommended); short BETSE simulations (e.g. `betse try`) will fail this check
 - GUDHI Wasserstein distance requires the `POT` package (`pip install POT`); bottleneck distance works without it
 - Test coverage is 63.92%; target is 70%+ for JOSS submission
 - `compute_basin_of_attraction()` was removed in this revision; design notes preserved in [docs/FUTURE_IDEAS.md](docs/FUTURE_IDEAS.md) for future re-implementation
@@ -155,19 +155,16 @@ python scripts/analyze_betse.py path/to/Vmem2D_TextExport/ --resolution 64 --out
 ## Lyapunov Spectrum Usage
 
 ```python
-from mneme.core import compute_lyapunov_spectrum, classify_attractor_by_lyapunov, kaplan_yorke_dimension
+from mneme.core import (
+    largest_lyapunov, surrogate_test, classify_attractor,
+    lyapunov_spectrum, kaplan_yorke_dimension,
+)
 
-# Compute spectrum from any trajectory (1D or embedded)
-spectrum = compute_lyapunov_spectrum(trajectory, dt=0.01, n_neighbors=15)
-
-# Interpret results
-attractor_type = classify_attractor_by_lyapunov(spectrum)  # FIXED_POINT, LIMIT_CYCLE, STRANGE, etc.
-d_ky = kaplan_yorke_dimension(spectrum)  # Fractal dimension
-
-# What the spectrum means:
-# - Positive exponent → chaos (trajectories diverge)
-# - Zero exponent → neutral (flow direction)
-# - Negative exponents → stability (trajectories converge)
+res = largest_lyapunov(trajectory, dt=0.01)            # robust λ₁ (Rosenstein 1993)
+sur = surrogate_test(trajectory, statistic="lambda1", n=200, dt=0.01)
+attractor_type = classify_attractor(res.lambda1, surrogate=sur)  # STRANGE only if sur.significant
+spectrum = lyapunov_spectrum(trajectory, dt=0.01)      # EXPLORATORY full spectrum (RuntimeWarning)
+d_ky = kaplan_yorke_dimension(spectrum)
 ```
 
-**Validated on real data:** PhysioNet ECG heart rate variability shows λ₁=+0.12/s, D_KY=2.35, matching published literature on cardiac chaos.
+> **Validation status:** Lyapunov/attractor results are **pending re-validation** under the Tier 0 corrected estimators. The previous PhysioNet headline numbers were produced by the now-removed estimator and are **not asserted**. Chaos is never reported without a passed surrogate-significance test.
