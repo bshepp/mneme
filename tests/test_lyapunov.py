@@ -15,3 +15,5 @@ def test_rossler_rk4_fixture_shape(rossler_rk4):
     traj, dt = rossler_rk4
     assert traj.shape[1] == 3
     assert np.all(np.isfinite(traj))
+    assert traj.shape[0] >= 7000
+    assert dt == 0.05

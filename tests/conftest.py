@@ -82,6 +82,7 @@ def fixed_point_trajectory():
     return np.column_stack([x, y])
 
 
+# pure RK4 integrator helper, not a pytest fixture
 def _rk4(deriv, state0, dt, n_steps):
     states = np.empty((n_steps, len(state0)))
     s = np.asarray(state0, dtype=float)
