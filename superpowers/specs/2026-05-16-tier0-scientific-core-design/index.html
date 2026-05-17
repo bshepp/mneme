@@ -10,25 +10,27 @@
       
       
       
+        <link rel="canonical" href="https://bshepp.github.io/mneme/superpowers/specs/2026-05-16-tier0-scientific-core-design/">
+      
       
       
       
         
       
       
-      <link rel="icon" href="/mneme/assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>Mneme</title>
+        <title>Tier 0 — Scientific Core Repair: Design Spec - Mneme</title>
       
     
     
-      <link rel="stylesheet" href="/mneme/assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="/mneme/assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -47,9 +49,9 @@
       
     
     
-      <link rel="stylesheet" href="/mneme/assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("/mneme/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -73,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#tier-0-scientific-core-repair-design-spec" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -85,7 +92,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/mneme/." title="Mneme" class="md-header__button md-logo" aria-label="Mneme" data-md-component="logo">
+    <a href="../../.." title="Mneme" class="md-header__button md-logo" aria-label="Mneme" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -105,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Tier 0 — Scientific Core Repair: Design Spec
             
           </span>
         </div>
@@ -221,7 +228,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/mneme/." title="Mneme" class="md-nav__button md-logo" aria-label="Mneme" data-md-component="logo">
+    <a href="../../.." title="Mneme" class="md-nav__button md-logo" aria-label="Mneme" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -251,7 +258,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -332,7 +339,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/DEVELOPMENT_SETUP/" class="md-nav__link">
+      <a href="../../../DEVELOPMENT_SETUP/" class="md-nav__link">
         
   
   
@@ -360,7 +367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/PROJECT_STRUCTURE/" class="md-nav__link">
+      <a href="../../../PROJECT_STRUCTURE/" class="md-nav__link">
         
   
   
@@ -449,7 +456,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/DATA_PIPELINE/" class="md-nav__link">
+      <a href="../../../DATA_PIPELINE/" class="md-nav__link">
         
   
   
@@ -477,7 +484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/API_DESIGN/" class="md-nav__link">
+      <a href="../../../API_DESIGN/" class="md-nav__link">
         
   
   
@@ -505,7 +512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/BETSE_ANALYSIS_REPORT/" class="md-nav__link">
+      <a href="../../../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
         
   
   
@@ -594,7 +601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/" class="md-nav__link">
+      <a href="../../../api/" class="md-nav__link">
         
   
   
@@ -673,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/core/field_theory/" class="md-nav__link">
+      <a href="../../../api/core/field_theory/" class="md-nav__link">
         
   
   
@@ -701,7 +708,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/core/topology/" class="md-nav__link">
+      <a href="../../../api/core/topology/" class="md-nav__link">
         
   
   
@@ -729,7 +736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/core/attractors/" class="md-nav__link">
+      <a href="../../../api/core/attractors/" class="md-nav__link">
         
   
   
@@ -757,7 +764,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/core/lyapunov/" class="md-nav__link">
+      <a href="../../../api/core/lyapunov/" class="md-nav__link">
         
   
   
@@ -785,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/core/surrogates/" class="md-nav__link">
+      <a href="../../../api/core/surrogates/" class="md-nav__link">
         
   
   
@@ -813,7 +820,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/core/classify/" class="md-nav__link">
+      <a href="../../../api/core/classify/" class="md-nav__link">
         
   
   
@@ -841,7 +848,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/core/embedding/" class="md-nav__link">
+      <a href="../../../api/core/embedding/" class="md-nav__link">
         
   
   
@@ -928,7 +935,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/models/autoencoders/" class="md-nav__link">
+      <a href="../../../api/models/autoencoders/" class="md-nav__link">
         
   
   
@@ -956,7 +963,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/models/symbolic/" class="md-nav__link">
+      <a href="../../../api/models/symbolic/" class="md-nav__link">
         
   
   
@@ -1043,7 +1050,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/data/generators/" class="md-nav__link">
+      <a href="../../../api/data/generators/" class="md-nav__link">
         
   
   
@@ -1071,7 +1078,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/data/preprocessors/" class="md-nav__link">
+      <a href="../../../api/data/preprocessors/" class="md-nav__link">
         
   
   
@@ -1099,7 +1106,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/data/betse_loader/" class="md-nav__link">
+      <a href="../../../api/data/betse_loader/" class="md-nav__link">
         
   
   
@@ -1186,7 +1193,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/analysis/pipeline/" class="md-nav__link">
+      <a href="../../../api/analysis/pipeline/" class="md-nav__link">
         
   
   
@@ -1214,7 +1221,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/api/analysis/visualization/" class="md-nav__link">
+      <a href="../../../api/analysis/visualization/" class="md-nav__link">
         
   
   
@@ -1311,7 +1318,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/" class="md-nav__link">
+      <a href="../../../course/" class="md-nav__link">
         
   
   
@@ -1339,7 +1346,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/01_first_principles/" class="md-nav__link">
+      <a href="../../../course/01_first_principles/" class="md-nav__link">
         
   
   
@@ -1367,7 +1374,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/02_environment_setup/" class="md-nav__link">
+      <a href="../../../course/02_environment_setup/" class="md-nav__link">
         
   
   
@@ -1395,7 +1402,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/03_cli_quickstart/" class="md-nav__link">
+      <a href="../../../course/03_cli_quickstart/" class="md-nav__link">
         
   
   
@@ -1423,7 +1430,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/04_pipeline_anatomy/" class="md-nav__link">
+      <a href="../../../course/04_pipeline_anatomy/" class="md-nav__link">
         
   
   
@@ -1451,7 +1458,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/05_field_reconstruction/" class="md-nav__link">
+      <a href="../../../course/05_field_reconstruction/" class="md-nav__link">
         
   
   
@@ -1479,7 +1486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/06_topology_tda/" class="md-nav__link">
+      <a href="../../../course/06_topology_tda/" class="md-nav__link">
         
   
   
@@ -1507,7 +1514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/07_attractor_detection/" class="md-nav__link">
+      <a href="../../../course/07_attractor_detection/" class="md-nav__link">
         
   
   
@@ -1535,7 +1542,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/08_visualization_reporting/" class="md-nav__link">
+      <a href="../../../course/08_visualization_reporting/" class="md-nav__link">
         
   
   
@@ -1563,7 +1570,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/09_experiments_reproducibility/" class="md-nav__link">
+      <a href="../../../course/09_experiments_reproducibility/" class="md-nav__link">
         
   
   
@@ -1591,7 +1598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/10_performance_monitoring/" class="md-nav__link">
+      <a href="../../../course/10_performance_monitoring/" class="md-nav__link">
         
   
   
@@ -1619,7 +1626,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/course/11_symbolic_regression/" class="md-nav__link">
+      <a href="../../../course/11_symbolic_regression/" class="md-nav__link">
         
   
   
@@ -1654,7 +1661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/contributing/" class="md-nav__link">
+      <a href="../../../contributing/" class="md-nav__link">
         
   
   
@@ -1681,7 +1688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/mneme/code_of_conduct/" class="md-nav__link">
+      <a href="../../../code_of_conduct/" class="md-nav__link">
         
   
   
@@ -1718,6 +1725,176 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-non-goals-explicitly-out-of-scope-for-this-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Non-Goals (explicitly out of scope for this spec)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-key-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Key Decisions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-module-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Module Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-component-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Component Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Component Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-embeddingpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 embedding.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-lyapunovpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 lyapunov.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-surrogatespy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 surrogates.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-classifypy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 classify.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-deletions-migrations-clean-break" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Deletions / migrations (clean break)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-validation-plan-tdd-tests-written-before-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Validation Plan (TDD — tests written before implementation)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-risks-mitigations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Risks &amp; Mitigations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-definition-of-done" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Definition of Done
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1730,8 +1907,200 @@
               
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+  
+  
+
+
+<h1 id="tier-0-scientific-core-repair-design-spec">Tier 0 — Scientific Core Repair: Design Spec<a class="headerlink" href="#tier-0-scientific-core-repair-design-spec" title="Permanent link">&para;</a></h1>
+<p><strong>Date:</strong> 2026-05-16
+<strong>Status:</strong> Approved for implementation planning
+<strong>Author:</strong> Brian Sheppard (with Claude Code)</p>
+<h2 id="1-problem">1. Problem<a class="headerlink" href="#1-problem" title="Permanent link">&para;</a></h2>
+<p>The flagship dynamical-systems instrument in Mneme is scientifically unreliable. Independent verification on this codebase established:</p>
+<ul>
+<li><code>compute_lyapunov_spectrum</code> is quantitatively inaccurate on a known system: Lorenz spectrum sum returned ≈ −6.64 (true −13.67), λ₁ ≈ 0.587 (true ≈ 0.906).</li>
+<li>The pipeline labels <strong>white Gaussian noise</strong> as <code>STRANGE</code> (λ₁ ≈ +0.56, D_KY ≈ 3.0) and a <strong>pure sine wave</strong> as <code>STRANGE</code>. It cannot discriminate structure from noise.</li>
+<li>There is <strong>no statistical-significance machinery anywhere in <code>src/</code></strong> (zero matches for surrogate / IAAFT / Theiler / bootstrap / p_value). Every "chaos / strange attractor" claim is unguarded.</li>
+<li><code>_estimate_time_delay_mutual_info</code> uses linear autocorrelation, not mutual information (despite name and docstring); <code>_estimate_dimension_fnn</code> uses a non-standard FNN variant; 1-D input is hard-wired to <code>embedding_dimension=3, time_delay=1</code>; no Theiler window exists.</li>
+</ul>
+<p>Until this is repaired, every downstream attractor/memory claim produced by the tool is suspect.</p>
+<h2 id="2-goals">2. Goals<a class="headerlink" href="#2-goals" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Replace the Lyapunov machinery with literature-standard, correctly-implemented estimators.</li>
+<li>Make statistical significance (surrogate-data testing) a <strong>mandatory gate</strong>: the tool must never label a signal <code>STRANGE</code>/chaotic without passed surrogate evidence.</li>
+<li>Provide correct embedding-parameter selection (true mutual-information delay, Cao-1997 dimension, Theiler window).</li>
+<li>Prove correctness with validation tests against systems with known answers, written before the implementation (TDD).</li>
+</ol>
+<h2 id="3-non-goals-explicitly-out-of-scope-for-this-spec">3. Non-Goals (explicitly out of scope for this spec)<a class="headerlink" href="#3-non-goals-explicitly-out-of-scope-for-this-spec" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Pipeline fail-soft semantics (<code>success=True</code> on swallowed-stage failure; <code>np.zeros</code> returns). Separate follow-up change.</li>
+<li>Renaming <code>SparseGPReconstructor</code> / "Information Field Theory".</li>
+<li>Topology, symbolic regression, VAE modules.</li>
+<li>Regenerating or numerically reconciling the committed PhysioNet <code>.npz</code> result files against real data (Tier 1 validation work).</li>
+</ul>
+<h2 id="4-key-decisions">4. Key Decisions<a class="headerlink" href="#4-key-decisions" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Choice</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estimator source</td>
+<td><strong>Hand-rolled, pure numpy.</strong> No new dependencies.</td>
+<td>Full control; no install-footprint growth; correctness proven by validation tests rather than borrowed from a library.</td>
+</tr>
+<tr>
+<td>API compatibility</td>
+<td><strong>Clean break.</strong> Old public names deleted, not shimmed.</td>
+<td>User directive: no backwards compatibility required. Removes deprecation cruft.</td>
+</tr>
+<tr>
+<td>Chaos-without-evidence</td>
+<td>New <code>AttractorType.UNDETERMINED</code>; <code>classify_attractor</code> refuses <code>STRANGE</code> without a passed <code>SurrogateResult</code>.</td>
+<td>Scientific correctness — the central credibility fix. Independent of the compat decision.</td>
+</tr>
+<tr>
+<td>Module organization</td>
+<td>New focused modules; <code>attractors.py</code> reduced to recurrence/clustering.</td>
+<td>Executes the engineering report's recommended split of the 1285-LOC <code>attractors.py</code>; keeps units small and independently testable.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-module-layout">5. Module Layout<a class="headerlink" href="#5-module-layout" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>src/mneme/core/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  embedding.py    NEW   true-MI delay, Cao-1997 dimension, Theiler window, embed_trajectory (moved here)
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  lyapunov.py     NEW   largest_lyapunov (Rosenstein 1993), lyapunov_spectrum (corrected Sano-Sawada)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  surrogates.py   NEW   iaaft_surrogates, surrogate_test
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  classify.py     NEW   classify_attractor, kaplan_yorke_dimension (moved here, formula unchanged)
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  attractors.py   KEEP  RecurrenceAnalysis, ClusteringDetector, AttractorDetector,
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                        and LyapunovAnalysis (its method delegates to lyapunov.py).
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                        Module-level compute_lyapunov_spectrum /
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                        classify_attractor_by_lyapunov / the private _estimate_* /
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                        _estimate_local_jacobian helpers DELETED.
+</code></pre></div>
+<p><code>mneme/core/__init__.py</code> re-exports only the new public names. No old-name aliases.</p>
+<h2 id="6-component-design">6. Component Design<a class="headerlink" href="#6-component-design" title="Permanent link">&para;</a></h2>
+<h3 id="61-embeddingpy">6.1 <code>embedding.py</code><a class="headerlink" href="#61-embeddingpy" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>mutual_information_delay(x, max_delay, *, n_bins=None) -&gt; int</code></strong> — time delay = first local minimum of time-delayed mutual information, estimated by histogram binning (Fraser–Swinney). Default bin count via Freedman–Diaconis. Falls back to <code>max_delay</code>-bounded search; documented behavior when no local minimum exists (returns delay at global MI minimum within range).</li>
+<li><strong><code>cao_embedding_dimension(x, delay, *, max_dim=10) -&gt; int</code></strong> — Cao 1997 E1/E2 statistics (robust for short/noisy series; no arbitrary FNN ratio threshold). Returns the dimension where E1 saturates.</li>
+<li><strong><code>theiler_window(x) -&gt; int</code></strong> — default Theiler window = first zero crossing (or 1/e decay) of the autocorrelation function; used to exclude temporally-correlated neighbors in all neighbor-based estimators.</li>
+<li><strong><code>embed_trajectory(series, embedding_dimension, time_delay) -&gt; np.ndarray</code></strong> — moved verbatim from <code>attractors.py</code> (logic correct as-is); <code>attractors.py</code> imports it from here for its recurrence/clustering use.</li>
+<li><strong><code>estimate_embedding_parameters(series, max_dimension=10, max_delay=100) -&gt; (int, int)</code></strong> — moved here; internals rebuilt on the two correct estimators above.</li>
+</ul>
+<h3 id="62-lyapunovpy">6.2 <code>lyapunov.py</code><a class="headerlink" href="#62-lyapunovpy" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>LyapunovResult</code></strong> dataclass: <code>lambda1: float</code>, <code>divergence_curve: np.ndarray</code>, <code>fit_region: tuple[int, int]</code>, <code>emb_dim: int</code>, <code>delay: int</code>, <code>theiler: int</code>, <code>dt: float</code>.</li>
+<li><strong><code>largest_lyapunov(trajectory, dt=1.0, *, emb_dim=None, delay=None, theiler=None, min_separation=None) -&gt; LyapunovResult</code></strong> — Rosenstein 1993:</li>
+<li>If 1-D, embed using <code>delay</code>/<code>emb_dim</code> (estimated via §6.1 when <code>None</code> — <strong>no hard-coded 3/1</strong>).</li>
+<li>For each point, nearest neighbor excluding indices within the Theiler window.</li>
+<li>Track mean log Euclidean divergence ⟨ln d(i)⟩ vs. step i.</li>
+<li>λ₁ = slope of the least-squares line over an automatically-detected linear scaling region (longest contiguous near-constant-slope segment), divided by <code>dt</code>.</li>
+<li>Returns the curve and fitted region so callers can audit the linear region.</li>
+<li><strong><code>lyapunov_spectrum(trajectory, dt=1.0, *, emb_dim=None, delay=None, theiler=None) -&gt; np.ndarray</code></strong> — corrected Sano-Sawada local-Jacobian QR method: Theiler-excluded conditioned neighbor sets, regularized least-squares Jacobian, and <strong>consistent</strong> growth-log accumulation vs. time normalization (the per-step-multiply / interval-log mismatch in the old code is removed). <strong>Docstring and a <code>RuntimeWarning</code> mark this exploratory</strong>; <code>largest_lyapunov</code> is the headline method.</li>
+</ul>
+<h3 id="63-surrogatespy">6.3 <code>surrogates.py</code><a class="headerlink" href="#63-surrogatespy" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>iaaft_surrogates(x, n=200, *, max_iter=1000, seed=None) -&gt; np.ndarray</code></strong> — Schreiber–Schmitz iterative amplitude-adjusted Fourier transform. Preserves the amplitude distribution and power spectrum (linear structure) while randomizing nonlinear structure. Returns shape <code>(n, len(x))</code>.</li>
+<li><strong><code>SurrogateResult</code></strong> dataclass: <code>statistic_value: float</code>, <code>null_distribution: np.ndarray</code>, <code>p_value: float</code>, <code>n_surrogates: int</code>, <code>alpha: float</code>, <code>significant: bool</code>, <code>statistic_name: str</code>.</li>
+<li><strong><code>surrogate_test(trajectory, statistic="lambda1", n=200, *, alpha=0.05, seed=None, **stat_kwargs) -&gt; SurrogateResult</code></strong> — computes the statistic on the original and on <code>n</code> IAAFT surrogates; <strong>one-sided rank-based p-value</strong> = (1 + #{surrogate ≥ original}) / (n + 1); <code>significant = p_value &lt; alpha</code>. <code>statistic="lambda1"</code> uses <code>largest_lyapunov</code>. Pluggable statistic registry so other discriminating statistics can be added later.</li>
+</ul>
+<h3 id="64-classifypy">6.4 <code>classify.py</code><a class="headerlink" href="#64-classifypy" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>kaplan_yorke_dimension(spectrum) -&gt; float</code></strong> — moved unchanged (formula was correct).</li>
+<li><strong><code>classify_attractor(lambda1, *, spectrum=None, surrogate=None, zero_tol=None) -&gt; AttractorType</code></strong>:</li>
+<li>If <code>surrogate</code> is <code>None</code> <strong>or</strong> <code>not surrogate.significant</code>: positive λ₁ → <code>UNDETERMINED</code> (never <code>STRANGE</code>).</li>
+<li>Only with a passed, significant <code>SurrogateResult</code> and λ₁ meaningfully &gt; 0 → <code>STRANGE</code>.</li>
+<li><code>zero_tol</code> defaults to a band scaled by the surrogate spread (std of null distribution) when available, else a fixed small constant; |λ₁| within band → <code>LIMIT_CYCLE</code> (when oscillatory) / <code>FIXED_POINT</code>.</li>
+<li><strong><code>AttractorType</code></strong> (in <code>mneme/types.py</code>) gains member <strong><code>UNDETERMINED</code></strong>.</li>
+</ul>
+<h3 id="65-deletions-migrations-clean-break">6.5 Deletions / migrations (clean break)<a class="headerlink" href="#65-deletions-migrations-clean-break" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Delete <code>compute_lyapunov_spectrum</code>, <code>classify_attractor_by_lyapunov</code>, <code>_estimate_time_delay_mutual_info</code>, <code>_estimate_dimension_fnn</code>, <code>_estimate_local_jacobian</code> from <code>attractors.py</code>.</li>
+<li><code>LyapunovAnalysis.compute_lyapunov_spectrum</code> (the class method at <code>attractors.py:512</code>) re-implemented to delegate to the new <code>lyapunov_spectrum</code> / <code>largest_lyapunov</code>.</li>
+<li>Update <code>mneme/core/__init__.py</code> exports.</li>
+<li>Migrate the 3 scripts to the new API: <code>scripts/analyze_physionet.py</code>, <code>scripts/deep_analysis.py</code>, <code>scripts/analyze_betse.py</code>. They must import and run without error against the new functions. (Numeric re-validation of their outputs vs. literature is Tier 1, not here.)</li>
+<li>Update existing <code>tests/test_attractors.py</code> to the new API (and add the new validation tests, §7).</li>
+<li>Update API usage snippets in <code>CLAUDE.md</code> and <code>README.md</code> to the new names. Replace the asserted headline numbers (λ₁=+0.12/s, D_KY=2.35 "matching literature") with a "pending re-validation under corrected estimators" note. Add a CHANGELOG entry.</li>
+</ul>
+<h2 id="7-validation-plan-tdd-tests-written-before-implementation">7. Validation Plan (TDD — tests written before implementation)<a class="headerlink" href="#7-validation-plan-tdd-tests-written-before-implementation" title="Permanent link">&para;</a></h2>
+<p>Acceptance gates, with explicit tolerances. Lorenz and Rössler RK4 integrators added as seeded test fixtures (the Euler Lorenz fixture in <code>conftest.py</code> is replaced).</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Assertion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lorenz (RK4, then 1-D x(t) delay-embedded)</td>
+<td><code>largest_lyapunov</code> λ₁ ∈ [0.85, 0.97]; <strong>scale invariance</strong>: spectrum/λ₁ for <code>x</code> and <code>1000*x</code> agree within 1%</td>
+</tr>
+<tr>
+<td>Lorenz spectrum (3-D)</td>
+<td><code>lyapunov_spectrum</code> sum ∈ [−15, −12] (true −13.67); λ₁ ∈ [0.85, 0.97]</td>
+</tr>
+<tr>
+<td>Rössler (RK4)</td>
+<td>λ₁ ∈ [0.05, 0.10]</td>
+</tr>
+<tr>
+<td>Pure sine</td>
+<td>λ₁ within zero band; <code>classify_attractor</code> → <code>LIMIT_CYCLE</code></td>
+</tr>
+<tr>
+<td>White Gaussian noise</td>
+<td><code>surrogate_test(statistic="lambda1")</code> → <code>significant is False</code>; <code>classify_attractor</code> → not <code>STRANGE</code> (→ <code>UNDETERMINED</code>)</td>
+</tr>
+<tr>
+<td>AR(1) correlated noise</td>
+<td><code>surrogate_test</code> → <code>significant is False</code> (no false chaos from linear autocorrelation)</td>
+</tr>
+</tbody>
+</table>
+<p>Unit tests:
+- <code>iaaft_surrogates</code>: surrogate power spectrum and sorted-amplitude distribution match the original within tolerance; shape <code>(n, len)</code>; reproducible under fixed <code>seed</code>.
+- <code>theiler_window</code>: returns expected window on a signal of known autocorrelation; neighbor sets in <code>largest_lyapunov</code> change when the window changes.
+- <code>mutual_information_delay</code>: recovers the known delay on a sampled sine; returns a positive int within range.
+- <code>cao_embedding_dimension</code>: returns ≈3 for Lorenz, ≈2 for a 2-D torus.
+- <code>classify_attractor</code>: positive λ₁ + no surrogate → <code>UNDETERMINED</code>; positive λ₁ + significant surrogate → <code>STRANGE</code>; near-zero → <code>LIMIT_CYCLE</code>/<code>FIXED_POINT</code>.</p>
+<p>New modules <code>lyapunov.py</code>, <code>surrogates.py</code>, <code>embedding.py</code>, <code>classify.py</code> should each land at high line coverage. A non-<code>slow</code> downsized Lorenz λ₁ test must run in default CI (the current rigorous Lorenz test is <code>@pytest.mark.slow</code> and never runs in CI).</p>
+<h2 id="8-risks-mitigations">8. Risks &amp; Mitigations<a class="headerlink" href="#8-risks-mitigations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Rosenstein linear-region detection is the classic fragile step.</strong> Mitigation: return the divergence curve + fitted region in <code>LyapunovResult</code> so it is auditable; validate the auto-detected region against Lorenz/Rössler in tests.</li>
+<li><strong>Surrogate testing is compute-heavy</strong> (n × λ₁ estimations). Mitigation: <code>n=200</code> default, vectorized IAAFT, seeded; keep the heavy surrogate test out of default CI (mark <code>slow</code>) but run a small-<code>n</code> smoke version in default CI.</li>
+<li><strong>Sano-Sawada spectrum may remain noisy on short biological series.</strong> Mitigation: it is explicitly demoted to exploratory with a <code>RuntimeWarning</code>; λ₁ via Rosenstein is the headline; D_KY documented as derived from the exploratory spectrum.</li>
+<li><strong>Script migration blast radius.</strong> Mitigation: scripts must import-and-run in tests/CI smoke (no numeric assertion here); numeric reconciliation deferred to Tier 1.</li>
+</ul>
+<h2 id="9-definition-of-done">9. Definition of Done<a class="headerlink" href="#9-definition-of-done" title="Permanent link">&para;</a></h2>
+<ul>
+<li>All §7 validation and unit tests written first, then passing.</li>
+<li>Old Lyapunov names removed; new modules in place; <code>__init__</code> updated.</li>
+<li>3 scripts and <code>tests/</code> import and run against the new API.</li>
+<li><code>CLAUDE.md</code>/<code>README.md</code> API snippets updated; headline numbers flagged pending re-validation; CHANGELOG entry added.</li>
+<li>Full existing test suite still green.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -1774,10 +2143,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "/mneme/", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "/mneme/assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="/mneme/assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
