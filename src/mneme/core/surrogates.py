@@ -7,6 +7,7 @@ that gates chaos claims.
 
 from __future__ import annotations
 
+import warnings
 from dataclasses import dataclass
 from typing import Optional
 
@@ -77,6 +78,20 @@ class SurrogateResult:
     effect_size: float
     min_sigma: float
     embedding: dict
+
+
+#: Series length below which the λ₁ surrogate test failed to detect Lorenz
+#: and Rössler chaos in validation (detected at 4,000 points, missed at
+#: 3,000 and 1,000). Below this a non-significant result is uninformative.
+MIN_POINTS_FOR_POWER = 4000
+
+
+def min_surrogates_for(alpha: float) -> int:
+    """Fewest surrogates for which the two-sided rank test can reach `alpha`.
+
+    The smallest attainable p-value is 2 / (n + 1).
+    """
+    return int(np.ceil(2.0 / alpha - 1.0))
 
 
 def _lambda1_stat(series: np.ndarray, **kw) -> float:
@@ -172,8 +187,33 @@ def surrogate_test(
         )
     stat_fn = _STATISTICS[statistic]
 
+    needed = min_surrogates_for(alpha)
+    if n < needed:
+        raise ValueError(
+            f"n={n} surrogates cannot reach significance at alpha={alpha}: "
+            f"the smallest two-sided p-value is 2/(n+1) = {2.0 / (n + 1):.4f}. "
+            f"Use n >= {needed}."
+        )
+
     arr = np.asarray(trajectory, dtype=float)
+    if arr.ndim > 1 and arr.shape[1] > 1:
+        warnings.warn(
+            f"surrogate_test received a {arr.shape[1]}-dimensional trajectory "
+            "and tests only its first column, delay-embedded. Compute the "
+            "statistic you report on that same column.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
     series_1d = arr if arr.ndim == 1 else arr[:, 0]
+    if statistic == "lambda1" and len(series_1d) < MIN_POINTS_FOR_POWER:
+        warnings.warn(
+            f"surrogate_test on {len(series_1d)} points: below "
+            f"{MIN_POINTS_FOR_POWER} points this test did not detect known "
+            "chaotic systems in validation, so a non-significant result is "
+            "uninformative.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
 
     # Schreiber & Schmitz (2000): the original and its surrogates must
     # undergo IDENTICAL processing. For the Lyapunov statistic, estimate
