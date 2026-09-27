@@ -166,7 +166,7 @@ def minimal_pipeline_config():
     """Minimal pipeline configuration for integration tests."""
     return {
         "reconstruction": {
-            "method": "ift",
+            "method": "gp_subset",
             "resolution": [16, 16],
         },
         "topology": {

@@ -7,8 +7,8 @@ from . import attractors
 # Convenience exports for common classes
 from .field_theory import (
     FieldReconstructor,
-    SparseGPReconstructor,
-    DenseIFTReconstructor,
+    SubsetGPReconstructor,
+    WienerFilterReconstructor,
     GaussianProcessReconstructor,
     NeuralFieldReconstructor,
     create_reconstructor,
@@ -20,6 +20,14 @@ from .lyapunov import LyapunovResult, largest_lyapunov, lyapunov_spectrum
 from .surrogates import SurrogateResult, iaaft_surrogates, surrogate_test
 from .classify import classify_attractor, kaplan_yorke_dimension
 
+
+def __getattr__(name: str):
+    # Deprecated reconstructor names resolve through field_theory, which warns.
+    if name in field_theory._DEPRECATED_CLASSES:
+        return getattr(field_theory, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
 __all__ = [
     # Modules
     "field_theory",
@@ -27,8 +35,8 @@ __all__ = [
     "attractors",
     # Reconstructors
     "FieldReconstructor",
-    "SparseGPReconstructor",
-    "DenseIFTReconstructor",
+    "SubsetGPReconstructor",
+    "WienerFilterReconstructor",
     "GaussianProcessReconstructor",
     "NeuralFieldReconstructor",
     "create_reconstructor",

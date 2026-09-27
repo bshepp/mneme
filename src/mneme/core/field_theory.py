@@ -1,7 +1,13 @@
-"""Information Field Theory implementations for field reconstruction.
+"""Field reconstruction from sparse observations.
 
-This module provides multiple approaches for reconstructing continuous fields
-from sparse observations, with scalable defaults for large field sizes.
+Four backends: a Gaussian process fitted to a random subset of the
+observations (default), a dense Wiener filter, a standard Gaussian process,
+and a coordinate neural network.
+
+The module keeps its historical name. Earlier versions described the
+default as "Information Field Theory" and "sparse GP"; it was neither, and
+the classes have been renamed to say what they do. The old names still
+resolve, with a DeprecationWarning.
 """
 
 from typing import Optional, Tuple, Dict, Any, Union
@@ -18,11 +24,11 @@ from ..types import (
 # Module constants
 # ---------------------------------------------------------------------------
 
-#: Number of grid points to predict per batch in SparseGPReconstructor.
+#: Number of grid points to predict per batch in SubsetGPReconstructor.
 #: Controls the memory/speed trade-off when evaluating the GP on a dense grid.
 GP_PREDICTION_BATCH_SIZE: int = 10_000
 
-#: Maximum grid size (height*width) before DenseIFTReconstructor emits a
+#: Maximum grid size (height*width) before WienerFilterReconstructor emits a
 #: memory warning.  64x64 = 4096 points → covariance matrix is ~128 MB.
 DENSE_IFT_MAX_RECOMMENDED_SIZE: int = 64 * 64
 
@@ -104,10 +110,13 @@ class FieldReconstructor(BaseFieldReconstructor):
     ----------
     method : str or ReconstructionMethod
         Reconstruction method to use:
-        - 'ift': Sparse GP-based IFT (default, scalable)
-        - 'dense_ift': Dense matrix IFT (exact but O(n³), for small fields only)
+        - 'gp_subset': Gaussian process fitted to a random subset of the
+          observations (default, scalable)
+        - 'wiener_filter': dense Wiener filter (O(n³), small fields only)
         - 'gaussian_process': Standard GP reconstruction
         - 'neural_field': Neural network-based reconstruction
+        The older names 'ift', 'sparse_gp' and 'dense_ift' still work and
+        emit a DeprecationWarning.
     resolution : Tuple[int, int]
         Output field resolution (height, width)
     **kwargs
@@ -118,7 +127,7 @@ class FieldReconstructor(BaseFieldReconstructor):
     >>> from mneme.core.field_theory import FieldReconstructor
     >>> import numpy as np
     >>> 
-    >>> # Create reconstructor (uses scalable Sparse GP by default)
+    >>> # Create reconstructor (subset-of-data GP by default)
     >>> reconstructor = FieldReconstructor(resolution=(128, 128))
     >>> 
     >>> # Fit to sparse observations
@@ -133,38 +142,24 @@ class FieldReconstructor(BaseFieldReconstructor):
     
     def __init__(
         self, 
-        method: Union[str, ReconstructionMethod] = ReconstructionMethod.IFT,
+        method: Union[str, ReconstructionMethod] = ReconstructionMethod.GP_SUBSET,
         resolution: Tuple[int, int] = (256, 256),
         **kwargs
     ):
         super().__init__(resolution)
-        
-        # Handle string method names
-        if isinstance(method, str):
-            method_lower = method.lower()
-            if method_lower == 'dense_ift':
-                self.method = ReconstructionMethod.IFT
-                self._use_dense = True
-            else:
-                self.method = ReconstructionMethod(method_lower)
-                self._use_dense = False
-        else:
-            self.method = method
-            self._use_dense = kwargs.pop('use_dense', False)
-        
+
+        use_dense = kwargs.pop('use_dense', False)
+        self.method = _resolve_method(method, use_dense=use_dense)
         self.method_params = kwargs
         self._backend = None
         self._initialize_backend()
-        
+
     def _initialize_backend(self):
         """Initialize the appropriate backend reconstructor."""
-        if self.method == ReconstructionMethod.IFT:
-            if self._use_dense:
-                # Use original dense IFT (for small fields or exact computation)
-                self._backend = DenseIFTReconstructor(self.resolution, **self.method_params)
-            else:
-                # Use scalable Sparse GP (default)
-                self._backend = SparseGPReconstructor(self.resolution, **self.method_params)
+        if self.method == ReconstructionMethod.GP_SUBSET:
+            self._backend = SubsetGPReconstructor(self.resolution, **self.method_params)
+        elif self.method == ReconstructionMethod.WIENER_FILTER:
+            self._backend = WienerFilterReconstructor(self.resolution, **self.method_params)
         elif self.method == ReconstructionMethod.GAUSSIAN_PROCESS:
             self._backend = GaussianProcessReconstructor(self.resolution, **self.method_params)
         elif self.method == ReconstructionMethod.NEURAL_FIELD:
@@ -220,7 +215,12 @@ class FieldReconstructor(BaseFieldReconstructor):
         
         self.fit(observations, positions)
         field_data = self.reconstruct(grid_points)
-        uncertainty_data = self.uncertainty()
+        try:
+            uncertainty_data = self.uncertainty()
+        except NotImplementedError:
+            # The backend has no uncertainty estimate; report none rather
+            # than a placeholder.
+            uncertainty_data = None
         
         computation_time = time.time() - start_time
         
@@ -239,51 +239,64 @@ class FieldReconstructor(BaseFieldReconstructor):
         )
 
 
-class SparseGPReconstructor(BaseFieldReconstructor):
-    """Sparse Gaussian Process reconstructor using inducing points.
-    
-    This is a scalable approximation to full GP regression that uses
-    a subset of inducing points to approximate the full covariance
-    structure. Complexity is O(nm²) instead of O(n³) where m << n.
-    
-    This is the DEFAULT method for IFT reconstruction as it scales
-    to large field sizes while maintaining good accuracy.
-    
+class SubsetGPReconstructor(BaseFieldReconstructor):
+    """Gaussian process regression on a random subset of the observations.
+
+    When there are more than `n_subset` observations, a random `n_subset`
+    of them are used to fit an exact GP and THE REST ARE DISCARDED. This
+    is the "subset of data" approximation. It is not a sparse GP in the
+    inducing-point sense (no FITC/VFE), and it is not Information Field
+    Theory. Cost is O(m³) in the subset size m.
+
+    The reported uncertainty is the posterior standard deviation of the
+    subset model, so it does not reflect the discarded observations.
+
     Parameters
     ----------
     resolution : Tuple[int, int]
         Output field resolution
-    n_inducing : int
-        Number of inducing points. More points = better accuracy but slower.
-        Default 500 works well for most bioelectric fields.
+    n_subset : int
+        Maximum number of observations used to fit the GP.
     kernel : str
         Kernel type: 'rbf', 'matern', 'exponential'
     length_scale : float
-        Kernel length scale (correlation length)
+        Kernel length scale, as a fraction of the observation extent
     noise_level : float
         Observation noise level
     optimize_hyperparameters : bool
-        Whether to optimize kernel hyperparameters during fitting
+        Whether to optimize kernel hyperparameters during fitting. When
+        False the kernel is used exactly as specified.
     random_state : int, optional
-        Random seed for inducing point selection
+        Random seed for subset selection
+    n_inducing : int, optional
+        Deprecated name for `n_subset`.
     """
-    
+
     def __init__(
         self,
         resolution: Tuple[int, int] = (256, 256),
-        n_inducing: int = 500,
+        n_subset: int = 500,
         kernel: str = "rbf",
         length_scale: float = 0.1,
         noise_level: float = 0.1,
         optimize_hyperparameters: bool = True,
         random_state: Optional[int] = None,
-        # Legacy parameter mapping from IFT
+        # Legacy parameter mapping
         correlation_length: Optional[float] = None,
         power_spectrum_model: Optional[str] = None,
+        n_inducing: Optional[int] = None,
     ):
         super().__init__(resolution)
-        
-        self.n_inducing = n_inducing
+
+        if n_inducing is not None:
+            warnings.warn(
+                "n_inducing is deprecated; use n_subset. The reconstructor "
+                "fits a GP to a random subset and has no inducing points.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+            n_subset = n_inducing
+        self.n_subset = n_subset
         self.optimize_hyperparameters = optimize_hyperparameters
         self.random_state = random_state
         
@@ -334,11 +347,16 @@ class SparseGPReconstructor(BaseFieldReconstructor):
         
         return kernel
         
-    def fit(self, observations: np.ndarray, positions: np.ndarray) -> 'SparseGPReconstructor':
-        """Fit Sparse GP to observations using inducing points.
-        
-        For efficiency, we subsample the observations to create inducing points
-        when the number of observations exceeds n_inducing.
+    @property
+    def n_inducing(self) -> int:
+        """Deprecated name for `n_subset`."""
+        return self.n_subset
+
+    def fit(self, observations: np.ndarray, positions: np.ndarray) -> 'SubsetGPReconstructor':
+        """Fit a GP to the observations, or to a random subset of them.
+
+        When there are more than `n_subset` observations a random subset is
+        used and ``n_discarded_`` records how many were left out.
         """
         from sklearn.gaussian_process import GaussianProcessRegressor
         
@@ -354,15 +372,17 @@ class SparseGPReconstructor(BaseFieldReconstructor):
         
         positions_norm = (positions - self._pos_min) / self._pos_range
         
-        # Select inducing points if we have more observations than n_inducing
-        if n_obs > self.n_inducing:
+        # Use a random subset when there are more observations than n_subset
+        if n_obs > self.n_subset:
             rng = np.random.RandomState(self.random_state)
-            inducing_idx = rng.choice(n_obs, size=self.n_inducing, replace=False)
-            X_train = positions_norm[inducing_idx]
-            y_train = observations[inducing_idx]
+            subset_idx = rng.choice(n_obs, size=self.n_subset, replace=False)
+            X_train = positions_norm[subset_idx]
+            y_train = observations[subset_idx]
         else:
             X_train = positions_norm
             y_train = observations
+        self.n_used_ = len(y_train)
+        self.n_discarded_ = n_obs - len(y_train)
         
         # Normalize observations
         self._y_mean = y_train.mean()
@@ -374,22 +394,31 @@ class SparseGPReconstructor(BaseFieldReconstructor):
         # Create and fit GP
         kernel = self._create_kernel()
         
-        self._gp = GaussianProcessRegressor(
-            kernel=kernel,
-            n_restarts_optimizer=5 if self.optimize_hyperparameters else 0,
-            normalize_y=False,  # We already normalized
-            random_state=self.random_state,
-        )
-        
+        if self.optimize_hyperparameters:
+            self._gp = GaussianProcessRegressor(
+                kernel=kernel,
+                n_restarts_optimizer=5,
+                normalize_y=False,  # We already normalized
+                random_state=self.random_state,
+            )
+        else:
+            # optimizer=None keeps the kernel exactly as specified.
+            self._gp = GaussianProcessRegressor(
+                kernel=kernel,
+                optimizer=None,
+                normalize_y=False,
+                random_state=self.random_state,
+            )
+
         self._gp.fit(X_train, y_train_norm)
-        
+
         self.is_fitted = True
         return self
-    
+
     def reconstruct(self, grid_points: Optional[np.ndarray] = None) -> np.ndarray:
-        """Reconstruct field using the fitted Sparse GP."""
+        """Reconstruct field using the fitted GP."""
         if not self.is_fitted:
-            raise RuntimeError("SparseGP reconstructor must be fitted first")
+            raise RuntimeError("Reconstructor must be fitted first")
         
         if grid_points is None:
             grid_points = create_grid_points(self.resolution)
@@ -426,9 +455,9 @@ class SparseGPReconstructor(BaseFieldReconstructor):
         return predictions
     
     def uncertainty(self) -> np.ndarray:
-        """Return uncertainty estimates from Sparse GP."""
+        """Posterior standard deviation of the fitted (subset) GP."""
         if not self.is_fitted:
-            raise RuntimeError("SparseGP reconstructor must be fitted first")
+            raise RuntimeError("Reconstructor must be fitted first")
         
         if self._last_std is None:
             # Need to run reconstruct first
@@ -442,28 +471,29 @@ class SparseGPReconstructor(BaseFieldReconstructor):
         return self._last_std
 
 
-class DenseIFTReconstructor(BaseFieldReconstructor):
-    """Dense Information Field Theory based reconstruction.
-    
-    WARNING: This implementation uses full dense matrices and has O(n³)
-    complexity. It will be very slow or run out of memory for large fields
-    (e.g., 256×256 = 65K points requires ~34GB for covariance matrix).
-    
-    Use this only for:
-    - Small fields (< 64×64)
-    - When you need exact IFT computation
-    - Educational/debugging purposes
-    
-    For production use with larger fields, use the default SparseGPReconstructor.
-    
+class WienerFilterReconstructor(BaseFieldReconstructor):
+    """Dense Wiener-filter reconstruction on the grid.
+
+    Computes the posterior mean and covariance of a Gaussian field with a
+    fixed stationary prior, observed through a Gaussian-blur response with
+    white noise. This is the free-theory (linear, Gaussian) case of
+    Information Field Theory, which is the classical Wiener filter; nothing
+    beyond that is implemented.
+
+    WARNING: uses full dense matrices, O(n³) in the number of grid points.
+    256×256 = 65K points needs ~34GB for the covariance matrix. Use only
+    for small fields (< 64×64).
+
     Parameters
     ----------
     resolution : Tuple[int, int]
         Output field resolution
     power_spectrum_model : str
-        Power spectrum model ('power_law', 'gaussian', 'exponential')
+        Prior covariance shape ('power_law', 'gaussian', 'exponential')
     correlation_length : float
-        Correlation length scale in pixels
+        Correlation length in pixels. Converted to grid coordinates by
+        dividing by the larger grid dimension, since the grid spans the
+        unit square.
     noise_var : float
         Observation noise variance
     """
@@ -479,21 +509,24 @@ class DenseIFTReconstructor(BaseFieldReconstructor):
     ):
         super().__init__(resolution)
         self.power_spectrum_model = power_spectrum_model
-        self.correlation_length = correlation_length
+        self.correlation_length_pixels = correlation_length
+        # The grid spans the unit square, so a length in pixels must be
+        # converted before it is compared with grid distances.
+        self.correlation_length = correlation_length / max(resolution)
         self.noise_var = noise_var
         
         # Warn if resolution is too large
         n_grid = resolution[0] * resolution[1]
         if n_grid > self.MAX_RECOMMENDED_SIZE:
             warnings.warn(
-                f"DenseIFTReconstructor with resolution {resolution} ({n_grid} points) "
+                f"WienerFilterReconstructor with resolution {resolution} ({n_grid} points) "
                 f"will require {n_grid**2 * 8 / 1e9:.1f} GB of memory and be very slow. "
-                f"Consider using the default SparseGPReconstructor instead (method='ift').",
+                f"Consider the default SubsetGPReconstructor (method='gp_subset').",
                 UserWarning
             )
         
-    def fit(self, observations: np.ndarray, positions: np.ndarray) -> 'DenseIFTReconstructor':
-        """Fit IFT model to observations using dense matrices."""
+    def fit(self, observations: np.ndarray, positions: np.ndarray) -> 'WienerFilterReconstructor':
+        """Compute the Wiener-filter posterior using dense matrices."""
         self.observations = observations
         self.positions = positions
         self.n_observations = len(observations)
@@ -523,6 +556,18 @@ class DenseIFTReconstructor(BaseFieldReconstructor):
                 dist = np.linalg.norm(obs_pos - grid_pos)
                 if dist < self.correlation_length:
                     self.R[i, j] = np.exp(-dist**2 / (2 * self.correlation_length**2))
+
+        # Each observation is a weighted AVERAGE of nearby grid values, so
+        # the weights of a row must sum to one. Left unnormalised, a row sums
+        # to roughly the number of grid points within a correlation length
+        # and the reconstruction is scaled down by that factor.
+        row_sums = self.R.sum(axis=1, keepdims=True)
+        if np.any(row_sums == 0):
+            raise ValueError(
+                "An observation lies further than one correlation length from "
+                "every grid point; increase correlation_length or resolution."
+            )
+        self.R /= row_sums
     
     def _compute_prior_covariance(self):
         """Compute prior covariance matrix."""
@@ -563,9 +608,9 @@ class DenseIFTReconstructor(BaseFieldReconstructor):
         self.posterior_mean = self.posterior_cov @ self.R.T @ N_inv @ self.observations
         
     def reconstruct(self, grid_points: Optional[np.ndarray] = None) -> np.ndarray:
-        """Reconstruct field using dense IFT."""
+        """Return the posterior mean field."""
         if not self.is_fitted:
-            raise RuntimeError("DenseIFT reconstructor must be fitted first")
+            raise RuntimeError("Reconstructor must be fitted first")
         
         if grid_points is None:
             field_1d = self.posterior_mean
@@ -578,16 +623,74 @@ class DenseIFTReconstructor(BaseFieldReconstructor):
             return field_1d.reshape(self.resolution)
         
     def uncertainty(self) -> np.ndarray:
-        """Compute IFT uncertainty estimates."""
+        """Posterior standard deviation on the grid."""
         if not self.is_fitted:
-            raise RuntimeError("DenseIFT reconstructor must be fitted first")
+            raise RuntimeError("Reconstructor must be fitted first")
         
         uncertainty_1d = np.sqrt(np.diag(self.posterior_cov))
         return uncertainty_1d.reshape(self.resolution)
 
 
-# Keep the old name as an alias for backwards compatibility
-IFTReconstructor = SparseGPReconstructor
+#: Old class names, kept so existing code keeps working. They resolve to
+#: the SAME class objects (so isinstance checks still hold) through the
+#: module-level ``__getattr__`` below, which warns on access.
+_DEPRECATED_CLASSES = {
+    "SparseGPReconstructor": "SubsetGPReconstructor",
+    "IFTReconstructor": "SubsetGPReconstructor",
+    "DenseIFTReconstructor": "WienerFilterReconstructor",
+}
+
+
+def __getattr__(name: str):
+    if name in _DEPRECATED_CLASSES:
+        new_name = _DEPRECATED_CLASSES[name]
+        warnings.warn(
+            f"{name} is deprecated; use {new_name}.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return globals()[new_name]
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+#: Deprecated method names and what they now select.
+_DEPRECATED_METHODS = {
+    "ift": ReconstructionMethod.GP_SUBSET,
+    "sparse_gp": ReconstructionMethod.GP_SUBSET,
+    "sparse": ReconstructionMethod.GP_SUBSET,
+    "dense_ift": ReconstructionMethod.WIENER_FILTER,
+}
+
+_METHOD_ALIASES = {
+    "gp": ReconstructionMethod.GAUSSIAN_PROCESS,
+    "neural": ReconstructionMethod.NEURAL_FIELD,
+    "wiener": ReconstructionMethod.WIENER_FILTER,
+}
+
+
+def _resolve_method(
+    method: Union[str, ReconstructionMethod], use_dense: bool = False
+) -> ReconstructionMethod:
+    """Map a method name (current or deprecated) to a ReconstructionMethod."""
+    if isinstance(method, ReconstructionMethod) and method is not ReconstructionMethod.IFT:
+        return method
+    name = method.value if isinstance(method, ReconstructionMethod) else str(method).lower()
+    if name in _DEPRECATED_METHODS:
+        resolved = _DEPRECATED_METHODS[name]
+        if name == "ift" and use_dense:
+            resolved = ReconstructionMethod.WIENER_FILTER
+        warnings.warn(
+            f"Reconstruction method {name!r} is deprecated; use "
+            f"{resolved.value!r}. The method is unchanged, only the name.",
+            DeprecationWarning,
+            stacklevel=3,
+        )
+        return resolved
+    if name in _METHOD_ALIASES:
+        return _METHOD_ALIASES[name]
+    try:
+        return ReconstructionMethod(name)
+    except ValueError:
+        raise ValueError(f"Unknown reconstruction method: {method}") from None
 
 
 class GaussianProcessReconstructor(BaseFieldReconstructor):
@@ -872,13 +975,10 @@ class NeuralFieldReconstructor(BaseFieldReconstructor):
         return pred
         
     def uncertainty(self) -> np.ndarray:
-        """Estimate uncertainty (placeholder - returns zeros)."""
-        if not self.is_fitted:
-            raise RuntimeError("Neural field must be fitted first")
-        
-        # Neural fields don't provide uncertainty by default
-        # Could be improved with MC dropout or ensemble methods
-        return np.zeros(self.resolution)
+        """Not available: a single trained network gives no uncertainty."""
+        raise NotImplementedError(
+            "NeuralFieldReconstructor does not estimate uncertainty"
+        )
 
 
 # Utility functions
@@ -915,21 +1015,23 @@ def create_grid_points(
 
 
 def create_reconstructor(
-    method: str = "ift",
+    method: str = "gp_subset",
     resolution: Tuple[int, int] = (256, 256),
     **kwargs
 ) -> BaseFieldReconstructor:
     """
     Factory function to create field reconstructors.
-    
+
     Parameters
     ----------
     method : str
         Reconstruction method:
-        - 'ift' or 'sparse_gp': Sparse GP (scalable, default)
-        - 'dense_ift': Dense matrix IFT (exact, slow)
+        - 'gp_subset': GP on a random subset of observations (default)
+        - 'wiener_filter' or 'wiener': dense Wiener filter (slow)
         - 'gp' or 'gaussian_process': Standard GP
         - 'neural' or 'neural_field': Neural network
+        Deprecated names 'ift', 'sparse_gp', 'sparse' and 'dense_ift'
+        still work and emit a DeprecationWarning.
     resolution : Tuple[int, int]
         Output field resolution
     **kwargs
@@ -940,15 +1042,11 @@ def create_reconstructor(
     reconstructor : BaseFieldReconstructor
         Configured reconstructor
     """
-    method_lower = method.lower()
-    
-    if method_lower in ('ift', 'sparse_gp', 'sparse'):
-        return SparseGPReconstructor(resolution, **kwargs)
-    elif method_lower == 'dense_ift':
-        return DenseIFTReconstructor(resolution, **kwargs)
-    elif method_lower in ('gp', 'gaussian_process'):
-        return GaussianProcessReconstructor(resolution, **kwargs)
-    elif method_lower in ('neural', 'neural_field'):
-        return NeuralFieldReconstructor(resolution, **kwargs)
-    else:
-        raise ValueError(f"Unknown reconstruction method: {method}")
+    resolved = _resolve_method(method)
+    backends = {
+        ReconstructionMethod.GP_SUBSET: SubsetGPReconstructor,
+        ReconstructionMethod.WIENER_FILTER: WienerFilterReconstructor,
+        ReconstructionMethod.GAUSSIAN_PROCESS: GaussianProcessReconstructor,
+        ReconstructionMethod.NEURAL_FIELD: NeuralFieldReconstructor,
+    }
+    return backends[resolved](resolution, **kwargs)

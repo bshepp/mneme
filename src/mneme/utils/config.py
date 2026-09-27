@@ -359,7 +359,11 @@ MNEME_CONFIG_SCHEMA = {
     'reconstruction': {
         'type': dict,
         'schema': {
-            'method': {'type': str, 'values': ['ift', 'gaussian_process', 'neural_field']},
+            'method': {'type': str, 'values': [
+                'gp_subset', 'wiener_filter', 'gaussian_process', 'neural_field',
+                # deprecated names, still accepted
+                'ift', 'sparse_gp', 'dense_ift',
+            ]},
             'resolution': {'type': list}
         }
     }
