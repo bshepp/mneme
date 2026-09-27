@@ -11,6 +11,7 @@ from mneme.data.betse_loader import (
     interpolate_to_grid,
     load_betse_timeseries,
     load_betse_exported_data,
+    load_betse_cells,
 )
 
 
@@ -193,3 +194,58 @@ class TestLoadBetseExportedData:
 
         assert data.shape == (3,)
         assert len(columns) == 1
+
+
+# ---------------------------------------------------------------------------
+# Frame ordering and raw-cell loading
+# ---------------------------------------------------------------------------
+
+class TestFrameOrdering:
+    """Frames must be read in numeric time order, not directory order.
+
+    Regression: the sort key used to match the "2" in "Vmem2D", so every
+    file got the same key and runs of 10+ frames loaded as 0, 1, 10, 11, 2...
+    """
+
+    N_FRAMES = 25
+
+    def _write_run(self, tmp_path):
+        x, y = _make_circle_cells(20)
+        for t in range(self.N_FRAMES):
+            # Each frame is spatially constant with value == its time index.
+            _write_vmem_csv(tmp_path / f"Vmem2D_{t}.csv", x, y, np.full(20, float(t)))
+
+    def test_timeseries_is_in_numeric_order(self, tmp_path):
+        self._write_run(tmp_path)
+        field_seq, metadata = load_betse_timeseries(tmp_path, resolution=(8, 8))
+        per_frame = field_seq.reshape(self.N_FRAMES, -1).mean(axis=1)
+        np.testing.assert_allclose(per_frame, np.arange(self.N_FRAMES))
+        assert metadata["frame_indices"] == list(range(self.N_FRAMES))
+
+    def test_cells_are_in_numeric_order(self, tmp_path):
+        self._write_run(tmp_path)
+        vmem, x, y, frames = load_betse_cells(tmp_path)
+        assert vmem.shape == (self.N_FRAMES, 20)
+        assert x.shape == y.shape == (20,)
+        np.testing.assert_allclose(vmem[:, 0], np.arange(self.N_FRAMES))
+        assert frames == list(range(self.N_FRAMES))
+
+    def test_unparseable_filename_raises(self, tmp_path):
+        x, y = _make_circle_cells(5)
+        _write_vmem_csv(tmp_path / "Vmem2D_final.csv", x, y, np.zeros(5))
+        with pytest.raises(ValueError, match="frame index"):
+            load_betse_timeseries(tmp_path, resolution=(8, 8))
+
+
+class TestInterpolationDoesNotOvershoot:
+    def test_default_interpolation_stays_within_data_range(self, tmp_path):
+        rng = np.random.RandomState(0)
+        x, y = _make_circle_cells(40)
+        vmem = rng.uniform(-70.0, -20.0, 40)
+        _write_vmem_csv(tmp_path / "Vmem2D_0.csv", x, y, vmem)
+        field_seq, metadata = load_betse_timeseries(tmp_path, resolution=(32, 32))
+        assert field_seq.min() >= vmem.min() - 1e-9
+        assert field_seq.max() <= vmem.max() + 1e-9
+        mask = metadata["inside_hull"]
+        assert mask.shape == (32, 32) and mask.dtype == bool
+        assert 0 < mask.sum() < mask.size
