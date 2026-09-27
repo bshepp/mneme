@@ -1,6 +1,7 @@
 """Topological Data Analysis methods for field analysis."""
 
 from typing import List, Optional, Dict, Any, Tuple, Union
+import warnings
 import numpy as np
 from abc import ABC, abstractmethod
 
@@ -77,7 +78,7 @@ class PersistentHomology(BaseTopologyAnalyzer):
         max_dimension: int = 2,
         filtration: Union[str, FiltrationMethod] = FiltrationMethod.SUBLEVEL,
         persistence_threshold: float = 0.05,
-        compute_cycles: bool = True
+        compute_cycles: bool = False
     ):
         """
         Initialize persistent homology analyzer.
@@ -91,38 +92,53 @@ class PersistentHomology(BaseTopologyAnalyzer):
         persistence_threshold : float
             Minimum persistence to consider significant
         compute_cycles : bool
-            Whether to compute representative cycles
+            Not implemented. Passing True raises NotImplementedError.
         """
         super().__init__(max_dimension)
         self.filtration = FiltrationMethod(filtration) if isinstance(filtration, str) else filtration
         self.persistence_threshold = persistence_threshold
-        self.compute_cycles = compute_cycles
+        if compute_cycles:
+            raise NotImplementedError(
+                "Representative cycle extraction is not implemented"
+            )
+        self.compute_cycles = False
         self._cycles = None
         
     def compute_persistence(self, field: np.ndarray) -> List[PersistenceDiagram]:
         """Compute persistence diagrams using GUDHI."""
+        field = np.asarray(field, dtype=float)
+        if field.ndim != 2:
+            raise ValueError("Persistence computation only supports 2D fields")
+        if not np.all(np.isfinite(field)):
+            raise ValueError(
+                "Field contains NaN or infinite values; persistence is undefined"
+            )
+
         try:
             import gudhi
         except ImportError:
-            # Fallback implementation without GUDHI
+            warnings.warn(
+                "GUDHI is not installed: computing H0 only with the built-in "
+                "union-find fallback. Higher-dimensional diagrams are returned "
+                "empty. Install gudhi for H1.",
+                RuntimeWarning,
+                stacklevel=2,
+            )
             return self._compute_persistence_simple(field)
-        
-        if field.ndim != 2:
-            raise ValueError("Persistence computation only supports 2D fields")
-        
-        # Create cubical complex
-        if self.filtration == FiltrationMethod.SUBLEVEL:
-            # For sublevel filtration, negate the field
-            filtration_values = -field.flatten()
-        else:
-            filtration_values = field.flatten()
-        
-        # Create cubical complex
+
+        # GUDHI's cubical complex computes SUBLEVEL persistence of the values
+        # it is given. Superlevel persistence of f is sublevel persistence of
+        # -f, so superlevel diagrams are expressed in units of -field (which
+        # keeps death >= birth).
+        values = self._filtration_values(field)
+
+        # GUDHI reads top-dimensional cells with the FIRST axis varying
+        # fastest, i.e. Fortran order.
         cubical_complex = gudhi.CubicalComplex(
-            dimensions=field.shape,
-            top_dimensional_cells=filtration_values
+            dimensions=list(values.shape),
+            top_dimensional_cells=values.flatten(order="F"),
         )
-        
+
         # Compute persistence
         cubical_complex.compute_persistence()
         
@@ -159,90 +175,45 @@ class PersistentHomology(BaseTopologyAnalyzer):
         
         return diagrams
     
+    def _filtration_values(self, field: np.ndarray) -> np.ndarray:
+        """Values whose sublevel sets realise the requested filtration."""
+        if self.filtration == FiltrationMethod.SUPERLEVEL:
+            return -field
+        return field
+
     def _compute_persistence_simple(self, field: np.ndarray) -> List[PersistenceDiagram]:
-        """Simple persistence computation without GUDHI."""
-        # Basic implementation using connected components
-        from scipy import ndimage
-        
-        if field.ndim != 2:
-            raise ValueError("Simple persistence only supports 2D fields")
-        
-        # Match GUDHI behaviour: for sublevel filtration, negate the field
-        # so that we track superlevel sets of the original (i.e. detect peaks).
-        if self.filtration == FiltrationMethod.SUBLEVEL:
-            work_field = -field
-        else:
-            work_field = field
-        
-        # Create binary images at different thresholds
-        min_val, max_val = work_field.min(), work_field.max()
-        n_levels = 50
-        thresholds = np.linspace(min_val, max_val, n_levels)
-        
-        # Track connected components
-        components_history = []
-        
-        for threshold in thresholds:
-            binary = work_field <= threshold
-            
-            # Find connected components
-            labeled, num_features = ndimage.label(binary)
-            components_history.append((threshold, num_features, labeled))
-        
-        # Extract 0-dimensional persistence (connected components)
-        birth_death_pairs = []
-        
-        # Initialise births for components already present at the first
-        # threshold level (these are the global minima of the work field).
-        if components_history:
-            first_threshold, first_num, _ = components_history[0]
-            for _ in range(first_num):
-                birth_death_pairs.append([first_threshold, np.inf])
-        
-        # Track births and deaths across subsequent threshold transitions
-        for i in range(len(components_history) - 1):
-            curr_threshold, curr_num, curr_labeled = components_history[i]
-            next_threshold, next_num, next_labeled = components_history[i + 1]
-            
-            if next_num > curr_num:
-                # New components born
-                for _ in range(next_num - curr_num):
-                    birth_death_pairs.append([next_threshold, np.inf])
-            elif next_num < curr_num:
-                # Components merged (younger ones die)
-                for _ in range(curr_num - next_num):
-                    # Kill the most recently born still-alive component
-                    for j in range(len(birth_death_pairs) - 1, -1, -1):
-                        if birth_death_pairs[j][1] == np.inf:
-                            birth_death_pairs[j][1] = next_threshold
-                            break
-        
-        # Convert to numpy array — keep features with finite death.
-        # The single component that survives to infinity is the
-        # "essential" feature; include it as well for dim-0.
-        if birth_death_pairs:
-            points = np.array(birth_death_pairs)
-            # Remove only zero-persistence features (birth == death)
-            persistence = points[:, 1] - points[:, 0]
-            # Keep infinite-death features and features with positive persistence
-            mask = np.isfinite(points[:, 1]) & (persistence > 0) | ~np.isfinite(points[:, 1])
-            points = points[mask]
-            # Replace inf deaths with the maximum threshold for a finite diagram
-            inf_mask = ~np.isfinite(points[:, 1])
-            if np.any(inf_mask) and len(thresholds) > 0:
-                points[inf_mask, 1] = thresholds[-1]
-        else:
-            points = np.empty((0, 2))
-        
-        # Create diagram
-        diagram = PersistenceDiagram(
-            points=points,
-            dimension=0,
-            threshold=self.persistence_threshold
-        )
-        
-        return [diagram]
-    
+        """Exact H0 sublevel persistence without GUDHI (union-find, elder rule).
+
+        Pixels are top-dimensional cells, so two pixels that share an edge
+        or a corner are connected (8-connectivity). This reproduces the H0
+        diagram of GUDHI's cubical complex. H1 and above are NOT computed;
+        those diagrams are returned empty.
+        """
+        values = self._filtration_values(np.asarray(field, dtype=float))
+        points = _h0_sublevel_persistence(values)
+
+        finite = np.isfinite(points[:, 1])
+        if self.persistence_threshold > 0:
+            keep = ~finite | (
+                (points[:, 1] - points[:, 0]) >= self.persistence_threshold
+            )
+            points = points[keep]
+
+        diagrams = [
+            PersistenceDiagram(
+                points=points, dimension=0, threshold=self.persistence_threshold
+            )
+        ]
+        for dim in range(1, self.max_dimension + 1):
+            diagrams.append(
+                PersistenceDiagram(
+                    points=np.empty((0, 2)),
+                    dimension=dim,
+                    threshold=self.persistence_threshold,
+                )
+            )
+        return diagrams
+
     def _extract_cycles(self, cubical_complex, diagrams):
         """Extract representative cycles."""
         # This is a simplified implementation
@@ -662,59 +633,144 @@ class AlphaComplex(BaseTopologyAnalyzer):
 
 
 # Utility functions
+def _h0_sublevel_persistence(values: np.ndarray) -> np.ndarray:
+    """H0 sublevel persistence of a 2-D array of top-cell values.
+
+    Union-find over pixels in increasing value order with 8-connectivity.
+    When two components meet, the younger one (larger birth value) dies
+    (elder rule). Zero-persistence pairs are dropped. The oldest component
+    never dies and is returned with death = inf.
+
+    Returns
+    -------
+    np.ndarray
+        Shape (n, 2) array of (birth, death), sorted by birth.
+    """
+    rows, cols = values.shape
+    flat = values.ravel()
+    order = np.argsort(flat, kind="stable")
+    parent = np.full(flat.size, -1, dtype=np.int64)
+    birth = np.empty(flat.size, dtype=float)
+
+    def find(i: int) -> int:
+        root = i
+        while parent[root] != root:
+            root = parent[root]
+        while parent[i] != root:
+            parent[i], i = root, parent[i]
+        return root
+
+    pairs = []
+    offsets = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+    for idx in order:
+        idx = int(idx)
+        value = flat[idx]
+        parent[idx] = idx
+        birth[idx] = value
+        r, c = divmod(idx, cols)
+        for dr, dc in offsets:
+            rr, cc = r + dr, c + dc
+            if not (0 <= rr < rows and 0 <= cc < cols):
+                continue
+            nb = rr * cols + cc
+            if parent[nb] < 0:
+                continue
+            root_a, root_b = find(idx), find(nb)
+            if root_a == root_b:
+                continue
+            # Elder rule: the component born later dies now.
+            if birth[root_a] < birth[root_b]:
+                root_a, root_b = root_b, root_a
+            if value > birth[root_a]:
+                pairs.append((birth[root_a], value))
+            parent[root_a] = root_b
+
+    pairs.append((float(flat[order[0]]), np.inf))
+    out = np.asarray(pairs, dtype=float)
+    return out[np.argsort(out[:, 0], kind="stable")]
+
+
+def _finite_points(diagram: PersistenceDiagram) -> np.ndarray:
+    """Finite (birth, death) pairs of a diagram; essential classes are dropped."""
+    points = np.asarray(diagram.points, dtype=float).reshape(-1, 2)
+    return points[np.all(np.isfinite(points), axis=1)]
+
+
+def _matching_costs(points1: np.ndarray, points2: np.ndarray) -> np.ndarray:
+    """Cost matrix for diagram matching under the L-infinity ground metric.
+
+    Rows are the points of diagram 1 followed by one diagonal slot per point
+    of diagram 2; columns mirror that. A point may be matched to its own
+    diagonal projection at cost (death - birth) / 2. Diagonal slots match
+    each other at zero cost. Disallowed pairings are inf.
+    """
+    n1, n2 = len(points1), len(points2)
+    cost = np.zeros((n1 + n2, n1 + n2))
+    if n1 and n2:
+        cost[:n1, :n2] = np.max(
+            np.abs(points1[:, None, :] - points2[None, :, :]), axis=2
+        )
+    if n1:
+        block = np.full((n1, n1), np.inf)
+        np.fill_diagonal(block, (points1[:, 1] - points1[:, 0]) / 2.0)
+        cost[:n1, n2:] = block
+    if n2:
+        block = np.full((n2, n2), np.inf)
+        np.fill_diagonal(block, (points2[:, 1] - points2[:, 0]) / 2.0)
+        cost[n1:, :n2] = block
+    return cost
+
+
 def compute_wasserstein_distance(
     diagram1: PersistenceDiagram,
     diagram2: PersistenceDiagram,
     p: float = 2.0
 ) -> float:
     """
-    Compute Wasserstein distance between persistence diagrams.
-    
+    Compute the p-Wasserstein distance between persistence diagrams.
+
+    Uses the L-infinity ground metric. Essential classes (infinite death)
+    are ignored. GUDHI with POT is used when available; otherwise an exact
+    assignment-based computation is used and a RuntimeWarning is emitted.
+
     Parameters
     ----------
     diagram1, diagram2 : PersistenceDiagram
         Persistence diagrams to compare
     p : float
-        Wasserstein parameter (typically 1 or 2)
-        
+        Wasserstein order (typically 1 or 2)
+
     Returns
     -------
     distance : float
         Wasserstein distance
     """
+    points1 = _finite_points(diagram1)
+    points2 = _finite_points(diagram2)
+    if len(points1) == 0 and len(points2) == 0:
+        return 0.0
+
     try:
         from gudhi.wasserstein import wasserstein_distance as _gudhi_wasserstein
-        # Use GUDHI implementation if available
-        return _gudhi_wasserstein(diagram1.points, diagram2.points, order=p)
     except (ImportError, ModuleNotFoundError):
-        # Simple approximation using Hungarian algorithm
-        from scipy.optimize import linear_sum_assignment
-        
-        points1 = diagram1.points
-        points2 = diagram2.points
-        
-        if len(points1) == 0 and len(points2) == 0:
-            return 0.0
-        
-        # Add diagonal points for unmatched points
-        diag_points1 = np.array([[(p[0] + p[1]) / 2, (p[0] + p[1]) / 2] for p in points1])
-        diag_points2 = np.array([[(p[0] + p[1]) / 2, (p[0] + p[1]) / 2] for p in points2])
-        
-        # Combine points and diagonal points
-        all_points1 = np.vstack([points1, diag_points2]) if len(points2) > 0 else points1
-        all_points2 = np.vstack([points2, diag_points1]) if len(points1) > 0 else points2
-        
-        # Compute cost matrix
-        cost_matrix = np.zeros((len(all_points1), len(all_points2)))
-        for i, p1 in enumerate(all_points1):
-            for j, p2 in enumerate(all_points2):
-                cost_matrix[i, j] = np.linalg.norm(p1 - p2, ord=p)
-        
-        # Solve assignment problem
-        row_indices, col_indices = linear_sum_assignment(cost_matrix)
-        
-        # Return total cost
-        return cost_matrix[row_indices, col_indices].sum()
+        warnings.warn(
+            "gudhi.wasserstein is unavailable (needs gudhi and POT): using the "
+            "built-in assignment-based Wasserstein distance.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+    else:
+        return float(
+            _gudhi_wasserstein(points1, points2, order=p, internal_p=np.inf)
+        )
+
+    from scipy.optimize import linear_sum_assignment
+
+    cost = _matching_costs(points1, points2) ** p
+    allowed = np.isfinite(cost)
+    big = (cost[allowed].max() + 1.0) * cost.shape[0] * 10.0
+    rows, cols = linear_sum_assignment(np.where(allowed, cost, big))
+    return float(cost[rows, cols].sum() ** (1.0 / p))
 
 
 def compute_bottleneck_distance(
@@ -723,50 +779,52 @@ def compute_bottleneck_distance(
 ) -> float:
     """
     Compute bottleneck distance between persistence diagrams.
-    
+
+    Essential classes (infinite death) are ignored. GUDHI is used when
+    available; otherwise an exact threshold search over bipartite matchings
+    is used and a RuntimeWarning is emitted.
+
     Parameters
     ----------
     diagram1, diagram2 : PersistenceDiagram
         Persistence diagrams to compare
-        
+
     Returns
     -------
     distance : float
         Bottleneck distance
     """
+    points1 = _finite_points(diagram1)
+    points2 = _finite_points(diagram2)
+    if len(points1) == 0 and len(points2) == 0:
+        return 0.0
+
     try:
         import gudhi
-        # Use GUDHI implementation if available
-        return gudhi.bottleneck_distance(diagram1.points, diagram2.points)
     except (ImportError, ModuleNotFoundError):
-        # Simple approximation
-        from scipy.optimize import linear_sum_assignment
-        
-        points1 = diagram1.points
-        points2 = diagram2.points
-        
-        if len(points1) == 0 and len(points2) == 0:
-            return 0.0
-        
-        # Add diagonal projections
-        diag_points1 = np.array([[(p[0] + p[1]) / 2, (p[0] + p[1]) / 2] for p in points1])
-        diag_points2 = np.array([[(p[0] + p[1]) / 2, (p[0] + p[1]) / 2] for p in points2])
-        
-        # Combine points
-        all_points1 = np.vstack([points1, diag_points2]) if len(points2) > 0 else points1
-        all_points2 = np.vstack([points2, diag_points1]) if len(points1) > 0 else points2
-        
-        # Compute cost matrix (L-infinity norm)
-        cost_matrix = np.zeros((len(all_points1), len(all_points2)))
-        for i, p1 in enumerate(all_points1):
-            for j, p2 in enumerate(all_points2):
-                cost_matrix[i, j] = np.linalg.norm(p1 - p2, ord=np.inf)
-        
-        # Solve assignment problem
-        row_indices, col_indices = linear_sum_assignment(cost_matrix)
-        
-        # Return maximum cost (bottleneck)
-        return cost_matrix[row_indices, col_indices].max()
+        warnings.warn(
+            "GUDHI is not installed: using the built-in bottleneck distance.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+    else:
+        return float(gudhi.bottleneck_distance(points1, points2))
+
+    from scipy.optimize import linear_sum_assignment
+
+    cost = _matching_costs(points1, points2)
+    candidates = np.unique(cost[np.isfinite(cost)])
+    lo, hi = 0, len(candidates) - 1
+    # Smallest threshold at which a perfect matching uses only allowed edges.
+    while lo < hi:
+        mid = (lo + hi) // 2
+        blocked = (~(cost <= candidates[mid])).astype(float)
+        rows, cols = linear_sum_assignment(blocked)
+        if blocked[rows, cols].sum() == 0:
+            hi = mid
+        else:
+            lo = mid + 1
+    return float(candidates[lo])
 
 
 def filter_persistence_diagram(
