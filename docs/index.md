@@ -9,7 +9,7 @@ Mneme is an exploratory research system for uncovering attractor states, regulat
 - **Field Reconstruction** -- Scalable Sparse GP (default), Dense IFT, Standard GP, and Neural Field backends. Handles 256x256 fields in sub-second time.
 - **Topology Analysis** -- Full GUDHI integration for cubical, Rips, and Alpha complexes. Persistence diagrams, landscapes, images, Wasserstein/bottleneck distances.
 - **Attractor Detection** -- Recurrence-based, Lyapunov, and clustering detectors for identifying stable states in temporal field data.
-- **Lyapunov Spectrum** -- Full Wolf algorithm for computing Lyapunov exponents. Kaplan-Yorke dimension and automatic attractor classification.
+- **Lyapunov Analysis (exploratory)** -- Rosenstein largest-exponent estimate with IAAFT surrogate testing. Not yet validated on biological data.
 - **Symbolic Regression** -- PySR integration for discovering governing PDEs from field dynamics.
 - **Latent Space Analysis** -- Convolutional VAE for learning compressed field representations with interpolation and sampling.
 - **BETSE Integration** -- Direct ingestion of BETSE bioelectric tissue simulation output.
@@ -58,7 +58,6 @@ pip install gudhi pysr
 - **[Project Structure](PROJECT_STRUCTURE.md)** -- Code organization and architecture
 - **[API Reference](api/index.md)** -- Auto-generated reference for all modules
 - **[Data Pipeline](DATA_PIPELINE.md)** -- Pipeline architecture and stages
-- **[BETSE Analysis](BETSE_ANALYSIS_REPORT.md)** -- Results from BETSE simulation analysis
 - **[Course](course/README.md)** -- 11-module learning course
 
 ## License
