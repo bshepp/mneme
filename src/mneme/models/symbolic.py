@@ -9,6 +9,8 @@ import warnings
 from typing import Any, Dict, List, Optional, Union
 import numpy as np
 
+from .._status import warn_experimental
+
 # Try to import PySR
 _PYSR_AVAILABLE = False
 _PySRRegressor = None
@@ -97,6 +99,7 @@ class SymbolicRegressor:
         progress: bool = True,
         random_state: Optional[int] = None,
     ) -> None:
+        warn_experimental("SymbolicRegressor")
         self.operators = operators
         self.complexity_penalty = complexity_penalty
         self.max_complexity = max_complexity
@@ -457,6 +460,7 @@ def discover_field_dynamics(
         - 'features_used': Names of input features
         - 'r2_score': R² score on training data
     """
+    warn_experimental("discover_field_dynamics", stacklevel=3)
     if field_sequence.ndim != 3:
         raise ValueError("field_sequence must be 3D (timesteps, height, width)")
     

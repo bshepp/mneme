@@ -1,0 +1,11 @@
+case                                      truth   lambda1 null_mean  null_sd  effect      p signif         LABEL   sec
+Lorenz x dt=0.01                        chaotic    1.1456    1.3827   0.6797   -0.35  0.500  False  undetermined   333
+Rossler x dt=0.1                        chaotic    0.0950    0.1248   0.0379   -0.79  0.400  False  undetermined   209
+white noise                         NOT chaotic    0.0021    0.0020   0.0001    1.01  0.350  False   limit_cycle   206
+AR(1) phi=0.95                      NOT chaotic    0.0078    0.0089   0.0030   -0.38  0.750  False   limit_cycle   252
+AR(2) narrowband                    NOT chaotic    0.0093    0.0109   0.0037   -0.43  0.500  False   limit_cycle   304
+sine + 5% noise                     NOT chaotic    0.0006    0.0007   0.0003   -0.18  0.850  False   limit_cycle   296
+noisy VdP (dynamical noise)         NOT chaotic    0.0940    0.1087   0.0492   -0.30  0.950  False  undetermined   249
+threshold-AR (nonlinear stoch.)     NOT chaotic    0.0032    0.0031   0.0001    1.66  0.200  False   limit_cycle   209
+nonstationary AR(1)                 NOT chaotic    0.0089    0.0120   0.0030   -0.99  0.200  False   limit_cycle   233
+exit=0

@@ -452,11 +452,8 @@ _STANDARD_CONFIG: Dict[str, Any] = {
         'filtration': 'sublevel',
         'persistence_threshold': 0.05
     },
-    'attractors': {
-        'method': 'recurrence',
-        'threshold': 0.1,
-        'parameters': {'min_persistence': 0.1}
-    }
+    # Attractor detection is experimental and is not run by default. Add an
+    # 'attractors' section (or pass --attractor-method) to opt in.
 }
 
 _BIOELECTRIC_CONFIG: Dict[str, Any] = {
@@ -480,11 +477,7 @@ _BIOELECTRIC_CONFIG: Dict[str, Any] = {
         'filtration': 'sublevel',
         'persistence_threshold': 0.05
     },
-    'attractors': {
-        'method': 'recurrence',
-        'threshold': 0.1,
-        'parameters': {}
-    }
+    # Attractor detection is experimental and is not run by default.
 }
 
 

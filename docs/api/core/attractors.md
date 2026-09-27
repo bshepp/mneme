@@ -1,6 +1,9 @@
 # Attractors
 
-Recurrence- and clustering-based attractor detection for field time series.
+Recurrence- and clustering-based detection of dense regions in a trajectory.
+
+!!! warning "Experimental"
+    These detectors locate regions. They do not determine attractor type, and report `UNDETERMINED`. See [Scope and Support Status](../../SCOPE.md).
 
 (For the corrected Lyapunov estimator and surrogate-significance gate, see
 [Lyapunov](lyapunov.md), [Surrogates](surrogates.md), and

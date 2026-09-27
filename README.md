@@ -1,224 +1,168 @@
 # Mneme
 
-An exploratory research system for detecting field-like, emergent memory structures in biological systems, with initial focus on planarian regeneration and bioelectric data.
+An exploratory research toolkit for studying field-like memory in biological tissue, starting with simulated bioelectric data.
 
-## Overview
+> **Validation status (2026-09-27):** No scientific result produced with Mneme is currently asserted. The BETSE analysis report and the earlier PhysioNet Lyapunov numbers were both withdrawn after a review found defects in the code that produced them. The defects are fixed; the analyses have not yet been re-run.
 
-Mneme seeks to uncover attractor states, regulatory logic, and latent architectures not captured by sequence-based models alone. The project employs Information Field Theory (IFT), Topological Data Analysis (TDA), and machine learning to identify and model distributed memory encoding via fields in biological tissue.
+## What it does
 
-## Key Features
+Mneme loads spatial voltage data, reconstructs fields from sparse observations, and measures their topology. Components are sorted into three tiers by how far their output can be relied on. See [docs/SCOPE.md](docs/SCOPE.md).
 
-- **Field Reconstruction**: Scalable Sparse GP reconstruction (default), with dense IFT, standard GP, and neural field backends available. Handles 256×256 fields in sub-second time.
-- **Topology Analysis**: Full GUDHI integration for cubical, Rips, and Alpha complexes. Computes persistence diagrams, landscapes, and images with Wasserstein/bottleneck distances.
-- **Attractor Detection**: Recurrence-based, Lyapunov, and clustering detectors for identifying stable states in temporal field data.
-- **Lyapunov Spectrum**: Rosenstein-1993 `largest_lyapunov()` for robust λ₁, exploratory `lyapunov_spectrum()`, surrogate significance testing via `surrogate_test()`, and surrogate-gated `classify_attractor()`. Includes `kaplan_yorke_dimension()` for fractal dimension.
-- **Symbolic Regression**: Full PySR integration for discovering governing equations from field dynamics. Includes `discover_field_dynamics()` for automatic PDE discovery.
-- **Latent Space Analysis**: Convolutional VAE (`FieldAutoencoder`) for learning compressed field representations, with training loop, interpolation, and sampling capabilities.
+| Tier | Components |
+|---|---|
+| **Core** (tested against known answers) | BETSE loading, cubical persistent homology, Wasserstein and bottleneck distances, Gaussian-process and Wiener-filter reconstruction, preprocessing, I/O |
+| **Frozen** (documented operating range) | Largest Lyapunov exponent, surrogate significance test, gated attractor classification |
+| **Experimental** (not validated) | Attractor detectors, symbolic regression, variational autoencoder, neural field reconstruction |
+
+Experimental components emit `mneme.ExperimentalWarning`. The default pipelines run core stages only.
 
 ## Installation
 
 ```bash
-# Clone repository
 git clone https://github.com/bshepp/mneme.git
 cd mneme
 
-# Create virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies
-pip install -r requirements.txt
-pip install -e .
+pip install -e ".[tda]"   # core, plus GUDHI and POT for topology
 
-# Install optional dependencies (recommended)
-pip install gudhi pysr
+# Optional: symbolic regression (needs Julia)
+pip install -e ".[pysr]"
 ```
 
-For detailed setup instructions, see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMENT_SETUP.md).
+Python 3.12 or later. For detailed setup see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMENT_SETUP.md).
 
-## Project Status: Active Development (Core Implemented)
-
-**Recent Updates (2026-02-14):**
-- ✅ Deep analysis pipeline: PCA mode extraction, cross-frame Wasserstein matrix, symbolic regression on PCA dynamics
-- ✅ GUDHI integration for H0+H1 persistence computation; PySR/Julia for symbolic regression
-- ✅ BETSE integration: load bioelectric tissue simulation data directly into Mneme
-- ✅ 113 unit/integration tests with GitHub Actions CI (38.4% coverage)
-
-**Previous milestones (2025-11-27):**
-- ✅ Sparse GP reconstruction as scalable default (O(nm²) instead of O(n³))
-- ✅ Lyapunov analysis (Rosenstein λ₁, exploratory spectrum, surrogate gating) — re-validation pending under Tier 0 estimators
-- ✅ Full PySR integration for symbolic regression with Julia backend
-- ✅ Convolutional VAE with proper training loop and latent space utilities
-- ✅ GUDHI integration for Rips, Alpha, and cubical complexes
-- ✅ Dense IFT preserved as option for exact computation on small fields
-
-> **Validation status (2026-09-27):** No scientific result produced with Mneme is currently asserted. The BETSE analysis report and the earlier PhysioNet Lyapunov numbers have both been withdrawn after a review found defects in the code that produced them. Fixes are in progress.
->
-> The `classify_attractor()` function gates chaos labels behind a surrogate-significance test (IAAFT, two-sided). The `mneme analyze` pipeline and the detectors in `mneme.core.attractors` do not yet use that gate, so attractor-type labels from those paths should be disregarded.
+Without GUDHI, persistence is computed for H0 only and a `RuntimeWarning` says so.
 
 ## Quick Start
 
+### Topology of a field
+
 ```python
 import numpy as np
-from mneme.core import FieldReconstructor, create_reconstructor
-from mneme.analysis.pipeline import create_bioelectric_pipeline
-from mneme.data.generators import generate_planarian_bioelectric_sequence
-from mneme.models import create_field_vae, SymbolicRegressor
+from mneme.core.topology import PersistentHomology, compute_wasserstein_distance
 
-# Generate synthetic bioelectric data
-data = generate_planarian_bioelectric_sequence(shape=(64, 64), timesteps=30, seed=42)
+field_a = np.random.default_rng(0).normal(size=(64, 64))
+field_b = np.random.default_rng(1).normal(size=(64, 64))
 
-# Run analysis pipeline
-pipe = create_bioelectric_pipeline()
-result = pipe.run({'field': data})
-print(f"Pipeline completed in {result.execution_time:.2f}s")
+ph = PersistentHomology(max_dimension=1, filtration="sublevel", persistence_threshold=0.0)
+h0_a, h1_a = ph.compute_persistence(field_a)
+h0_b, h1_b = ph.compute_persistence(field_b)
 
-# Reconstruct field from sparse observations
-positions = np.random.rand(100, 2)
-observations = np.sin(4 * np.pi * positions[:, 0])
-rec = create_reconstructor('ift', resolution=(128, 128))  # Uses Sparse GP
-rec.fit(observations, positions)
-field = rec.reconstruct()
-
-# Train VAE on field data
-vae = create_field_vae((64, 64), latent_dim=16)
-vae.fit(data, epochs=50, verbose=True)  # Accepts numpy arrays directly
-latent = vae.encode_fields(data)  # Shape: (30, 16)
-
-# Discover governing equations
-from mneme.models import discover_field_dynamics
-result = discover_field_dynamics(data, dt=1.0, niterations=50)
-print(f"Discovered equation: {result['best_equation']}")
-
-# Compute Lyapunov exponent (chaos analysis)
-from mneme.core import (
-    largest_lyapunov, surrogate_test, classify_attractor,
-    lyapunov_spectrum, kaplan_yorke_dimension,
-)
-trajectory = latent  # Use VAE latent space as phase space
-res = largest_lyapunov(trajectory, dt=1.0)
-sur = surrogate_test(trajectory, statistic="lambda1", n=200, dt=1.0)
-attractor_type = classify_attractor(res.lambda1, surrogate=sur)  # STRANGE only if sur.significant
-spectrum = lyapunov_spectrum(trajectory, dt=1.0)      # EXPLORATORY full spectrum (RuntimeWarning)
-print(f"λ₁ = {res.lambda1:.4f}, attractor = {attractor_type}")
-print(f"Kaplan-Yorke dimension: {kaplan_yorke_dimension(spectrum):.2f}")
+print(len(h0_a.points), "components,", len(h1_a.points), "loops")
+print("H1 distance:", compute_wasserstein_distance(h1_a, h1_b))
 ```
 
-### CLI Usage
+`sublevel` tracks pits as the threshold rises. `superlevel` tracks peaks, with diagrams expressed in units of the negated field.
 
-```bash
-# Generate synthetic data first
-mneme generate -o sample_data.npz
-
-# Basic analysis
-mneme analyze sample_data.npz --pipeline bioelectric -o results
-
-# With Rips topology backend
-mneme analyze sample_data.npz --topology-backend rips -o results
-
-# With clustering attractor detection
-mneme analyze sample_data.npz \
-  --attractor-method clustering \
-  --attractor-threshold 0.2 \
-  -o results
-```
-
-#### Attractor CLI Flags
-
-| Flag | Description |
-|------|-------------|
-| --attractor-method {none,recurrence,lyapunov,clustering} | Choose attractor detector |
-| --attractor-threshold FLOAT | Detection threshold |
-| --attractor-min-persistence FLOAT | Recurrence: minimum persistence fraction |
-| --attractor-embedding-dim INT | Embedding dimension for 1D series |
-| --attractor-time-delay INT | Time delay for embedding |
-| --attractor-n-neighbors INT | Lyapunov: number of neighbors |
-| --attractor-min-samples INT | Clustering: minimum samples per cluster |
-
-## BETSE Integration
-
-Mneme can directly ingest output from [BETSE](https://github.com/betsee/betse) (BioElectric Tissue Simulation Engine), the 2D bioelectric simulator used in Levin Lab research:
+### Reconstruction from sparse observations
 
 ```python
-from mneme.data.betse_loader import betse_to_field
+import numpy as np
+from mneme.core import create_reconstructor
 
-# Load BETSE CSV exports into a Mneme Field object
-field = betse_to_field("path/to/Vmem2D_TextExport/", resolution=(64, 64))
+rng = np.random.default_rng(0)
+positions = rng.uniform(0, 1, (300, 2))
+observations = np.sin(2 * np.pi * positions[:, 0])
 
-# Or run the standalone analysis script
-# python scripts/analyze_betse.py path/to/Vmem2D_TextExport/ --resolution 64 --output results/betse
+rec = create_reconstructor("gp_subset", resolution=(64, 64))
+rec.fit(observations, positions)
+field = rec.reconstruct()
+uncertainty = rec.uncertainty()
 ```
 
-The loader handles:
-- Irregular cell-center data → regular grid interpolation
-- Multi-frame time series stacking
-- Metadata extraction (spatial bounds, units, cell count)
-- Single-cell `ExportedData.csv` time series
+### BETSE simulation output
+
+[BETSE](https://github.com/betsee/betse) is a 2D bioelectric tissue simulator.
+
+```python
+from mneme.data.betse_loader import load_betse_cells, betse_to_field
+
+# Voltages at the cells, in time order. No interpolation.
+vmem, x, y, frames = load_betse_cells("path/to/Vmem2D_TextExport/")
+# vmem: shape (n_timesteps, n_cells), in mV
+
+# Or interpolated to a regular grid, for topology
+field = betse_to_field("path/to/Vmem2D_TextExport/", resolution=(64, 64))
+inside = field.metadata["inside_hull"]   # False where values are fill
+```
+
+Prefer `load_betse_cells()` unless you need a grid. Grid values outside the convex hull of the cells are nearest-neighbour fill, not simulation output.
+
+### Lyapunov analysis (frozen)
+
+```python
+from mneme.core import largest_lyapunov, surrogate_test, classify_attractor
+
+res = largest_lyapunov(series, dt=0.01)
+sur = surrogate_test(series, statistic="lambda1", n=200, dt=0.01)
+label = classify_attractor(res.lambda1, surrogate=sur)
+```
+
+Read [docs/LYAPUNOV_OPERATING_RANGE.md](docs/LYAPUNOV_OPERATING_RANGE.md) before using a number from these. In brief:
+
+- The surrogate test needs about 4,000 points to detect chaos.
+- `STRANGE` means "consistent with chaos", and is returned only with a passed surrogate test.
+- λ₁ was off by 14% to 81% away from the conditions it was tuned on.
+
+### Command line
+
+```bash
+mneme generate -o sample_data.npz
+mneme analyze sample_data.npz --pipeline bioelectric -o results
+mneme analyze sample_data.npz --topology-backend rips -o results
+```
+
+`mneme analyze` prints the status of each stage and exits non-zero if a stage fails.
+
+Attractor detection is experimental and off by default. Opt in with `--attractor-method {recurrence,lyapunov,clustering}`.
+
+## Reconstruction Methods
+
+| Method | Name | Cost | Notes |
+|---|---|---|---|
+| Subset GP (default) | `gp_subset` | O(m³), m = subset size | Fits a GP to a random subset of the observations and discards the rest |
+| Wiener filter | `wiener_filter` | O(n³), n = grid points | Small grids only |
+| Standard GP | `gaussian_process` | O(n³), n = observations | Uses every observation |
+| Neural field | `neural_field` | per epoch | Experimental; no uncertainty estimate |
+
+The names `ift`, `sparse_gp` and `dense_ift`, and the classes `SparseGPReconstructor`, `IFTReconstructor` and `DenseIFTReconstructor`, still work and emit a `DeprecationWarning`. The methods behind them are unchanged; the old names described them inaccurately.
 
 ## Project Structure
 
 ```
 mneme/
 ├── src/mneme/
-│   ├── core/           # Field theory, topology, attractors
+│   ├── core/           # Reconstruction, topology, Lyapunov tools, attractor detectors
 │   ├── analysis/       # Pipeline, visualization, metrics
 │   ├── data/           # Generators, loaders, preprocessors, BETSE loader
-│   ├── models/         # VAE, symbolic regression
+│   ├── models/         # VAE, symbolic regression (experimental)
 │   └── utils/          # Config, logging, I/O
-├── scripts/            # Analysis scripts (BETSE, PhysioNet, deep analysis)
+├── scripts/            # Analysis scripts
 ├── notebooks/          # Demo notebooks
-├── tests/              # Test suite (113 tests)
-├── docs/               # Documentation
-└── results/            # Analysis output (JSON, NPZ, reports)
+├── tests/              # Test suite
+└── docs/               # Documentation
 ```
 
 ## Documentation
 
-- [Project Structure](docs/PROJECT_STRUCTURE.md) — Code organization and architecture
-- [Development Setup](docs/DEVELOPMENT_SETUP.md) — Environment setup and dependencies
-- [API Design](docs/API_DESIGN.md) — Module interfaces and usage
-- [Data Pipeline](docs/DATA_PIPELINE.md) — Pipeline architecture and stages
+- [Scope and Support Status](docs/SCOPE.md) — what is core, frozen and experimental
+- [Lyapunov Operating Range](docs/LYAPUNOV_OPERATING_RANGE.md) — measured accuracy and limits
+- [Project Structure](docs/PROJECT_STRUCTURE.md) — code organization
+- [Development Setup](docs/DEVELOPMENT_SETUP.md) — environment setup
+- [Data Pipeline](docs/DATA_PIPELINE.md) — pipeline stages
 - [Course](docs/course/README.md) — 11-module learning course
-
-## Reconstruction Methods
-
-| Method | Command | Complexity | Best For |
-|--------|---------|------------|----------|
-| Sparse GP | `method='ift'` (default) | O(nm²) | Large fields, production use |
-| Dense IFT | `method='dense_ift'` | O(n³) | Small fields, exact computation |
-| Standard GP | `method='gaussian_process'` | O(n³) | Moderate datasets |
-| Neural Field | `method='neural_field'` | O(epochs) | Complex patterns |
-
-## Core Technologies
-
-- **Python 3.12+**: Primary development language
-- **NumPy/SciPy**: Numerical computing
-- **PyTorch**: Deep learning (VAE, neural fields)
-- **GUDHI**: Topological data analysis
-- **PySR**: Symbolic regression (Julia backend)
-- **scikit-learn**: Sparse GP, clustering
 
 ## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-## Citation
-
-If you use Mneme in your research, please cite:
-```bibtex
-@software{mneme2024,
-  title = {Mneme: Detecting Field-Like Memory Structures in Biological Systems},
-  year = {2024},
-  url = {https://github.com/bshepp/mneme}
-}
-```
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-This project is licensed under the MIT License - see LICENSE file for details.
+MIT. See [LICENSE](LICENSE).
 
 ## Acknowledgments
 
 - Inspired by work on bioelectric patterns in regeneration (Levin Lab)
-- Built on theoretical foundations from Information Field Theory
-- Leverages topological methods for biological data analysis
+- BETSE, GUDHI, PySR and scikit-learn

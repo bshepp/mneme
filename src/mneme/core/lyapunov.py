@@ -4,6 +4,17 @@
 (corrected Sano-Sawada) is explicitly exploratory and emits a RuntimeWarning.
 Pure numpy/scipy; no new dependencies.
 
+Status: FROZEN
+--------------
+This module is kept as it is and is not under development. Its measured
+accuracy and the conditions under which it works are recorded in
+docs/LYAPUNOV_OPERATING_RANGE.md; read that before using a number from it.
+In brief: the detector's constants were tuned on Lorenz and Rössler series
+sampled at about 50 to 100 points per characteristic time and 6,000 points
+long, and λ₁ is within a few percent there. Away from those conditions the
+error measured up to 81%, and ``fit_r2`` stays near 1 regardless, so it does
+not indicate whether an estimate can be trusted.
+
 Scope
 -----
 Designed for continuous (sampled-flow) time series. Discrete maps are out

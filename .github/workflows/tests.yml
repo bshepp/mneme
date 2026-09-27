@@ -28,7 +28,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install -e ".[dev]"
+        # tda installs GUDHI and POT so the real persistence and Wasserstein
+        # code paths are tested, not only the fallbacks.
+        pip install -e ".[dev,tda]"
 
     - name: Lint with flake8
       run: |
@@ -47,4 +49,4 @@ jobs:
 
     - name: Check coverage threshold
       run: |
-        coverage report --fail-under=35
+        coverage report --fail-under=60

@@ -15,6 +15,7 @@ import warnings
 import numpy as np
 from abc import ABC, abstractmethod
 
+from .._status import warn_experimental
 from ..types import (
     Field, ReconstructionMethod, ReconstructionResult,
     Coordinates, FieldData
@@ -837,6 +838,7 @@ class NeuralFieldReconstructor(BaseFieldReconstructor):
         learning_rate: float = 0.001,
         verbose: bool = False,
     ):
+        warn_experimental("NeuralFieldReconstructor")
         super().__init__(resolution)
         self.hidden_dims = hidden_dims
         self.activation = activation

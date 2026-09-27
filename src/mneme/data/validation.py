@@ -334,15 +334,22 @@ class QualityChecker:
         }
         
         # Run all checks
+        failed_checks = []
         for check in self.checks:
             try:
                 check_result = check(data)
                 report['metrics'].update(check_result)
             except Exception as e:
-                report['issues'].append(f"Check failed: {e}")
-        
-        # Determine overall quality
-        report['overall_quality'] = self._determine_overall_quality(report['metrics'])
+                name = getattr(check, '__name__', repr(check))
+                failed_checks.append(name)
+                report['issues'].append(f"Check {name} failed: {e}")
+        report['failed_checks'] = failed_checks
+
+        # A verdict needs every check to have run.
+        if failed_checks:
+            report['overall_quality'] = 'unknown'
+        else:
+            report['overall_quality'] = self._determine_overall_quality(report['metrics'])
         
         # Generate recommendations
         report['recommendations'] = self._generate_recommendations(report['metrics'])

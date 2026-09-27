@@ -205,24 +205,25 @@ class ResultManager:
         
         summary['comparison']['reconstruction_methods'] = reconstruction_methods
         
-        # Compare topology results
+        # Compare topology results. None means the analysis did not run (or
+        # failed); 0 means it ran and found nothing.
         topology_features = []
         for exp_name, result in results:
-            if result.topology is not None and result.topology.diagrams:
+            if result.topology is not None and result.topology.diagrams is not None:
                 total_features = sum(len(d.points) for d in result.topology.diagrams)
                 topology_features.append(total_features)
             else:
-                topology_features.append(0)
-        
+                topology_features.append(None)
+
         summary['comparison']['topology_features'] = topology_features
-        
-        # Compare attractors
+
+        # Compare attractors (same None-versus-0 convention)
         attractor_counts = []
         for exp_name, result in results:
-            if result.attractors:
+            if result.attractors is not None:
                 attractor_counts.append(len(result.attractors))
             else:
-                attractor_counts.append(0)
+                attractor_counts.append(None)
         
         summary['comparison']['attractor_counts'] = attractor_counts
         

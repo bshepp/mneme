@@ -10,10 +10,10 @@ readme = "README.md"
 requires-python = ">=3.12"
 license = {text = "MIT"}
 authors = [
-    {name = "Mneme Development Team", email = "mneme@example.com"},
+    {name = "Brian Sheppard"},
 ]
 maintainers = [
-    {name = "Mneme Development Team", email = "mneme@example.com"},
+    {name = "Brian Sheppard"},
 ]
 keywords = [
     "biology",
@@ -84,6 +84,7 @@ pysr = [
 ]
 tda = [
     "gudhi>=3.4.0",
+    "POT>=0.9.0",  # required by gudhi.wasserstein
 ]
 docs = [
     "mkdocs>=1.5.0",

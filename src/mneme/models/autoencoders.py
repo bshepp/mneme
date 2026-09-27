@@ -9,6 +9,8 @@ from typing import Tuple, Optional, Dict, Any, List, Union
 from dataclasses import dataclass
 import numpy as np
 
+from .._status import warn_experimental
+
 try:
     import torch
     from torch import nn
@@ -154,6 +156,7 @@ class FieldAutoencoder(nn.Module if _TORCH_AVAILABLE else object):
         architecture: str = "standard",
         beta: float = 1.0,
     ) -> None:
+        warn_experimental("FieldAutoencoder")
         self.input_shape = input_shape
         self.latent_dim = latent_dim
         self.in_channels = in_channels

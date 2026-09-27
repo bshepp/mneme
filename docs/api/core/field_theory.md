@@ -1,6 +1,8 @@
 # Field Theory
 
-Field reconstruction from sparse observations using Gaussian Processes, Information Field Theory, and Neural Fields.
+Field reconstruction from sparse observations: a Gaussian process on a random subset of the data (default), a dense Wiener filter, a standard Gaussian process, and an experimental neural field.
+
+The names `SparseGPReconstructor`, `IFTReconstructor` and `DenseIFTReconstructor` are deprecated aliases of the classes below.
 
 ## Factory Function
 
@@ -8,9 +10,9 @@ Field reconstruction from sparse observations using Gaussian Processes, Informat
 
 ## Reconstructors
 
-::: mneme.core.field_theory.SparseGPReconstructor
+::: mneme.core.field_theory.SubsetGPReconstructor
 
-::: mneme.core.field_theory.DenseIFTReconstructor
+::: mneme.core.field_theory.WienerFilterReconstructor
 
 ::: mneme.core.field_theory.GaussianProcessReconstructor
 

@@ -2,17 +2,18 @@
 
 **Detecting field-like memory structures in biological systems**
 
-Mneme is an exploratory research system for uncovering attractor states, regulatory logic, and latent architectures in biological tissue -- structures not captured by sequence-based models alone. The project employs Information Field Theory (IFT), Topological Data Analysis (TDA), and machine learning to identify and model distributed memory encoding via fields.
+Mneme is an exploratory research toolkit for studying field-like memory in biological tissue, starting with simulated bioelectric data.
 
-## Key Capabilities
+!!! warning "Validation status"
+    No scientific result produced with Mneme is currently asserted. Earlier results were withdrawn after a review found defects in the code that produced them. See [Scope and Support Status](SCOPE.md).
 
-- **Field Reconstruction** -- Scalable Sparse GP (default), Dense IFT, Standard GP, and Neural Field backends. Handles 256x256 fields in sub-second time.
-- **Topology Analysis** -- Full GUDHI integration for cubical, Rips, and Alpha complexes. Persistence diagrams, landscapes, images, Wasserstein/bottleneck distances.
-- **Attractor Detection** -- Recurrence-based, Lyapunov, and clustering detectors for identifying stable states in temporal field data.
-- **Lyapunov Analysis (exploratory)** -- Rosenstein largest-exponent estimate with IAAFT surrogate testing. Not yet validated on biological data.
-- **Symbolic Regression** -- PySR integration for discovering governing PDEs from field dynamics.
-- **Latent Space Analysis** -- Convolutional VAE for learning compressed field representations with interpolation and sampling.
-- **BETSE Integration** -- Direct ingestion of BETSE bioelectric tissue simulation output.
+## Capabilities
+
+| Tier | Components |
+|---|---|
+| **Core** (tested against known answers) | BETSE loading, cubical persistent homology, Wasserstein and bottleneck distances, Gaussian-process and Wiener-filter reconstruction |
+| **Frozen** (documented operating range) | Largest Lyapunov exponent, surrogate significance test, gated attractor classification |
+| **Experimental** (not validated) | Attractor detectors, symbolic regression, variational autoencoder, neural field reconstruction |
 
 ## Quick Start
 
@@ -33,7 +34,7 @@ print(f"Pipeline completed in {result.execution_time:.2f}s")
 # Reconstruct field from sparse observations
 positions = np.random.rand(100, 2)
 observations = np.sin(4 * np.pi * positions[:, 0])
-rec = create_reconstructor('ift', resolution=(128, 128))
+rec = create_reconstructor('gp_subset', resolution=(128, 128))
 rec.fit(observations, positions)
 field = rec.reconstruct()
 ```
@@ -58,6 +59,8 @@ pip install gudhi pysr
 - **[Project Structure](PROJECT_STRUCTURE.md)** -- Code organization and architecture
 - **[API Reference](api/index.md)** -- Auto-generated reference for all modules
 - **[Data Pipeline](DATA_PIPELINE.md)** -- Pipeline architecture and stages
+- **[Scope and Support Status](SCOPE.md)** -- What is core, frozen and experimental
+- **[Lyapunov Operating Range](LYAPUNOV_OPERATING_RANGE.md)** -- Measured accuracy and limits
 - **[Course](course/README.md)** -- 11-module learning course
 
 ## License

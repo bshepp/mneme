@@ -7,12 +7,13 @@ bioelectric data.
 """
 
 __version__ = "0.1.0"
-__author__ = "Mneme Development Team"
+__author__ = "Brian Sheppard"
 
+from ._status import ExperimentalWarning
 from . import core
 from . import models
 from . import data
 from . import analysis
 from . import utils
 
-__all__ = ["core", "models", "data", "analysis", "utils"]
+__all__ = ["core", "models", "data", "analysis", "utils", "ExperimentalWarning"]

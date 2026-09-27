@@ -14,6 +14,7 @@ from typing import List, Dict, Any
 import numpy as np
 from abc import ABC, abstractmethod
 
+from .._status import warn_experimental
 from ..types import Attractor, AttractorType
 from .embedding import embed_trajectory
 from .lyapunov import lyapunov_spectrum
@@ -628,6 +629,7 @@ class AttractorDetector:
         **kwargs
             Method-specific parameters
         """
+        warn_experimental("AttractorDetector")
         self.method = method
         self.threshold = threshold
         self.method_params = kwargs

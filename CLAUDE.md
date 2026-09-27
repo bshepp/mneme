@@ -4,86 +4,86 @@ Developer context for the Mneme project. Useful for both AI assistants and human
 
 ## Project Overview
 
-Mneme is an exploratory research system designed to detect field-like, emergent memory structures embedded in biological systems, beginning with planarian regeneration and bioelectric data. The project seeks to uncover attractor states, regulatory logic, and latent architectures not captured by sequence-based models alone.
+Mneme is an exploratory research toolkit for studying field-like memory in biological tissue, starting with simulated bioelectric data (BETSE).
 
-## Current Status (2026-02-14)
+## Current Status (2026-09-27)
 
-The core system is in **active development** with all major components implemented:
+**No scientific result produced with Mneme is currently asserted.** A review in September 2026 found that the BETSE analysis report and the PhysioNet Lyapunov numbers were produced by defective code. Both are withdrawn. The defects are fixed; the analyses have not been re-run.
 
-### Implemented Features
-- **Field Reconstruction**: Sparse GP (default, scalable), Dense IFT, Standard GP, Neural Fields
-- **Topology Analysis**: Full GUDHI integration (cubical, Rips, Alpha complexes)
-- **Attractor Detection**: Recurrence, Lyapunov, and clustering methods
-- **Lyapunov Spectrum**: Rosenstein-1993 `largest_lyapunov()`, exploratory `lyapunov_spectrum()`, `surrogate_test()`, surrogate-gated `classify_attractor()`, `kaplan_yorke_dimension()`
-- **Symbolic Regression**: Full PySR integration with `discover_field_dynamics()`
-- **Latent Space Analysis**: Convolutional VAE with training, encoding, interpolation
-- **Pipeline**: End-to-end analysis with visualization and HDF5 export
-- **Real Data Validation**: PhysioNet ECG/HRV validation pending re-run under Tier 0 corrected estimators
-- **BETSE Integration**: Loader for BETSE bioelectric tissue simulation output (`betse_loader.py`)
-- **Test Suite**: Unit and integration tests with CI via GitHub Actions
+The plan is in [project_plan.md](project_plan.md). The next scientific step is the multistability experiment in [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md).
 
-### Key Architecture Decisions
-- Sparse GP is the default reconstruction method (scalable to 256×256 fields)
-- Dense IFT preserved as `method='dense_ift'` for exact computation on small fields
-- PySR falls back to linear regression if Julia not available
-- GUDHI falls back to scipy-based persistence if not installed
+### Component tiers
+
+Full detail in [docs/SCOPE.md](docs/SCOPE.md).
+
+| Tier | Components |
+|---|---|
+| **Core** (tested against known answers) | BETSE loading, cubical persistent homology, Wasserstein and bottleneck distances, subset-GP / standard-GP / Wiener-filter reconstruction, preprocessing, I/O |
+| **Frozen** (documented operating range, no development) | `largest_lyapunov`, `surrogate_test`, `classify_attractor`, `lyapunov_spectrum`, `kaplan_yorke_dimension`, `mneme.core.embedding` |
+| **Experimental** (not validated) | `mneme.core.attractors` detectors, symbolic regression, VAE, neural field reconstruction, quality checker |
+
+Experimental components emit `mneme.ExperimentalWarning`. Default pipelines run core stages only.
+
+## Rules for claims
+
+1. Report a result only with a null model or baseline beside it.
+2. Only core-tier output supports a claim.
+3. Use a method only on data inside its measured operating range.
+4. Replicate conditions. One run per condition demonstrates nothing.
 
 ## Development Environment
 
 - **Python**: 3.12+ required
-- **Virtual Environment**: `venv/` directory
 - **Core Dependencies**: numpy, scipy, pandas, scikit-learn, torch, matplotlib
-- **Optional Dependencies**: gudhi (TDA), pysr (symbolic regression)
+- **Optional Dependencies**: gudhi and POT (`.[tda]`), pysr (`.[pysr]`)
+- The `venv/` directory in the repo root is a stale Linux environment from an earlier checkout path. Create a fresh one.
 
 ## Key Commands
 
 ```bash
-# Environment setup
-source venv/bin/activate  # Linux/Mac
-.\venv\Scripts\Activate.ps1  # Windows PowerShell
+pip install -e ".[dev,tda]"
 
-pip install -r requirements.txt
-pip install -e .
+# Run tests (about 5 minutes)
+pytest tests
 
-# Install optional dependencies
-pip install gudhi pysr
-
-# Run tests
-python -c "from mneme.models import SymbolicRegressor, create_field_vae; print('OK')"
+# Without installing the package
+PYTHONPATH=src python -m pytest tests
 
 # CLI usage
-mneme generate -o sample_data.npz  # Generate synthetic data first
+mneme generate -o sample_data.npz
 mneme analyze sample_data.npz --pipeline bioelectric -o results
-mneme info  # Show system information
+mneme info
 ```
 
 ## Module Structure
 
 ```
 src/mneme/
+├── _status.py             # ExperimentalWarning, warn_experimental()
 ├── core/
-│   ├── field_theory.py    # SparseGPReconstructor, DenseIFTReconstructor, etc.
-│   ├── topology.py        # PersistentHomology, RipsComplex, AlphaComplex
-│   └── attractors.py      # RecurrenceAnalysis, LyapunovAnalysis, ClusteringDetector
+│   ├── field_theory.py    # SubsetGPReconstructor, WienerFilterReconstructor, etc.
+│   ├── topology.py        # PersistentHomology, RipsComplex, AlphaComplex, distances
+│   ├── embedding.py       # delay embedding, MI delay, Cao dimension (frozen)
+│   ├── lyapunov.py        # largest_lyapunov, lyapunov_spectrum (frozen)
+│   ├── surrogates.py      # IAAFT surrogates, surrogate_test (frozen)
+│   ├── classify.py        # classify_attractor, kaplan_yorke_dimension (frozen)
+│   └── attractors.py      # RecurrenceAnalysis, ClusteringDetector (experimental)
 ├── analysis/
-│   ├── pipeline.py        # MnemePipeline, create_bioelectric_pipeline()
+│   ├── pipeline.py        # MnemePipeline, default_config(), merge_config()
 │   └── visualization.py   # FieldVisualizer, dashboards
 ├── data/
-│   ├── generators.py      # SyntheticFieldGenerator, generate_planarian_bioelectric_sequence()
+│   ├── generators.py      # SyntheticFieldGenerator
 │   ├── preprocessors.py   # Denoiser, Normalizer, Interpolator
-│   └── betse_loader.py    # BETSE simulation CSV → Mneme Field objects
-├── models/
-│   ├── autoencoders.py    # FieldAutoencoder (Conv VAE), create_field_vae()
+│   └── betse_loader.py    # load_betse_cells(), load_betse_timeseries(), betse_to_field()
+├── models/                # experimental
+│   ├── autoencoders.py    # FieldAutoencoder (Conv VAE)
 │   └── symbolic.py        # SymbolicRegressor, discover_field_dynamics()
 └── utils/
-    ├── config.py          # Configuration management
-    └── io.py              # save_results(), load_results()
+    ├── config.py
+    └── io.py
 
-scripts/
-├── analyze_betse.py       # Run Mneme pipeline on BETSE simulation output
-├── deep_analysis.py       # PCA, Wasserstein matrix, VAE, symbolic regression
-├── analyze_physionet.py   # PhysioNet ECG/HRV analysis
-└── validate_installation.py
+scripts/                   # not re-run since the fixes; see Known Issues
+review_artifacts/          # probe scripts and outputs behind the measured numbers
 ```
 
 ## Important Implementation Notes
@@ -92,79 +92,62 @@ scripts/
 ```python
 from mneme.core import create_reconstructor
 
-# Default: Sparse GP (scalable)
-rec = create_reconstructor('ift', resolution=(256, 256), n_inducing=500)
+# Default: GP fitted to a random subset of the observations
+rec = create_reconstructor('gp_subset', resolution=(256, 256), n_subset=500)
 
-# Dense IFT (exact, for small fields only)
-rec = create_reconstructor('dense_ift', resolution=(32, 32))
+# Dense Wiener filter (small fields only)
+rec = create_reconstructor('wiener_filter', resolution=(32, 32))
 ```
 
-### Symbolic Regression
+The names `ift`, `sparse_gp`, `dense_ift`, `SparseGPReconstructor`, `IFTReconstructor`, `DenseIFTReconstructor` and `n_inducing` are deprecated aliases. They still work and emit `DeprecationWarning`.
+
+### Topology
 ```python
-from mneme.models import discover_field_dynamics
+from mneme.core.topology import PersistentHomology
 
-# Discovers PDEs from field time series
-result = discover_field_dynamics(field_sequence, dt=1.0, niterations=100)
-# Returns: equations, best_equation, r2_score, features_used
+ph = PersistentHomology(max_dimension=1, filtration="sublevel")
+h0, h1 = ph.compute_persistence(field)
 ```
 
-### VAE Training
+- `sublevel` tracks pits. `superlevel` tracks peaks, in units of the negated field.
+- GUDHI reads cells with the first axis fastest. Pass `values.flatten(order="F")`.
+- Without GUDHI only H0 is computed, by union-find, with a `RuntimeWarning`.
+
+### BETSE
 ```python
-from mneme.models import create_field_vae
+from mneme.data.betse_loader import load_betse_cells, betse_to_field
 
-vae = create_field_vae((64, 64), latent_dim=16)
-result = vae.fit(train_data, val_data, epochs=100, early_stopping_patience=10)
-latent = vae.encode_fields(fields)
-interpolation = vae.interpolate(field_a, field_b, n_steps=10)
+vmem, x, y, frames = load_betse_cells("path/to/Vmem2D_TextExport/")   # preferred
+field = betse_to_field("path/to/Vmem2D_TextExport/", resolution=(64, 64))
 ```
+
+The frame index is the trailing integer of the file name. An unanchored digit search matches the "2" in "Vmem2D".
+
+### Lyapunov tools (frozen)
+```python
+from mneme.core import largest_lyapunov, surrogate_test, classify_attractor
+
+res = largest_lyapunov(series, dt=0.01)
+sur = surrogate_test(series, statistic="lambda1", n=200, dt=0.01)
+label = classify_attractor(res.lambda1, surrogate=sur)
+```
+
+Read [docs/LYAPUNOV_OPERATING_RANGE.md](docs/LYAPUNOV_OPERATING_RANGE.md) first. Do not retune the detector constants to make a new case pass: they were already tuned on the test fixtures, which is why accuracy falls off elsewhere.
 
 ## Contributor Guidance
 
-1. **Sparse GP is default**: Don't change IFT to use dense matrices unless explicitly requested
-2. **Preserve backwards compatibility**: Old code using `method='ift'` should continue to work
-3. **Optional dependencies**: Always provide fallbacks for gudhi and pysr
-4. **Test thoroughly**: Run full integration test before committing
-5. **Update docs**: Keep README.md, CLAUDE.md, and CHANGELOG.md in sync
-
-## BETSE Integration
-
-```python
-from mneme.data.betse_loader import betse_to_field, load_betse_timeseries
-
-# Load BETSE Vmem2D CSV exports into a Mneme Field object
-field = betse_to_field("path/to/Vmem2D_TextExport/", resolution=(64, 64))
-
-# Or load raw time series for custom analysis
-field_sequence, metadata = load_betse_timeseries("path/to/Vmem2D_TextExport/")
-# field_sequence: shape (n_timesteps, rows, cols), values in mV
-```
-
-There is also a standalone analysis script:
-```bash
-python scripts/analyze_betse.py path/to/Vmem2D_TextExport/ --resolution 64 --output results/betse
-```
+1. **Test against a known answer.** A test that checks only shape, type or absence of an exception does not count toward moving a component into the core tier.
+2. **Do not tune a constant and its test in the same change** without a held-out case.
+3. **Fail loudly.** A stage that cannot produce a result raises or reports failure. It does not return zeros, empties or its input.
+4. **Fallbacks warn.** Any path that substitutes a weaker method emits a warning.
+5. **Preserve backwards compatibility** for names, with `DeprecationWarning`.
+6. **Update docs**: keep README.md, CLAUDE.md, docs/SCOPE.md and CHANGELOG.md in sync.
 
 ## Known Issues / TODOs
 
-- Import order warning: import juliacall before torch to avoid potential segfault
-- `lyapunov_spectrum()` (exploratory) requires >100 timesteps (hard error) and emits a `RuntimeWarning` below 1000 (recommended); short BETSE simulations (e.g. `betse try`) will fail this check
-- GUDHI Wasserstein distance requires the `POT` package (`pip install POT`); bottleneck distance works without it
-- Test coverage is 63.92%; target is 70%+ for JOSS submission
-- `compute_basin_of_attraction()` was removed in this revision; design notes preserved in [docs/FUTURE_IDEAS.md](docs/FUTURE_IDEAS.md) for future re-implementation
-
-## Lyapunov Spectrum Usage
-
-```python
-from mneme.core import (
-    largest_lyapunov, surrogate_test, classify_attractor,
-    lyapunov_spectrum, kaplan_yorke_dimension,
-)
-
-res = largest_lyapunov(trajectory, dt=0.01)            # robust λ₁ (Rosenstein 1993)
-sur = surrogate_test(trajectory, statistic="lambda1", n=200, dt=0.01)
-attractor_type = classify_attractor(res.lambda1, surrogate=sur)  # STRANGE only if sur.significant
-spectrum = lyapunov_spectrum(trajectory, dt=0.01)      # EXPLORATORY full spectrum (RuntimeWarning)
-d_ky = kaplan_yorke_dimension(spectrum)
-```
-
-> **Validation status:** Lyapunov/attractor results are **pending re-validation** under the Tier 0 corrected estimators. The previous PhysioNet headline numbers were produced by the now-removed estimator and are **not asserted**. Chaos is never reported without a passed surrogate-significance test.
+- The scripts in `scripts/` have not been re-run since the fixes. They compute λ₁ on multi-dimensional trajectories while testing only the first column, and they still save the exploratory spectrum and D_KY.
+- The BETSE runs on hand are 119 to 635 frames and are relaxations toward rest. They are outside the operating range of the Lyapunov tools.
+- BETSE is not installed in the development environment and the simulation configs are not in the repository.
+- Import order warning: import juliacall before torch to avoid a potential segfault. On Windows, PySR prints "access violation" traces during tests that still pass.
+- `mypy` runs in CI but cannot fail it.
+- `compute_basin_of_attraction()` was removed; design notes are in [docs/FUTURE_IDEAS.md](docs/FUTURE_IDEAS.md).

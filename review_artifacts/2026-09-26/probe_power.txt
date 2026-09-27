@@ -1,0 +1,6 @@
+lorenz   N=  4000 ic=0 lambda1= 0.6669 null= 2.0100+-0.3041 effect=  -4.42 p=0.050 signif=True label=strange emb={'emb_dim': 4, 'delay': 16, 'theiler': 206} sec=544
+lorenz   N=  4000 ic=1 lambda1= 0.7342 null= 2.4009+-0.0708 effect= -23.53 p=0.050 signif=True label=strange emb={'emb_dim': 3, 'delay': 16, 'theiler': 293} sec=456
+rossler  N=  8000 ic=0 lambda1= 0.0662 null= 0.1641+-0.0038 effect= -25.69 p=0.050 signif=True label=strange emb={'emb_dim': 4, 'delay': 13, 'theiler': 15} sec=669
+lorenz   N=  6000 ic=1 lambda1= 0.7123 null= 2.4553+-0.0534 effect= -32.63 p=0.050 signif=True label=strange emb={'emb_dim': 3, 'delay': 16, 'theiler': 292} sec=824
+lorenz   N=  8000 ic=2 lambda1= 0.8732 null= 2.5351+-0.0500 effect= -33.26 p=0.050 signif=True label=strange emb={'emb_dim': 3, 'delay': 16, 'theiler': 144} sec=775
+=69
