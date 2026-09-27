@@ -1,8 +1,9 @@
 """Analysis pipeline for field memory detection."""
 
+import copy
 import numpy as np
 from typing import Dict, List, Any, Optional, Callable, Union
-from dataclasses import dataclass
+from dataclasses import dataclass, field as dataclass_field
 import time
 from datetime import datetime
 import logging
@@ -37,12 +38,19 @@ TOPOLOGY_MAX_POINT_CLOUD: int = 2000
 
 @dataclass
 class PipelineResult:
-    """Result from pipeline execution."""
+    """Result from pipeline execution.
+
+    ``success`` is True only when every stage that ran completed. When a
+    stage fails, ``success`` is False, the stage is listed in
+    ``failed_stages`` with its message in ``errors``, and
+    ``analysis_result`` still holds whatever the other stages produced.
+    """
     success: bool
     execution_time: float
     stage_results: Dict[str, Any]
     analysis_result: Optional[AnalysisResult] = None
     errors: Optional[List[str]] = None
+    failed_stages: List[str] = dataclass_field(default_factory=list)
 
 
 class MnemePipeline:
@@ -102,7 +110,7 @@ class MnemePipeline:
         if 'reconstruction' in self.config:
             recon_config = self.config['reconstruction']
             self.reconstructor = FieldReconstructor(
-                method=recon_config.get('method', 'ift'),
+                method=recon_config.get('method', 'gp_subset'),
                 resolution=tuple(recon_config.get('resolution', (256, 256))),
                 **recon_config.get('parameters', {})
             )
@@ -222,14 +230,22 @@ class MnemePipeline:
             
             # Create analysis result
             analysis_result = self._create_analysis_result(data_dict, stage_results)
-            
+
             execution_time = time.time() - start_time
-            
+
+            failed = [
+                name for name, summary in stage_results.items()
+                if isinstance(summary, dict) and summary.get('status') == 'failed'
+            ]
             return PipelineResult(
-                success=True,
+                success=not failed,
                 execution_time=execution_time,
                 stage_results=stage_results,
-                analysis_result=analysis_result
+                analysis_result=analysis_result,
+                errors=[
+                    f"{name}: {stage_results[name]['error']}" for name in failed
+                ] or None,
+                failed_stages=failed,
             )
         
         except Exception as e:
@@ -364,7 +380,8 @@ class MnemePipeline:
                     'backend': 'rips' if 'rips' in backend_name else ('alpha' if 'alpha' in backend_name else 'cubical'),
                 }
             except Exception as exc:
-                self.logger.warning(f"Topology analysis failed: {exc}")
+                self.logger.error(f"Topology analysis failed: {exc}")
+                stage_results['topology'] = {'status': 'failed', 'error': str(exc)}
 
         # Optional attractors (only if temporal data provided)
         attractors = None
@@ -379,31 +396,28 @@ class MnemePipeline:
                     'attractor_types': [a.type.value for a in attractors],
                 }
             except Exception as exc:
-                self.logger.warning(f"Attractor detection failed: {exc}")
+                self.logger.error(f"Attractor detection failed: {exc}")
+                stage_results['attractors'] = {'status': 'failed', 'error': str(exc)}
 
-        # Reconstruction (identity fallback to avoid heavy compute without sparse obs)
+        # Reconstruction needs sparse observations. Without them there is
+        # nothing to reconstruct, and the stage is skipped rather than
+        # returning the input under another name.
         reconstruction = None
-        try:
-            if self.reconstructor is not None and 'observations' in data_dict and 'positions' in data_dict:
-                observations = np.asarray(data_dict['observations'])
-                positions = np.asarray(data_dict['positions'])
-                reconstruction = self.reconstructor.fit_reconstruct(observations, positions)
+        if self.reconstructor is not None:
+            if 'observations' in data_dict and 'positions' in data_dict:
+                try:
+                    observations = np.asarray(data_dict['observations'])
+                    positions = np.asarray(data_dict['positions'])
+                    reconstruction = self.reconstructor.fit_reconstruct(observations, positions)
+                    stage_results['reconstruction'] = {'status': 'completed'}
+                except Exception as exc:
+                    self.logger.error(f"Reconstruction step failed: {exc}")
+                    stage_results['reconstruction'] = {'status': 'failed', 'error': str(exc)}
             else:
-                # Identity reconstruction: wrap current analysis field
-                reconstruction = ReconstructionResult(
-                    field=Field(
-                        data=analysis_field.data,
-                        coordinates=analysis_field.coordinates,
-                        resolution=analysis_field.resolution,
-                        metadata=(analysis_field.metadata or {}) | {'note': 'identity_reconstruction'}
-                    ),
-                    uncertainty=None,
-                    method=None,
-                    parameters=None,
-                    computation_time=0.0,
-                )
-        except Exception as exc:
-            self.logger.warning(f"Reconstruction step failed: {exc}")
+                stage_results['reconstruction'] = {
+                    'status': 'skipped',
+                    'reason': "no 'observations' and 'positions' in input",
+                }
 
         # Compose AnalysisResult
         analysis_result = AnalysisResult(
@@ -420,74 +434,93 @@ class MnemePipeline:
         return analysis_result
 
 
+_STANDARD_CONFIG: Dict[str, Any] = {
+    'preprocessing': {
+        'denoise': {'enabled': True, 'method': 'gaussian', 'sigma': 1.0},
+        'normalize': {'enabled': True, 'method': 'z_score'},
+        'register': {'enabled': False},
+        'interpolate': {'enabled': True, 'target_shape': (256, 256)}
+    },
+    'reconstruction': {
+        'method': 'gaussian_process',
+        'resolution': (256, 256),
+        'parameters': {'kernel': 'rbf', 'length_scale': 10.0}
+    },
+    'topology': {
+        'backend': 'cubical',  # 'cubical' | 'rips' | 'alpha'
+        'max_dimension': 2,
+        'filtration': 'sublevel',
+        'persistence_threshold': 0.05
+    },
+    'attractors': {
+        'method': 'recurrence',
+        'threshold': 0.1,
+        'parameters': {'min_persistence': 0.1}
+    }
+}
+
+_BIOELECTRIC_CONFIG: Dict[str, Any] = {
+    'preprocessing': {
+        # Use lightweight, broadly compatible defaults for MVP
+        'denoise': {'enabled': True, 'method': 'gaussian', 'sigma': 1.0},
+        'normalize': {'enabled': True, 'method': 'z_score', 'per_frame': True},
+        # Registration requires temporal (3D) data; disable by default for 2D fields
+        'register': {'enabled': False},
+        # Linear interpolation is much faster than cubic for MVP
+        'interpolate': {'enabled': True, 'target_shape': (256, 256), 'method': 'linear'},
+    },
+    'reconstruction': {
+        'method': 'gp_subset',
+        'resolution': (256, 256),
+        'parameters': {}
+    },
+    'topology': {
+        'backend': 'cubical',  # 'cubical' | 'rips' | 'alpha'
+        'max_dimension': 2,
+        'filtration': 'sublevel',
+        'persistence_threshold': 0.05
+    },
+    'attractors': {
+        'method': 'recurrence',
+        'threshold': 0.1,
+        'parameters': {}
+    }
+}
+
+
+def default_config(pipeline: str = 'standard') -> Dict[str, Any]:
+    """Return a fresh copy of the default configuration for a pipeline."""
+    if pipeline == 'standard':
+        return copy.deepcopy(_STANDARD_CONFIG)
+    if pipeline == 'bioelectric':
+        return copy.deepcopy(_BIOELECTRIC_CONFIG)
+    raise ValueError(f"Unknown pipeline: {pipeline}")
+
+
+def merge_config(base: Dict[str, Any], overrides: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+    """Recursively overlay `overrides` on `base`, returning a new dict."""
+    merged = copy.deepcopy(base)
+    for key, value in (overrides or {}).items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = merge_config(merged[key], value)
+        else:
+            merged[key] = copy.deepcopy(value)
+    return merged
+
+
 def create_standard_pipeline(config: Optional[Dict[str, Any]] = None) -> MnemePipeline:
-    """Create standard analysis pipeline."""
-    if config is None:
-        config = {
-            'preprocessing': {
-                'denoise': {'enabled': True, 'method': 'gaussian', 'sigma': 1.0},
-                'normalize': {'enabled': True, 'method': 'z_score'},
-                'register': {'enabled': False},
-                'interpolate': {'enabled': True, 'target_shape': (256, 256)}
-            },
-            'reconstruction': {
-                'method': 'gaussian_process',
-                'resolution': (256, 256),
-                'parameters': {'kernel': 'rbf', 'length_scale': 10.0}
-            },
-            'topology': {
-                'backend': 'cubical',  # 'cubical' | 'rips' | 'alpha'
-                'max_dimension': 2,
-                'filtration': 'sublevel',
-                'persistence_threshold': 0.05
-            },
-            'attractors': {
-                'method': 'recurrence',
-                'threshold': 0.1,
-                'parameters': {'min_persistence': 0.1}
-            }
-        }
-    
-    return MnemePipeline(config)
+    """Create standard analysis pipeline.
+
+    With no config (None or empty) the defaults are used. A non-empty
+    config is used exactly as given.
+    """
+    return MnemePipeline(config if config else default_config('standard'))
 
 
 def create_bioelectric_pipeline(config: Optional[Dict[str, Any]] = None) -> MnemePipeline:
     """Create a bioelectric-focused analysis pipeline.
 
-    This is a lightweight wrapper around the standard pipeline with
-    bioelectric-appropriate defaults. It can be extended later.
+    With no config (None or empty) the bioelectric defaults are used. A
+    non-empty config is used exactly as given.
     """
-    if config is None:
-        config = {
-            'preprocessing': {
-                # Use lightweight, broadly compatible defaults for MVP
-                'denoise': {'enabled': True, 'method': 'gaussian', 'sigma': 1.0},
-                'normalize': {'enabled': True, 'method': 'z_score', 'per_frame': True},
-                # Registration requires temporal (3D) data; disable by default for 2D fields
-                'register': {'enabled': False},
-                # Linear interpolation is much faster than cubic for MVP
-                'interpolate': {'enabled': True, 'target_shape': (256, 256), 'method': 'linear'},
-            },
-            'reconstruction': {
-                'method': 'ift',
-                'resolution': (256, 256),
-                'parameters': {}
-            },
-            'topology': {
-                'backend': 'cubical',  # 'cubical' | 'rips' | 'alpha'
-                'max_dimension': 2,
-                'filtration': 'sublevel',
-                'persistence_threshold': 0.05
-            },
-            'attractors': {
-                'method': 'recurrence',
-                'threshold': 0.1,
-                'parameters': {}
-            }
-        }
-
-    return MnemePipeline(config)
-
-
-    
-    
+    return MnemePipeline(config if config else default_config('bioelectric'))

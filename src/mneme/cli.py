@@ -6,7 +6,10 @@ from pathlib import Path
 import sys
 import yaml
 
-from .analysis.pipeline import create_standard_pipeline, create_bioelectric_pipeline
+from .analysis.pipeline import (
+    create_standard_pipeline, create_bioelectric_pipeline,
+    default_config, merge_config,
+)
 from .data.generators import SyntheticFieldGenerator, generate_planarian_bioelectric_sequence
 from .data.loaders import create_data_loader
 from .utils.config import Config
@@ -135,8 +138,9 @@ def analyze(ctx, data_path, output, pipeline, format, topology_backend,
             click.echo(f"Error: Unsupported file format: {data_path.suffix}")
             return
     
-    # Create pipeline config and apply CLI overrides
-    config = ctx.obj.to_dict()
+    # Start from the chosen pipeline's defaults, overlay the user's config
+    # file, then apply CLI overrides.
+    config = merge_config(default_config(pipeline), ctx.obj.to_dict())
     if topology_backend is not None:
         config.setdefault('topology', {})
         config['topology']['backend'] = topology_backend
@@ -187,19 +191,23 @@ def analyze(ctx, data_path, output, pipeline, format, topology_backend,
     click.echo("Running analysis pipeline...")
     result = pipe.run(data)
     
-    if result.success:
-        # Save results
+    for name, summary in result.stage_results.items():
+        status = summary.get('status', 'completed') if isinstance(summary, dict) else 'completed'
+        click.echo(f"  {name}: {status}")
+
+    if result.analysis_result is not None:
         output_file = output_dir / f"analysis_results.{format}"
         save_results(result.analysis_result, output_file, format=format)
-        
-        click.echo(f"Analysis completed successfully!")
         click.echo(f"Results saved to {output_file}")
+
+    if result.success:
+        click.echo(f"Analysis completed successfully!")
         click.echo(f"Execution time: {result.execution_time:.2f}s")
     else:
         click.echo("Analysis failed!")
-        if result.errors:
-            for error in result.errors:
-                click.echo(f"Error: {error}")
+        for error in result.errors or []:
+            click.echo(f"Error: {error}")
+        ctx.exit(1)
 
 
 @cli.command()
