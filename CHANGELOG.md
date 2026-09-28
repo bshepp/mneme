@@ -42,6 +42,10 @@ All notable changes to this project will be documented in this file.
   - `largest_lyapunov` divergence loop is vectorised: same results to 1e-13,
     about ten times faster.
   - ### Added
+  - `mneme.analysis.steady_state`: `assess_steady_state()` and
+    `count_distinct_states()`.
+  - `studies/convergence`: a BETSE study of one tissue started from six ion
+    concentrations. Every run reached the same state.
   - `load_betse_cells()` for analysis without interpolation.
   - `mneme.ExperimentalWarning`, and component tiers in `docs/SCOPE.md`.
   - `docs/LYAPUNOV_OPERATING_RANGE.md`, `docs/MULTISTABILITY_PROTOCOL.md`.

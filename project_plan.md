@@ -43,8 +43,8 @@ Mneme studies whether biological tissue stores pattern memory in its bioelectric
 | 0. Withdraw unsupported claims | Done. Pending merge of the withdrawal to the public site. |
 | 1. Correctness fixes with regression tests | Done |
 | 2. Measure and document the Lyapunov operating range; freeze | Done |
-| 3. Multistability experiment | Protocol written. Runs not started. |
-| 4. Rewrite the BETSE report from new results | Blocked on stage 3 |
+| 3. Multistability experiment | First study done: one stable state found in the published configuration. See [studies/convergence/RESULTS.md](studies/convergence/RESULTS.md). |
+| 4. Rewrite the BETSE report from new results | Done for the first study, as its RESULTS.md. |
 | 5. JOSS submission | Not ready. See below. |
 
 ## Stage 3: Multistability experiment
@@ -58,7 +58,9 @@ Protocol: [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md).
 | 3.3 | Perturb a settled state | Return, or failure to return, is measured |
 | 3.4 | Sweep gap-junction conductance | The number of end states is tracked across the sweep |
 
-The existing runs cannot stand in for this. They differ in cell count and were not run to steady state.
+The original runs cannot stand in for this. They differ in cell count and in a fixed parameter, and were not run to steady state.
+
+**First study (2026-09-27):** steps 3.1 to 3.3's counting were run on the published 2016 configuration, with and without coupling. Every run reached the same state. That configuration has no mechanism expected to give multistability, so the next study needs one: voltage-gated channels, or a gene regulatory network coupled to voltage. Steps 3.3 (perturbation) and 3.4 (sweep) are still to do.
 
 ## Stage 5: JOSS
 
