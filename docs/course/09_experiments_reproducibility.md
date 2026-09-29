@@ -16,8 +16,8 @@ Creates a timestamped directory with config, results, and plots.
 
 ## 9.3 Exercises
 1) Compare two experiments with different topology backends; write a 5-sentence summary
-2) Change attractor thresholds; capture differences in a simple CSV of metrics (edit `analysis/metrics.py` if desired)
+2) Opt in to attractor detection (experimental; `--attractor-method recurrence` with `mneme analyze`) and change thresholds; capture differences in a simple CSV of metrics (edit `analysis/metrics.py` if desired)
 
 Solutions (outline)
-- Record backend, diagram counts, feature vector lengths, and any attractor counts; summarize trade-offs
+- Record backend, diagram counts, feature vector lengths, and any attractor region counts; summarize trade-offs
 - Metrics scripts help quantify differences reproducibly

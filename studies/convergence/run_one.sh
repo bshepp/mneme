@@ -9,7 +9,10 @@ mkdir -p logs
 logfile='logs\'"$n"'.betse.log'
 {
   date
-  for phase in "seed" "init" "sim" "plot init" "plot sim"; do
+  # SKIP_SEED=1 when the runs share one pre-seeded world.
+  phases=("seed" "init" "sim" "plot init" "plot sim")
+  [ -n "$SKIP_SEED" ] && phases=("init" "sim" "plot init" "plot sim")
+  for phase in "${phases[@]}"; do
     echo "== $phase"
     $B --headless --log-file "$logfile" $phase "$n.yaml" 2>&1 \
       | grep -v '^[[:space:]]' \

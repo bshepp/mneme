@@ -1,6 +1,6 @@
 # Mneme Testing Strategy
 
-> MVP note: Current repository includes a smoke test for imports. The sections below describe the intended testing strategy as the project grows.
+> Status: The suite has 372 tests in a flat `tests/` directory (one file per module) and takes about 5 minutes. Coverage is about 70%; CI fails below 60%. CI installs GUDHI and POT so the real persistence and Wasserstein paths are exercised, not only the fallbacks. Several sections below (property-based, performance, data-validation examples) describe an intended approach rather than tests that exist.
 
 ## Testing Philosophy
 
@@ -14,10 +14,10 @@ The Mneme project employs comprehensive testing to ensure:
 
 ### 1. Unit Tests
 
-Test individual functions and classes in isolation.
+Test individual functions and classes in isolation. A component is core only when a test checks its output against an answer known independently of the code (a closed-form field, a union-find H0 count, a known time constant); see [SCOPE.md](SCOPE.md).
 
 ```python
-# tests/unit/test_field_theory.py
+# tests/test_field_theory.py
 import pytest
 import numpy as np
 from mneme.core.field_theory import FieldReconstructor
@@ -64,54 +64,57 @@ class TestFieldReconstructor:
 Test interactions between components.
 
 ```python
-# tests/integration/test_pipeline.py
+# tests/test_pipeline.py
+import numpy as np
 import pytest
-from mneme.analysis.pipeline import MnemePipeline
-from mneme.data.generators import SyntheticFieldGenerator
+from mneme.analysis.pipeline import MnemePipeline, default_config, merge_config
 
 class TestPipelineIntegration:
-    def test_full_pipeline_execution(self):
-        # Generate synthetic data
-        generator = SyntheticFieldGenerator(seed=42)
-        field_data = generator.generate_dynamic(
-            shape=(64, 64), 
-            timesteps=10,
-            parameters={'noise_level': 0.1}
-        )
-        
-        # Create and run pipeline
-        pipeline = MnemePipeline({
-            'preprocessing': {'normalize': True},
-            'reconstruction': {'method': 'gp_subset'},
-            'analysis': {'compute_topology': True}
-        })
-        
-        results = pipeline.run({'field': field_data})
-        
-        # Verify all expected outputs
-        assert 'reconstructed_field' in results
-        assert 'persistence_diagrams' in results
-        assert results['reconstructed_field'].shape[1:] == (256, 256)
-    
-    def test_pipeline_stage_dependencies(self):
-        # Test that stages execute in correct order
-        pipeline = MnemePipeline({})
-        
-        # Add stages with dependencies
-        pipeline.add_stage('preprocess', lambda x: x, ['raw'], ['processed'])
-        pipeline.add_stage('analyze', lambda x: x, ['processed'], ['results'])
-        
-        # Verify dependency resolution
-        order = pipeline._resolve_execution_order()
-        assert order.index('preprocess') < order.index('analyze')
+    def test_full_pipeline_execution(self, gaussian_blob_field, sparse_observations):
+        observations, positions = sparse_observations
+        config = merge_config(default_config('bioelectric'),
+                              {'reconstruction': {'resolution': (16, 16)},
+                               'topology': {'max_dimension': 1}})
+        pipeline = MnemePipeline(config)
+
+        result = pipeline.run({'field': gaussian_blob_field,
+                               'observations': observations,
+                               'positions': positions})
+
+        assert result.success
+        assert result.failed_stages == []
+        assert result.stage_results['reconstruction']['status'] == 'completed'
+        assert result.analysis_result.reconstruction.field.data.shape == (16, 16)
+        assert result.analysis_result.topology is not None
+
+    def test_reconstruction_skipped_without_observations(self, gaussian_blob_field):
+        pipeline = MnemePipeline(default_config('bioelectric'))
+        result = pipeline.run({'field': gaussian_blob_field})
+
+        # Skipped, not faked: no reconstruction result, and the run still succeeds
+        assert result.success
+        assert result.stage_results['reconstruction']['status'] == 'skipped'
+        assert result.analysis_result.reconstruction is None
+
+    def test_failed_stage_is_reported(self, gaussian_blob_field):
+        pipeline = MnemePipeline({'topology': {'max_dimension': 1}})
+        field = gaussian_blob_field.copy()
+        field[0, 0] = np.nan          # persistence of a NaN field raises
+
+        result = pipeline.run({'field': field})
+
+        assert not result.success
+        assert 'topology' in result.failed_stages
+        assert result.errors
 ```
 
-### 3. Property-Based Tests
+### 3. Property-Based Tests (not yet in the suite)
 
-Use hypothesis for generative testing.
+Hypothesis is not currently a dependency. If added, properties of persistence diagrams are a natural target.
 
 ```python
-# tests/unit/test_topology_properties.py
+# tests/test_topology_properties.py (illustrative)
+import numpy as np
 import hypothesis as hp
 from hypothesis import strategies as st
 from mneme.core.topology import PersistentHomology
@@ -120,31 +123,31 @@ class TestTopologyProperties:
     @hp.given(
         field=st.lists(
             st.lists(st.floats(min_value=-100, max_value=100), 
-                    min_size=10, max_size=100),
+                    min_size=10, max_size=10),
             min_size=10, max_size=100
         )
     )
     def test_persistence_diagram_properties(self, field):
-        # Convert to numpy array
         field_array = np.array(field)
         
-        ph = PersistentHomology()
+        ph = PersistentHomology(max_dimension=1, persistence_threshold=0.0)
         diagrams = ph.compute_persistence(field_array)
         
-        # Property: Birth times <= Death times
+        # Property: birth <= death for every bar
         for diagram in diagrams:
-            assert np.all(diagram[:, 0] <= diagram[:, 1])
+            pts = diagram.points
+            assert np.all(pts[:, 0] <= pts[:, 1])
         
-        # Property: Finite persistence
-        assert np.all(np.isfinite(diagrams[0]))
+        # Property: exactly one infinite H0 bar (one connected field)
+        assert np.sum(np.isinf(diagrams[0].points[:, 1])) == 1
 ```
 
-### 4. Performance Tests
+### 4. Performance Tests (not yet in the suite)
 
-Ensure operations meet performance requirements.
+Ensure operations meet performance requirements. The `performance` marker is registered in `pyproject.toml`.
 
 ```python
-# tests/performance/test_reconstruction_performance.py
+# tests/test_reconstruction_performance.py (illustrative)
 import pytest
 import time
 from mneme.core.field_theory import FieldReconstructor
@@ -188,9 +191,11 @@ class TestReconstructionPerformance:
 Test data loading and validation.
 
 ```python
-# tests/unit/test_data_validation.py
+# tests/test_data_validation.py (illustrative)
+import numpy as np
 import pytest
-from mneme.data.validation import FieldDataSchema, DataValidator
+from mneme.types import FieldDataSchema
+from mneme.data.validation import DataValidator
 
 class TestDataValidation:
     def test_valid_field_data(self):
@@ -204,92 +209,56 @@ class TestDataValidation:
         valid_data = np.random.uniform(-50, 50, (10, 256, 256)).astype(np.float32)
         validator = DataValidator(schema)
         
-        is_valid, errors = validator.validate(valid_data)
-        assert is_valid
-        assert len(errors) == 0
+        result = validator.validate(valid_data)   # ValidationResult
+        assert result.is_valid
+        assert result.errors == []
     
     def test_invalid_shape(self):
         schema = FieldDataSchema(shape=(None, 256, 256))
         invalid_data = np.zeros((10, 128, 128))  # Wrong spatial dimensions
         
         validator = DataValidator(schema)
-        is_valid, errors = validator.validate(invalid_data)
+        result = validator.validate(invalid_data)
         
-        assert not is_valid
-        assert 'shape' in errors[0]
-    
-    def test_out_of_range_values(self):
-        schema = FieldDataSchema(value_range=(0, 1))
-        invalid_data = np.array([[-1, 2, 0.5]])  # Values outside range
-        
-        validator = DataValidator(schema)
-        is_valid, errors = validator.validate(invalid_data)
-        
-        assert not is_valid
-        assert 'value_range' in errors[0]
+        assert not result.is_valid
+        assert 'shape' in result.errors[0]
 ```
 
-### 6. Fixture and Mock Tests
+### 6. Fixtures
+
+`tests/conftest.py` provides shared fixtures: closed-form 32x32 fields (`gaussian_blob_field`, `two_peak_field`, `sinusoidal_field`), a `temporal_field_sequence`, RK4-integrated `lorenz_rk4` and `rossler_rk4` trajectories with known λ₁ (0.906 and 0.071), `sparse_observations` for reconstruction, and a `minimal_pipeline_config`.
 
 ```python
-# tests/conftest.py
-import pytest
-import numpy as np
-from mneme.data.generators import SyntheticFieldGenerator
-
-@pytest.fixture
-def sample_field():
-    """Generate a sample field for testing."""
-    generator = SyntheticFieldGenerator(seed=42)
-    return generator.generate_static(
-        shape=(64, 64),
-        parameters={'pattern': 'gaussian_blob', 'noise': 0.1}
-    )
-
-@pytest.fixture
-def mock_bioelectric_data(tmp_path):
-    """Create mock bioelectric data file."""
-    import h5py
-    
-    data_file = tmp_path / "mock_data.h5"
-    with h5py.File(data_file, 'w') as f:
-        f.create_dataset('voltage_fields', data=np.random.randn(10, 64, 64))
-        f.create_dataset('timestamps', data=np.arange(10))
-        f.attrs['sampling_rate_hz'] = 10.0
-    
-    return data_file
-
 # Usage in tests
-def test_with_fixture(sample_field):
-    assert sample_field.shape == (64, 64)
-    assert sample_field.dtype == np.float64
+def test_two_peaks_give_two_components(two_peak_field):
+    from mneme.core.topology import PersistentHomology
+    ph = PersistentHomology(max_dimension=0, filtration='superlevel', persistence_threshold=0.1)
+    h0, = ph.compute_persistence(two_peak_field)
+    assert len(h0.points) == 2
 ```
 
 ## Test Organization
 
+The suite is flat: one file per module, plus shared fixtures.
+
 ```
 tests/
-├── unit/                      # Unit tests for individual components
-│   ├── test_field_theory.py
-│   ├── test_topology.py
-│   ├── test_attractors.py
-│   ├── test_data_loaders.py
-│   └── test_models.py
-│
-├── integration/               # Integration tests
-│   ├── test_pipeline.py
-│   ├── test_data_flow.py
-│   └── test_model_training.py
-│
-├── performance/               # Performance benchmarks
-│   ├── test_reconstruction_performance.py
-│   └── test_topology_performance.py
-│
-├── fixtures/                  # Test data and fixtures
-│   ├── synthetic_fields.npz
-│   └── test_config.yaml
-│
-└── conftest.py               # Shared fixtures and configuration
+├── conftest.py                    # Shared fixtures
+├── test_field_theory.py           # Reconstructors against a known field
+├── test_topology.py
+├── test_topology_correctness.py   # Closed-form fields, union-find H0, sublevel/superlevel
+├── test_attractors.py
+├── test_embedding.py
+├── test_lyapunov.py               # Lorenz / Rössler
+├── test_surrogates.py
+├── test_classify.py
+├── test_steady_state.py           # Known time constants, double-well states
+├── test_betse_loader.py           # Frame order, cell counts, value ranges
+├── test_pipeline.py               # Success semantics, skipped reconstruction
+├── test_cli.py
+├── test_status.py                 # ExperimentalWarning
+├── test_models.py
+└── ...                            # config, io, loaders, logging, metrics, preprocessors, ...
 ```
 
 ## Running Tests
@@ -297,17 +266,17 @@ tests/
 ### Basic Test Execution
 
 ```bash
-# Run all tests
+# Run all tests (about 5 minutes)
 pytest
 
 # Run specific test file
-pytest tests/unit/test_field_theory.py
+pytest tests/test_field_theory.py
 
 # Run tests matching pattern
 pytest -k "reconstruction"
 
 # Run with coverage
-pytest --cov=mneme --cov-report=html
+pytest --cov=src/mneme --cov-report=html
 
 # Run only marked tests
 pytest -m "not slow"
@@ -337,38 +306,15 @@ def test_full_pipeline():
 
 ### Continuous Integration
 
-```yaml
-# .github/workflows/tests.yml
-name: Tests
+`.github/workflows/tests.yml` runs on pushes and pull requests to `main`, on Ubuntu with Python 3.12:
 
-on: [push, pull_request]
+1. Install `libhdf5-dev`, then `pip install -e ".[dev,tda]"` (GUDHI and POT included, so the real persistence and Wasserstein paths are tested)
+2. `flake8` for syntax errors and undefined names (fails the build); style warnings are reported but do not fail
+3. `mypy src/mneme --ignore-missing-imports` (advisory)
+4. `pytest tests -v --tb=short --cov=src/mneme --cov-report=term-missing --cov-report=xml`
+5. `coverage report --fail-under=60`
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.8, 3.9, "3.10"]
-    
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-        pip install -r requirements-dev.txt
-    
-    - name: Run tests
-      run: |
-        pytest --cov=mneme --cov-report=xml
-    
-    - name: Upload coverage
-      uses: codecov/codecov-action@v2
-```
+A separate `docs.yml` workflow builds the mkdocs site and deploys it to GitHub Pages on pushes to `main`.
 
 ## Test-Driven Development Guidelines
 
@@ -382,10 +328,10 @@ jobs:
 
 ## Coverage Requirements
 
-- Minimum overall coverage: 80%
-- Core modules (`field_theory`, `topology`): 90%
-- Critical paths: 95%
-- Exclude from coverage: Visualization code, scripts
+- CI floor: 60% (`coverage report --fail-under=60`; `fail_under = 60` in `pyproject.toml`)
+- Current: about 70%
+- Coverage is a floor, not the goal. What moves a component to the core tier is a test against an independently known answer, not line coverage.
+- Excluded from coverage: `__init__.py` files and tests (see `[tool.coverage.run]` in `pyproject.toml`)
 
 ## Debugging Tests
 
@@ -400,5 +346,5 @@ pytest -s  # No capture, show prints
 pytest -vv  # Very verbose
 
 # Run specific test with debugging
-pytest tests/unit/test_field_theory.py::TestFieldReconstructor::test_fit_with_valid_data --pdb -vv
+pytest tests/test_field_theory.py::TestFieldReconstructor::test_fit_with_valid_data --pdb -vv
 ```

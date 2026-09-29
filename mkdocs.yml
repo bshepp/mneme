@@ -88,6 +88,7 @@ nav:
       - BETSE Loader: api/data/betse_loader.md
     - Analysis:
       - Pipeline: api/analysis/pipeline.md
+      - Steady State: api/analysis/steady_state.md
       - Visualization: api/analysis/visualization.md
   - Course:
     - Overview: course/README.md

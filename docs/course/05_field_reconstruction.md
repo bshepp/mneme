@@ -29,7 +29,7 @@ unc = result.uncertainty  # already an ndarray; do not call as a function
 
 ## 5.3 IFT notes
 - Prior covariance controlled by `correlation_length`, `power_spectrum_model`
-- Identity fallback is used when the pipeline has no sparse obs; supply `observations` and `positions` to enable real reconstruction
+- The pipeline skips reconstruction (stage status `skipped`) when it has no sparse obs; supply `observations` and `positions` to enable real reconstruction
 
 ## 5.4 Exercises
 1) Reconstruct with GP over multiple `length_scale` values; inspect smoothness and uncertainty

@@ -1,3 +1,5 @@
+*Historical document, kept for the record. It describes the project as it was on its date and is not current; see docs/SCOPE.md.*
+
 **Project Title: Mneme**
 
 **Purpose:**

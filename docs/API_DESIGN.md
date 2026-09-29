@@ -10,9 +10,9 @@ The Mneme API follows these principles:
 
 ## Module APIs
 
-> MVP note: Some classes shown below (e.g., rich attractor characterization, full models) are placeholders or partially implemented. Methods explicitly marked with `NotImplementedError` are roadmap.
+> Note: The signatures below are abbreviated; the generated [API reference](api/index.md) is authoritative. Every component belongs to a tier (core, frozen or experimental) listed in [SCOPE.md](SCOPE.md). Experimental components emit `mneme.ExperimentalWarning` when constructed, and their output should not be used as evidence for a scientific claim.
 
-### 1. Field Theory Module (`mneme.core.field_theory`) — MVP
+### 1. Field Theory Module (`mneme.core.field_theory`) — core
 
 ```python
 from mneme.core import field_theory
@@ -20,10 +20,13 @@ from mneme.core import field_theory
 class FieldReconstructor:
     """Reconstruct continuous fields from discrete observations."""
     
-    def __init__(self, method='gp_subset', resolution=(256, 256)):
+    def __init__(self, method='gp_subset', resolution=(256, 256), **kwargs):
         """
         Parameters:
-            method: Reconstruction method ('gp_subset', 'wiener_filter', 'gaussian_process', 'neural_field')
+            method: 'gp_subset' (default: a GP on a random subset of the observations),
+                    'wiener_filter' (dense, small grids), 'gaussian_process' (every
+                    observation), 'neural_field' (experimental). The old names 'ift',
+                    'sparse_gp' and 'dense_ift' still work with a DeprecationWarning.
             resolution: Output field resolution
         """
     
@@ -34,16 +37,20 @@ class FieldReconstructor:
         """Reconstruct the continuous field."""
     
     def uncertainty(self) -> np.ndarray:
-        """Return reconstruction uncertainty estimates."""
+        """Return reconstruction uncertainty estimates (NotImplementedError for 'neural_field')."""
 
 # Usage example
 reconstructor = FieldReconstructor(method='gp_subset')
 reconstructor.fit(voltage_measurements, electrode_positions)
 field = reconstructor.reconstruct()
 uncertainty = reconstructor.uncertainty()
+
+# Or the factory, which defaults to 'gp_subset'
+from mneme.core import create_reconstructor
+reconstructor = create_reconstructor('gp_subset', resolution=(128, 128), n_subset=500)
 ```
 
-### 2. Topology Module (`mneme.core.topology`) — MVP
+### 2. Topology Module (`mneme.core.topology`) — core
 
 ```python
 from mneme.core import topology
@@ -51,36 +58,26 @@ from mneme.core import topology
 class PersistentHomology:
     """Compute persistent homology of fields."""
     
-    def __init__(self, max_dimension=2, filtration='sublevel'):
+    def __init__(self, max_dimension=2, filtration='sublevel',
+                 persistence_threshold=0.05, compute_cycles=False):
         """
         Parameters:
             max_dimension: Maximum homological dimension
-            filtration: Type of filtration to use
+            filtration: 'sublevel' tracks pits as the threshold rises;
+                        'superlevel' tracks peaks (diagrams in units of the negated field)
+            persistence_threshold: Minimum persistence to keep
+            compute_cycles: Not implemented; True raises NotImplementedError
         """
     
-    def compute_persistence(self, field: np.ndarray) -> List[Diagram]:
-        """Compute persistence diagrams."""
+    def compute_persistence(self, field: np.ndarray) -> List[PersistenceDiagram]:
+        """Compute persistence diagrams. NaN fields raise. Without GUDHI only H0
+        is computed and a RuntimeWarning is emitted."""
     
-    def extract_features(self, diagrams: List[Diagram]) -> np.ndarray:
+    def extract_features(self, diagrams: List[PersistenceDiagram]) -> np.ndarray:
         """Extract topological features from diagrams."""
+```
 
-class AttractorDetector:
-    """Detect and characterize attractors in dynamical fields (basic recurrence)."""
-    
-    def __init__(self, method='recurrence', threshold=0.1):
-        """
-        Parameters:
-            method: Detection method ('recurrence', 'lyapunov', 'clustering')
-            threshold: Detection threshold
-        """
-    
-    def detect(self, trajectory: np.ndarray) -> List[Attractor]:
-        """Detect attractors in phase space trajectory."""
-    
-    def characterize(self, attractor: Attractor) -> Dict[str, Any]:
-        """Compute attractor properties (dimension, stability, basin)."""
-
-### 2b. Point-cloud topology backends — MVP
+### 2b. Point-cloud topology backends — core
 
 ```python
 from mneme.core.topology import RipsComplex, AlphaComplex, field_to_point_cloud
@@ -91,22 +88,80 @@ tda = RipsComplex(max_dimension=1)
 diagrams = tda.compute_persistence(pc)
 features = tda.extract_features(diagrams)
 ```
+
+### 2c. Attractor detectors (`mneme.core.attractors`) — experimental
+
+```python
+from mneme.core.attractors import AttractorDetector
+
+class AttractorDetector:
+    """Locate dense or recurrent regions of a trajectory.
+
+    Detectors cannot determine what kind of attractor a region is. Every
+    Attractor they return has type AttractorType.UNDETERMINED.
+    """
+    
+    def __init__(self, method='recurrence', threshold=0.1, **kwargs):
+        """
+        Parameters:
+            method: Detection method ('recurrence', 'lyapunov', 'clustering')
+            threshold: Detection threshold
+        """
+    
+    def detect(self, trajectory: np.ndarray) -> List[Attractor]:
+        """Locate regions in a phase space trajectory."""
+    
+    def characterize(self, attractor: Attractor, trajectory: np.ndarray) -> Dict[str, Any]:
+        """Compute descriptive properties of a region."""
 ```
 
-### 3. Models Module (`mneme.models`) — placeholders
+### 2d. Lyapunov tools (`mneme.core`) — frozen
+
+```python
+from mneme.core import largest_lyapunov, surrogate_test, classify_attractor
+from mneme.core import lyapunov_spectrum, kaplan_yorke_dimension
+
+res = largest_lyapunov(series, dt=0.01)                    # LyapunovResult; res.lambda1
+sur = surrogate_test(series, statistic="lambda1", n=200, dt=0.01)  # n >= 39 at alpha 0.05
+label = classify_attractor(res.lambda1, surrogate=sur, oscillatory=None)
+# STRANGE only when sur.significant; UNDETERMINED for near-zero or negative
+# estimates unless the caller asserts oscillatory=True/False.
+spectrum = lyapunov_spectrum(trajectory, dt=0.01)          # exploratory; RuntimeWarning below 1000 points
+d_ky = kaplan_yorke_dimension(spectrum)
+```
+
+Read [LYAPUNOV_OPERATING_RANGE.md](LYAPUNOV_OPERATING_RANGE.md) before using a number from these: the surrogate test needs about 4,000 points to have power, and λ₁ was off by tens of percent away from the conditions it was tuned on.
+
+### 2e. Steady-state analysis (`mneme.analysis.steady_state`) — core
+
+```python
+from mneme.analysis.steady_state import assess_steady_state, count_distinct_states
+
+# values: shape (n_times, n_cells), one value per cell per sample
+report = assess_steady_state(values, times, rate_tolerance=1e-4, drift_tolerance=0.1)
+report.settled                     # bool
+
+# end states of several runs, each shape (n_cells,)
+distinct = count_distinct_states([run[-1] for run in runs], threshold=1.0)
+distinct.n_distinct
+```
+
+### 3. Models Module (`mneme.models`) — experimental
 
 ```python
 from mneme.models import autoencoders, symbolic
 
 class FieldAutoencoder(nn.Module):
-    """Placeholder VAE for field data (minimal)."""
+    """Convolutional VAE for 2D field data. Experimental."""
     
-    def __init__(self, input_shape, latent_dim=32, architecture='convolutional'):
+    def __init__(self, input_shape, latent_dim=32, in_channels=1,
+                 base_channels=32, architecture='standard', beta=1.0):
         """
         Parameters:
-            input_shape: Shape of input fields
+            input_shape: Shape of input fields (height, width), each divisible by 16
             latent_dim: Latent space dimensionality
-            architecture: Network architecture type
+            architecture: 'standard', 'deep' or 'residual'
+            beta: β-VAE weight
         """
     
     def encode(self, field: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -119,10 +174,10 @@ class FieldAutoencoder(nn.Module):
         """Forward pass returning reconstruction, mean, log_var."""
 
 class SymbolicRegressor:
-    """Placeholder symbolic regression interface."""
+    """PySR wrapper; falls back to linear regression without PySR. Experimental."""
     
-    def __init__(self, operators=['+', '-', '*', '/', 'sin', 'cos'], 
-                 complexity_penalty=0.001):
+    def __init__(self, operators=None, complexity_penalty=0.001,
+                 niterations=100, random_state=None, **kwargs):
         """
         Parameters:
             operators: Allowed mathematical operators
@@ -140,13 +195,15 @@ class SymbolicRegressor:
         """Return discovered equations as strings."""
 ```
 
-### 4. Data Module (`mneme.data`) — MVP
+### 4. Data Module (`mneme.data`) — core
 
 ```python
 from mneme.data import loaders, generators, preprocessors
 
 """
-Note: The MVP provides loader utilities (`mneme.data.loaders.create_data_loader`) and generators rather than a concrete `BioelectricDataset` class. A thin dataset wrapper can be added later if needed.
+Note: Loading goes through `mneme.data.loaders.create_data_loader` and the
+BETSE loader (`mneme.data.betse_loader.load_betse_cells`, `betse_to_field`).
+There is no `BioelectricDataset` class.
 """
 
 class SyntheticFieldGenerator:
@@ -177,20 +234,21 @@ class FieldPreprocessor:
     def __init__(self, steps=['denoise', 'normalize', 'register']):
         """
         Parameters:
-            steps: Preprocessing steps to apply
+            steps: Step names ('denoise', 'normalize', 'register', 'interpolate'),
+                   or (name, params) tuples
         """
     
-    def fit(self, fields: List[np.ndarray]) -> 'FieldPreprocessor':
+    def fit(self, data: np.ndarray) -> 'FieldPreprocessor':
         """Fit preprocessing parameters."""
     
-    def transform(self, field: np.ndarray) -> np.ndarray:
+    def transform(self, data: np.ndarray) -> np.ndarray:
         """Apply preprocessing to field."""
     
-    def inverse_transform(self, field: np.ndarray) -> np.ndarray:
-        """Reverse preprocessing (where possible)."""
+    def fit_transform(self, data: np.ndarray) -> np.ndarray:
+        """Fit and apply."""
 ```
 
-### 5. Analysis Pipeline (`mneme.analysis.pipeline`) — MVP
+### 5. Analysis Pipeline (`mneme.analysis.pipeline`) — core
 
 ```python
 from mneme.analysis import pipeline
@@ -201,42 +259,44 @@ class MnemePipeline:
     def __init__(self, config: Dict[str, Any]):
         """
         Parameters:
-            config: Pipeline configuration dictionary
+            config: Pipeline configuration dictionary (keys: 'preprocessing',
+                    'reconstruction', 'topology', and optionally 'attractors')
         """
     
-    def add_stage(self, name: str, stage: Callable, 
-                  inputs: List[str], outputs: List[str]) -> 'MnemePipeline':
-        """Add processing stage to pipeline."""
+    def add_stage(self, name: str, stage_func: Callable, inputs: List[str],
+                  outputs: List[str], enabled: bool = True) -> 'MnemePipeline':
+        """Add a custom stage. When any custom stages exist they replace the
+        default preprocessing stage; the configured topology, reconstruction
+        and attractor components still run on the resulting data."""
     
-    def run(self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def run(self, data: Union[Dict[str, Any], Field, np.ndarray]) -> PipelineResult:
         """Execute full pipeline on data."""
-    
-    def run_stage(self, stage_name: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Run specific pipeline stage."""
-    
-    def visualize_flow(self) -> None:
-        """Visualize pipeline structure."""
 
-# Predefined pipeline configurations
-def create_standard_pipeline() -> MnemePipeline:
-    """Create standard analysis pipeline."""
-    pipeline = MnemePipeline(config={
-        'preprocessing': {'normalize': True, 'denoise': True},
-        'reconstruction': {'method': 'gp_subset', 'resolution': (256, 256)},
-        'analysis': {'compute_topology': True, 'detect_attractors': True},
-        'modeling': {'use_autoencoder': True, 'symbolic_regression': True}
-    })
-    return pipeline
+@dataclass
+class PipelineResult:
+    success: bool                 # False when any stage failed
+    execution_time: float
+    stage_results: Dict[str, Any] # per-stage summaries; failed stages carry 'status': 'failed'
+    analysis_result: Optional[AnalysisResult]  # whatever the other stages produced
+    errors: Optional[List[str]]
+    failed_stages: List[str]
 
-def create_bioelectric_pipeline() -> MnemePipeline:
-    """Bioelectric-focused defaults; thin wrapper over standard."""
-    return MnemePipeline({
-        'preprocessing': {'denoise': {'enabled': True}, 'normalize': {'enabled': True}, 'register': {'enabled': True}, 'interpolate': {'enabled': True}},
-        'reconstruction': {'method': 'gp_subset', 'resolution': (256, 256)},
-        'topology': {'max_dimension': 2, 'filtration': 'sublevel'},
-        'attractors': {'method': 'recurrence', 'threshold': 0.1}
-    })
+# Predefined configurations
+def default_config(pipeline: str = 'standard') -> Dict[str, Any]:
+    """Fresh copy of the 'standard' or 'bioelectric' defaults. Both run
+    preprocessing, reconstruction and topology; neither runs attractor detection."""
+
+def merge_config(base: Dict[str, Any], overrides: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+    """Recursively overlay overrides on base, returning a new dict."""
+
+def create_standard_pipeline(config=None) -> MnemePipeline:
+    """MnemePipeline(default_config('standard')) unless a non-empty config is given."""
+
+def create_bioelectric_pipeline(config=None) -> MnemePipeline:
+    """MnemePipeline(default_config('bioelectric')) unless a non-empty config is given."""
 ```
+
+Reconstruction runs only when the input dict has `'observations'` and `'positions'`; otherwise the stage is reported as skipped. Attractor detection runs only when an `'attractors'` section is present and the field is a temporal (3D) sequence.
 
 ### 6. Visualization Module (`mneme.analysis.visualization`)
 
@@ -267,10 +327,11 @@ class FieldVisualizer:
     
     def plot_attractor_portrait(self, trajectory: np.ndarray, 
                                attractors: List[Attractor]) -> plt.Figure:
-        """Plot phase space with detected attractors."""
+        """Plot phase space with detected regions."""
     
-    def create_dashboard(self, results: Dict[str, Any]) -> None:
-        """Create interactive dashboard of results."""
+    def create_analysis_dashboard(self, result: AnalysisResult,
+                                  save_path: Optional[str] = None) -> plt.Figure:
+        """Create a dashboard figure from an AnalysisResult."""
 ```
 
 ## Usage Patterns
@@ -278,82 +339,67 @@ class FieldVisualizer:
 ### Basic Field Analysis
 
 ```python
-import mneme
-from mneme.core import field_theory, topology
+from mneme.data.betse_loader import betse_to_field
 from mneme.analysis import pipeline, visualization
 
-# Load data
-data = mneme.data.load_bioelectric("path/to/data")
+# Load data (BETSE output interpolated to a grid)
+field = betse_to_field("path/to/Vmem2D_TextExport/", resolution=(64, 64))
 
 # Create and run pipeline
-pipe = pipeline.create_standard_pipeline()
-results = pipe.run(data)
+pipe = pipeline.create_bioelectric_pipeline()
+result = pipe.run({'field': field.data[-1]})   # one 2D frame
+if not result.success:
+    print(result.failed_stages, result.errors)
 
 # Visualize results
 viz = visualization.FieldVisualizer()
-viz.create_dashboard(results)
+viz.create_analysis_dashboard(result.analysis_result)
 ```
 
 ### Custom Pipeline
 
 ```python
-# Define custom pipeline
-pipe = MnemePipeline(config={'seed': 42})
+# Custom stages replace the default preprocessing stage
+pipe = MnemePipeline(config={'topology': {'max_dimension': 1}})
 
-# Add custom stages
 pipe.add_stage(
     name='custom_filter',
-    stage=lambda x: custom_filter_function(x['field']),
+    stage_func=lambda x: custom_filter_function(x['field']),
     inputs=['field'],
-    outputs=['filtered_field']
-)
-
-pipe.add_stage(
-    name='extract_features',
-    stage=lambda x: extract_spatial_features(x['filtered_field']),
-    inputs=['filtered_field'],
-    outputs=['features']
+    outputs=['processed_field']   # 'processed_field' is what topology analyses
 )
 
 # Run pipeline
-results = pipe.run({'field': my_field_data})
+result = pipe.run({'field': my_field_data})
 ```
 
 ### Batch Processing
 
 ```python
-from mneme.data import BioelectricDataset
-from torch.utils.data import DataLoader
+from mneme.data.loaders import create_data_loader
+from mneme.data.parallel import ParallelPipeline
 
-# Create dataset and dataloader
-dataset = BioelectricDataset("data/planarian/")
-dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+# Iterate a directory of files
+loader = create_data_loader("data/planarian/", loader_type="bioelectric")
+for item in loader:
+    result = pipe.run({'field': item['voltage_field']})
 
-# Process batches
-for batch in dataloader:
-    fields = batch['voltage_field']
-    results = pipe.run_batch(fields)
-    # Save or aggregate results
+# Or process a list of files in parallel
+results = ParallelPipeline(pipe, backend='multiprocessing', n_workers=4).map(file_list)
 ```
 
 ## Error Handling
 
-All API functions include proper error handling:
+Constructors validate their arguments:
 
 ```python
 try:
     reconstructor = FieldReconstructor(method='invalid_method')
 except ValueError as e:
     print(f"Invalid method: {e}")
-
-# Or with validation
-from mneme.utils import validate_parameters
-
-@validate_parameters
-def process_field(field: np.ndarray, threshold: float = 0.1) -> np.ndarray:
-    """Process field with automatic parameter validation."""
-    return field[field > threshold]
 ```
+
+Inside a pipeline, a failing stage does not raise: `PipelineResult.success` is False, the stage is named in `failed_stages`, and its message is in `errors`.
 
 ## Configuration Management
 

@@ -7,7 +7,7 @@ echo "Setting up Mneme development environment..."
 
 # Check Python version
 python_version=$(python3 --version 2>&1 | awk '{print $2}')
-required_version="3.8"
+required_version="3.12"
 
 if [ "$(printf '%s\n' "$required_version" "$python_version" | sort -V | head -n1)" != "$required_version" ]; then 
     echo "Error: Python $required_version or higher is required. Found: $python_version"
@@ -39,7 +39,7 @@ pip install -r requirements.txt
 echo "✓ Core requirements installed"
 
 echo "Installing development requirements..."
-pip install -r requirements-dev.txt
+pip install -r pyproject.toml
 echo "✓ Development requirements installed"
 
 # Install package in development mode

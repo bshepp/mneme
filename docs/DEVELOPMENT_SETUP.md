@@ -2,136 +2,121 @@
 
 ## Prerequisites
 
-- Python 3.12.3 (tested and working)
+- Python 3.12 or later
 - Git
 - Virtual environment tool (venv recommended)
 - CUDA-capable GPU (optional, for deep learning models)
-- WSL2 environment (if on Windows)
+
+Windows, Linux and macOS all work natively. WSL2 is not required.
 
 ## Initial Setup
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/mneme.git
+git clone https://github.com/bshepp/mneme.git
 cd mneme
 ```
 
 ### 2. Create Virtual Environment
 
+The `venv/` directory that may already be present in a checkout is a stale Linux environment. Do not activate it; create a fresh one.
+
 ```bash
 # Using venv
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 # Or using conda
-conda create -n mneme python=3.9
+conda create -n mneme python=3.12
 conda activate mneme
 ```
 
 ### 3. Install Dependencies
 
 ```bash
-# Core dependencies
-pip install -r requirements.txt
+# Package in development mode, with test/lint tools and the TDA extras
+# (GUDHI and POT). This is what CI installs.
+pip install -e ".[dev,tda]"
 
-# Development dependencies (includes testing and linting tools)
-pip install -r requirements-dev.txt
+# Optional: symbolic regression (needs Julia)
+pip install -e ".[pysr]"
 
-# Install package in development mode
-pip install -e .
+# Optional: notebooks, docs
+pip install -e ".[notebooks]"
+pip install -e ".[docs]"
 ```
+
+Core dependencies are declared in `pyproject.toml`. `requirements.txt` pins the same core set for reproducible installs and is not required when installing with `pip install -e`.
 
 ## Dependencies Overview
 
-### Core Scientific Libraries
+### Core (from `pyproject.toml`)
 ```txt
-numpy>=1.21.0
-scipy>=1.7.0
-pandas>=1.3.0
-matplotlib>=3.4.0
-seaborn>=0.11.0
-scikit-learn>=0.24.0
-```
-
-### Deep Learning
-```txt
+numpy>=1.24.0
+scipy>=1.10.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.0.0
 torch>=2.0.0
-torchvision>=0.15.0
+h5py>=3.0.0
+scikit-image>=0.20.0
+pyyaml>=6.0
+tqdm>=4.60.0
+click>=8.0.0
+pydantic>=2.0.0
 ```
 
-### Specialized Tools
+### Optional Extras
 ```txt
-pysr>=0.6.0              # Symbolic regression
-gudhi>=3.4.0             # Topological data analysis
-nifty>=0.1.0             # Information field theory
-scikit-image>=0.18.0     # Image processing
+tda:    gudhi>=3.4.0, POT>=0.9.0      # persistent homology above H0, Wasserstein distance
+pysr:   pysr, juliacall               # symbolic regression (experimental; needs Julia)
+dev:    pytest, pytest-cov, pytest-mock, black, flake8, isort, mypy, pre-commit
+docs:   mkdocs, mkdocs-material, mkdocstrings[python]
+notebooks: jupyter, jupyterlab, ipykernel
 ```
 
-### Development Tools
-```txt
-pytest>=6.2.0
-pytest-cov>=2.12.0
-black>=21.6b0
-flake8>=3.9.0
-mypy>=0.910
-jupyter>=1.0.0
-ipykernel>=6.0.0
-```
+Without GUDHI, persistence is computed for H0 only and a `RuntimeWarning` says so.
 
 ## Environment Configuration
 
-### 1. Create Configuration File
+### 1. Configuration Files
 
-Create `config/development.yaml`:
+The pipeline's configuration keys are the ones returned by `mneme.analysis.pipeline.default_config('standard' | 'bioelectric')`: top-level `preprocessing`, `reconstruction`, `topology` and, to opt in to the experimental detectors, `attractors`. A YAML file passed as `mneme --config file.yaml analyze ...` is overlaid on those defaults with `merge_config()`.
 
 ```yaml
-# Development configuration
-data:
-  raw_path: ./data/raw
-  processed_path: ./data/processed
-  synthetic_path: ./data/synthetic
+# Example override file
+reconstruction:
+  method: gp_subset
+  resolution: [128, 128]
 
-experiments:
-  output_dir: ./experiments/results
-  log_level: DEBUG
-  random_seed: 42
-
-compute:
-  device: auto  # 'cuda', 'cpu', or 'auto'
-  num_workers: 4
-  batch_size: 32
-
-visualization:
-  backend: matplotlib
-  dpi: 300
-  save_format: png
+topology:
+  max_dimension: 1
+  filtration: sublevel
+  persistence_threshold: 0.05
 ```
 
-### 2. Set Environment Variables
+`config/default.yaml` and `config/experiment_example.yaml` are older, broader files; keys in them that the pipeline does not read are ignored.
 
-Create `.env` file in project root:
+### 2. Environment Variables
 
-```bash
-# Environment variables
-MNEME_CONFIG_PATH=./config/development.yaml
-MNEME_LOG_LEVEL=DEBUG
-PYTHONPATH="${PYTHONPATH}:${PWD}/src"
-```
+`mneme.utils.config.Config.from_env()` reads variables with the `MNEME_` prefix. No environment variable is required for a normal install: once the package is installed with `pip install -e .`, `PYTHONPATH` does not need to include `src/`.
 
 ## Verify Installation
 
 ### 1. Run Test Suite
 
 ```bash
-# Run all tests
+# Run all tests (372 tests, about 5 minutes)
 pytest
 
-# Run with coverage
-pytest --cov=mneme --cov-report=html
+# Run with coverage (about 70%; CI fails below 60%)
+pytest --cov=src/mneme --cov-report=html
 
 # Run specific test module
-pytest tests/unit/test_field_theory.py
+pytest tests/test_field_theory.py
 ```
 
 ### 2. Check Imports
@@ -146,14 +131,19 @@ from mneme.models import autoencoders
 print(f"Mneme version: {mneme.__version__}")
 ```
 
-### 3. Run Example Script
+Or run `python scripts/validate_installation.py`.
+
+### 3. Run Example Commands
 
 ```bash
 # Generate synthetic data
-python src/scripts/generate_synthetic.py --size 100 --noise 0.1
+mneme generate -o sample_data.npz
 
-# Run basic pipeline
-python src/scripts/run_pipeline.py --config config/development.yaml
+# Run the default pipeline (prints each stage's status; exits non-zero if a stage fails)
+mneme analyze sample_data.npz --pipeline bioelectric -o results
+
+# Show system information
+mneme info
 ```
 
 ## Development Tools Setup
@@ -180,25 +170,8 @@ mypy src/
 
 ### 3. Pre-commit Hooks
 
-Create `.pre-commit-config.yaml`:
+The repository ships a `.pre-commit-config.yaml` (trailing-whitespace and end-of-file fixers, YAML and merge-conflict checks, black, isort, flake8). Install the hooks with:
 
-```yaml
-repos:
-  - repo: https://github.com/psf/black
-    rev: 21.6b0
-    hooks:
-      - id: black
-  - repo: https://github.com/pycqa/flake8
-    rev: 3.9.2
-    hooks:
-      - id: flake8
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.910
-    hooks:
-      - id: mypy
-```
-
-Install hooks:
 ```bash
 pip install pre-commit
 pre-commit install
@@ -221,13 +194,9 @@ jupyter lab
 
 ### For NVIDIA GPUs:
 
-1. Install CUDA Toolkit (11.3 or higher)
+1. Install a CUDA Toolkit supported by your PyTorch version
 2. Install cuDNN
-3. Install PyTorch with CUDA support:
-
-```bash
-pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
-```
+3. Install PyTorch with CUDA support following the selector at https://pytorch.org/get-started/locally/
 
 ### Verify GPU:
 
@@ -241,10 +210,10 @@ print(f"CUDA device: {torch.cuda.get_device_name(0) if torch.cuda.is_available()
 
 ### Common Issues:
 
-1. **Import errors**: Ensure `PYTHONPATH` includes `src/` directory
-2. **GUDHI installation**: May require C++ compiler on some systems
-3. **PySR installation**: Requires Julia, follow [PySR docs](https://github.com/MilesCranmer/PySR)
-4. **Memory issues**: Reduce batch size in configuration
+1. **Import errors**: Ensure the package is installed (`pip install -e .`) into the active environment, not the stale `venv/`
+2. **GUDHI installation**: `pip install -e ".[tda]"`; may require a C++ compiler on some systems
+3. **PySR installation**: Requires Julia, follow [PySR docs](https://github.com/MilesCranmer/PySR); import `juliacall` before `torch` to avoid a possible segfault
+4. **Memory issues**: Reduce the reconstruction resolution or `n_subset` in the configuration
 
 ### Getting Help:
 

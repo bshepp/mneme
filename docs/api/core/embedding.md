@@ -1,6 +1,6 @@
 # Embedding
 
-Phase-space embedding and parameter selection (true-MI delay, Cao-1997 dimension, Theiler window).
+Phase-space embedding and parameter selection (true-MI delay, Cao-1997 dimension, Theiler window). Frozen tier.
 
 ## Delay Embedding
 

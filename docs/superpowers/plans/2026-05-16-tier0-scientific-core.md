@@ -1,3 +1,5 @@
+*Historical document, kept for the record. It describes the project as it was on its date and is not current; see docs/SCOPE.md.*
+
 # Tier 0 Scientific Core Repair — Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.

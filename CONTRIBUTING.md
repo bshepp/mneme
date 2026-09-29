@@ -10,7 +10,7 @@ This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_C
 
 1. Fork the repository
 2. Clone your fork: `git clone https://github.com/yourusername/mneme.git`
-3. Add upstream remote: `git remote add upstream https://github.com/original/mneme.git`
+3. Add upstream remote: `git remote add upstream https://github.com/bshepp/mneme.git`
 4. Create a feature branch: `git checkout -b feature/your-feature-name`
 5. Set up development environment (see `docs/DEVELOPMENT_SETUP.md`)
 
@@ -79,9 +79,10 @@ test(models): add autoencoder integration tests
 
 ### 3. Testing
 
+- Install with `pip install -e ".[dev,tda]"` so GUDHI and POT are present, as in CI
 - Write tests for new functionality
-- Ensure all tests pass: `pytest`
-- Maintain or improve code coverage
+- Ensure all tests pass: `pytest` (about 5 minutes)
+- Maintain or improve code coverage (CI fails below 60%)
 - Add integration tests for complex features
 
 ### 4. Documentation
@@ -127,15 +128,21 @@ test(models): add autoencoder integration tests
 
 ## Project-Specific Guidelines
 
+### Component Tiers
+
+Every component is core, frozen or experimental ([docs/SCOPE.md](docs/SCOPE.md)). A new component is experimental until it has a test that checks its output against an answer known independently of the code, and that test runs in CI. Until then its constructor should call `mneme._status.warn_experimental("Name")`, and its documentation should say so.
+
+Do not add a scientific result to the documentation unless the analysis that produced it is reproducible from the repository and its inputs are recorded. Results that are later found to rest on defective code are withdrawn in `CHANGELOG.md`, not silently edited.
+
 ### Adding New Analysis Methods
 
 When adding new analysis methods:
 
 1. Create module in appropriate subpackage
 2. Implement base functionality with clear API
-3. Add comprehensive tests
+3. Add tests, including at least one against a known answer
 4. Create example notebook
-5. Update pipeline integration
+5. Update pipeline integration and the tier table in `docs/SCOPE.md`
 
 Example structure:
 ```python
@@ -180,8 +187,8 @@ When working with data:
 
 ### High Priority
 
-- [ ] Implement additional IFT reconstruction methods
-- [ ] Add more symbolic regression backends
+- [ ] Move experimental components to the core tier by testing them against known answers (symbolic regression on a system with known equations; the VAE on data with known latent structure; the quality checker's thresholds)
+- [ ] Re-run the withdrawn BETSE and PhysioNet analyses under the corrected code
 - [ ] Improve visualization tools
 - [ ] Optimize memory usage for large datasets
 - [ ] Add support for 3D field data
@@ -197,7 +204,7 @@ When working with data:
 ### Research Contributions
 
 - Propose new analysis methods
-- Validate on additional biological systems
+- Test on additional biological systems where an answer is known independently
 - Improve theoretical foundations
 - Contribute experimental data (with proper permissions)
 
@@ -223,7 +230,6 @@ Pull requests are reviewed for:
 
 Contributors are recognized in:
 - Git history
-- CONTRIBUTORS.md file
 - Release notes
 - Academic publications (for significant contributions)
 

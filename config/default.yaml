@@ -46,14 +46,19 @@ preprocessing:
 
 # Field reconstruction
 reconstruction:
-  method: "ift"  # Options: ift, gaussian_process, neural_field
+  method: "gp_subset"  # Options: gp_subset, wiener_filter, gaussian_process, neural_field
   resolution: [256, 256]
-  
-  # IFT specific
-  ift:
-    power_spectrum_model: "power_law"
-    correlation_length: 10.0
-    smoothness_prior: 2.0
+
+  # Subset GP specific (a GP fitted to a random subset of the observations)
+  gp_subset:
+    n_subset: 500
+    kernel: "rbf"
+    length_scale: 0.1
+
+  # Wiener filter specific (dense; small grids only)
+  wiener_filter:
+    power_spectrum_model: "gaussian"
+    correlation_length: 10.0   # pixels
   
   # Gaussian process specific
   gaussian_process:
@@ -72,9 +77,9 @@ topology:
   max_dimension: 2
   filtration: "sublevel"  # Options: sublevel, superlevel
   persistence_threshold: 0.05
-  compute_cycles: true
-  
-  # Attractor detection
+  compute_cycles: false  # representative cycles are not implemented
+
+  # Attractor detection (experimental: detectors report UNDETERMINED)
   attractors:
     method: "recurrence"  # Options: recurrence, lyapunov, clustering
     recurrence_threshold: 0.1

@@ -28,7 +28,8 @@ deliver that, so it was removed to avoid misleading downstream users.
 Add basin estimation only once Mneme can either
 
 1. Operate on a *learned* surrogate model of the dynamics (e.g. the symbolic
-   regressor in `mneme.models.symbolic` or the VAE-decoded vector field), or
+   regressor in `mneme.models.symbolic` or the VAE-decoded vector field; both
+   are experimental and untested against known answers, see `SCOPE.md`), or
 2. Accept an explicit user-supplied `dynamics_fn(state) -> dstate/dt`.
 
 ### Suggested approach (when prerequisites exist)
