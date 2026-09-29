@@ -10,7 +10,7 @@ Mneme is an exploratory research toolkit for studying field-like memory in biolo
 
 **No scientific result produced with Mneme is currently asserted.** A review in September 2026 found that the BETSE analysis report and the PhysioNet Lyapunov numbers were produced by defective code. Both are withdrawn. The defects are fixed; the analyses have not been re-run.
 
-The plan is in [project_plan.md](project_plan.md). The next scientific step is the multistability experiment in [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md).
+The plan is in [project_plan.md](project_plan.md). The first study under [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md) found one stable state in the published BETSE configuration; see [studies/convergence/RESULTS.md](studies/convergence/RESULTS.md).
 
 ### Component tiers
 
@@ -70,6 +70,7 @@ src/mneme/
 │   └── attractors.py      # RecurrenceAnalysis, ClusteringDetector (experimental)
 ├── analysis/
 │   ├── pipeline.py        # MnemePipeline, default_config(), merge_config()
+│   ├── steady_state.py    # assess_steady_state(), count_distinct_states()
 │   └── visualization.py   # FieldVisualizer, dashboards
 ├── data/
 │   ├── generators.py      # SyntheticFieldGenerator
@@ -83,6 +84,7 @@ src/mneme/
     └── io.py
 
 scripts/                   # not re-run since the fixes; see Known Issues
+studies/convergence/       # BETSE convergence study: configs, runner, analysis, results
 review_artifacts/          # probe scripts and outputs behind the measured numbers
 ```
 
@@ -147,7 +149,7 @@ Read [docs/LYAPUNOV_OPERATING_RANGE.md](docs/LYAPUNOV_OPERATING_RANGE.md) first.
 
 - The scripts in `scripts/` have not been re-run since the fixes. They compute λ₁ on multi-dimensional trajectories while testing only the first column, and they still save the exploratory spectrum and D_KY.
 - The BETSE runs on hand are 119 to 635 frames and are relaxations toward rest. They are outside the operating range of the Lyapunov tools.
-- BETSE is not installed in the development environment and the simulation configs are not in the repository.
+- BETSE's default gap-junction coupling is numerically unstable at a time step of 0.01 s. The convergence study used a coupling 50 times weaker.
 - Import order warning: import juliacall before torch to avoid a potential segfault. On Windows, PySR prints "access violation" traces during tests that still pass.
 - `mypy` runs in CI but cannot fail it.
 - `compute_basin_of_attraction()` was removed; design notes are in [docs/FUTURE_IDEAS.md](docs/FUTURE_IDEAS.md).

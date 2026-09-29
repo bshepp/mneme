@@ -1,6 +1,6 @@
 # Multistability Experiment Protocol
 
-**Status:** protocol written, runs not started.
+**Status:** first study complete. It found one stable state in the published 2016 configuration. Results are in `studies/convergence/RESULTS.md` in the repository. Perturbation and parameter-sweep steps are still to do.
 
 ## Question
 
@@ -88,6 +88,6 @@ A negative result is reported as such.
 
 | Requirement | Notes |
 |---|---|
-| BETSE | Not installed in the development environment. The earlier runs used BETSE 1.5.1 on Linux. |
-| Simulation configs | Not in the repository. |
-| Compute | The earlier attractor runs took about 2.5 hours each. 20 initial conditions at 5 conductances is 100 runs. |
+| BETSE | `pip install betse`. Version 1.5.0 was used for the first study. |
+| Simulation configs | In the BETSE source repository under `doc/yaml/paper/`. |
+| Compute | About 4.5 hours per run on one core for 25,000 s of simulated time. |

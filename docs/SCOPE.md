@@ -20,6 +20,7 @@ Experimental components emit `mneme.ExperimentalWarning` when constructed. The d
 | Subset GP reconstruction | `mneme.core.field_theory.SubsetGPReconstructor` | A known field; uncertainty coverage |
 | Standard GP reconstruction | `mneme.core.field_theory.GaussianProcessReconstructor` | A known field |
 | Wiener-filter reconstruction | `mneme.core.field_theory.WienerFilterReconstructor` | A known field |
+| Steady-state and distinct-state analysis | `mneme.analysis.steady_state` | Exponential relaxations with known time constants; a double-well system with two known stable states |
 | Preprocessing and I/O | `mneme.data.preprocessors`, `mneme.utils.io` | Round trips and unit tests |
 
 ### Known limits of core components
