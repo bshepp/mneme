@@ -10,7 +10,7 @@ Mneme is an exploratory research toolkit for studying field-like memory in biolo
 
 **No scientific result produced with Mneme is currently asserted.** A review in September 2026 found that the BETSE analysis report and the PhysioNet Lyapunov numbers were produced by defective code. Both are withdrawn. The defects are fixed; the analyses have not been re-run.
 
-The plan is in [project_plan.md](project_plan.md). The first study under [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md) found one stable state in the published BETSE configuration; see [studies/convergence/RESULTS.md](studies/convergence/RESULTS.md).
+The plan is in [project_plan.md](project_plan.md). Two studies under [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md) are done: the published 2016 configuration has one stable state ([studies/convergence](studies/convergence/RESULTS.md)); the 2018 gene-network configuration has two stable voltage patterns under one parameter set, while Kir2.1 plus a Na⁺ leak gives one ([studies/multistability](studies/multistability/RESULTS.md)). These are simulation results with one geometry and one parameter set each.
 
 ### Component tiers
 
@@ -85,6 +85,7 @@ src/mneme/
 
 scripts/                   # not re-run since the fixes; see Known Issues
 studies/convergence/       # BETSE convergence study: configs, runner, analysis, results
+studies/multistability/    # gene-network and channel studies: configs, results
 review_artifacts/          # probe scripts and outputs behind the measured numbers
 ```
 
