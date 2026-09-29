@@ -15,7 +15,7 @@ from mneme.core import (
     classify_attractor, kaplan_yorke_dimension, embed_trajectory,
 )
 
-SURROGATE_N = 30
+SURROGATE_N = 40  # two-sided test needs n >= 39 to reach alpha = 0.05
 
 
 def analyze_ecg_hrv(signal, fs, description):
@@ -139,10 +139,11 @@ def main():
               f'{r["spectrum"][0]:>+8.4f}  {r["spectrum"][1]:>+8.4f}  {r["d_ky"]:>5.2f}  {typename}')
     
     print()
-    print('Interpretation:')
-    print('  - Healthy hearts: L1 > 0 (chaotic), D_KY ~ 2-3')
-    print('  - Heart failure: Often shows reduced chaos (less adaptive)')
-    print('  - Higher SDNN = more variability = healthier')
+    print('Caution:')
+    print('  - L1, L2 and D_KY above come from the EXPLORATORY spectrum estimator.')
+    print('  - These recordings are far shorter than the ~4000 points the')
+    print('    surrogate test needs, so no conclusion about chaos can be drawn.')
+    print('  - See docs/LYAPUNOV_OPERATING_RANGE.md.')
     print()
     
     # Save results

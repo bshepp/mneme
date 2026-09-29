@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 
 - Unreleased
+  - ### Withdrawn (2026-09-27)
+  - The BETSE analysis report is withdrawn. Its time-dependent results were
+    computed on frames loaded out of time order.
+  - Withdrawn PhysioNet result files are removed from `data/raw/physionet/`.
+  - ### Fixed (correctness review)
+  - **betse_loader**: frames are read in numeric time order. The sort key
+    matched the "2" in "Vmem2D", so runs of ten or more frames loaded as
+    0, 1, 10, 100, ...
+  - **topology**: `sublevel` and `superlevel` were swapped. Non-square fields
+    were passed to GUDHI in the wrong cell order. NaN fields now raise.
+  - **topology**: the no-GUDHI fallback is now an exact union-find H0
+    computation. The Wasserstein and bottleneck fallbacks are rewritten; the
+    Wasserstein fallback crashed on infinite bars.
+  - **attractors**: detectors no longer assign fixed-point, limit-cycle or
+    strange labels from variance thresholds. They report `UNDETERMINED`.
+  - **classify_attractor**: near-zero or negative estimates return
+    `UNDETERMINED` unless the caller passes `oscillatory`.
+  - **surrogate_test**: raises when the surrogate count cannot reach `alpha`;
+    warns on multi-dimensional input and below 4000 points.
+  - **pipeline**: a failed stage gives `success=False`, with the stage in
+    `failed_stages`. Reconstruction is skipped, not faked, when there are no
+    sparse observations.
+  - **cli**: `mneme analyze` without `--config` uses the pipeline defaults
+    (it previously disabled every stage) and exits non-zero on failure.
+  - **field_theory**: Wiener filter response rows are normalised and
+    `correlation_length` is converted from pixels.
+    `optimize_hyperparameters=False` no longer optimises.
+  - ### Changed
+  - **BREAKING**: `classify_attractor(..., oscillatory=...)` defaults to
+    `None`. `PersistentHomology(compute_cycles=True)` and
+    `NeuralFieldReconstructor.uncertainty()` raise `NotImplementedError`.
+    Default pipelines no longer run attractor detection.
+  - Reconstructors renamed: `SubsetGPReconstructor` (`gp_subset`) and
+    `WienerFilterReconstructor` (`wiener_filter`). Old names are deprecated
+    aliases.
+  - BETSE interpolation defaults to linear. Cubic overshoots the data range.
+  - `largest_lyapunov` divergence loop is vectorised: same results to 1e-13,
+    about ten times faster.
+  - ### Added
+  - `load_betse_cells()` for analysis without interpolation.
+  - `mneme.ExperimentalWarning`, and component tiers in `docs/SCOPE.md`.
+  - `docs/LYAPUNOV_OPERATING_RANGE.md`, `docs/MULTISTABILITY_PROTOCOL.md`.
+  - CI installs GUDHI and POT; coverage floor raised from 35% to 60%.
   - ### Changed (Tier 0 — scientific core repair)
   - **BREAKING:** removed `compute_lyapunov_spectrum` and `classify_attractor_by_lyapunov`.
   - Added `largest_lyapunov` (Rosenstein 1993), exploratory `lyapunov_spectrum`

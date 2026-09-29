@@ -38,11 +38,22 @@ class TestClassifyAttractor:
     def test_positive_lambda_significant_surrogate_is_strange(self):
         assert classify_attractor(0.9, surrogate=_sig(True)) == AttractorType.STRANGE
 
-    def test_near_zero_is_limit_cycle(self):
+    def test_near_zero_asserted_oscillatory_is_limit_cycle(self):
         assert classify_attractor(0.001, oscillatory=True) == AttractorType.LIMIT_CYCLE
 
-    def test_negative_is_fixed_point(self):
-        assert classify_attractor(-0.5) == AttractorType.FIXED_POINT
+    def test_near_zero_asserted_settling_is_fixed_point(self):
+        assert classify_attractor(0.001, oscillatory=False) == AttractorType.FIXED_POINT
+
+    def test_negative_asserted_settling_is_fixed_point(self):
+        assert classify_attractor(-0.5, oscillatory=False) == AttractorType.FIXED_POINT
+
+    def test_near_zero_without_assertion_is_undetermined(self):
+        # A near-zero estimate cannot tell a sine wave from white noise.
+        assert classify_attractor(0.001) == AttractorType.UNDETERMINED
+        assert classify_attractor(-0.5) == AttractorType.UNDETERMINED
+
+    def test_near_zero_is_never_strange_even_if_significant(self):
+        assert classify_attractor(0.0, surrogate=_sig(True)) != AttractorType.STRANGE
 
 
 class TestKaplanYorke:

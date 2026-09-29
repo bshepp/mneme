@@ -53,7 +53,7 @@ class TestFieldReconstructor:
         assert field.shape == (128, 128)
         assert not np.any(np.isnan(field))
     
-    @pytest.mark.parametrize("method", ['gaussian_process', 'ift', 'neural_field'])
+    @pytest.mark.parametrize("method", ['gp_subset', 'gaussian_process', 'neural_field'])
     def test_different_methods(self, method):
         reconstructor = FieldReconstructor(method=method)
         # Test method-specific behavior
@@ -82,7 +82,7 @@ class TestPipelineIntegration:
         # Create and run pipeline
         pipeline = MnemePipeline({
             'preprocessing': {'normalize': True},
-            'reconstruction': {'method': 'ift'},
+            'reconstruction': {'method': 'gp_subset'},
             'analysis': {'compute_topology': True}
         })
         

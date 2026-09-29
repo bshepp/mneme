@@ -1,12 +1,14 @@
 # Module 5: Field Reconstruction (IFT and GP)
 
+> **Naming note.** This module was written when the default reconstructor was called "IFT". It is a Gaussian process fitted to a random subset of the observations, now named `gp_subset`. Where the text says IFT, read subset GP. The old name still works and emits a `DeprecationWarning`.
+
 - Objectives
   - Understand and use IFT and GP reconstructors
   - Provide sparse observations and positions to reconstruct fields
 - Time: 60–90 minutes
 
 ## 5.1 API overview
-- `mneme.core.field_theory.FieldReconstructor(method='ift'|'gaussian_process'|'neural_field')`
+- `mneme.core.field_theory.FieldReconstructor(method='gp_subset'|'gaussian_process'|'neural_field')`
 - `fit(observations, positions)` then `reconstruct()` and `uncertainty()`
 
 ## 5.2 Minimal example (Python)

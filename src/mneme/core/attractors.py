@@ -1,33 +1,24 @@
-"""Attractor detection and characterization methods."""
+"""Attractor detection and characterization methods (EXPERIMENTAL).
+
+The detectors here locate dense or recurrent regions of a trajectory. They
+do NOT establish what kind of attractor a region is: every detector reports
+``AttractorType.UNDETERMINED``. Earlier versions assigned fixed-point,
+limit-cycle and strange labels from variance and spread thresholds, which
+labelled a sine wave and white noise as strange.
+
+To make a claim about chaos, use ``mneme.core.largest_lyapunov`` with
+``surrogate_test`` and ``classify_attractor``.
+"""
 
 from typing import List, Dict, Any
 import numpy as np
 from abc import ABC, abstractmethod
 
+from .._status import warn_experimental
 from ..types import Attractor, AttractorType
 from .embedding import embed_trajectory
 from .lyapunov import lyapunov_spectrum
 
-# ---------------------------------------------------------------------------
-# Module constants — classification thresholds
-# ---------------------------------------------------------------------------
-
-#: Variance threshold below which an attractor is classified as a fixed point
-#: (used in RecurrenceAnalysis._classify_attractor_simple).
-SIMPLE_FIXED_POINT_VARIANCE: float = 0.01
-
-#: Variance threshold below which an attractor is classified as a limit cycle
-#: (used in RecurrenceAnalysis._classify_attractor_simple).
-SIMPLE_LIMIT_CYCLE_VARIANCE: float = 0.1
-
-#: Lyapunov exponent threshold for fixed-point classification.
-LYAPUNOV_FIXED_POINT_THRESHOLD: float = -0.1
-
-#: Coefficient-of-variation threshold for fixed-point in clustering detector.
-CLUSTERING_CV_FIXED_POINT: float = 0.1
-
-#: Coefficient-of-variation threshold for limit-cycle in clustering detector.
-CLUSTERING_CV_LIMIT_CYCLE: float = 0.5
 
 
 class BaseAttractorDetector(ABC):
@@ -155,13 +146,15 @@ class RecurrenceAnalysis(BaseAttractorDetector):
         attractors = []
         
         for region in recurrent_regions:
-            # Get indices of points in this region
-            indices = np.where(region)
-            if len(indices[0]) == 0:
+            # Time indices that take part in this region. A region is a set
+            # of (i, j) pixels, so each time index appears many times; use
+            # each one once.
+            time_indices = np.unique(np.where(region)[0])
+            if len(time_indices) == 0:
                 continue
-            
+
             # Extract trajectory points in this region
-            region_points = trajectory[indices[0]]
+            region_points = trajectory[time_indices]
             
             # Cluster points within the region
             clustering = DBSCAN(eps=self.threshold, min_samples=5)
@@ -182,33 +175,17 @@ class RecurrenceAnalysis(BaseAttractorDetector):
                 center = np.mean(cluster_points, axis=0)
                 basin_size = len(cluster_points) / len(trajectory)
                 
-                # Classify attractor type (simplified)
-                attractor_type = self._classify_attractor_simple(cluster_points)
-                
                 attractor = Attractor(
-                    type=attractor_type,
+                    type=AttractorType.UNDETERMINED,
                     center=center,
                     basin_size=basin_size,
-                    trajectory_indices=indices[0][cluster_mask].tolist()
+                    trajectory_indices=time_indices[cluster_mask].tolist()
                 )
                 
                 attractors.append(attractor)
         
         return attractors
     
-    def _classify_attractor_simple(self, points: np.ndarray) -> AttractorType:
-        """Simple attractor classification based on point distribution."""
-        # Very simple classification based on variance
-        variance = np.var(points, axis=0)
-        total_variance = np.sum(variance)
-        
-        if total_variance < SIMPLE_FIXED_POINT_VARIANCE:
-            return AttractorType.FIXED_POINT
-        elif total_variance < SIMPLE_LIMIT_CYCLE_VARIANCE:
-            return AttractorType.LIMIT_CYCLE
-        else:
-            return AttractorType.STRANGE
-        
     def characterize(self, attractor: Attractor, trajectory: np.ndarray) -> Dict[str, Any]:
         """Characterize attractor using recurrence quantification."""
         if attractor.trajectory_indices is None:
@@ -463,16 +440,8 @@ class LyapunovAnalysis(BaseAttractorDetector):
             # Average Lyapunov exponent for this attractor
             avg_lyapunov = np.mean(lyapunov_exponents[cluster_indices])
             
-            # Classify attractor type based on Lyapunov exponent
-            if avg_lyapunov < LYAPUNOV_FIXED_POINT_THRESHOLD:
-                attractor_type = AttractorType.FIXED_POINT
-            elif avg_lyapunov < 0:
-                attractor_type = AttractorType.LIMIT_CYCLE
-            else:
-                attractor_type = AttractorType.STRANGE
-            
             attractor = Attractor(
-                type=attractor_type,
+                type=AttractorType.UNDETERMINED,
                 center=center,
                 basin_size=basin_size,
                 lyapunov_exponents=np.array([avg_lyapunov]),
@@ -577,11 +546,8 @@ class ClusteringDetector(BaseAttractorDetector):
             # Estimate attractor dimension using correlation dimension
             dimension = self._estimate_correlation_dimension(cluster_points)
             
-            # Classify attractor type based on point distribution
-            attractor_type = self._classify_attractor_by_clustering(cluster_points)
-            
             attractor = Attractor(
-                type=attractor_type,
+                type=AttractorType.UNDETERMINED,
                 center=center,
                 basin_size=basin_size,
                 dimension=dimension,
@@ -628,23 +594,6 @@ class ClusteringDetector(BaseAttractorDetector):
         else:
             return 0.0
     
-    def _classify_attractor_by_clustering(self, points: np.ndarray) -> AttractorType:
-        """Classify attractor type based on point distribution."""
-        # Compute statistics of point distribution
-        centroid = np.mean(points, axis=0)
-        distances_to_centroid = np.linalg.norm(points - centroid, axis=1)
-        
-        # Coefficient of variation
-        cv = np.std(distances_to_centroid) / (np.mean(distances_to_centroid) + 1e-10)
-        
-        # Classify based on coefficient of variation
-        if cv < CLUSTERING_CV_FIXED_POINT:
-            return AttractorType.FIXED_POINT
-        elif cv < CLUSTERING_CV_LIMIT_CYCLE:
-            return AttractorType.LIMIT_CYCLE
-        else:
-            return AttractorType.STRANGE
-        
     def characterize(self, attractor: Attractor, trajectory: np.ndarray) -> Dict[str, Any]:
         """Characterize attractor geometry using clustering (MVP)."""
         if attractor.trajectory_indices is None or len(attractor.trajectory_indices) == 0:
@@ -680,6 +629,7 @@ class AttractorDetector:
         **kwargs
             Method-specific parameters
         """
+        warn_experimental("AttractorDetector")
         self.method = method
         self.threshold = threshold
         self.method_params = kwargs
@@ -705,23 +655,13 @@ class AttractorDetector:
         return self._detector.characterize(attractor, trajectory)
         
     def classify_attractor(self, attractor: Attractor) -> AttractorType:
-        """Classify attractor type based on simple heuristics (MVP)."""
-        if attractor.dimension is not None:
-            if attractor.dimension < 0.2:
-                return AttractorType.FIXED_POINT
-            if attractor.dimension < 1.2:
-                return AttractorType.LIMIT_CYCLE
-            return AttractorType.STRANGE
-        if attractor.lyapunov_exponents is not None and len(attractor.lyapunov_exponents) > 0:
-            lyap = float(np.mean(attractor.lyapunov_exponents))
-            if lyap < -0.1:
-                return AttractorType.FIXED_POINT
-            if lyap < 0.05:
-                return AttractorType.LIMIT_CYCLE
-            return AttractorType.STRANGE
-        if attractor.basin_size < 0.02:
-            return AttractorType.FIXED_POINT
-        return AttractorType.LIMIT_CYCLE
+        """Return the attractor's recorded type.
+
+        Detectors cannot determine attractor type, so this is
+        ``UNDETERMINED`` unless the caller set it from
+        ``mneme.core.classify_attractor`` with surrogate evidence.
+        """
+        return attractor.type
 
 
 def compute_correlation_dimension(

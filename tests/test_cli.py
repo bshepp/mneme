@@ -117,3 +117,26 @@ def test_list_experiments_empty(runner, tmp_path):
     res = runner.invoke(cli, ["list-experiments", "-b", str(tmp_path)])
     # Either prints "No experiments" or exits cleanly
     assert res.exit_code == 0
+
+
+def test_analyze_without_config_runs_the_default_stages(runner, tmp_path):
+    """Regression: with no --config every stage was disabled, yet it 'succeeded'."""
+    data_file = tmp_path / "field.npz"
+    np.savez(data_file, data=np.random.RandomState(0).rand(32, 32))
+    out = tmp_path / "out"
+    res = runner.invoke(cli, ["analyze", str(data_file), "-o", str(out)])
+    assert res.exit_code == 0, res.output
+    assert "topology: completed" in res.output
+    assert "preprocessing: completed" in res.output
+    assert "reconstruction: skipped" in res.output
+
+
+def test_analyze_reports_failure_with_nonzero_exit(runner, tmp_path):
+    data = np.random.RandomState(0).rand(32, 32)
+    data[0, 0] = np.nan
+    data_file = tmp_path / "field.npy"
+    np.save(data_file, data)
+    res = runner.invoke(cli, ["analyze", str(data_file), "-o", str(tmp_path / "out")])
+    assert res.exit_code == 1
+    assert "Analysis failed!" in res.output
+    assert "successfully" not in res.output

@@ -17,10 +17,16 @@ TimeSeries = npt.NDArray[np.float64]  # Shape: (time_steps, ...)
 
 # Enums
 class ReconstructionMethod(str, Enum):
-    """Available field reconstruction methods."""
-    IFT = "ift"
+    """Available field reconstruction methods.
+
+    ``IFT`` is a deprecated name kept so that old configs and result files
+    still load. It selects ``GP_SUBSET``.
+    """
+    GP_SUBSET = "gp_subset"
+    WIENER_FILTER = "wiener_filter"
     GAUSSIAN_PROCESS = "gaussian_process"
     NEURAL_FIELD = "neural_field"
+    IFT = "ift"
 
 class PreprocessingStep(str, Enum):
     """Preprocessing pipeline steps."""

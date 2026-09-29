@@ -66,6 +66,9 @@ nav:
   - User Guide:
     - Data Pipeline: DATA_PIPELINE.md
     - API Design: API_DESIGN.md
+    - Scope and Support Status: SCOPE.md
+    - Lyapunov Operating Range: LYAPUNOV_OPERATING_RANGE.md
+    - Multistability Protocol: MULTISTABILITY_PROTOCOL.md
   - API Reference:
     - Overview: api/index.md
     - Core:

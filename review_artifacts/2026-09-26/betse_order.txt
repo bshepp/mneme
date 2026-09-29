@@ -1,0 +1,28 @@
+
+sim_1: frames=635 cells={153}
+  loader order, first 8 frame ids: [0, 1, 10, 100, 101, 102, 103, 104]
+  LOADER order max_step=  59.740 median_step= 0.0946 path=  4436.61 net=   19.22 path/net= 230.81 mean_monotone= 0.91 late/early_step= 1.407
+               mean Vmem start= -42.75 end= -41.63 min= -42.75 max= -38.68 | PCA var: 99.57%  0.43%  0.00%  0.00%  0.00%
+  TRUE order   max_step=   0.221 median_step= 0.0844 path=    62.80 net=   62.14 path/net=   1.01 mean_monotone= 1.00 late/early_step= 0.172
+               mean Vmem start= -42.75 end= -38.68 min= -42.75 max= -38.68 | PCA var: 99.57%  0.43%  0.00%  0.00%  0.00%
+
+sim_2: frames=635 cells={156}
+  loader order, first 8 frame ids: [0, 1, 10, 100, 101, 102, 103, 104]
+  LOADER order max_step=  30.041 median_step= 0.0447 path=  2299.35 net=   11.12 path/net= 206.82 mean_monotone= 0.91 late/early_step= 1.255
+               mean Vmem start= -55.96 end= -56.36 min= -57.12 max= -55.96 | PCA var: 99.63%  0.36%  0.01%  0.00%  0.00%
+  TRUE order   max_step=   0.133 median_step= 0.0386 path=    31.49 net=   31.18 path/net=   1.01 mean_monotone= 1.00 late/early_step= 0.100
+               mean Vmem start= -55.96 end= -57.12 min= -57.12 max= -55.96 | PCA var: 99.63%  0.36%  0.01%  0.00%  0.00%
+
+physiology: frames=190 cells={7}
+  loader order, first 8 frame ids: [0, 1, 10, 100, 101, 102, 103, 104]
+  LOADER order max_step= 106.459 median_step= 0.9303 path=  2190.32 net=   67.07 path/net=  32.66 mean_monotone= 0.62 late/early_step= 0.347
+               mean Vmem start= -36.38 end= -61.71 min= -81.48 max= -22.41 | PCA var: 98.51%  1.48%  0.00%  0.00%  0.00%
+  TRUE order   max_step=  73.467 median_step= 0.5817 path=   909.00 net=   80.32 path/net=  11.32 mean_monotone= 0.63 late/early_step= 0.044
+               mean Vmem start= -36.38 end= -66.74 min= -81.48 max= -22.41 | PCA var: 98.51%  1.48%  0.00%  0.00%  0.00%
+
+patterns: frames=119 cells={824}
+  loader order, first 8 frame ids: [0, 1, 10, 100, 101, 102, 103, 104]
+  LOADER order max_step= 211.027 median_step= 3.4961 path=  4099.89 net=  262.94 path/net=  15.59 mean_monotone= 0.57 late/early_step= 1.314
+               mean Vmem start= -48.00 end= -48.67 min= -48.79 max= -48.00 | PCA var: 81.08% 11.81%  5.10%  1.01%  0.58%
+  TRUE order   max_step=  19.341 median_step= 3.0230 path=   460.38 net=  268.68 path/net=   1.71 mean_monotone= 0.62 late/early_step= 0.132
+               mean Vmem start= -48.00 end= -48.69 min= -48.79 max= -48.00 | PCA var: 81.08% 11.81%  5.10%  1.01%  0.58%

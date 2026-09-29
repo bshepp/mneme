@@ -3,6 +3,7 @@
 import numpy as np
 import pytest
 
+from mneme.types import AttractorType
 from mneme.core.attractors import (
     AttractorDetector,
     ClusteringDetector,
@@ -79,3 +80,36 @@ class TestComputeCorrelationDimension:
     def test_finite_result(self, sine_trajectory):
         dim = compute_correlation_dimension(sine_trajectory)
         assert np.isfinite(dim)
+
+
+# ---------------------------------------------------------------------------
+# Detectors must not assign attractor types
+# ---------------------------------------------------------------------------
+
+class TestDetectorsDoNotLabel:
+    """Regression: a sine wave and white noise were both labelled 'strange'."""
+
+    @staticmethod
+    def _signals():
+        t = np.linspace(0, 40 * np.pi, 600)
+        circle = np.column_stack([np.sin(t), np.cos(t)])
+        noise = np.random.RandomState(0).standard_normal((600, 2))
+        return {"circle": circle, "noise": noise}
+
+    @pytest.mark.parametrize("method", ["recurrence", "clustering", "lyapunov"])
+    @pytest.mark.parametrize("signal", ["circle", "noise"])
+    def test_type_is_undetermined(self, method, signal):
+        det = AttractorDetector(method=method, threshold=0.3)
+        for attractor in det.detect(self._signals()[signal]):
+            assert attractor.type == AttractorType.UNDETERMINED
+            assert det.classify_attractor(attractor) == AttractorType.UNDETERMINED
+
+    def test_recurrence_finds_something_on_a_circle(self):
+        det = AttractorDetector(method="recurrence", threshold=0.3)
+        assert len(det.detect(self._signals()["circle"])) > 0
+
+    def test_basin_size_is_a_fraction(self):
+        det = AttractorDetector(method="recurrence", threshold=0.3)
+        for attractor in det.detect(self._signals()["circle"]):
+            assert 0.0 < attractor.basin_size <= 1.0
+            assert len(set(attractor.trajectory_indices)) == len(attractor.trajectory_indices)

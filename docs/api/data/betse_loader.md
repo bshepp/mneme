@@ -8,6 +8,8 @@ Load and preprocess output from BETSE (BioElectric Tissue Simulation Engine) sim
 
 ## Loading Functions
 
+::: mneme.data.betse_loader.load_betse_cells
+
 ::: mneme.data.betse_loader.load_betse_timeseries
 
 ::: mneme.data.betse_loader.load_betse_vmem_csv

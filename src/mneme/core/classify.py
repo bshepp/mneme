@@ -3,6 +3,19 @@
 `classify_attractor` REFUSES to return STRANGE without passed surrogate
 evidence — positive λ₁ alone yields UNDETERMINED. This is the central
 credibility fix.
+
+What the labels mean
+--------------------
+STRANGE means: λ₁ is clearly positive AND the series is inconsistent with
+a linear stochastic process (the IAAFT null). That is necessary for chaos
+but not sufficient: non-stationarity and nonlinear stochastic dynamics can
+also reject the null. Treat STRANGE as "consistent with chaos".
+
+A near-zero or negative λ₁ estimate says nothing on its own. The Rosenstein
+estimator returns about zero for white noise as well as for a sine wave,
+and cannot measure negative exponents. FIXED_POINT and LIMIT_CYCLE are
+therefore returned only when the caller asserts, from other knowledge,
+whether the signal oscillates.
 """
 
 from __future__ import annotations
@@ -19,7 +32,7 @@ def classify_attractor(
     lambda1: float,
     *,
     surrogate: Optional[SurrogateResult] = None,
-    oscillatory: bool = False,
+    oscillatory: Optional[bool] = None,
     zero_tol: Optional[float] = None,
 ) -> AttractorType:
     """Classify an attractor from λ₁, gating chaos on surrogate evidence.
@@ -31,8 +44,11 @@ def classify_attractor(
     surrogate : SurrogateResult, optional
         Result of `surrogate_test`. STRANGE is only returned when this is
         provided AND `surrogate.significant` is True.
-    oscillatory : bool
-        Hint that near-zero λ₁ corresponds to a limit cycle vs fixed point.
+    oscillatory : bool, optional
+        The caller's assertion about a signal whose λ₁ is not clearly
+        positive: True for a sustained oscillation, False for a signal
+        that settles to rest. When None (default) such signals are
+        UNDETERMINED, because λ₁ cannot tell regular dynamics from noise.
     zero_tol : float, optional
         Half-width of the "λ₁ ≈ 0" band. Defaults to the surrogate null
         spread (std) when available, else 0.01.
@@ -40,9 +56,9 @@ def classify_attractor(
     Returns
     -------
     AttractorType
-        STRANGE only with significant surrogate evidence; otherwise
-        UNDETERMINED (positive λ₁), LIMIT_CYCLE / FIXED_POINT (≈0), or
-        FIXED_POINT (negative).
+        STRANGE only with significant surrogate evidence. LIMIT_CYCLE or
+        FIXED_POINT only when `oscillatory` is given and λ₁ is not
+        clearly positive. UNDETERMINED otherwise.
     """
     if zero_tol is None:
         if surrogate is not None and surrogate.null_distribution.size > 1:
@@ -50,11 +66,10 @@ def classify_attractor(
         else:
             zero_tol = 0.01
 
-    if abs(lambda1) <= zero_tol:
+    if lambda1 <= zero_tol:
+        if oscillatory is None:
+            return AttractorType.UNDETERMINED
         return AttractorType.LIMIT_CYCLE if oscillatory else AttractorType.FIXED_POINT
-
-    if lambda1 < 0:
-        return AttractorType.FIXED_POINT
 
     # lambda1 clearly positive — chaos claim requires surrogate evidence.
     if surrogate is not None and surrogate.significant:

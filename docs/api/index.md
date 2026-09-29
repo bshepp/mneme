@@ -6,7 +6,7 @@ Auto-generated reference documentation for all public Mneme modules.
 
 The foundation of Mneme's analysis capabilities:
 
-- [**Field Theory**](core/field_theory.md) -- Field reconstruction from sparse observations (Sparse GP, Dense IFT, Neural Fields)
+- [**Field Theory**](core/field_theory.md) -- Field reconstruction from sparse observations (subset GP, Wiener filter, standard GP, neural field)
 - [**Topology**](core/topology.md) -- Persistent homology, persistence diagrams, Wasserstein/bottleneck distances
 - [**Attractors**](core/attractors.md) -- Recurrence- and clustering-based attractor detection
 - [**Lyapunov**](core/lyapunov.md) -- Largest Lyapunov exponent (Rosenstein 1993) and exploratory spectrum

@@ -1,5 +1,13 @@
 # Bioelectric Data Acquisition Plan
 
+> **Superseded (2026-09-27).** This plan predates the September 2026 review and is kept for the record only. It should not be followed as written:
+>
+> - Its code examples use `compute_lyapunov_spectrum` and `classify_attractor_by_lyapunov`, which were removed.
+> - Its "expected" values and its claim that PhysioNet results match the literature rest on an estimator that was found to be unreliable. Those results are withdrawn.
+> - The recordings it proposes are far shorter than the roughly 4,000 points the surrogate test needs.
+>
+> See [Scope and Support Status](SCOPE.md) and [Lyapunov Operating Range](LYAPUNOV_OPERATING_RANGE.md).
+
 A comprehensive plan for acquiring and analyzing bioelectric time series data to validate Mneme's analysis capabilities before approaching academic collaborators.
 
 ---

@@ -16,6 +16,7 @@ import numpy as np
 from typing import Dict, Any, Optional, Tuple, List, Union
 from pathlib import Path
 from scipy.interpolate import griddata
+from scipy.spatial import Delaunay
 import warnings
 import re
 import logging
@@ -33,6 +34,34 @@ DEFAULT_GRID_RESOLUTION: Tuple[int, int] = (64, 64)
 
 #: Column names expected in BETSE 2D Vmem CSV exports.
 VMEM_2D_COLUMNS = ("x [um]", "y [um]", "Vmem [mV]")
+
+#: Default interpolation. Linear stays within the range of the cell data;
+#: cubic overshoots and creates voltages that are not in the simulation.
+DEFAULT_INTERPOLATION = "linear"
+
+#: The frame index is the trailing integer of the file stem ("Vmem2D_17").
+#: Anchoring at the end matters: an unanchored search matches the "2" in
+#: "Vmem2D" for every file.
+_FRAME_INDEX_RE = re.compile(r"_(\d+)$")
+
+
+def _frame_index(path: Path) -> int:
+    """Return the time index encoded in a ``Vmem2D_<n>.csv`` file name."""
+    match = _FRAME_INDEX_RE.search(path.stem)
+    if match is None:
+        raise ValueError(
+            f"Cannot read a frame index from {path.name!r}; "
+            f"expected a name like 'Vmem2D_17.csv'"
+        )
+    return int(match.group(1))
+
+
+def _sorted_frame_files(vmem_dir: Path) -> List[Path]:
+    """List ``Vmem2D_*.csv`` files in numeric time order."""
+    csv_files = sorted(vmem_dir.glob("Vmem2D_*.csv"), key=_frame_index)
+    if not csv_files:
+        raise FileNotFoundError(f"No Vmem2D_*.csv files found in {vmem_dir}")
+    return csv_files
 
 
 def load_betse_vmem_csv(
@@ -69,7 +98,7 @@ def interpolate_to_grid(
     y: np.ndarray,
     values: np.ndarray,
     resolution: Tuple[int, int] = DEFAULT_GRID_RESOLUTION,
-    method: str = "cubic",
+    method: str = DEFAULT_INTERPOLATION,
     padding: float = 0.05,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Interpolate scattered cell data onto a regular grid.
@@ -117,10 +146,48 @@ def interpolate_to_grid(
     return grid, grid_x, grid_y
 
 
+def load_betse_cells(
+    vmem_dir: Union[str, Path],
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, List[int]]:
+    """Load a BETSE Vmem2D time series at the cells, without interpolation.
+
+    Prefer this over :func:`load_betse_timeseries` for any analysis that
+    does not need a regular grid: it contains only values the simulation
+    produced.
+
+    Parameters
+    ----------
+    vmem_dir : str or Path
+        Directory containing Vmem2D_0.csv, Vmem2D_1.csv, ... files.
+
+    Returns
+    -------
+    vmem : np.ndarray
+        Shape (n_timesteps, n_cells), in mV, in time order.
+    x, y : np.ndarray
+        Cell positions in micrometres, shape (n_cells,), from the first frame.
+    frame_indices : List[int]
+        Time index of each row of ``vmem``.
+    """
+    vmem_dir = Path(vmem_dir)
+    csv_files = _sorted_frame_files(vmem_dir)
+    x0, y0, first = load_betse_vmem_csv(csv_files[0])
+    rows = [first]
+    for csv_path in csv_files[1:]:
+        _, _, vmem = load_betse_vmem_csv(csv_path)
+        if vmem.shape != first.shape:
+            raise ValueError(
+                f"{csv_path.name} has {vmem.shape[0]} cells; "
+                f"{csv_files[0].name} has {first.shape[0]}"
+            )
+        rows.append(vmem)
+    return np.stack(rows, axis=0), x0, y0, [_frame_index(p) for p in csv_files]
+
+
 def load_betse_timeseries(
     vmem_dir: Union[str, Path],
     resolution: Tuple[int, int] = DEFAULT_GRID_RESOLUTION,
-    method: str = "cubic",
+    method: str = DEFAULT_INTERPOLATION,
 ) -> Tuple[np.ndarray, Dict[str, Any]]:
     """Load a BETSE Vmem2D time series from a directory of CSV files.
 
@@ -144,19 +211,16 @@ def load_betse_timeseries(
         Dictionary with keys:
         - ``n_cells``: number of cells in the simulation
         - ``n_timesteps``: number of temporal frames loaded
+        - ``frame_indices``: time index of each frame, ascending
+        - ``inside_hull``: boolean (rows, cols) mask, True where the grid
+          point lies inside the convex hull of the cells. Values outside
+          it are nearest-neighbour fill, not interpolation.
         - ``grid_x``, ``grid_y``: 1-D coordinate arrays for the regular grid
         - ``x_bounds``, ``y_bounds``: spatial extent in micrometres
         - ``source_dir``: path to source directory
     """
     vmem_dir = Path(vmem_dir)
-    csv_files = sorted(
-        vmem_dir.glob("Vmem2D_*.csv"),
-        key=lambda p: int(re.search(r"(\d+)", p.stem).group(1)),
-    )
-    if not csv_files:
-        raise FileNotFoundError(
-            f"No Vmem2D_*.csv files found in {vmem_dir}"
-        )
+    csv_files = _sorted_frame_files(vmem_dir)
 
     logger.info(
         "Loading %d BETSE Vmem frames from %s at resolution %s",
@@ -197,9 +261,17 @@ def load_betse_timeseries(
 
     field_sequence = np.stack(frames, axis=0)
 
+    x0, y0, _ = frame_data[0]
+    hull = Delaunay(np.column_stack([x0, y0]))
+    inside_hull = (
+        hull.find_simplex(np.column_stack([gx.ravel(), gy.ravel()])) >= 0
+    ).reshape(gx.shape)
+
     metadata = {
         "n_cells": len(frame_data[0][0]),
         "n_timesteps": len(frames),
+        "frame_indices": [_frame_index(p) for p in csv_files],
+        "inside_hull": inside_hull,
         "grid_x": grid_x,
         "grid_y": grid_y,
         "x_bounds": (float(x_min), float(x_max)),
@@ -247,7 +319,7 @@ def load_betse_exported_data(
 def betse_to_field(
     vmem_dir: Union[str, Path],
     resolution: Tuple[int, int] = DEFAULT_GRID_RESOLUTION,
-    method: str = "cubic",
+    method: str = DEFAULT_INTERPOLATION,
 ) -> Field:
     """Load BETSE data and return a Mneme Field object.
 

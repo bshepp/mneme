@@ -44,7 +44,7 @@ from mneme.core import (
     classify_attractor, kaplan_yorke_dimension, embed_trajectory,
 )
 
-SURROGATE_N = 30
+SURROGATE_N = 40  # two-sided test needs n >= 39 to reach alpha = 0.05
 from mneme.utils.io import save_results
 
 logging.basicConfig(

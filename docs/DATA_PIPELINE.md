@@ -169,7 +169,7 @@ from mneme.core import field_theory, topology
 from mneme.models import autoencoders
 
 # 1. Field reconstruction
-reconstructor = field_theory.FieldReconstructor(method='ift')
+reconstructor = field_theory.FieldReconstructor(method='gp_subset')
 continuous_field = reconstructor.fit_reconstruct(processed_field)
 
 # 2. Topology analysis
@@ -253,7 +253,7 @@ pipeline:
     
     analysis:
       field_reconstruction:
-        method: "ift"
+        method: "gp_subset"
         resolution: [512, 512]
       
       topology:

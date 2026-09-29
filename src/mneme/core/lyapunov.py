@@ -4,6 +4,17 @@
 (corrected Sano-Sawada) is explicitly exploratory and emits a RuntimeWarning.
 Pure numpy/scipy; no new dependencies.
 
+Status: FROZEN
+--------------
+This module is kept as it is and is not under development. Its measured
+accuracy and the conditions under which it works are recorded in
+docs/LYAPUNOV_OPERATING_RANGE.md; read that before using a number from it.
+In brief: the detector's constants were tuned on Lorenz and Rössler series
+sampled at about 50 to 100 points per characteristic time and 6,000 points
+long, and λ₁ is within a few percent there. Away from those conditions the
+error measured up to 81%, and ``fit_r2`` stays near 1 regardless, so it does
+not indicate whether an estimate can be trusted.
+
 Scope
 -----
 Designed for continuous (sampled-flow) time series. Discrete maps are out
@@ -371,28 +382,34 @@ def largest_lyapunov(
     tree = cKDTree(emb)
     k = min(n, 4 * theiler + 8)
     dists, idxs = tree.query(emb, k=k)
-    neighbour = np.full(n, -1, dtype=int)
-    for i in range(n):
-        for j_pos in range(1, idxs.shape[1]):
-            j = idxs[i, j_pos]
-            if abs(j - i) > theiler:
-                neighbour[i] = j
-                break
+    # Nearest neighbour of each point outside the Theiler window: the first
+    # candidate (in distance order, skipping the point itself) that is far
+    # enough away in time.
+    candidates = idxs[:, 1:]
+    eligible = np.abs(candidates - np.arange(n)[:, None]) > theiler
+    has_neighbour = eligible.any(axis=1)
+    first = np.argmax(eligible, axis=1)
+    neighbour = np.where(
+        has_neighbour, candidates[np.arange(n), first], -1
+    ).astype(int)
+
+    # Track each pair for as long as both points stay inside the series.
+    src = np.flatnonzero(has_neighbour)
+    dst = neighbour[src]
+    horizon = np.minimum(max_steps, n - 1 - np.maximum(src, dst))
+    tracked = horizon >= 1
+    src, dst, horizon = src[tracked], dst[tracked], horizon[tracked]
 
     log_div_sum = np.zeros(max_steps + 1)
     log_div_cnt = np.zeros(max_steps + 1)
-    for i in range(n):
-        j = neighbour[i]
-        if j < 0:
-            continue
-        horizon = min(max_steps, n - 1 - max(i, j))
-        if horizon < 1:
-            continue
-        for s in range(horizon + 1):
-            d = np.linalg.norm(emb[i + s] - emb[j + s])
-            if d > 1e-12:
-                log_div_sum[s] += np.log(d)
-                log_div_cnt[s] += 1
+    for s in range(max_steps + 1):
+        alive = horizon >= s
+        if not alive.any():
+            break
+        d = np.linalg.norm(emb[src[alive] + s] - emb[dst[alive] + s], axis=1)
+        d = d[d > 1e-12]
+        log_div_sum[s] = np.log(d).sum()
+        log_div_cnt[s] = d.size
 
     valid = log_div_cnt > 0
     curve = np.full(max_steps + 1, np.nan)

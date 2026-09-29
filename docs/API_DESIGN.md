@@ -20,10 +20,10 @@ from mneme.core import field_theory
 class FieldReconstructor:
     """Reconstruct continuous fields from discrete observations."""
     
-    def __init__(self, method='ift', resolution=(256, 256)):
+    def __init__(self, method='gp_subset', resolution=(256, 256)):
         """
         Parameters:
-            method: Reconstruction method ('gaussian_process', 'ift', 'neural_field')
+            method: Reconstruction method ('gp_subset', 'wiener_filter', 'gaussian_process', 'neural_field')
             resolution: Output field resolution
         """
     
@@ -37,7 +37,7 @@ class FieldReconstructor:
         """Return reconstruction uncertainty estimates."""
 
 # Usage example
-reconstructor = FieldReconstructor(method='ift')
+reconstructor = FieldReconstructor(method='gp_subset')
 reconstructor.fit(voltage_measurements, electrode_positions)
 field = reconstructor.reconstruct()
 uncertainty = reconstructor.uncertainty()
@@ -222,7 +222,7 @@ def create_standard_pipeline() -> MnemePipeline:
     """Create standard analysis pipeline."""
     pipeline = MnemePipeline(config={
         'preprocessing': {'normalize': True, 'denoise': True},
-        'reconstruction': {'method': 'ift', 'resolution': (256, 256)},
+        'reconstruction': {'method': 'gp_subset', 'resolution': (256, 256)},
         'analysis': {'compute_topology': True, 'detect_attractors': True},
         'modeling': {'use_autoencoder': True, 'symbolic_regression': True}
     })
@@ -232,7 +232,7 @@ def create_bioelectric_pipeline() -> MnemePipeline:
     """Bioelectric-focused defaults; thin wrapper over standard."""
     return MnemePipeline({
         'preprocessing': {'denoise': {'enabled': True}, 'normalize': {'enabled': True}, 'register': {'enabled': True}, 'interpolate': {'enabled': True}},
-        'reconstruction': {'method': 'ift', 'resolution': (256, 256)},
+        'reconstruction': {'method': 'gp_subset', 'resolution': (256, 256)},
         'topology': {'max_dimension': 2, 'filtration': 'sublevel'},
         'attractors': {'method': 'recurrence', 'threshold': 0.1}
     })
@@ -364,7 +364,7 @@ from mneme.utils import Config
 config = Config.from_yaml("config/experiment.yaml")
 
 # Access nested values
-reconstruction_method = config.get("reconstruction.method", default="ift")
+reconstruction_method = config.get("reconstruction.method", default="gp_subset")
 
 # Update configuration
 config.set("analysis.threshold", 0.15)

@@ -34,7 +34,7 @@ from mneme.core import (
     classify_attractor, kaplan_yorke_dimension, embed_trajectory,
 )
 
-SURROGATE_N = 30
+SURROGATE_N = 40  # two-sided test needs n >= 39 to reach alpha = 0.05
 from mneme.models.autoencoders import create_field_vae
 from mneme.models.symbolic import SymbolicRegressor, discover_field_dynamics
 
