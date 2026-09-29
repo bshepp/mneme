@@ -16,7 +16,7 @@
         <link rel="prev" href="../DATA_PIPELINE/">
       
       
-        <link rel="next" href="../api/">
+        <link rel="next" href="../SCOPE/">
       
       
         
@@ -706,6 +706,90 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCOPE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scope and Support Status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LYAPUNOV_OPERATING_RANGE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lyapunov Operating Range
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MULTISTABILITY_PROTOCOL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multistability Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2104,10 +2188,10 @@
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">FieldReconstructor</span><span class="p">:</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="sd">"""Reconstruct continuous fields from discrete observations."""</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'ift'</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)):</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'gp_subset'</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)):</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="sd">"""</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="sd">        Parameters:</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sd">            method: Reconstruction method ('gaussian_process', 'ift', 'neural_field')</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sd">            method: Reconstruction method ('gp_subset', 'wiener_filter', 'gaussian_process', 'neural_field')</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="sd">            resolution: Output field resolution</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="sd">        """</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
@@ -2121,7 +2205,7 @@
 <a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="sd">"""Return reconstruction uncertainty estimates."""</span>
 <a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
 <a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1"># Usage example</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="n">reconstructor</span> <span class="o">=</span> <span class="n">FieldReconstructor</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'ift'</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="n">reconstructor</span> <span class="o">=</span> <span class="n">FieldReconstructor</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'gp_subset'</span><span class="p">)</span>
 <a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="n">reconstructor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">voltage_measurements</span><span class="p">,</span> <span class="n">electrode_positions</span><span class="p">)</span>
 <a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="n">field</span> <span class="o">=</span> <span class="n">reconstructor</span><span class="o">.</span><span class="n">reconstruct</span><span class="p">()</span>
 <a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="n">uncertainty</span> <span class="o">=</span> <span class="n">reconstructor</span><span class="o">.</span><span class="n">uncertainty</span><span class="p">()</span>
@@ -2295,7 +2379,7 @@
 <a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">    </span><span class="sd">"""Create standard analysis pipeline."""</span>
 <a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">MnemePipeline</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span>
 <a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>        <span class="s1">'preprocessing'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'normalize'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'denoise'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>        <span class="s1">'reconstruction'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'method'</span><span class="p">:</span> <span class="s1">'ift'</span><span class="p">,</span> <span class="s1">'resolution'</span><span class="p">:</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)},</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>        <span class="s1">'reconstruction'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'method'</span><span class="p">:</span> <span class="s1">'gp_subset'</span><span class="p">,</span> <span class="s1">'resolution'</span><span class="p">:</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)},</span>
 <a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>        <span class="s1">'analysis'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'compute_topology'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'detect_attractors'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
 <a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>        <span class="s1">'modeling'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'use_autoencoder'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'symbolic_regression'</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
 <a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>    <span class="p">})</span>
@@ -2305,7 +2389,7 @@
 <a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="w">    </span><span class="sd">"""Bioelectric-focused defaults; thin wrapper over standard."""</span>
 <a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>    <span class="k">return</span> <span class="n">MnemePipeline</span><span class="p">({</span>
 <a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>        <span class="s1">'preprocessing'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'denoise'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s1">'normalize'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s1">'register'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s1">'interpolate'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
-<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>        <span class="s1">'reconstruction'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'method'</span><span class="p">:</span> <span class="s1">'ift'</span><span class="p">,</span> <span class="s1">'resolution'</span><span class="p">:</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)},</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>        <span class="s1">'reconstruction'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'method'</span><span class="p">:</span> <span class="s1">'gp_subset'</span><span class="p">,</span> <span class="s1">'resolution'</span><span class="p">:</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)},</span>
 <a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a>        <span class="s1">'topology'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'max_dimension'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'filtration'</span><span class="p">:</span> <span class="s1">'sublevel'</span><span class="p">},</span>
 <a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>        <span class="s1">'attractors'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'method'</span><span class="p">:</span> <span class="s1">'recurrence'</span><span class="p">,</span> <span class="s1">'threshold'</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
 <a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>    <span class="p">})</span>
@@ -2417,7 +2501,7 @@
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">"config/experiment.yaml"</span><span class="p">)</span>
 <a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
 <a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1"># Access nested values</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">reconstruction_method</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"reconstruction.method"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">"ift"</span><span class="p">)</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">reconstruction_method</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"reconstruction.method"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">"gp_subset"</span><span class="p">)</span>
 <a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
 <a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c1"># Update configuration</span>
 <a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">"analysis.threshold"</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">)</span>

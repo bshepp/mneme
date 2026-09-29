@@ -320,10 +320,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#key-capabilities" class="md-nav__link">
+  <a href="#capabilities" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Capabilities
+        Capabilities
       
     </span>
   </a>
@@ -596,6 +596,90 @@
     
   
     API Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SCOPE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scope and Support Status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LYAPUNOV_OPERATING_RANGE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lyapunov Operating Range
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="MULTISTABILITY_PROTOCOL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multistability Protocol
   
 
     
@@ -1811,10 +1895,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#key-capabilities" class="md-nav__link">
+  <a href="#capabilities" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Capabilities
+        Capabilities
       
     </span>
   </a>
@@ -1887,17 +1971,34 @@
 
 <h1 id="mneme">Mneme<a class="headerlink" href="#mneme" title="Permanent link">&para;</a></h1>
 <p><strong>Detecting field-like memory structures in biological systems</strong></p>
-<p>Mneme is an exploratory research system for uncovering attractor states, regulatory logic, and latent architectures in biological tissue -- structures not captured by sequence-based models alone. The project employs Information Field Theory (IFT), Topological Data Analysis (TDA), and machine learning to identify and model distributed memory encoding via fields.</p>
-<h2 id="key-capabilities">Key Capabilities<a class="headerlink" href="#key-capabilities" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Field Reconstruction</strong> -- Scalable Sparse GP (default), Dense IFT, Standard GP, and Neural Field backends. Handles 256x256 fields in sub-second time.</li>
-<li><strong>Topology Analysis</strong> -- Full GUDHI integration for cubical, Rips, and Alpha complexes. Persistence diagrams, landscapes, images, Wasserstein/bottleneck distances.</li>
-<li><strong>Attractor Detection</strong> -- Recurrence-based, Lyapunov, and clustering detectors for identifying stable states in temporal field data.</li>
-<li><strong>Lyapunov Analysis (exploratory)</strong> -- Rosenstein largest-exponent estimate with IAAFT surrogate testing. Not yet validated on biological data.</li>
-<li><strong>Symbolic Regression</strong> -- PySR integration for discovering governing PDEs from field dynamics.</li>
-<li><strong>Latent Space Analysis</strong> -- Convolutional VAE for learning compressed field representations with interpolation and sampling.</li>
-<li><strong>BETSE Integration</strong> -- Direct ingestion of BETSE bioelectric tissue simulation output.</li>
-</ul>
+<p>Mneme is an exploratory research toolkit for studying field-like memory in biological tissue, starting with simulated bioelectric data.</p>
+<div class="admonition warning">
+<p class="admonition-title">Validation status</p>
+<p>No scientific result produced with Mneme is currently asserted. Earlier results were withdrawn after a review found defects in the code that produced them. See <a href="SCOPE/">Scope and Support Status</a>.</p>
+</div>
+<h2 id="capabilities">Capabilities<a class="headerlink" href="#capabilities" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Components</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Core</strong> (tested against known answers)</td>
+<td>BETSE loading, cubical persistent homology, Wasserstein and bottleneck distances, Gaussian-process and Wiener-filter reconstruction</td>
+</tr>
+<tr>
+<td><strong>Frozen</strong> (documented operating range)</td>
+<td>Largest Lyapunov exponent, surrogate significance test, gated attractor classification</td>
+</tr>
+<tr>
+<td><strong>Experimental</strong> (not validated)</td>
+<td>Attractor detectors, symbolic regression, variational autoencoder, neural field reconstruction</td>
+</tr>
+</tbody>
+</table>
 <h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mneme.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_reconstructor</span>
@@ -1915,7 +2016,7 @@
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1"># Reconstruct field from sparse observations</span>
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">observations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">rec</span> <span class="o">=</span> <span class="n">create_reconstructor</span><span class="p">(</span><span class="s1">'ift'</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">rec</span> <span class="o">=</span> <span class="n">create_reconstructor</span><span class="p">(</span><span class="s1">'gp_subset'</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">rec</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">observations</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="n">field</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">reconstruct</span><span class="p">()</span>
 </code></pre></div>
@@ -1936,6 +2037,8 @@
 <li><strong><a href="PROJECT_STRUCTURE/">Project Structure</a></strong> -- Code organization and architecture</li>
 <li><strong><a href="api/">API Reference</a></strong> -- Auto-generated reference for all modules</li>
 <li><strong><a href="DATA_PIPELINE/">Data Pipeline</a></strong> -- Pipeline architecture and stages</li>
+<li><strong><a href="SCOPE/">Scope and Support Status</a></strong> -- What is core, frozen and experimental</li>
+<li><strong><a href="LYAPUNOV_OPERATING_RANGE/">Lyapunov Operating Range</a></strong> -- Measured accuracy and limits</li>
 <li><strong><a href="course/">Course</a></strong> -- 11-module learning course</li>
 </ul>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>

@@ -10,9 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://bshepp.github.io/mneme/mneme_project_plan_v1_original/">
+        <link rel="canonical" href="https://bshepp.github.io/mneme/MULTISTABILITY_PROTOCOL/">
       
       
+        <link rel="prev" href="../LYAPUNOV_OPERATING_RANGE/">
+      
+      
+        <link rel="next" href="../api/">
       
       
         
@@ -23,7 +27,7 @@
     
     
       
-        <title>Mneme project plan v1 original - Mneme</title>
+        <title>Multistability Protocol - Mneme</title>
       
     
     
@@ -75,6 +79,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#multistability-experiment-protocol" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -107,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mneme project plan v1 original
+              Multistability Protocol
             
           </span>
         </div>
@@ -394,8 +403,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -406,13 +417,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -433,7 +442,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -560,10 +569,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../MULTISTABILITY_PROTOCOL/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multistability Protocol
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -579,6 +615,175 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#question" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-existing-runs-do-not-answer-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the existing runs do not answer it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed-across-all-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed across all runs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-steady-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: steady state
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-initial-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: initial conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-count-the-end-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: count the end states
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-perturbation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: perturbation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-parameter-sweep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: parameter sweep
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#baselines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Baselines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-would-count-as-a-negative-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What would count as a negative result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1776,6 +1981,165 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#question" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-existing-runs-do-not-answer-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the existing runs do not answer it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed-across-all-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed across all runs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-steady-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: steady state
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-initial-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: initial conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-count-the-end-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: count the end states
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-perturbation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: perturbation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-parameter-sweep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: parameter sweep
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#baselines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Baselines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-would-count-as-a-negative-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What would count as a negative result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1795,64 +2159,169 @@
   
 
 
-  <h1>Mneme project plan v1 original</h1>
-
-<p><strong>Project Title: Mneme</strong></p>
-<p><strong>Purpose:</strong>
-Mneme is an exploratory research system designed to detect field-like, emergent memory structures embedded in biological systems, beginning with planarian regeneration and bioelectric data. It seeks to uncover attractor states, regulatory logic, and latent architectures not captured by sequence-based models alone.</p>
-<hr />
-<p><strong>Guiding Premise:</strong>
-Biological systems, particularly those capable of regeneration, may encode memory not just genetically but as persistent spatial or field-based attractors. Mneme aims to identify, model, and interpret these attractor dynamics using machine learning, field theory, and topological methods.</p>
-<hr />
-<p><strong>Phase 1: Synthetic Data Prototyping (Planarian Focus)</strong></p>
-<p><strong>Objective:</strong> Develop and validate a modular analysis pipeline on synthetic field-like data inspired by planarian voltage maps and regenerative logic.</p>
-<p><strong>Tasks:</strong>
-1. Create synthetic 2D field data with noise and attractor behavior.
-2. Apply Information Field Theory (IFT) reconstruction to interpolate continuous fields.
-3. Run dimensionality reduction (PCA, autoencoders) to uncover latent spaces.
-4. Apply Topological Data Analysis (TDA) to identify persistent structures.
-5. Use Symbolic Regression to extract mathematical rules governing local field behaviors.
-6. Validate internal coherence across methods.</p>
-<p><strong>Tools:</strong> Python, Jupyter/Colab, NumPy, SciPy, PyTorch/Keras, PySR, GUDHI (for TDA)</p>
-<hr />
-<p><strong>Phase 2: Real Bioelectric + Gene Expression Data (Planarian)</strong></p>
-<p><strong>Objective:</strong> Test Mneme on actual biological data, starting with planarian bioelectric images, gene expression overlays, and regeneration timelines.</p>
-<p><strong>Tasks:</strong>
-1. Collect and preprocess datasets from Levin Lab, SmedGD, and published literature.
-2. Normalize spatial and temporal scales.
-3. Reconstruct bioelectric and expression fields with IFT tools.
-4. Embed expression snapshots into latent space (e.g., via VAE).
-5. Detect attractors, loops, and bifurcations using TDA.
-6. Run symbolic regression on voltage-expression transitions.
-7. Correlate findings with known regeneration outcomes and perturbation experiments.</p>
-<p><strong>Deliverables:</strong>
-- A reproducible Jupyter notebook pipeline
-- Cleaned and annotated dataset repository
-- Visualization module for field and attractor mapping</p>
-<hr />
-<p><strong>Phase 3: Interpretation + Theory Development</strong></p>
-<p><strong>Objective:</strong> Formalize insights into a model of distributed memory encoding via fields in biological tissue.</p>
-<p><strong>Tasks:</strong>
-1. Identify recurring attractor geometries and recovery behaviors.
-2. Propose theoretical framework for field memory dynamics.
-3. Compare results to Hopfield networks and morphogenetic models.
-4. Draft whitepaper or publication.
-5. Design follow-up experiments (e.g., perturbation predictions).</p>
-<p><strong>Potential Extensions:</strong>
-- Cross-organism validation (e.g., zebrafish, axolotl)
-- Inclusion of behavior/fear response patterning
-- Field inheritance modeling across generations</p>
-<hr />
-<p><strong>Core Values:</strong>
-- No prior overfitting to clean systems (Drosophila bias avoided)
-- Sensitivity to emergent, nonlinear, and self-correcting behavior
-- Respect for biological memory as distributed and dynamic</p>
-<hr />
-<p><strong>Current Status:</strong>
-Project name chosen: Mneme
-Project plan initialized
-Synthetic data prototyping phase in progress
-Real planarian datasets to be sourced and prepped</p>
+<h1 id="multistability-experiment-protocol">Multistability Experiment Protocol<a class="headerlink" href="#multistability-experiment-protocol" title="Permanent link">&para;</a></h1>
+<p><strong>Status:</strong> protocol written, runs not started.</p>
+<h2 id="question">Question<a class="headerlink" href="#question" title="Permanent link">&para;</a></h2>
+<p>Does a simulated tissue have more than one stable voltage pattern under the same parameters?</p>
+<p>This is the prediction that separates "tissue stores pattern memory as attractors" from "tissue relaxes to a single resting state".</p>
+<h2 id="why-the-existing-runs-do-not-answer-it">Why the existing runs do not answer it<a class="headerlink" href="#why-the-existing-runs-do-not-answer-it" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Different tissues</td>
+<td><code>sim_1</code> has 153 cells and <code>sim_2</code> has 156. They are different worlds, so different end states are expected regardless.</td>
+</tr>
+<tr>
+<td>Not at steady state</td>
+<td>At the final frame both runs were still moving at 10% to 17% of their starting speed.</td>
+</tr>
+<tr>
+<td>One run per condition</td>
+<td>Nothing was replicated, so no variation can be attributed to a cause.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="design">Design<a class="headerlink" href="#design" title="Permanent link">&para;</a></h2>
+<h3 id="fixed-across-all-runs">Fixed across all runs<a class="headerlink" href="#fixed-across-all-runs" title="Permanent link">&para;</a></h3>
+<ul>
+<li>One cell cluster, generated once from one seed and reused.</li>
+<li>One parameter set, apart from the variable under test.</li>
+<li>One export schedule.</li>
+</ul>
+<h3 id="step-1-steady-state">Step 1: steady state<a class="headerlink" href="#step-1-steady-state" title="Permanent link">&para;</a></h3>
+<p>Run the tissue until the largest per-cell voltage change between exported frames stays below a tolerance for a sustained period.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tolerance</td>
+<td>0.01 mV per frame</td>
+</tr>
+<tr>
+<td>Sustained for</td>
+<td>20 consecutive frames</td>
+</tr>
+</tbody>
+</table>
+<p>A run that does not meet this is extended or excluded. It is not analysed as if it had settled.</p>
+<h3 id="step-2-initial-conditions">Step 2: initial conditions<a class="headerlink" href="#step-2-initial-conditions" title="Permanent link">&para;</a></h3>
+<p>Start the same tissue from at least 20 initial voltage patterns drawn from a stated distribution. Record the end state of each.</p>
+<h3 id="step-3-count-the-end-states">Step 3: count the end states<a class="headerlink" href="#step-3-count-the-end-states" title="Permanent link">&para;</a></h3>
+<p>Two end states are the same if the largest per-cell difference between them is below a threshold set from replicate noise.</p>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>How it is set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Replicate noise</td>
+<td>Largest per-cell difference between end states of runs started from the same initial condition</td>
+</tr>
+<tr>
+<td>Same-state threshold</td>
+<td>Five times the replicate noise</td>
+</tr>
+</tbody>
+</table>
+<p>The number of distinct end states is the result. One distinct state means no multistability was found.</p>
+<h3 id="step-4-perturbation">Step 4: perturbation<a class="headerlink" href="#step-4-perturbation" title="Permanent link">&para;</a></h3>
+<p>Take a settled state, displace the voltages by a stated amount, and continue the run. Record whether it returns to the same state, and how long it takes. Repeat at increasing displacements to find the size at which it stops returning.</p>
+<h3 id="step-5-parameter-sweep">Step 5: parameter sweep<a class="headerlink" href="#step-5-parameter-sweep" title="Permanent link">&para;</a></h3>
+<p>Repeat steps 2 and 3 at several values of gap-junction conductance. Report the number of distinct end states at each value.</p>
+<h2 id="analysis">Analysis<a class="headerlink" href="#analysis" title="Permanent link">&para;</a></h2>
+<p>Analysis uses voltages at the cells, loaded with <code>load_betse_cells()</code>. No interpolation.</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Convergence curve</td>
+<td>Confirms steady state</td>
+</tr>
+<tr>
+<td>Number of distinct end states</td>
+<td>The primary result</td>
+</tr>
+<tr>
+<td>Return time after perturbation</td>
+<td>Stability of each state</td>
+</tr>
+<tr>
+<td>Persistence diagram of each end state</td>
+<td>Whether topology separates the states</td>
+</tr>
+</tbody>
+</table>
+<h2 id="baselines">Baselines<a class="headerlink" href="#baselines" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Baseline it must beat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"There are k distinct end states"</td>
+<td>Replicate noise from identical initial conditions</td>
+</tr>
+<tr>
+<td>"Topology separates the states"</td>
+<td>Separation by mean voltage alone</td>
+</tr>
+<tr>
+<td>"The state count changes with conductance"</td>
+<td>Variation in the count across repeated draws of initial conditions at fixed conductance</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-would-count-as-a-negative-result">What would count as a negative result<a class="headerlink" href="#what-would-count-as-a-negative-result" title="Permanent link">&para;</a></h2>
+<ul>
+<li>One distinct end state at every conductance.</li>
+<li>End states that differ by no more than replicate noise.</li>
+</ul>
+<p>A negative result is reported as such.</p>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BETSE</td>
+<td>Not installed in the development environment. The earlier runs used BETSE 1.5.1 on Linux.</td>
+</tr>
+<tr>
+<td>Simulation configs</td>
+<td>Not in the repository.</td>
+</tr>
+<tr>
+<td>Compute</td>
+<td>The earlier attractor runs took about 2.5 hours each. 20 initial conditions at 5 conductances is 100 runs.</td>
+</tr>
+</tbody>
+</table>
 
 
 

@@ -509,6 +509,90 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../SCOPE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scope and Support Status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LYAPUNOV_OPERATING_RANGE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lyapunov Operating Range
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MULTISTABILITY_PROTOCOL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multistability Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1262,6 +1346,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mneme.analysis.pipeline.default_config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        default_config
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mneme.analysis.pipeline.merge_config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        merge_config
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pipeline-class" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1896,6 +2002,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mneme.analysis.pipeline.default_config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        default_config
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mneme.analysis.pipeline.merge_config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        merge_config
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pipeline-class" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2006,83 +2134,25 @@
     <div class="doc doc-contents first">
 
         <p>Create a bioelectric-focused analysis pipeline.</p>
-<p>This is a lightweight wrapper around the standard pipeline with
-bioelectric-appropriate defaults. It can be extended later.</p>
+<p>With no config (None or empty) the bioelectric defaults are used. A
+non-empty config is used exactly as given.</p>
 
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/mneme/analysis/pipeline.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-454">454</a></span>
-<span class="normal"><a href="#__codelineno-0-455">455</a></span>
-<span class="normal"><a href="#__codelineno-0-456">456</a></span>
-<span class="normal"><a href="#__codelineno-0-457">457</a></span>
-<span class="normal"><a href="#__codelineno-0-458">458</a></span>
-<span class="normal"><a href="#__codelineno-0-459">459</a></span>
-<span class="normal"><a href="#__codelineno-0-460">460</a></span>
-<span class="normal"><a href="#__codelineno-0-461">461</a></span>
-<span class="normal"><a href="#__codelineno-0-462">462</a></span>
-<span class="normal"><a href="#__codelineno-0-463">463</a></span>
-<span class="normal"><a href="#__codelineno-0-464">464</a></span>
-<span class="normal"><a href="#__codelineno-0-465">465</a></span>
-<span class="normal"><a href="#__codelineno-0-466">466</a></span>
-<span class="normal"><a href="#__codelineno-0-467">467</a></span>
-<span class="normal"><a href="#__codelineno-0-468">468</a></span>
-<span class="normal"><a href="#__codelineno-0-469">469</a></span>
-<span class="normal"><a href="#__codelineno-0-470">470</a></span>
-<span class="normal"><a href="#__codelineno-0-471">471</a></span>
-<span class="normal"><a href="#__codelineno-0-472">472</a></span>
-<span class="normal"><a href="#__codelineno-0-473">473</a></span>
-<span class="normal"><a href="#__codelineno-0-474">474</a></span>
-<span class="normal"><a href="#__codelineno-0-475">475</a></span>
-<span class="normal"><a href="#__codelineno-0-476">476</a></span>
-<span class="normal"><a href="#__codelineno-0-477">477</a></span>
-<span class="normal"><a href="#__codelineno-0-478">478</a></span>
-<span class="normal"><a href="#__codelineno-0-479">479</a></span>
-<span class="normal"><a href="#__codelineno-0-480">480</a></span>
-<span class="normal"><a href="#__codelineno-0-481">481</a></span>
-<span class="normal"><a href="#__codelineno-0-482">482</a></span>
-<span class="normal"><a href="#__codelineno-0-483">483</a></span>
-<span class="normal"><a href="#__codelineno-0-484">484</a></span>
-<span class="normal"><a href="#__codelineno-0-485">485</a></span>
-<span class="normal"><a href="#__codelineno-0-486">486</a></span>
-<span class="normal"><a href="#__codelineno-0-487">487</a></span>
-<span class="normal"><a href="#__codelineno-0-488">488</a></span>
-<span class="normal"><a href="#__codelineno-0-489">489</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-454" name="__codelineno-0-454"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_bioelectric_pipeline</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MnemePipeline</span><span class="p">:</span>
-<a id="__codelineno-0-455" name="__codelineno-0-455"></a><span class="w">    </span><span class="sd">"""Create a bioelectric-focused analysis pipeline.</span>
-<a id="__codelineno-0-456" name="__codelineno-0-456"></a>
-<a id="__codelineno-0-457" name="__codelineno-0-457"></a><span class="sd">    This is a lightweight wrapper around the standard pipeline with</span>
-<a id="__codelineno-0-458" name="__codelineno-0-458"></a><span class="sd">    bioelectric-appropriate defaults. It can be extended later.</span>
-<a id="__codelineno-0-459" name="__codelineno-0-459"></a><span class="sd">    """</span>
-<a id="__codelineno-0-460" name="__codelineno-0-460"></a>    <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-461" name="__codelineno-0-461"></a>        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-0-462" name="__codelineno-0-462"></a>            <span class="s1">'preprocessing'</span><span class="p">:</span> <span class="p">{</span>
-<a id="__codelineno-0-463" name="__codelineno-0-463"></a>                <span class="c1"># Use lightweight, broadly compatible defaults for MVP</span>
-<a id="__codelineno-0-464" name="__codelineno-0-464"></a>                <span class="s1">'denoise'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'method'</span><span class="p">:</span> <span class="s1">'gaussian'</span><span class="p">,</span> <span class="s1">'sigma'</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
-<a id="__codelineno-0-465" name="__codelineno-0-465"></a>                <span class="s1">'normalize'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'method'</span><span class="p">:</span> <span class="s1">'z_score'</span><span class="p">,</span> <span class="s1">'per_frame'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-<a id="__codelineno-0-466" name="__codelineno-0-466"></a>                <span class="c1"># Registration requires temporal (3D) data; disable by default for 2D fields</span>
-<a id="__codelineno-0-467" name="__codelineno-0-467"></a>                <span class="s1">'register'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-<a id="__codelineno-0-468" name="__codelineno-0-468"></a>                <span class="c1"># Linear interpolation is much faster than cubic for MVP</span>
-<a id="__codelineno-0-469" name="__codelineno-0-469"></a>                <span class="s1">'interpolate'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'target_shape'</span><span class="p">:</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="s1">'method'</span><span class="p">:</span> <span class="s1">'linear'</span><span class="p">},</span>
-<a id="__codelineno-0-470" name="__codelineno-0-470"></a>            <span class="p">},</span>
-<a id="__codelineno-0-471" name="__codelineno-0-471"></a>            <span class="s1">'reconstruction'</span><span class="p">:</span> <span class="p">{</span>
-<a id="__codelineno-0-472" name="__codelineno-0-472"></a>                <span class="s1">'method'</span><span class="p">:</span> <span class="s1">'ift'</span><span class="p">,</span>
-<a id="__codelineno-0-473" name="__codelineno-0-473"></a>                <span class="s1">'resolution'</span><span class="p">:</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
-<a id="__codelineno-0-474" name="__codelineno-0-474"></a>                <span class="s1">'parameters'</span><span class="p">:</span> <span class="p">{}</span>
-<a id="__codelineno-0-475" name="__codelineno-0-475"></a>            <span class="p">},</span>
-<a id="__codelineno-0-476" name="__codelineno-0-476"></a>            <span class="s1">'topology'</span><span class="p">:</span> <span class="p">{</span>
-<a id="__codelineno-0-477" name="__codelineno-0-477"></a>                <span class="s1">'backend'</span><span class="p">:</span> <span class="s1">'cubical'</span><span class="p">,</span>  <span class="c1"># 'cubical' | 'rips' | 'alpha'</span>
-<a id="__codelineno-0-478" name="__codelineno-0-478"></a>                <span class="s1">'max_dimension'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-<a id="__codelineno-0-479" name="__codelineno-0-479"></a>                <span class="s1">'filtration'</span><span class="p">:</span> <span class="s1">'sublevel'</span><span class="p">,</span>
-<a id="__codelineno-0-480" name="__codelineno-0-480"></a>                <span class="s1">'persistence_threshold'</span><span class="p">:</span> <span class="mf">0.05</span>
-<a id="__codelineno-0-481" name="__codelineno-0-481"></a>            <span class="p">},</span>
-<a id="__codelineno-0-482" name="__codelineno-0-482"></a>            <span class="s1">'attractors'</span><span class="p">:</span> <span class="p">{</span>
-<a id="__codelineno-0-483" name="__codelineno-0-483"></a>                <span class="s1">'method'</span><span class="p">:</span> <span class="s1">'recurrence'</span><span class="p">,</span>
-<a id="__codelineno-0-484" name="__codelineno-0-484"></a>                <span class="s1">'threshold'</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
-<a id="__codelineno-0-485" name="__codelineno-0-485"></a>                <span class="s1">'parameters'</span><span class="p">:</span> <span class="p">{}</span>
-<a id="__codelineno-0-486" name="__codelineno-0-486"></a>            <span class="p">}</span>
-<a id="__codelineno-0-487" name="__codelineno-0-487"></a>        <span class="p">}</span>
-<a id="__codelineno-0-488" name="__codelineno-0-488"></a>
-<a id="__codelineno-0-489" name="__codelineno-0-489"></a>    <span class="k">return</span> <span class="n">MnemePipeline</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-513">513</a></span>
+<span class="normal"><a href="#__codelineno-0-514">514</a></span>
+<span class="normal"><a href="#__codelineno-0-515">515</a></span>
+<span class="normal"><a href="#__codelineno-0-516">516</a></span>
+<span class="normal"><a href="#__codelineno-0-517">517</a></span>
+<span class="normal"><a href="#__codelineno-0-518">518</a></span>
+<span class="normal"><a href="#__codelineno-0-519">519</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-513" name="__codelineno-0-513"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_bioelectric_pipeline</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MnemePipeline</span><span class="p">:</span>
+<a id="__codelineno-0-514" name="__codelineno-0-514"></a><span class="w">    </span><span class="sd">"""Create a bioelectric-focused analysis pipeline.</span>
+<a id="__codelineno-0-515" name="__codelineno-0-515"></a>
+<a id="__codelineno-0-516" name="__codelineno-0-516"></a><span class="sd">    With no config (None or empty) the bioelectric defaults are used. A</span>
+<a id="__codelineno-0-517" name="__codelineno-0-517"></a><span class="sd">    non-empty config is used exactly as given.</span>
+<a id="__codelineno-0-518" name="__codelineno-0-518"></a><span class="sd">    """</span>
+<a id="__codelineno-0-519" name="__codelineno-0-519"></a>    <span class="k">return</span> <span class="n">MnemePipeline</span><span class="p">(</span><span class="n">config</span> <span class="k">if</span> <span class="n">config</span> <span class="k">else</span> <span class="n">default_config</span><span class="p">(</span><span class="s1">'bioelectric'</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2103,67 +2173,103 @@ bioelectric-appropriate defaults. It can be extended later.</p>
     <div class="doc doc-contents first">
 
         <p>Create standard analysis pipeline.</p>
+<p>With no config (None or empty) the defaults are used. A non-empty
+config is used exactly as given.</p>
 
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/mneme/analysis/pipeline.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-423">423</a></span>
-<span class="normal"><a href="#__codelineno-0-424">424</a></span>
-<span class="normal"><a href="#__codelineno-0-425">425</a></span>
-<span class="normal"><a href="#__codelineno-0-426">426</a></span>
-<span class="normal"><a href="#__codelineno-0-427">427</a></span>
-<span class="normal"><a href="#__codelineno-0-428">428</a></span>
-<span class="normal"><a href="#__codelineno-0-429">429</a></span>
-<span class="normal"><a href="#__codelineno-0-430">430</a></span>
-<span class="normal"><a href="#__codelineno-0-431">431</a></span>
-<span class="normal"><a href="#__codelineno-0-432">432</a></span>
-<span class="normal"><a href="#__codelineno-0-433">433</a></span>
-<span class="normal"><a href="#__codelineno-0-434">434</a></span>
-<span class="normal"><a href="#__codelineno-0-435">435</a></span>
-<span class="normal"><a href="#__codelineno-0-436">436</a></span>
-<span class="normal"><a href="#__codelineno-0-437">437</a></span>
-<span class="normal"><a href="#__codelineno-0-438">438</a></span>
-<span class="normal"><a href="#__codelineno-0-439">439</a></span>
-<span class="normal"><a href="#__codelineno-0-440">440</a></span>
-<span class="normal"><a href="#__codelineno-0-441">441</a></span>
-<span class="normal"><a href="#__codelineno-0-442">442</a></span>
-<span class="normal"><a href="#__codelineno-0-443">443</a></span>
-<span class="normal"><a href="#__codelineno-0-444">444</a></span>
-<span class="normal"><a href="#__codelineno-0-445">445</a></span>
-<span class="normal"><a href="#__codelineno-0-446">446</a></span>
-<span class="normal"><a href="#__codelineno-0-447">447</a></span>
-<span class="normal"><a href="#__codelineno-0-448">448</a></span>
-<span class="normal"><a href="#__codelineno-0-449">449</a></span>
-<span class="normal"><a href="#__codelineno-0-450">450</a></span>
-<span class="normal"><a href="#__codelineno-0-451">451</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-423" name="__codelineno-0-423"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_standard_pipeline</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MnemePipeline</span><span class="p">:</span>
-<a id="__codelineno-0-424" name="__codelineno-0-424"></a><span class="w">    </span><span class="sd">"""Create standard analysis pipeline."""</span>
-<a id="__codelineno-0-425" name="__codelineno-0-425"></a>    <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-426" name="__codelineno-0-426"></a>        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-0-427" name="__codelineno-0-427"></a>            <span class="s1">'preprocessing'</span><span class="p">:</span> <span class="p">{</span>
-<a id="__codelineno-0-428" name="__codelineno-0-428"></a>                <span class="s1">'denoise'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'method'</span><span class="p">:</span> <span class="s1">'gaussian'</span><span class="p">,</span> <span class="s1">'sigma'</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
-<a id="__codelineno-0-429" name="__codelineno-0-429"></a>                <span class="s1">'normalize'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'method'</span><span class="p">:</span> <span class="s1">'z_score'</span><span class="p">},</span>
-<a id="__codelineno-0-430" name="__codelineno-0-430"></a>                <span class="s1">'register'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-<a id="__codelineno-0-431" name="__codelineno-0-431"></a>                <span class="s1">'interpolate'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'enabled'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'target_shape'</span><span class="p">:</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)}</span>
-<a id="__codelineno-0-432" name="__codelineno-0-432"></a>            <span class="p">},</span>
-<a id="__codelineno-0-433" name="__codelineno-0-433"></a>            <span class="s1">'reconstruction'</span><span class="p">:</span> <span class="p">{</span>
-<a id="__codelineno-0-434" name="__codelineno-0-434"></a>                <span class="s1">'method'</span><span class="p">:</span> <span class="s1">'gaussian_process'</span><span class="p">,</span>
-<a id="__codelineno-0-435" name="__codelineno-0-435"></a>                <span class="s1">'resolution'</span><span class="p">:</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
-<a id="__codelineno-0-436" name="__codelineno-0-436"></a>                <span class="s1">'parameters'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'kernel'</span><span class="p">:</span> <span class="s1">'rbf'</span><span class="p">,</span> <span class="s1">'length_scale'</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">}</span>
-<a id="__codelineno-0-437" name="__codelineno-0-437"></a>            <span class="p">},</span>
-<a id="__codelineno-0-438" name="__codelineno-0-438"></a>            <span class="s1">'topology'</span><span class="p">:</span> <span class="p">{</span>
-<a id="__codelineno-0-439" name="__codelineno-0-439"></a>                <span class="s1">'backend'</span><span class="p">:</span> <span class="s1">'cubical'</span><span class="p">,</span>  <span class="c1"># 'cubical' | 'rips' | 'alpha'</span>
-<a id="__codelineno-0-440" name="__codelineno-0-440"></a>                <span class="s1">'max_dimension'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-<a id="__codelineno-0-441" name="__codelineno-0-441"></a>                <span class="s1">'filtration'</span><span class="p">:</span> <span class="s1">'sublevel'</span><span class="p">,</span>
-<a id="__codelineno-0-442" name="__codelineno-0-442"></a>                <span class="s1">'persistence_threshold'</span><span class="p">:</span> <span class="mf">0.05</span>
-<a id="__codelineno-0-443" name="__codelineno-0-443"></a>            <span class="p">},</span>
-<a id="__codelineno-0-444" name="__codelineno-0-444"></a>            <span class="s1">'attractors'</span><span class="p">:</span> <span class="p">{</span>
-<a id="__codelineno-0-445" name="__codelineno-0-445"></a>                <span class="s1">'method'</span><span class="p">:</span> <span class="s1">'recurrence'</span><span class="p">,</span>
-<a id="__codelineno-0-446" name="__codelineno-0-446"></a>                <span class="s1">'threshold'</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
-<a id="__codelineno-0-447" name="__codelineno-0-447"></a>                <span class="s1">'parameters'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'min_persistence'</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
-<a id="__codelineno-0-448" name="__codelineno-0-448"></a>            <span class="p">}</span>
-<a id="__codelineno-0-449" name="__codelineno-0-449"></a>        <span class="p">}</span>
-<a id="__codelineno-0-450" name="__codelineno-0-450"></a>
-<a id="__codelineno-0-451" name="__codelineno-0-451"></a>    <span class="k">return</span> <span class="n">MnemePipeline</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-504">504</a></span>
+<span class="normal"><a href="#__codelineno-0-505">505</a></span>
+<span class="normal"><a href="#__codelineno-0-506">506</a></span>
+<span class="normal"><a href="#__codelineno-0-507">507</a></span>
+<span class="normal"><a href="#__codelineno-0-508">508</a></span>
+<span class="normal"><a href="#__codelineno-0-509">509</a></span>
+<span class="normal"><a href="#__codelineno-0-510">510</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-504" name="__codelineno-0-504"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_standard_pipeline</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MnemePipeline</span><span class="p">:</span>
+<a id="__codelineno-0-505" name="__codelineno-0-505"></a><span class="w">    </span><span class="sd">"""Create standard analysis pipeline.</span>
+<a id="__codelineno-0-506" name="__codelineno-0-506"></a>
+<a id="__codelineno-0-507" name="__codelineno-0-507"></a><span class="sd">    With no config (None or empty) the defaults are used. A non-empty</span>
+<a id="__codelineno-0-508" name="__codelineno-0-508"></a><span class="sd">    config is used exactly as given.</span>
+<a id="__codelineno-0-509" name="__codelineno-0-509"></a><span class="sd">    """</span>
+<a id="__codelineno-0-510" name="__codelineno-0-510"></a>    <span class="k">return</span> <span class="n">MnemePipeline</span><span class="p">(</span><span class="n">config</span> <span class="k">if</span> <span class="n">config</span> <span class="k">else</span> <span class="n">default_config</span><span class="p">(</span><span class="s1">'standard'</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="mneme.analysis.pipeline.default_config" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">default_config</span>
+
+
+<a href="#mneme.analysis.pipeline.default_config" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">default_config</span><span class="p">(</span><span class="n">pipeline</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'standard'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Return a fresh copy of the default configuration for a pipeline.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/mneme/analysis/pipeline.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-484">484</a></span>
+<span class="normal"><a href="#__codelineno-0-485">485</a></span>
+<span class="normal"><a href="#__codelineno-0-486">486</a></span>
+<span class="normal"><a href="#__codelineno-0-487">487</a></span>
+<span class="normal"><a href="#__codelineno-0-488">488</a></span>
+<span class="normal"><a href="#__codelineno-0-489">489</a></span>
+<span class="normal"><a href="#__codelineno-0-490">490</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-484" name="__codelineno-0-484"></a><span class="k">def</span><span class="w"> </span><span class="nf">default_config</span><span class="p">(</span><span class="n">pipeline</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'standard'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<a id="__codelineno-0-485" name="__codelineno-0-485"></a><span class="w">    </span><span class="sd">"""Return a fresh copy of the default configuration for a pipeline."""</span>
+<a id="__codelineno-0-486" name="__codelineno-0-486"></a>    <span class="k">if</span> <span class="n">pipeline</span> <span class="o">==</span> <span class="s1">'standard'</span><span class="p">:</span>
+<a id="__codelineno-0-487" name="__codelineno-0-487"></a>        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">_STANDARD_CONFIG</span><span class="p">)</span>
+<a id="__codelineno-0-488" name="__codelineno-0-488"></a>    <span class="k">if</span> <span class="n">pipeline</span> <span class="o">==</span> <span class="s1">'bioelectric'</span><span class="p">:</span>
+<a id="__codelineno-0-489" name="__codelineno-0-489"></a>        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">_BIOELECTRIC_CONFIG</span><span class="p">)</span>
+<a id="__codelineno-0-490" name="__codelineno-0-490"></a>    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown pipeline: </span><span class="si">{</span><span class="n">pipeline</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="mneme.analysis.pipeline.merge_config" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">merge_config</span>
+
+
+<a href="#mneme.analysis.pipeline.merge_config" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">merge_config</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">overrides</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Recursively overlay <code>overrides</code> on <code>base</code>, returning a new dict.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/mneme/analysis/pipeline.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-493">493</a></span>
+<span class="normal"><a href="#__codelineno-0-494">494</a></span>
+<span class="normal"><a href="#__codelineno-0-495">495</a></span>
+<span class="normal"><a href="#__codelineno-0-496">496</a></span>
+<span class="normal"><a href="#__codelineno-0-497">497</a></span>
+<span class="normal"><a href="#__codelineno-0-498">498</a></span>
+<span class="normal"><a href="#__codelineno-0-499">499</a></span>
+<span class="normal"><a href="#__codelineno-0-500">500</a></span>
+<span class="normal"><a href="#__codelineno-0-501">501</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-493" name="__codelineno-0-493"></a><span class="k">def</span><span class="w"> </span><span class="nf">merge_config</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">overrides</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<a id="__codelineno-0-494" name="__codelineno-0-494"></a><span class="w">    </span><span class="sd">"""Recursively overlay `overrides` on `base`, returning a new dict."""</span>
+<a id="__codelineno-0-495" name="__codelineno-0-495"></a>    <span class="n">merged</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+<a id="__codelineno-0-496" name="__codelineno-0-496"></a>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="n">overrides</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-0-497" name="__codelineno-0-497"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">merged</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">dict</span><span class="p">):</span>
+<a id="__codelineno-0-498" name="__codelineno-0-498"></a>            <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">merge_config</span><span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-0-499" name="__codelineno-0-499"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-500" name="__codelineno-0-500"></a>            <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-0-501" name="__codelineno-0-501"></a>    <span class="k">return</span> <span class="n">merged</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2231,37 +2337,37 @@ bioelectric-appropriate defaults. It can be extended later.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>src/mneme/analysis/pipeline.py</code></summary>
-                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-51">51</a></span>
-<span class="normal"><a href="#__codelineno-0-52">52</a></span>
-<span class="normal"><a href="#__codelineno-0-53">53</a></span>
-<span class="normal"><a href="#__codelineno-0-54">54</a></span>
-<span class="normal"><a href="#__codelineno-0-55">55</a></span>
-<span class="normal"><a href="#__codelineno-0-56">56</a></span>
-<span class="normal"><a href="#__codelineno-0-57">57</a></span>
-<span class="normal"><a href="#__codelineno-0-58">58</a></span>
-<span class="normal"><a href="#__codelineno-0-59">59</a></span>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-59">59</a></span>
 <span class="normal"><a href="#__codelineno-0-60">60</a></span>
 <span class="normal"><a href="#__codelineno-0-61">61</a></span>
 <span class="normal"><a href="#__codelineno-0-62">62</a></span>
 <span class="normal"><a href="#__codelineno-0-63">63</a></span>
 <span class="normal"><a href="#__codelineno-0-64">64</a></span>
 <span class="normal"><a href="#__codelineno-0-65">65</a></span>
-<span class="normal"><a href="#__codelineno-0-66">66</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-51" name="__codelineno-0-51"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
-<a id="__codelineno-0-52" name="__codelineno-0-52"></a><span class="w">    </span><span class="sd">"""</span>
-<a id="__codelineno-0-53" name="__codelineno-0-53"></a><span class="sd">    Initialize pipeline with configuration.</span>
-<a id="__codelineno-0-54" name="__codelineno-0-54"></a>
-<a id="__codelineno-0-55" name="__codelineno-0-55"></a><span class="sd">    Parameters</span>
-<a id="__codelineno-0-56" name="__codelineno-0-56"></a><span class="sd">    ----------</span>
-<a id="__codelineno-0-57" name="__codelineno-0-57"></a><span class="sd">    config : Dict[str, Any]</span>
-<a id="__codelineno-0-58" name="__codelineno-0-58"></a><span class="sd">        Pipeline configuration</span>
-<a id="__codelineno-0-59" name="__codelineno-0-59"></a><span class="sd">    """</span>
-<a id="__codelineno-0-60" name="__codelineno-0-60"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
-<a id="__codelineno-0-61" name="__codelineno-0-61"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">stages</span> <span class="o">=</span> <span class="p">[]</span>
-<a id="__codelineno-0-62" name="__codelineno-0-62"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">stage_mapping</span> <span class="o">=</span> <span class="p">{}</span>
-<a id="__codelineno-0-63" name="__codelineno-0-63"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-<a id="__codelineno-0-64" name="__codelineno-0-64"></a>
-<a id="__codelineno-0-65" name="__codelineno-0-65"></a>    <span class="c1"># Initialize components</span>
-<a id="__codelineno-0-66" name="__codelineno-0-66"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_components</span><span class="p">()</span>
+<span class="normal"><a href="#__codelineno-0-66">66</a></span>
+<span class="normal"><a href="#__codelineno-0-67">67</a></span>
+<span class="normal"><a href="#__codelineno-0-68">68</a></span>
+<span class="normal"><a href="#__codelineno-0-69">69</a></span>
+<span class="normal"><a href="#__codelineno-0-70">70</a></span>
+<span class="normal"><a href="#__codelineno-0-71">71</a></span>
+<span class="normal"><a href="#__codelineno-0-72">72</a></span>
+<span class="normal"><a href="#__codelineno-0-73">73</a></span>
+<span class="normal"><a href="#__codelineno-0-74">74</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-59" name="__codelineno-0-59"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a><span class="sd">    Initialize pipeline with configuration.</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62"></a>
+<a id="__codelineno-0-63" name="__codelineno-0-63"></a><span class="sd">    Parameters</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="sd">    ----------</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65"></a><span class="sd">    config : Dict[str, Any]</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66"></a><span class="sd">        Pipeline configuration</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67"></a><span class="sd">    """</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">stages</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">stage_mapping</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-0-71" name="__codelineno-0-71"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72"></a>
+<a id="__codelineno-0-73" name="__codelineno-0-73"></a>    <span class="c1"># Initialize components</span>
+<a id="__codelineno-0-74" name="__codelineno-0-74"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_components</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
                   </details>
 
@@ -2414,15 +2520,7 @@ bioelectric-appropriate defaults. It can be extended later.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/mneme/analysis/pipeline.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-147">147</a></span>
-<span class="normal"><a href="#__codelineno-0-148">148</a></span>
-<span class="normal"><a href="#__codelineno-0-149">149</a></span>
-<span class="normal"><a href="#__codelineno-0-150">150</a></span>
-<span class="normal"><a href="#__codelineno-0-151">151</a></span>
-<span class="normal"><a href="#__codelineno-0-152">152</a></span>
-<span class="normal"><a href="#__codelineno-0-153">153</a></span>
-<span class="normal"><a href="#__codelineno-0-154">154</a></span>
-<span class="normal"><a href="#__codelineno-0-155">155</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-155">155</a></span>
 <span class="normal"><a href="#__codelineno-0-156">156</a></span>
 <span class="normal"><a href="#__codelineno-0-157">157</a></span>
 <span class="normal"><a href="#__codelineno-0-158">158</a></span>
@@ -2453,46 +2551,54 @@ bioelectric-appropriate defaults. It can be extended later.</p>
 <span class="normal"><a href="#__codelineno-0-183">183</a></span>
 <span class="normal"><a href="#__codelineno-0-184">184</a></span>
 <span class="normal"><a href="#__codelineno-0-185">185</a></span>
-<span class="normal"><a href="#__codelineno-0-186">186</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-147" name="__codelineno-0-147"></a><span class="k">def</span><span class="w"> </span><span class="nf">add_stage</span><span class="p">(</span>
-<a id="__codelineno-0-148" name="__codelineno-0-148"></a>    <span class="bp">self</span><span class="p">,</span>
-<a id="__codelineno-0-149" name="__codelineno-0-149"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-<a id="__codelineno-0-150" name="__codelineno-0-150"></a>    <span class="n">stage_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
-<a id="__codelineno-0-151" name="__codelineno-0-151"></a>    <span class="n">inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-<a id="__codelineno-0-152" name="__codelineno-0-152"></a>    <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-<a id="__codelineno-0-153" name="__codelineno-0-153"></a>    <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-<a id="__codelineno-0-154" name="__codelineno-0-154"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'MnemePipeline'</span><span class="p">:</span>
-<a id="__codelineno-0-155" name="__codelineno-0-155"></a><span class="w">    </span><span class="sd">"""</span>
-<a id="__codelineno-0-156" name="__codelineno-0-156"></a><span class="sd">    Add processing stage to pipeline.</span>
-<a id="__codelineno-0-157" name="__codelineno-0-157"></a>
-<a id="__codelineno-0-158" name="__codelineno-0-158"></a><span class="sd">    Parameters</span>
-<a id="__codelineno-0-159" name="__codelineno-0-159"></a><span class="sd">    ----------</span>
-<a id="__codelineno-0-160" name="__codelineno-0-160"></a><span class="sd">    name : str</span>
-<a id="__codelineno-0-161" name="__codelineno-0-161"></a><span class="sd">        Stage name</span>
-<a id="__codelineno-0-162" name="__codelineno-0-162"></a><span class="sd">    stage_func : Callable</span>
-<a id="__codelineno-0-163" name="__codelineno-0-163"></a><span class="sd">        Function to execute</span>
-<a id="__codelineno-0-164" name="__codelineno-0-164"></a><span class="sd">    inputs : List[str]</span>
-<a id="__codelineno-0-165" name="__codelineno-0-165"></a><span class="sd">        Input data keys</span>
-<a id="__codelineno-0-166" name="__codelineno-0-166"></a><span class="sd">    outputs : List[str]  </span>
-<a id="__codelineno-0-167" name="__codelineno-0-167"></a><span class="sd">        Output data keys</span>
-<a id="__codelineno-0-168" name="__codelineno-0-168"></a><span class="sd">    enabled : bool</span>
-<a id="__codelineno-0-169" name="__codelineno-0-169"></a><span class="sd">        Whether stage is enabled</span>
-<a id="__codelineno-0-170" name="__codelineno-0-170"></a>
-<a id="__codelineno-0-171" name="__codelineno-0-171"></a><span class="sd">    Returns</span>
-<a id="__codelineno-0-172" name="__codelineno-0-172"></a><span class="sd">    -------</span>
-<a id="__codelineno-0-173" name="__codelineno-0-173"></a><span class="sd">    self : MnemePipeline</span>
-<a id="__codelineno-0-174" name="__codelineno-0-174"></a><span class="sd">        Pipeline instance for chaining</span>
-<a id="__codelineno-0-175" name="__codelineno-0-175"></a><span class="sd">    """</span>
-<a id="__codelineno-0-176" name="__codelineno-0-176"></a>    <span class="n">stage</span> <span class="o">=</span> <span class="n">PipelineStage</span><span class="p">(</span>
-<a id="__codelineno-0-177" name="__codelineno-0-177"></a>        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-<a id="__codelineno-0-178" name="__codelineno-0-178"></a>        <span class="n">enabled</span><span class="o">=</span><span class="n">enabled</span><span class="p">,</span>
-<a id="__codelineno-0-179" name="__codelineno-0-179"></a>        <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
-<a id="__codelineno-0-180" name="__codelineno-0-180"></a>        <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span>
-<a id="__codelineno-0-181" name="__codelineno-0-181"></a>    <span class="p">)</span>
-<a id="__codelineno-0-182" name="__codelineno-0-182"></a>
-<a id="__codelineno-0-183" name="__codelineno-0-183"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">stages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stage</span><span class="p">)</span>
-<a id="__codelineno-0-184" name="__codelineno-0-184"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">stage_mapping</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">stage_func</span>
-<a id="__codelineno-0-185" name="__codelineno-0-185"></a>
-<a id="__codelineno-0-186" name="__codelineno-0-186"></a>    <span class="k">return</span> <span class="bp">self</span>
+<span class="normal"><a href="#__codelineno-0-186">186</a></span>
+<span class="normal"><a href="#__codelineno-0-187">187</a></span>
+<span class="normal"><a href="#__codelineno-0-188">188</a></span>
+<span class="normal"><a href="#__codelineno-0-189">189</a></span>
+<span class="normal"><a href="#__codelineno-0-190">190</a></span>
+<span class="normal"><a href="#__codelineno-0-191">191</a></span>
+<span class="normal"><a href="#__codelineno-0-192">192</a></span>
+<span class="normal"><a href="#__codelineno-0-193">193</a></span>
+<span class="normal"><a href="#__codelineno-0-194">194</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-155" name="__codelineno-0-155"></a><span class="k">def</span><span class="w"> </span><span class="nf">add_stage</span><span class="p">(</span>
+<a id="__codelineno-0-156" name="__codelineno-0-156"></a>    <span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-0-157" name="__codelineno-0-157"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-0-158" name="__codelineno-0-158"></a>    <span class="n">stage_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+<a id="__codelineno-0-159" name="__codelineno-0-159"></a>    <span class="n">inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<a id="__codelineno-0-160" name="__codelineno-0-160"></a>    <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<a id="__codelineno-0-161" name="__codelineno-0-161"></a>    <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-0-162" name="__codelineno-0-162"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'MnemePipeline'</span><span class="p">:</span>
+<a id="__codelineno-0-163" name="__codelineno-0-163"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-0-164" name="__codelineno-0-164"></a><span class="sd">    Add processing stage to pipeline.</span>
+<a id="__codelineno-0-165" name="__codelineno-0-165"></a>
+<a id="__codelineno-0-166" name="__codelineno-0-166"></a><span class="sd">    Parameters</span>
+<a id="__codelineno-0-167" name="__codelineno-0-167"></a><span class="sd">    ----------</span>
+<a id="__codelineno-0-168" name="__codelineno-0-168"></a><span class="sd">    name : str</span>
+<a id="__codelineno-0-169" name="__codelineno-0-169"></a><span class="sd">        Stage name</span>
+<a id="__codelineno-0-170" name="__codelineno-0-170"></a><span class="sd">    stage_func : Callable</span>
+<a id="__codelineno-0-171" name="__codelineno-0-171"></a><span class="sd">        Function to execute</span>
+<a id="__codelineno-0-172" name="__codelineno-0-172"></a><span class="sd">    inputs : List[str]</span>
+<a id="__codelineno-0-173" name="__codelineno-0-173"></a><span class="sd">        Input data keys</span>
+<a id="__codelineno-0-174" name="__codelineno-0-174"></a><span class="sd">    outputs : List[str]  </span>
+<a id="__codelineno-0-175" name="__codelineno-0-175"></a><span class="sd">        Output data keys</span>
+<a id="__codelineno-0-176" name="__codelineno-0-176"></a><span class="sd">    enabled : bool</span>
+<a id="__codelineno-0-177" name="__codelineno-0-177"></a><span class="sd">        Whether stage is enabled</span>
+<a id="__codelineno-0-178" name="__codelineno-0-178"></a>
+<a id="__codelineno-0-179" name="__codelineno-0-179"></a><span class="sd">    Returns</span>
+<a id="__codelineno-0-180" name="__codelineno-0-180"></a><span class="sd">    -------</span>
+<a id="__codelineno-0-181" name="__codelineno-0-181"></a><span class="sd">    self : MnemePipeline</span>
+<a id="__codelineno-0-182" name="__codelineno-0-182"></a><span class="sd">        Pipeline instance for chaining</span>
+<a id="__codelineno-0-183" name="__codelineno-0-183"></a><span class="sd">    """</span>
+<a id="__codelineno-0-184" name="__codelineno-0-184"></a>    <span class="n">stage</span> <span class="o">=</span> <span class="n">PipelineStage</span><span class="p">(</span>
+<a id="__codelineno-0-185" name="__codelineno-0-185"></a>        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+<a id="__codelineno-0-186" name="__codelineno-0-186"></a>        <span class="n">enabled</span><span class="o">=</span><span class="n">enabled</span><span class="p">,</span>
+<a id="__codelineno-0-187" name="__codelineno-0-187"></a>        <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
+<a id="__codelineno-0-188" name="__codelineno-0-188"></a>        <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span>
+<a id="__codelineno-0-189" name="__codelineno-0-189"></a>    <span class="p">)</span>
+<a id="__codelineno-0-190" name="__codelineno-0-190"></a>
+<a id="__codelineno-0-191" name="__codelineno-0-191"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">stages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stage</span><span class="p">)</span>
+<a id="__codelineno-0-192" name="__codelineno-0-192"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">stage_mapping</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">stage_func</span>
+<a id="__codelineno-0-193" name="__codelineno-0-193"></a>
+<a id="__codelineno-0-194" name="__codelineno-0-194"></a>    <span class="k">return</span> <span class="bp">self</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2576,15 +2682,7 @@ bioelectric-appropriate defaults. It can be extended later.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/mneme/analysis/pipeline.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-188">188</a></span>
-<span class="normal"><a href="#__codelineno-0-189">189</a></span>
-<span class="normal"><a href="#__codelineno-0-190">190</a></span>
-<span class="normal"><a href="#__codelineno-0-191">191</a></span>
-<span class="normal"><a href="#__codelineno-0-192">192</a></span>
-<span class="normal"><a href="#__codelineno-0-193">193</a></span>
-<span class="normal"><a href="#__codelineno-0-194">194</a></span>
-<span class="normal"><a href="#__codelineno-0-195">195</a></span>
-<span class="normal"><a href="#__codelineno-0-196">196</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-196">196</a></span>
 <span class="normal"><a href="#__codelineno-0-197">197</a></span>
 <span class="normal"><a href="#__codelineno-0-198">198</a></span>
 <span class="normal"><a href="#__codelineno-0-199">199</a></span>
@@ -2633,64 +2731,88 @@ bioelectric-appropriate defaults. It can be extended later.</p>
 <span class="normal"><a href="#__codelineno-0-242">242</a></span>
 <span class="normal"><a href="#__codelineno-0-243">243</a></span>
 <span class="normal"><a href="#__codelineno-0-244">244</a></span>
-<span class="normal"><a href="#__codelineno-0-245">245</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-188" name="__codelineno-0-188"></a><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Field</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PipelineResult</span><span class="p">:</span>
-<a id="__codelineno-0-189" name="__codelineno-0-189"></a><span class="w">    </span><span class="sd">"""</span>
-<a id="__codelineno-0-190" name="__codelineno-0-190"></a><span class="sd">    Execute full pipeline on data.</span>
-<a id="__codelineno-0-191" name="__codelineno-0-191"></a>
-<a id="__codelineno-0-192" name="__codelineno-0-192"></a><span class="sd">    Parameters</span>
-<a id="__codelineno-0-193" name="__codelineno-0-193"></a><span class="sd">    ----------</span>
-<a id="__codelineno-0-194" name="__codelineno-0-194"></a><span class="sd">    data : Union[Dict[str, Any], Field, np.ndarray]</span>
-<a id="__codelineno-0-195" name="__codelineno-0-195"></a><span class="sd">        Input data</span>
-<a id="__codelineno-0-196" name="__codelineno-0-196"></a>
-<a id="__codelineno-0-197" name="__codelineno-0-197"></a><span class="sd">    Returns</span>
-<a id="__codelineno-0-198" name="__codelineno-0-198"></a><span class="sd">    -------</span>
-<a id="__codelineno-0-199" name="__codelineno-0-199"></a><span class="sd">    result : PipelineResult</span>
-<a id="__codelineno-0-200" name="__codelineno-0-200"></a><span class="sd">        Pipeline execution result</span>
-<a id="__codelineno-0-201" name="__codelineno-0-201"></a><span class="sd">    """</span>
-<a id="__codelineno-0-202" name="__codelineno-0-202"></a>    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<a id="__codelineno-0-203" name="__codelineno-0-203"></a>    <span class="n">stage_results</span> <span class="o">=</span> <span class="p">{}</span>
-<a id="__codelineno-0-204" name="__codelineno-0-204"></a>    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
-<a id="__codelineno-0-205" name="__codelineno-0-205"></a>
-<a id="__codelineno-0-206" name="__codelineno-0-206"></a>    <span class="k">try</span><span class="p">:</span>
-<a id="__codelineno-0-207" name="__codelineno-0-207"></a>        <span class="c1"># Prepare data</span>
-<a id="__codelineno-0-208" name="__codelineno-0-208"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-<a id="__codelineno-0-209" name="__codelineno-0-209"></a>            <span class="n">data_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'field'</span><span class="p">:</span> <span class="n">Field</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)}</span>
-<a id="__codelineno-0-210" name="__codelineno-0-210"></a>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Field</span><span class="p">):</span>
-<a id="__codelineno-0-211" name="__codelineno-0-211"></a>            <span class="n">data_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'field'</span><span class="p">:</span> <span class="n">data</span><span class="p">}</span>
-<a id="__codelineno-0-212" name="__codelineno-0-212"></a>        <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-213" name="__codelineno-0-213"></a>            <span class="n">data_dict</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<a id="__codelineno-0-214" name="__codelineno-0-214"></a>
-<a id="__codelineno-0-215" name="__codelineno-0-215"></a>        <span class="c1"># Run standard pipeline</span>
-<a id="__codelineno-0-216" name="__codelineno-0-216"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stages</span><span class="p">:</span>
-<a id="__codelineno-0-217" name="__codelineno-0-217"></a>            <span class="c1"># Use default pipeline</span>
-<a id="__codelineno-0-218" name="__codelineno-0-218"></a>            <span class="n">stage_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_default_pipeline</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
-<a id="__codelineno-0-219" name="__codelineno-0-219"></a>        <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-220" name="__codelineno-0-220"></a>            <span class="c1"># Run custom pipeline</span>
-<a id="__codelineno-0-221" name="__codelineno-0-221"></a>            <span class="n">stage_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_custom_pipeline</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-0-245">245</a></span>
+<span class="normal"><a href="#__codelineno-0-246">246</a></span>
+<span class="normal"><a href="#__codelineno-0-247">247</a></span>
+<span class="normal"><a href="#__codelineno-0-248">248</a></span>
+<span class="normal"><a href="#__codelineno-0-249">249</a></span>
+<span class="normal"><a href="#__codelineno-0-250">250</a></span>
+<span class="normal"><a href="#__codelineno-0-251">251</a></span>
+<span class="normal"><a href="#__codelineno-0-252">252</a></span>
+<span class="normal"><a href="#__codelineno-0-253">253</a></span>
+<span class="normal"><a href="#__codelineno-0-254">254</a></span>
+<span class="normal"><a href="#__codelineno-0-255">255</a></span>
+<span class="normal"><a href="#__codelineno-0-256">256</a></span>
+<span class="normal"><a href="#__codelineno-0-257">257</a></span>
+<span class="normal"><a href="#__codelineno-0-258">258</a></span>
+<span class="normal"><a href="#__codelineno-0-259">259</a></span>
+<span class="normal"><a href="#__codelineno-0-260">260</a></span>
+<span class="normal"><a href="#__codelineno-0-261">261</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-196" name="__codelineno-0-196"></a><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Field</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PipelineResult</span><span class="p">:</span>
+<a id="__codelineno-0-197" name="__codelineno-0-197"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-0-198" name="__codelineno-0-198"></a><span class="sd">    Execute full pipeline on data.</span>
+<a id="__codelineno-0-199" name="__codelineno-0-199"></a>
+<a id="__codelineno-0-200" name="__codelineno-0-200"></a><span class="sd">    Parameters</span>
+<a id="__codelineno-0-201" name="__codelineno-0-201"></a><span class="sd">    ----------</span>
+<a id="__codelineno-0-202" name="__codelineno-0-202"></a><span class="sd">    data : Union[Dict[str, Any], Field, np.ndarray]</span>
+<a id="__codelineno-0-203" name="__codelineno-0-203"></a><span class="sd">        Input data</span>
+<a id="__codelineno-0-204" name="__codelineno-0-204"></a>
+<a id="__codelineno-0-205" name="__codelineno-0-205"></a><span class="sd">    Returns</span>
+<a id="__codelineno-0-206" name="__codelineno-0-206"></a><span class="sd">    -------</span>
+<a id="__codelineno-0-207" name="__codelineno-0-207"></a><span class="sd">    result : PipelineResult</span>
+<a id="__codelineno-0-208" name="__codelineno-0-208"></a><span class="sd">        Pipeline execution result</span>
+<a id="__codelineno-0-209" name="__codelineno-0-209"></a><span class="sd">    """</span>
+<a id="__codelineno-0-210" name="__codelineno-0-210"></a>    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a id="__codelineno-0-211" name="__codelineno-0-211"></a>    <span class="n">stage_results</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-0-212" name="__codelineno-0-212"></a>    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-213" name="__codelineno-0-213"></a>
+<a id="__codelineno-0-214" name="__codelineno-0-214"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-0-215" name="__codelineno-0-215"></a>        <span class="c1"># Prepare data</span>
+<a id="__codelineno-0-216" name="__codelineno-0-216"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<a id="__codelineno-0-217" name="__codelineno-0-217"></a>            <span class="n">data_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'field'</span><span class="p">:</span> <span class="n">Field</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)}</span>
+<a id="__codelineno-0-218" name="__codelineno-0-218"></a>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Field</span><span class="p">):</span>
+<a id="__codelineno-0-219" name="__codelineno-0-219"></a>            <span class="n">data_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'field'</span><span class="p">:</span> <span class="n">data</span><span class="p">}</span>
+<a id="__codelineno-0-220" name="__codelineno-0-220"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-221" name="__codelineno-0-221"></a>            <span class="n">data_dict</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <a id="__codelineno-0-222" name="__codelineno-0-222"></a>
-<a id="__codelineno-0-223" name="__codelineno-0-223"></a>        <span class="c1"># Create analysis result</span>
-<a id="__codelineno-0-224" name="__codelineno-0-224"></a>        <span class="n">analysis_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_analysis_result</span><span class="p">(</span><span class="n">data_dict</span><span class="p">,</span> <span class="n">stage_results</span><span class="p">)</span>
-<a id="__codelineno-0-225" name="__codelineno-0-225"></a>
-<a id="__codelineno-0-226" name="__codelineno-0-226"></a>        <span class="n">execution_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
-<a id="__codelineno-0-227" name="__codelineno-0-227"></a>
-<a id="__codelineno-0-228" name="__codelineno-0-228"></a>        <span class="k">return</span> <span class="n">PipelineResult</span><span class="p">(</span>
-<a id="__codelineno-0-229" name="__codelineno-0-229"></a>            <span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-230" name="__codelineno-0-230"></a>            <span class="n">execution_time</span><span class="o">=</span><span class="n">execution_time</span><span class="p">,</span>
-<a id="__codelineno-0-231" name="__codelineno-0-231"></a>            <span class="n">stage_results</span><span class="o">=</span><span class="n">stage_results</span><span class="p">,</span>
-<a id="__codelineno-0-232" name="__codelineno-0-232"></a>            <span class="n">analysis_result</span><span class="o">=</span><span class="n">analysis_result</span>
-<a id="__codelineno-0-233" name="__codelineno-0-233"></a>        <span class="p">)</span>
-<a id="__codelineno-0-234" name="__codelineno-0-234"></a>
-<a id="__codelineno-0-235" name="__codelineno-0-235"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-<a id="__codelineno-0-236" name="__codelineno-0-236"></a>        <span class="n">execution_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
-<a id="__codelineno-0-237" name="__codelineno-0-237"></a>        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-<a id="__codelineno-0-238" name="__codelineno-0-238"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Pipeline execution failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-0-239" name="__codelineno-0-239"></a>
+<a id="__codelineno-0-223" name="__codelineno-0-223"></a>        <span class="c1"># Run standard pipeline</span>
+<a id="__codelineno-0-224" name="__codelineno-0-224"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stages</span><span class="p">:</span>
+<a id="__codelineno-0-225" name="__codelineno-0-225"></a>            <span class="c1"># Use default pipeline</span>
+<a id="__codelineno-0-226" name="__codelineno-0-226"></a>            <span class="n">stage_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_default_pipeline</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
+<a id="__codelineno-0-227" name="__codelineno-0-227"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-228" name="__codelineno-0-228"></a>            <span class="c1"># Run custom pipeline</span>
+<a id="__codelineno-0-229" name="__codelineno-0-229"></a>            <span class="n">stage_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_custom_pipeline</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
+<a id="__codelineno-0-230" name="__codelineno-0-230"></a>
+<a id="__codelineno-0-231" name="__codelineno-0-231"></a>        <span class="c1"># Create analysis result</span>
+<a id="__codelineno-0-232" name="__codelineno-0-232"></a>        <span class="n">analysis_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_analysis_result</span><span class="p">(</span><span class="n">data_dict</span><span class="p">,</span> <span class="n">stage_results</span><span class="p">)</span>
+<a id="__codelineno-0-233" name="__codelineno-0-233"></a>
+<a id="__codelineno-0-234" name="__codelineno-0-234"></a>        <span class="n">execution_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+<a id="__codelineno-0-235" name="__codelineno-0-235"></a>
+<a id="__codelineno-0-236" name="__codelineno-0-236"></a>        <span class="n">failed</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-0-237" name="__codelineno-0-237"></a>            <span class="n">name</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">summary</span> <span class="ow">in</span> <span class="n">stage_results</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<a id="__codelineno-0-238" name="__codelineno-0-238"></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">summary</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">summary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'status'</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'failed'</span>
+<a id="__codelineno-0-239" name="__codelineno-0-239"></a>        <span class="p">]</span>
 <a id="__codelineno-0-240" name="__codelineno-0-240"></a>        <span class="k">return</span> <span class="n">PipelineResult</span><span class="p">(</span>
-<a id="__codelineno-0-241" name="__codelineno-0-241"></a>            <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-241" name="__codelineno-0-241"></a>            <span class="n">success</span><span class="o">=</span><span class="ow">not</span> <span class="n">failed</span><span class="p">,</span>
 <a id="__codelineno-0-242" name="__codelineno-0-242"></a>            <span class="n">execution_time</span><span class="o">=</span><span class="n">execution_time</span><span class="p">,</span>
 <a id="__codelineno-0-243" name="__codelineno-0-243"></a>            <span class="n">stage_results</span><span class="o">=</span><span class="n">stage_results</span><span class="p">,</span>
-<a id="__codelineno-0-244" name="__codelineno-0-244"></a>            <span class="n">errors</span><span class="o">=</span><span class="n">errors</span>
-<a id="__codelineno-0-245" name="__codelineno-0-245"></a>        <span class="p">)</span>
+<a id="__codelineno-0-244" name="__codelineno-0-244"></a>            <span class="n">analysis_result</span><span class="o">=</span><span class="n">analysis_result</span><span class="p">,</span>
+<a id="__codelineno-0-245" name="__codelineno-0-245"></a>            <span class="n">errors</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-0-246" name="__codelineno-0-246"></a>                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">stage_results</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">'error'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">failed</span>
+<a id="__codelineno-0-247" name="__codelineno-0-247"></a>            <span class="p">]</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-248" name="__codelineno-0-248"></a>            <span class="n">failed_stages</span><span class="o">=</span><span class="n">failed</span><span class="p">,</span>
+<a id="__codelineno-0-249" name="__codelineno-0-249"></a>        <span class="p">)</span>
+<a id="__codelineno-0-250" name="__codelineno-0-250"></a>
+<a id="__codelineno-0-251" name="__codelineno-0-251"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-0-252" name="__codelineno-0-252"></a>        <span class="n">execution_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+<a id="__codelineno-0-253" name="__codelineno-0-253"></a>        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+<a id="__codelineno-0-254" name="__codelineno-0-254"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Pipeline execution failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-255" name="__codelineno-0-255"></a>
+<a id="__codelineno-0-256" name="__codelineno-0-256"></a>        <span class="k">return</span> <span class="n">PipelineResult</span><span class="p">(</span>
+<a id="__codelineno-0-257" name="__codelineno-0-257"></a>            <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-258" name="__codelineno-0-258"></a>            <span class="n">execution_time</span><span class="o">=</span><span class="n">execution_time</span><span class="p">,</span>
+<a id="__codelineno-0-259" name="__codelineno-0-259"></a>            <span class="n">stage_results</span><span class="o">=</span><span class="n">stage_results</span><span class="p">,</span>
+<a id="__codelineno-0-260" name="__codelineno-0-260"></a>            <span class="n">errors</span><span class="o">=</span><span class="n">errors</span>
+<a id="__codelineno-0-261" name="__codelineno-0-261"></a>        <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2719,7 +2841,7 @@ bioelectric-appropriate defaults. It can be extended later.</p>
   </span>
 
 <a href="#mneme.analysis.pipeline.PipelineResult" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">PipelineResult</span><span class="p">(</span><span class="n">success</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">execution_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">stage_results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">analysis_result</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AnalysisResult</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">errors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">PipelineResult</span><span class="p">(</span><span class="n">success</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">execution_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">stage_results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">analysis_result</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AnalysisResult</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">errors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">failed_stages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">())</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -2727,6 +2849,10 @@ bioelectric-appropriate defaults. It can be extended later.</p>
 
 
         <p>Result from pipeline execution.</p>
+<p><code>success</code> is True only when every stage that ran completed. When a
+stage fails, <code>success</code> is False, the stage is listed in
+<code>failed_stages</code> with its message in <code>errors</code>, and
+<code>analysis_result</code> still holds whatever the other stages produced.</p>
 
 
 
