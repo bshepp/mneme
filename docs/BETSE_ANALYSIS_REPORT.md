@@ -14,6 +14,6 @@ A review in September 2026 found defects that invalidate the report's conclusion
 
 ## What happens next
 
-The loader and analysis code are being corrected, and the simulations will be re-analysed. A new report will be published only for results that hold up under null-model testing.
+The loader and analysis code have been corrected. The simulations were re-analysed in correct frame order with a criterion fixed in advance; that write-up is `studies/convergence/RESULTS.md` in the repository. It finds one stable state where this report claimed two basins.
 
 The original text remains available in the repository history.

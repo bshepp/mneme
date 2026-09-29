@@ -2,7 +2,7 @@
 
 An exploratory research toolkit for studying field-like memory in biological tissue, starting with simulated bioelectric data.
 
-> **Validation status (2026-09-27):** No scientific result produced with Mneme is currently asserted. The BETSE analysis report and the earlier PhysioNet Lyapunov numbers were both withdrawn after a review found defects in the code that produced them. The defects are fixed; the analyses have not yet been re-run.
+> **Validation status (2026-09-29):** Two earlier results were withdrawn after a review found defects in the code that produced them; see [Withdrawn results](#withdrawn-results). The defects are fixed. The only results currently asserted are the two simulation studies under `studies/`, and those are from one geometry and one parameter set each.
 
 ## What it does
 
@@ -144,6 +144,17 @@ mneme/
 ├── tests/              # Test suite
 └── docs/               # Documentation
 ```
+
+## Withdrawn results
+
+Two results published from this project do not hold and are withdrawn. They should not be cited.
+
+| Result | Published | Withdrawn | Why |
+|---|---|---|---|
+| BETSE analysis report: multistability, Wasserstein drift, recurrence and Lyapunov findings on four simulations | 2026-02-13 | 2026-09-27 | The loader read simulation frames out of time order, so every time-dependent result was computed on a scrambled sequence. The Lyapunov values came from an estimator later found to label noise as chaotic. No claim had a null model. |
+| PhysioNet ECG: λ₁ = +0.12/s, D_KY = 2.35, "matching literature" | 2025-11-27 | 2026-05-17 | Produced by the same estimator, from 122 heartbeats. |
+
+The withdrawal notice that replaced the BETSE report is at [docs/BETSE_ANALYSIS_REPORT.md](docs/BETSE_ANALYSIS_REPORT.md); the original text is in git history. The review that found the defects is summarised in [CHANGELOG.md](CHANGELOG.md). The re-run of the BETSE analysis, in correct order and with a stated criterion, is in [studies/convergence/RESULTS.md](studies/convergence/RESULTS.md).
 
 ## Documentation
 

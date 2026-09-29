@@ -4,8 +4,8 @@
 
 Mneme is an exploratory research toolkit for studying field-like memory in biological tissue, starting with simulated bioelectric data.
 
-!!! warning "Validation status"
-    No scientific result produced with Mneme is currently asserted. Earlier results were withdrawn after a review found defects in the code that produced them. See [Scope and Support Status](SCOPE.md).
+!!! warning "Withdrawn results"
+    The BETSE analysis report (2026-02) and the PhysioNet Lyapunov numbers (2025-11) were withdrawn after a review found defects in the code that produced them. Do not cite them. The notice is at [Withdrawn BETSE Report](BETSE_ANALYSIS_REPORT.md); what each component can currently be relied on for is in [Scope and Support Status](SCOPE.md).
 
 ## Capabilities
 
