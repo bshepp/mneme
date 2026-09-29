@@ -2,6 +2,8 @@
 
 Welcome to the comprehensive, hands-on course for Mneme: a system for detecting field-like memory structures in biological systems. This program takes you from foundational theory to confident, practitioner-level use of Mneme’s CLI and Python APIs—with exercises, projects, and optional advanced modules.
 
+> **Status note (2026-09).** Mneme's components are sorted into core, frozen and experimental tiers; see [Scope and Support Status](../SCOPE.md) before relying on any output. Attractor detection (Module 7) and symbolic regression (Module 11) are experimental and emit `mneme.ExperimentalWarning`. No scientific result produced with Mneme is currently asserted; the exercises here teach the tools, not findings.
+
 - Audience: Scientists, ML/DS engineers, biophysicists, and curious generalists
 - Prerequisites: Python fundamentals; basic linear algebra and probability; comfort with NumPy; curiosity about fields and topology
 - Compute: CPU is sufficient for the MVP; GPU optional (PyTorch, heavy models)
@@ -20,9 +22,9 @@ Welcome to the comprehensive, hands-on course for Mneme: a system for detecting 
 2. [Environment Setup and Sanity Checks](02_environment_setup.md)
 3. [CLI Quickstart: Generate → Analyze → Visualize](03_cli_quickstart.md)
 4. [Pipeline Anatomy and Configuration](04_pipeline_anatomy.md)
-5. [Field Reconstruction (IFT and GP)](05_field_reconstruction.md)
+5. [Field Reconstruction (Subset GP and GP)](05_field_reconstruction.md)
 6. [Topology (Cubical, Rips, Alpha) and Features](06_topology_tda.md)
-7. [Attractor Detection (Recurrence, Lyapunov, Clustering)](07_attractor_detection.md)
+7. [Attractor Detection (Recurrence, Lyapunov, Clustering) — experimental](07_attractor_detection.md)
 8. [Visualization and Reporting](08_visualization_reporting.md)
 9. [Designing Experiments and Reproducibility](09_experiments_reproducibility.md)
 10. [Performance and Monitoring (MVP Tools)](10_performance_monitoring.md)
@@ -36,7 +38,7 @@ Welcome to the comprehensive, hands-on course for Mneme: a system for detecting 
 
 ## Reference docs
 
-- Core project docs: [Project Structure](../PROJECT_STRUCTURE.md), [Development Setup](../DEVELOPMENT_SETUP.md), [API Design](../API_DESIGN.md), [Data Pipeline](../DATA_PIPELINE.md)
+- Core project docs: [Scope and Support Status](../SCOPE.md), [Lyapunov Operating Range](../LYAPUNOV_OPERATING_RANGE.md), [Project Structure](../PROJECT_STRUCTURE.md), [Development Setup](../DEVELOPMENT_SETUP.md), [API Design](../API_DESIGN.md), [Data Pipeline](../DATA_PIPELINE.md)
 - Run Logs: Each module will gain a short “Run log” section as we execute the exercises end-to-end, noting successes and any failures with fixes.
 - Source: `src/mneme/` (see `analysis/`, `core/`, `data/`, `utils/`)
 

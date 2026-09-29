@@ -1,6 +1,9 @@
 # Symbolic Regression
 
-PySR integration for discovering governing equations from field dynamics.
+PySR integration for searching for governing equations in field dynamics. Falls back to linear regression when PySR is not installed.
+
+!!! warning "Experimental"
+    Never tested on a system with known governing equations. See [Scope and Support Status](../../SCOPE.md).
 
 ## Convenience Function
 

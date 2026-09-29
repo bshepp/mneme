@@ -15,6 +15,8 @@ ph = PersistentHomology(max_dimension=2, filtration='sublevel', persistence_thre
 diagrams = ph.compute_persistence(field)
 features = ph.extract_features(diagrams)
 ```
+- `filtration='sublevel'` tracks pits as the threshold rises; `'superlevel'` tracks peaks, with diagrams expressed in units of the negated field
+- Without GUDHI only H0 is computed, the higher diagrams are returned empty and a `RuntimeWarning` is emitted; `compute_cycles=True` raises `NotImplementedError`
 
 ## 6.2 Rips/Alpha via adapter
 ```python

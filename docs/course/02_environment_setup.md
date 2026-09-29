@@ -27,18 +27,20 @@ Check:
 ## 2.3 Smoke tests
 ```bash
 python -c "import mneme; print('OK')"
-pytest -q  # optional dev
+pytest -q  # optional dev; about 372 tests, roughly 5 minutes
 ```
 
+Without GUDHI, persistence is computed for H0 only and a `RuntimeWarning` says so.
+
 ## 2.4 GPU optionality
-- GPU not required for MVP. Neural-field reconstructor is a placeholder; keep CPU for now.
+- GPU not required for MVP. The neural-field reconstructor is experimental (no accuracy test, no uncertainty estimate; see [SCOPE.md](../SCOPE.md)); keep CPU for now.
 
 ## Exercises
-1) Change verbosity: run `mneme info -v` and note any differences in logging
+1) Change verbosity: run `mneme -v info` (the flag belongs to the top-level command) and note any differences in logging
 2) Optional: install GUDHI if missing; confirm cubical backend will be used
 3) Optional: install PySR; run `mneme info` and confirm Julia availability status
 
 Solutions (outline)
 - `mneme info` reports optional deps and default backend; with `-v`, console logging is verbose
-- With GUDHI installed, cubical/Rips/Alpha backends are available
+- With GUDHI installed, cubical/Rips/Alpha backends compute H1 and above; without it only H0 is computed
 - PySR shows ✓; Julia may install lazily on first use

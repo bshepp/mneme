@@ -2,6 +2,8 @@
 
 Persistent homology computation and topological distance metrics for field data.
 
+`sublevel` filtration tracks pits as the threshold rises; `superlevel` tracks peaks, with diagrams expressed in units of the negated field. Without GUDHI only H0 is computed (exact union-find) and a `RuntimeWarning` is emitted; the Wasserstein and bottleneck fallbacks also warn. `compute_cycles=True` raises `NotImplementedError`.
+
 ## Primary Interface
 
 ::: mneme.core.topology.PersistentHomology

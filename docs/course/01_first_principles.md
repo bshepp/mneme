@@ -2,8 +2,8 @@
 
 - Objectives
   - Understand why biological memory can be field-like and distributed
-  - Grasp core notions: Information Field Theory (IFT), persistent homology, attractors
-  - Map concepts to Mneme’s MVP: reconstruction → topology → attractors
+  - Grasp core notions: field reconstruction from sparse observations, persistent homology, attractors
+  - Map concepts to Mneme’s MVP: reconstruction → topology → (optional, experimental) attractors
 - Prereqs: None
 - Time: 60–90 minutes
 
@@ -14,10 +14,11 @@ Key ideas:
 - A field f(x, y, t) over tissue; memory as stable structures/trajectories
 - Perturbations relax back to morphology via attractors
 
-## 1.2 Information Field Theory (IFT)
-IFT reconstructs continuous fields from sparse/noisy observations with priors on smoothness/correlation. In Mneme:
-- Reconstructors: IFT, Gaussian Process (GP), Neural Field (placeholder)
+## 1.2 Field reconstruction
+Reconstruction estimates a continuous field from sparse/noisy observations using a prior on smoothness/correlation. In Mneme:
+- Reconstructors: subset Gaussian process (`gp_subset`, the default; a GP fitted to a random subset of the observations), standard Gaussian process (`gaussian_process`), Wiener filter (`wiener_filter`, small grids only), Neural Field (`neural_field`, experimental)
 - Goal: obtain a continuous field suitable for topology + further analysis
+- Note: earlier versions called the default reconstructor "IFT" (Information Field Theory). It is a subset GP; the old names still work with a `DeprecationWarning`.
 
 ## 1.3 Topological Data Analysis (TDA)
 Persistent homology summarizes shape across scales. In Mneme:
@@ -27,13 +28,13 @@ Persistent homology summarizes shape across scales. In Mneme:
 
 ## 1.4 Attractors in dynamical systems
 Attractors are sets toward which trajectories evolve (fixed point, limit cycle, strange). Mneme MVP:
-- Recurrence-based detection (default)
-- Basic Lyapunov and clustering modes (experimental MVP)
+- Recurrence, Lyapunov and clustering detectors in `mneme.core.attractors` (experimental; off by default). They locate dense or recurrent regions of a trajectory but cannot say what kind of attractor a region is, and report `AttractorType.UNDETERMINED`.
+- Claims about chaos go through the frozen Lyapunov tools (`largest_lyapunov`, `surrogate_test`, `classify_attractor`), which return `STRANGE` only with a passed surrogate test. See [Lyapunov Operating Range](../LYAPUNOV_OPERATING_RANGE.md).
 
 ## 1.5 How Mneme ties these together
 1) Preprocess + reconstruct continuous fields
 2) Compute persistence features (structure across thresholds)
-3) Detect attractors from dynamical trajectories when temporal data exist
+3) Optionally locate candidate attractor regions from dynamical trajectories when temporal data exist (experimental)
 4) Visualize + report
 
 ## Exercises
@@ -51,5 +52,5 @@ Attractors are sets toward which trajectories evolve (fixed point, limit cycle, 
 Solutions (outline)
 - Field-like memory: information stored as stable spatial patterns whose dynamics encode state
 - PH measures the birth/death of k-dimensional features across thresholds; robustness of structure
-- Fixed point: steady patterns; limit cycles: oscillations; important for regenerative stability
+- Fixed point: steady patterns; limit cycles: oscillations; important for regenerative stability. (Mneme's detectors do not assign these labels; see 1.4.)
 - GP prior with RBF kernel + Gaussian likelihood; longer correlation length → smoother reconstructions; smaller → finer detail

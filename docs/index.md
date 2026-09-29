@@ -44,13 +44,12 @@ field = rec.reconstruct()
 ```bash
 git clone https://github.com/bshepp/mneme.git
 cd mneme
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-pip install -e .
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -e ".[tda]"    # core, plus GUDHI and POT for topology
 
-# Optional: TDA and symbolic regression
-pip install gudhi pysr
+# Optional: symbolic regression (needs Julia)
+pip install -e ".[pysr]"
 ```
 
 ## Documentation

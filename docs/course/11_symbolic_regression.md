@@ -1,5 +1,7 @@
 # Module 11 (Optional): Symbolic Regression with PySR
 
+> **Experimental.** Mneme's symbolic regression wrapper (`mneme.models.symbolic`, including `discover_field_dynamics()`) is experimental: it has never been tested on a system with known governing equations, and it emits `mneme.ExperimentalWarning`. See [SCOPE.md](../SCOPE.md). The examples below call PySR directly on synthetic targets and are for learning the tool, not for producing evidence.
+
 - Objectives
   - Understand where symbolic regression may fit (post-feature extraction)
   - Run a small regression to recover simple dynamics

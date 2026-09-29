@@ -1,3 +1,5 @@
+*Historical document, kept for the record. It describes the project as it was on its date and is not current; see docs/SCOPE.md.*
+
 # Tier 0 — Scientific Core Repair: Design Spec
 
 **Date:** 2026-05-16
