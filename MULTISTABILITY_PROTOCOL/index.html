@@ -2160,7 +2160,7 @@
 
 
 <h1 id="multistability-experiment-protocol">Multistability Experiment Protocol<a class="headerlink" href="#multistability-experiment-protocol" title="Permanent link">&para;</a></h1>
-<p><strong>Status:</strong> protocol written, runs not started.</p>
+<p><strong>Status:</strong> first study complete. It found one stable state in the published 2016 configuration. Results are in <code>studies/convergence/RESULTS.md</code> in the repository. Perturbation and parameter-sweep steps are still to do.</p>
 <h2 id="question">Question<a class="headerlink" href="#question" title="Permanent link">&para;</a></h2>
 <p>Does a simulated tissue have more than one stable voltage pattern under the same parameters?</p>
 <p>This is the prediction that separates "tissue stores pattern memory as attractors" from "tissue relaxes to a single resting state".</p>
@@ -2310,15 +2310,15 @@
 <tbody>
 <tr>
 <td>BETSE</td>
-<td>Not installed in the development environment. The earlier runs used BETSE 1.5.1 on Linux.</td>
+<td><code>pip install betse</code>. Version 1.5.0 was used for the first study.</td>
 </tr>
 <tr>
 <td>Simulation configs</td>
-<td>Not in the repository.</td>
+<td>In the BETSE source repository under <code>doc/yaml/paper/</code>.</td>
 </tr>
 <tr>
 <td>Compute</td>
-<td>The earlier attractor runs took about 2.5 hours each. 20 initial conditions at 5 conductances is 100 runs.</td>
+<td>About 4.5 hours per run on one core for 25,000 s of simulated time.</td>
 </tr>
 </tbody>
 </table>
