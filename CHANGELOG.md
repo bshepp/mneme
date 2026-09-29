@@ -46,6 +46,9 @@ All notable changes to this project will be documented in this file.
     `count_distinct_states()`.
   - `studies/convergence`: a BETSE study of one tissue started from six ion
     concentrations. Every run reached the same state.
+  - `studies/multistability`: two mechanisms added to BETSE tissues. A
+    voltage-coupled gene network gave two stable voltage patterns; Kir2.1
+    plus a Na+ leak gave one.
   - `load_betse_cells()` for analysis without interpolation.
   - `mneme.ExperimentalWarning`, and component tiers in `docs/SCOPE.md`.
   - `docs/LYAPUNOV_OPERATING_RANGE.md`, `docs/MULTISTABILITY_PROTOCOL.md`.

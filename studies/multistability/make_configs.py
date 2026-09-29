@@ -79,8 +79,17 @@ if method == "grn":
         # neither is used.
         ("uniform", "None"),
     ]
+    # Perturbation test of the uniform state: an x gradient of 1% or 0.1%
+    # on top of a uniform Anion concentration (z-offset 1.0, small slope).
+    PERTURB = [("near_uniform_1pct", "gradient_x", 0.01),
+               ("near_uniform_0p1pct", "gradient_x", 0.001)]
+    slopes = {}
     if mode == "timing":
         starts, init_total, sim_total, sample = STARTS[:1], 20.0, 20.0, 5.0
+    elif mode == "perturb":
+        starts = [(label, asym) for label, asym, _ in PERTURB]
+        slopes = {label: slope for label, _, slope in PERTURB}
+        init_total, sim_total, sample = 500.0, 6000.0, 30.0
     else:
         starts = STARTS + [("bitmap_rep", "gradient_bitmap")]
         init_total, sim_total, sample = 500.0, 6000.0, 30.0
@@ -88,7 +97,8 @@ if method == "grn":
     for ic_label, asym in starts:
         name = f"{mode}_grn_ic_{ic_label}"
         c = yaml.load((HERE / "paper_grn.yaml").read_text(encoding="utf-8"))
-        set_paths(c, name, f"world_{mode}_grn.betse.gz")   # shared world
+        world_mode = "full" if mode == "perturb" else mode
+        set_paths(c, name, f"world_{world_mode}_grn.betse.gz")   # shared world
         # Half the paper's world: about 240 cells instead of 970, four
         # times faster. The geometry bitmaps are scaled to the world.
         c["world options"]["world size"] = 500.0e-6
@@ -110,6 +120,9 @@ if method == "grn":
         # The paper's sim phase cuts the tissue (a regeneration demo). The
         # runs here must be undisturbed, so the cut is disabled.
         c["cutting event"]["event happens"] = False
+        if ic_label in slopes:
+            c["modulator function properties"]["gradient_x"]["slope"] = slopes[ic_label]
+            c["modulator function properties"]["gradient_x"]["z-offset"] = 1.0
         with open(HERE / f"{name}.yaml", "w", encoding="utf-8") as f:
             yaml.dump(c, f)
         names.append(name)

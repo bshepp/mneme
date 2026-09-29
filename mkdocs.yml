@@ -69,6 +69,8 @@ nav:
     - Scope and Support Status: SCOPE.md
     - Lyapunov Operating Range: LYAPUNOV_OPERATING_RANGE.md
     - Multistability Protocol: MULTISTABILITY_PROTOCOL.md
+  - Record:
+    - Withdrawn BETSE Report: BETSE_ANALYSIS_REPORT.md
   - API Reference:
     - Overview: api/index.md
     - Core:

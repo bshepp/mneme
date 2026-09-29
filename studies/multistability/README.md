@@ -10,6 +10,7 @@ The [convergence study](../convergence/README.md) found one stable state in the 
 | Mechanism | A cytosolic "Anion" inhibits a K⁺ leak channel; gap junctions are voltage sensitive; the Anion moves between cells through gap junctions |
 | Tissue | The paper's geometry at half size (500 µm world, about 246 cells), one seeded world shared by all runs |
 | Varied: starting condition | The Anion's initial spatial distribution: the paper's bitmap gradient, an x gradient, a y gradient, uniform |
+| Perturbation test | Uniform plus an x gradient of 1% and of 0.1% of the concentration, to test whether the uniform state is stable |
 | Replicate | One exact repeat of the bitmap start |
 | Changed from the paper | The tissue cut in the simulation phase is disabled, so the runs are undisturbed |
 | Duration | 500 s initialisation plus 6,000 s simulation, sampled every 30 s, fast solver, time step 0.01 s |

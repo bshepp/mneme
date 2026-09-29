@@ -43,8 +43,8 @@ Mneme studies whether biological tissue stores pattern memory in its bioelectric
 | 0. Withdraw unsupported claims | Done. Pending merge of the withdrawal to the public site. |
 | 1. Correctness fixes with regression tests | Done |
 | 2. Measure and document the Lyapunov operating range; freeze | Done |
-| 3. Multistability experiment | First study done: one stable state found in the published configuration. See [studies/convergence/RESULTS.md](studies/convergence/RESULTS.md). |
-| 4. Rewrite the BETSE report from new results | Done for the first study, as its RESULTS.md. |
+| 3. Multistability experiment | Two studies done. The published 2016 configuration has one state ([studies/convergence](studies/convergence/RESULTS.md)). Adding a voltage-coupled gene network gives two stable patterns; adding Kir2.1 plus a Na⁺ leak does not ([studies/multistability](studies/multistability/RESULTS.md)). Perturbation and sweep steps still to do. |
+| 4. Rewrite the BETSE report from new results | Done for both studies, as their RESULTS.md files. |
 | 5. JOSS submission | Not ready. See below. |
 
 ## Stage 3: Multistability experiment
@@ -60,7 +60,9 @@ Protocol: [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md).
 
 The original runs cannot stand in for this. They differ in cell count and in a fixed parameter, and were not run to steady state.
 
-**First study (2026-09-27):** steps 3.1 to 3.3's counting were run on the published 2016 configuration, with and without coupling. Every run reached the same state. That configuration has no mechanism expected to give multistability, so the next study needs one: voltage-gated channels, or a gene regulatory network coupled to voltage. Steps 3.3 (perturbation) and 3.4 (sweep) are still to do.
+**First study (2026-09-27):** the published 2016 configuration, with and without coupling. Every run reached the same state.
+
+**Second study (2026-09-29):** two mechanisms added. A gene network coupled to voltage (the 2018 patterns configuration) gave two distinct stable voltage patterns under one parameter set, each reached from more than one start, with the uniform state an unstable saddle. Kir2.1 plus a Na⁺ leak gave one state at all three leak strengths tried. Steps 3.3 (perturbing a patterned state) and 3.4 (sweep) are still to do, on the gene-network system.
 
 ## Stage 5: JOSS
 

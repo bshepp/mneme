@@ -1,0 +1,161 @@
+{
+  "criteria": {
+    "rate_tolerance": 0.0001,
+    "drift_tolerance": 0.1,
+    "sustain": 20,
+    "same_state_threshold": 1.0
+  },
+  "n_cells": 42,
+  "geometry_gap_um": 0.0,
+  "replicate_noise_mV": 0.0,
+  "runs": {
+    "full_vgc_naL1e17_ic_na010": {
+      "coupling": "full_vgc_naL1e17",
+      "n_frames": 418,
+      "t_end": 25020.0,
+      "start_mean": -19.628350318380814,
+      "end_mean": -6.4394168280930755,
+      "end_min": -18.977223298344313,
+      "end_max": 26.829170661503376,
+      "final_rate": 3.3707242573773515e-05,
+      "time_constant": 12661.81539657598,
+      "remaining_drift": 0.42679488299672685,
+      "settled": false
+    },
+    "full_vgc_naL1e17_ic_paper": {
+      "coupling": "full_vgc_naL1e17",
+      "n_frames": 418,
+      "t_end": 25020.0,
+      "start_mean": -13.639698308468567,
+      "end_mean": -6.441343058735168,
+      "end_min": -19.00893703253532,
+      "end_max": 26.91614028217819,
+      "final_rate": 3.901077383202297e-05,
+      "time_constant": 12631.605907148387,
+      "remaining_drift": 0.49276872117901105,
+      "settled": false
+    },
+    "full_vgc_naL1e17_ic_paper_rep": {
+      "coupling": "full_vgc_naL1e17",
+      "n_frames": 418,
+      "t_end": 25020.0,
+      "start_mean": -13.639698308468567,
+      "end_mean": -6.441343058735168,
+      "end_min": -19.00893703253532,
+      "end_max": 26.91614028217819,
+      "final_rate": 3.901077383202297e-05,
+      "time_constant": 12631.605907148387,
+      "remaining_drift": 0.49276872117901105,
+      "settled": false
+    },
+    "full_vgc_naL3e17_ic_paper": {
+      "coupling": "full_vgc_naL3e17",
+      "n_frames": 418,
+      "t_end": 25020.0,
+      "start_mean": -5.398048425561835,
+      "end_mean": 4.752341341522171,
+      "end_min": -5.241393655097464,
+      "end_max": 37.72329764666122,
+      "final_rate": 9.586202340419922e-05,
+      "time_constant": 14569.278722511079,
+      "remaining_drift": 1.3966405378796587,
+      "settled": false
+    },
+    "full_vgc_naL3e18_ic_na010": {
+      "coupling": "full_vgc_naL3e18",
+      "n_frames": 418,
+      "t_end": 25020.0,
+      "start_mean": -43.42445501652761,
+      "end_mean": -22.676322374007878,
+      "end_min": -43.072048908462364,
+      "end_max": 14.335185657527372,
+      "final_rate": 3.561713918524371e-05,
+      "time_constant": 5343.238579109847,
+      "remaining_drift": 0.19031087217211923,
+      "settled": false
+    },
+    "full_vgc_naL3e18_ic_paper": {
+      "coupling": "full_vgc_naL3e18",
+      "n_frames": 418,
+      "t_end": 25020.0,
+      "start_mean": -27.986844331512625,
+      "end_mean": -22.686976167690023,
+      "end_min": -43.114098388854416,
+      "end_max": 14.337288720787113,
+      "final_rate": 4.1541492894954975e-05,
+      "time_constant": 5036.807578777389,
+      "remaining_drift": 0.20923650624703627,
+      "settled": false
+    }
+  },
+  "groups": {
+    "full_vgc_naL1e17": {
+      "members": [
+        "full_vgc_naL1e17_ic_na010",
+        "full_vgc_naL1e17_ic_paper"
+      ],
+      "n_states": 1,
+      "labels": [
+        0,
+        0
+      ],
+      "largest_start_difference": 44.548896904379326,
+      "largest_end_difference": 0.08696962067481451,
+      "largest_remaining_drift": 0.49276872117901105,
+      "all_settled": false,
+      "distances": [
+        [
+          0.0,
+          0.08696962067481451
+        ],
+        [
+          0.08696962067481451,
+          0.0
+        ]
+      ]
+    },
+    "full_vgc_naL3e17": {
+      "members": [
+        "full_vgc_naL3e17_ic_paper"
+      ],
+      "n_states": 1,
+      "labels": [
+        0
+      ],
+      "largest_start_difference": 0.0,
+      "largest_end_difference": 0.0,
+      "largest_remaining_drift": 1.3966405378796587,
+      "all_settled": false,
+      "distances": [
+        [
+          0.0
+        ]
+      ]
+    },
+    "full_vgc_naL3e18": {
+      "members": [
+        "full_vgc_naL3e18_ic_na010",
+        "full_vgc_naL3e18_ic_paper"
+      ],
+      "n_states": 1,
+      "labels": [
+        0,
+        0
+      ],
+      "largest_start_difference": 49.53471920154446,
+      "largest_end_difference": 0.04204948039205192,
+      "largest_remaining_drift": 0.20923650624703627,
+      "all_settled": false,
+      "distances": [
+        [
+          0.0,
+          0.04204948039205192
+        ],
+        [
+          0.04204948039205192,
+          0.0
+        ]
+      ]
+    }
+  }
+}
