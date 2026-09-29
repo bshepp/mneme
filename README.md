@@ -52,7 +52,9 @@ For detailed setup instructions, see [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMEN
 - ✅ GUDHI integration for Rips, Alpha, and cubical complexes
 - ✅ Dense IFT preserved as option for exact computation on small fields
 
-Lyapunov and attractor results are **pending re-validation** under the Tier 0 corrected estimators. Chaos/strange-attractor labels are gated behind a surrogate-significance test (IAAFT, two-sided) — the tool does not report chaos without passed surrogate evidence.
+> **Validation status (2026-09-27):** No scientific result produced with Mneme is currently asserted. The BETSE analysis report and the earlier PhysioNet Lyapunov numbers have both been withdrawn after a review found defects in the code that produced them. Fixes are in progress.
+>
+> The `classify_attractor()` function gates chaos labels behind a surrogate-significance test (IAAFT, two-sided). The `mneme analyze` pipeline and the detectors in `mneme.core.attractors` do not yet use that gate, so attractor-type labels from those paths should be disregarded.
 
 ## Quick Start
 
