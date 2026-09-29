@@ -74,9 +74,9 @@ if method == "grn":
         ("bitmap", "gradient_bitmap"),   # the paper's starting condition
         ("gradx", "gradient_x"),
         ("grady", "gradient_y"),
-        # gradient_r fails in BETSE 1.5.0 (array shape mismatch); a reversed
-        # x gradient is used instead.
-        ("gradx_rev", "gradient_x"),
+        # gradient_r fails in BETSE 1.5.0 (array shape mismatch), and a
+        # reversed x gradient (negative slope) is numerically unstable, so
+        # neither is used.
         ("uniform", "None"),
     ]
     if mode == "timing":
@@ -107,8 +107,9 @@ if method == "grn":
         c["gene regulatory network settings"]["gene regulatory network config"] = (
             f"extra_configs/worm_3_{name}.yaml"
         )
-        if ic_label == "gradx_rev":
-            c["modulator function properties"]["gradient_x"]["slope"] = -1.0
+        # The paper's sim phase cuts the tissue (a regeneration demo). The
+        # runs here must be undisturbed, so the cut is disabled.
+        c["cutting event"]["event happens"] = False
         with open(HERE / f"{name}.yaml", "w", encoding="utf-8") as f:
             yaml.dump(c, f)
         names.append(name)
