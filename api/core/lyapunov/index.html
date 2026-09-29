@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -496,34 +496,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -2297,7 +2269,7 @@ scaling region without depending on any per-system knowledge
 <a id="__codelineno-0-293" name="__codelineno-0-293"></a>    <span class="n">theiler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-0-294" name="__codelineno-0-294"></a>    <span class="n">max_steps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-0-295" name="__codelineno-0-295"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LyapunovResult</span><span class="p">:</span>
-<a id="__codelineno-0-296" name="__codelineno-0-296"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Largest Lyapunov exponent via Rosenstein et al. (1993).</span>
+<a id="__codelineno-0-296" name="__codelineno-0-296"></a><span class="w">    </span><span class="sd">"""Largest Lyapunov exponent via Rosenstein et al. (1993).</span>
 <a id="__codelineno-0-297" name="__codelineno-0-297"></a>
 <a id="__codelineno-0-298" name="__codelineno-0-298"></a><span class="sd">    Tracks the mean log Euclidean divergence of nearest-neighbour pairs</span>
 <a id="__codelineno-0-299" name="__codelineno-0-299"></a><span class="sd">    (excluding neighbours within the Theiler window) and fits a line over</span>
@@ -2339,7 +2311,7 @@ scaling region without depending on any per-system knowledge
 <a id="__codelineno-0-335" name="__codelineno-0-335"></a><span class="sd">        find. Clipping makes the horizon long enough to resolve the</span>
 <a id="__codelineno-0-336" name="__codelineno-0-336"></a><span class="sd">        scaling region without depending on any per-system knowledge</span>
 <a id="__codelineno-0-337" name="__codelineno-0-337"></a><span class="sd">        (the same formula is applied to every input).</span>
-<a id="__codelineno-0-338" name="__codelineno-0-338"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-338" name="__codelineno-0-338"></a><span class="sd">    """</span>
 <a id="__codelineno-0-339" name="__codelineno-0-339"></a>    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <a id="__codelineno-0-340" name="__codelineno-0-340"></a>    <span class="n">raw_1d</span> <span class="o">=</span> <span class="n">arr</span> <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">arr</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
 <a id="__codelineno-0-341" name="__codelineno-0-341"></a>
@@ -2357,13 +2329,13 @@ scaling region without depending on any per-system knowledge
 <a id="__codelineno-0-353" name="__codelineno-0-353"></a>    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span>
 <a id="__codelineno-0-354" name="__codelineno-0-354"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">MIN_TRAJECTORY_LENGTH</span><span class="p">:</span>
 <a id="__codelineno-0-355" name="__codelineno-0-355"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<a id="__codelineno-0-356" name="__codelineno-0-356"></a>            <span class="sa">f</span><span class="s2">&quot;Trajectory too short (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points). &quot;</span>
-<a id="__codelineno-0-357" name="__codelineno-0-357"></a>            <span class="sa">f</span><span class="s2">&quot;Need at least </span><span class="si">{</span><span class="n">MIN_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">.&quot;</span>
+<a id="__codelineno-0-356" name="__codelineno-0-356"></a>            <span class="sa">f</span><span class="s2">"Trajectory too short (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points). "</span>
+<a id="__codelineno-0-357" name="__codelineno-0-357"></a>            <span class="sa">f</span><span class="s2">"Need at least </span><span class="si">{</span><span class="n">MIN_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">."</span>
 <a id="__codelineno-0-358" name="__codelineno-0-358"></a>        <span class="p">)</span>
 <a id="__codelineno-0-359" name="__codelineno-0-359"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">RECOMMENDED_TRAJECTORY_LENGTH</span><span class="p">:</span>
 <a id="__codelineno-0-360" name="__codelineno-0-360"></a>        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-<a id="__codelineno-0-361" name="__codelineno-0-361"></a>            <span class="sa">f</span><span class="s2">&quot;largest_lyapunov on a short trajectory (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points; &quot;</span>
-<a id="__codelineno-0-362" name="__codelineno-0-362"></a>            <span class="sa">f</span><span class="s2">&quot;recommended &gt;= </span><span class="si">{</span><span class="n">RECOMMENDED_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">). Treat as exploratory.&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-361" name="__codelineno-0-361"></a>            <span class="sa">f</span><span class="s2">"largest_lyapunov on a short trajectory (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points; "</span>
+<a id="__codelineno-0-362" name="__codelineno-0-362"></a>            <span class="sa">f</span><span class="s2">"recommended &gt;= </span><span class="si">{</span><span class="n">RECOMMENDED_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">). Treat as exploratory."</span><span class="p">,</span>
 <a id="__codelineno-0-363" name="__codelineno-0-363"></a>            <span class="ne">RuntimeWarning</span><span class="p">,</span>
 <a id="__codelineno-0-364" name="__codelineno-0-364"></a>            <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <a id="__codelineno-0-365" name="__codelineno-0-365"></a>        <span class="p">)</span>
@@ -2651,7 +2623,7 @@ on both acceptance gates — see Task 4 tuning.</p>
 <a id="__codelineno-0-423" name="__codelineno-0-423"></a>    <span class="n">theiler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-0-424" name="__codelineno-0-424"></a>    <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
 <a id="__codelineno-0-425" name="__codelineno-0-425"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-426" name="__codelineno-0-426"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;EXPLORATORY full Lyapunov spectrum (corrected Sano-Sawada).</span>
+<a id="__codelineno-0-426" name="__codelineno-0-426"></a><span class="w">    </span><span class="sd">"""EXPLORATORY full Lyapunov spectrum (corrected Sano-Sawada).</span>
 <a id="__codelineno-0-427" name="__codelineno-0-427"></a>
 <a id="__codelineno-0-428" name="__codelineno-0-428"></a><span class="sd">    Local-Jacobian QR method with Theiler exclusion, ridge-regularised</span>
 <a id="__codelineno-0-429" name="__codelineno-0-429"></a><span class="sd">    neighbour regression, and consistent log-growth / time normalisation.</span>
@@ -2672,11 +2644,11 @@ on both acceptance gates — see Task 4 tuning.</p>
 <a id="__codelineno-0-444" name="__codelineno-0-444"></a><span class="sd">        bias the spectrum sum toward zero). Validated to recover the Lorenz</span>
 <a id="__codelineno-0-445" name="__codelineno-0-445"></a><span class="sd">        spectrum (λ₁≈0.90, sum≈-14, vs the true trace -13.67) with margin</span>
 <a id="__codelineno-0-446" name="__codelineno-0-446"></a><span class="sd">        on both acceptance gates — see Task 4 tuning.</span>
-<a id="__codelineno-0-447" name="__codelineno-0-447"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-447" name="__codelineno-0-447"></a><span class="sd">    """</span>
 <a id="__codelineno-0-448" name="__codelineno-0-448"></a>    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-<a id="__codelineno-0-449" name="__codelineno-0-449"></a>        <span class="s2">&quot;lyapunov_spectrum is EXPLORATORY (full-spectrum estimates on short/&quot;</span>
-<a id="__codelineno-0-450" name="__codelineno-0-450"></a>        <span class="s2">&quot;noisy data are unreliable). Use largest_lyapunov for the headline &quot;</span>
-<a id="__codelineno-0-451" name="__codelineno-0-451"></a>        <span class="s2">&quot;exponent.&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-449" name="__codelineno-0-449"></a>        <span class="s2">"lyapunov_spectrum is EXPLORATORY (full-spectrum estimates on short/"</span>
+<a id="__codelineno-0-450" name="__codelineno-0-450"></a>        <span class="s2">"noisy data are unreliable). Use largest_lyapunov for the headline "</span>
+<a id="__codelineno-0-451" name="__codelineno-0-451"></a>        <span class="s2">"exponent."</span><span class="p">,</span>
 <a id="__codelineno-0-452" name="__codelineno-0-452"></a>        <span class="ne">RuntimeWarning</span><span class="p">,</span>
 <a id="__codelineno-0-453" name="__codelineno-0-453"></a>        <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <a id="__codelineno-0-454" name="__codelineno-0-454"></a>    <span class="p">)</span>
@@ -2694,8 +2666,8 @@ on both acceptance gates — see Task 4 tuning.</p>
 <a id="__codelineno-0-466" name="__codelineno-0-466"></a>    <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">emb</span><span class="o">.</span><span class="n">shape</span>
 <a id="__codelineno-0-467" name="__codelineno-0-467"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">MIN_TRAJECTORY_LENGTH</span><span class="p">:</span>
 <a id="__codelineno-0-468" name="__codelineno-0-468"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<a id="__codelineno-0-469" name="__codelineno-0-469"></a>            <span class="sa">f</span><span class="s2">&quot;Trajectory too short (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points). &quot;</span>
-<a id="__codelineno-0-470" name="__codelineno-0-470"></a>            <span class="sa">f</span><span class="s2">&quot;Need at least </span><span class="si">{</span><span class="n">MIN_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">.&quot;</span>
+<a id="__codelineno-0-469" name="__codelineno-0-469"></a>            <span class="sa">f</span><span class="s2">"Trajectory too short (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points). "</span>
+<a id="__codelineno-0-470" name="__codelineno-0-470"></a>            <span class="sa">f</span><span class="s2">"Need at least </span><span class="si">{</span><span class="n">MIN_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">."</span>
 <a id="__codelineno-0-471" name="__codelineno-0-471"></a>        <span class="p">)</span>
 <a id="__codelineno-0-472" name="__codelineno-0-472"></a>
 <a id="__codelineno-0-473" name="__codelineno-0-473"></a>    <span class="n">tree</span> <span class="o">=</span> <span class="n">cKDTree</span><span class="p">(</span><span class="n">emb</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -2722,7 +2694,7 @@ on both acceptance gates — see Task 4 tuning.</p>
 <a id="__codelineno-0-494" name="__codelineno-0-494"></a>        <span class="n">n_steps</span> <span class="o">+=</span> <span class="mi">1</span>
 <a id="__codelineno-0-495" name="__codelineno-0-495"></a>
 <a id="__codelineno-0-496" name="__codelineno-0-496"></a>    <span class="k">if</span> <span class="n">n_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-<a id="__codelineno-0-497" name="__codelineno-0-497"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not estimate Jacobians. Check trajectory quality.&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-497" name="__codelineno-0-497"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Could not estimate Jacobians. Check trajectory quality."</span><span class="p">)</span>
 <a id="__codelineno-0-498" name="__codelineno-0-498"></a>    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">lyap_sums</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_steps</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
 <a id="__codelineno-0-499" name="__codelineno-0-499"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
@@ -2788,7 +2760,7 @@ on both acceptance gates — see Task 4 tuning.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

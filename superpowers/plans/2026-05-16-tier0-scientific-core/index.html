@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -492,34 +492,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -2002,7 +1974,7 @@
 <li>[ ] <strong>Step 1: Write the failing test</strong></li>
 </ul>
 <p>Create <code>tests/test_classify.py</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="sd">&quot;&quot;&quot;Tests for mneme.core.classify — gated attractor classification.&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="sd">"""Tests for mneme.core.classify — gated attractor classification."""</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
@@ -2011,8 +1983,8 @@
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_undetermined_member_exists</span><span class="p">():</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">assert</span> <span class="n">AttractorType</span><span class="o">.</span><span class="n">UNDETERMINED</span> <span class="o">==</span> <span class="s2">&quot;undetermined&quot;</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="k">assert</span> <span class="n">AttractorType</span><span class="o">.</span><span class="n">UNDETERMINED</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;undetermined&quot;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">assert</span> <span class="n">AttractorType</span><span class="o">.</span><span class="n">UNDETERMINED</span> <span class="o">==</span> <span class="s2">"undetermined"</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="k">assert</span> <span class="n">AttractorType</span><span class="o">.</span><span class="n">UNDETERMINED</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"undetermined"</span>
 </code></pre></div>
 <ul>
 <li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
@@ -2024,12 +1996,12 @@ Expected: FAIL — <code>AttributeError: UNDETERMINED</code></p>
 </ul>
 <p>In <code>src/mneme/types.py</code>, the <code>AttractorType</code> enum (lines 37-42) becomes:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">AttractorType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Types of dynamical attractors.&quot;&quot;&quot;</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">FIXED_POINT</span> <span class="o">=</span> <span class="s2">&quot;fixed_point&quot;</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">LIMIT_CYCLE</span> <span class="o">=</span> <span class="s2">&quot;limit_cycle&quot;</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">STRANGE</span> <span class="o">=</span> <span class="s2">&quot;strange&quot;</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">QUASI_PERIODIC</span> <span class="o">=</span> <span class="s2">&quot;quasi_periodic&quot;</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">UNDETERMINED</span> <span class="o">=</span> <span class="s2">&quot;undetermined&quot;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="sd">"""Types of dynamical attractors."""</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">FIXED_POINT</span> <span class="o">=</span> <span class="s2">"fixed_point"</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">LIMIT_CYCLE</span> <span class="o">=</span> <span class="s2">"limit_cycle"</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">STRANGE</span> <span class="o">=</span> <span class="s2">"strange"</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">QUASI_PERIODIC</span> <span class="o">=</span> <span class="s2">"quasi_periodic"</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">UNDETERMINED</span> <span class="o">=</span> <span class="s2">"undetermined"</span>
 </code></pre></div>
 <ul>
 <li>[ ] <strong>Step 4: Run test to verify it passes</strong></li>
@@ -2040,7 +2012,7 @@ Expected: PASS</p>
 <li>[ ] <strong>Step 5: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>add<span class="w"> </span>src/mneme/types.py<span class="w"> </span>tests/test_classify.py
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add AttractorType.UNDETERMINED&quot;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: add AttractorType.UNDETERMINED"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-2-rk4-lorenzrossler-test-fixtures">Task 2: RK4 Lorenz/Rössler test fixtures<a class="headerlink" href="#task-2-rk4-lorenzrossler-test-fixtures" title="Permanent link">&para;</a></h2>
@@ -2050,7 +2022,7 @@ Expected: PASS</p>
 <li>[ ] <strong>Step 1: Write the failing test</strong></li>
 </ul>
 <p>Append to <code>tests/test_classify.py</code> temporarily (will move in Task 6) — actually create <code>tests/test_lyapunov.py</code> with a fixture sanity test:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="sd">&quot;&quot;&quot;Tests for mneme.core.lyapunov.&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="sd">"""Tests for mneme.core.lyapunov."""</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
@@ -2092,10 +2064,10 @@ Expected: FAIL — <code>fixture 'lorenz_rk4' not found</code></p>
 <a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
 <a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
 <a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">lorenz_rk4</span><span class="p">():</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;RK4-integrated Lorenz attractor. Returns (trajectory (N,3), dt).</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="sd">"""RK4-integrated Lorenz attractor. Returns (trajectory (N,3), dt).</span>
 <a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
 <a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="sd">    100-step transient discarded. Standard params -&gt; lambda1 ~ 0.906.</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="sd">    """</span>
 <a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">8.0</span> <span class="o">/</span> <span class="mf">3.0</span>
 <a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
 <a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">deriv</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
@@ -2109,16 +2081,16 @@ Expected: FAIL — <code>fixture 'lorenz_rk4' not found</code></p>
 <a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>
 <a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
 <a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="k">def</span><span class="w"> </span><span class="nf">lorenz_trajectory</span><span class="p">(</span><span class="n">lorenz_rk4</span><span class="p">):</span>
-<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Back-compat alias used by existing recurrence tests: (N,3) array only.&quot;&quot;&quot;</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">    </span><span class="sd">"""Back-compat alias used by existing recurrence tests: (N,3) array only."""</span>
 <a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>    <span class="k">return</span> <span class="n">lorenz_rk4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>
 <a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>
 <a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
 <a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="k">def</span><span class="w"> </span><span class="nf">rossler_rk4</span><span class="p">():</span>
-<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;RK4-integrated Rössler attractor. Returns (trajectory (N,3), dt).</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="w">    </span><span class="sd">"""RK4-integrated Rössler attractor. Returns (trajectory (N,3), dt).</span>
 <a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>
 <a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="sd">    a=b=0.2, c=5.7 -&gt; lambda1 ~ 0.071.</span>
-<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="sd">    """</span>
 <a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">5.7</span>
 <a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a>
 <a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">deriv</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
@@ -2144,7 +2116,7 @@ Expected: PASS (the <code>lorenz_trajectory</code> alias keeps them working)</p>
 <li>[ ] <strong>Step 6: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>add<span class="w"> </span>tests/conftest.py<span class="w"> </span>tests/test_lyapunov.py
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;test: RK4 Lorenz/Rössler fixtures replacing Euler Lorenz&quot;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"test: RK4 Lorenz/Rössler fixtures replacing Euler Lorenz"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-3-embeddingpy">Task 3: <code>embedding.py</code><a class="headerlink" href="#task-3-embeddingpy" title="Permanent link">&para;</a></h2>
@@ -2155,7 +2127,7 @@ Expected: PASS (the <code>lorenz_trajectory</code> alias keeps them working)</p>
 <li>[ ] <strong>Step 1: Write the failing tests</strong></li>
 </ul>
 <p>Create <code>tests/test_embedding.py</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="sd">&quot;&quot;&quot;Tests for mneme.core.embedding.&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="sd">"""Tests for mneme.core.embedding."""</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
@@ -2182,7 +2154,7 @@ Expected: PASS (the <code>lorenz_trajectory</code> alias keeps them working)</p>
 <a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">emb</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">sig</span><span class="p">[</span><span class="mi">1</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
 <a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>
 <a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_short_series_raises</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;too short&quot;</span><span class="p">):</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">"too short"</span><span class="p">):</span>
 <a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>            <span class="n">embed_trajectory</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]),</span> <span class="n">embedding_dimension</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">time_delay</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>
 <a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>
@@ -2240,12 +2212,12 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.embedding</code></p>
 <ul>
 <li>[ ] <strong>Step 3: Create <code>src/mneme/core/embedding.py</code></strong></li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="sd">&quot;&quot;&quot;Phase-space embedding and parameter selection.</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="sd">"""Phase-space embedding and parameter selection.</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="sd">Pure-numpy implementations of delay embedding, the Theiler window,</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="sd">Fraser–Swinney mutual-information delay selection, and Cao&#39;s (1997)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="sd">Fraser–Swinney mutual-information delay selection, and Cao's (1997)</span>
 <a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="sd">minimum embedding dimension. These feed the Lyapunov estimators.</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="sd">"""</span>
 <a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
 <a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 <a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
@@ -2260,7 +2232,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.embedding</code></p>
 <a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>    <span class="n">embedding_dimension</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 <a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>    <span class="n">time_delay</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 <a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a delay embedding of a time series.</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="sd">"""Create a delay embedding of a time series.</span>
 <a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
 <a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="sd">    ----------</span>
@@ -2276,14 +2248,14 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.embedding</code></p>
 <a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a><span class="sd">    np.ndarray</span>
 <a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a><span class="sd">        Embedded trajectory, shape</span>
 <a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a><span class="sd">        (n - (embedding_dimension-1)*time_delay, embedding_dimension*n_features).</span>
-<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a><span class="sd">    """</span>
 <a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>    <span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">time_series</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>    <span class="k">if</span> <span class="n">ts</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
 <a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>        <span class="n">ts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a>
 <a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>    <span class="n">n_points</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">embedding_dimension</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">time_delay</span>
 <a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>    <span class="k">if</span> <span class="n">n_points</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Time series too short for embedding&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Time series too short for embedding"</span><span class="p">)</span>
 <a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a>
 <a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>    <span class="n">n_feat</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a>    <span class="n">embedded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_points</span><span class="p">,</span> <span class="n">embedding_dimension</span> <span class="o">*</span> <span class="n">n_feat</span><span class="p">))</span>
@@ -2294,11 +2266,11 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.embedding</code></p>
 <a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a>
 <a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a>
 <a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a><span class="k">def</span><span class="w"> </span><span class="nf">theiler_window</span><span class="p">(</span><span class="n">time_series</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Theiler window = first zero crossing of the autocorrelation function.</span>
+<a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a><span class="w">    </span><span class="sd">"""Theiler window = first zero crossing of the autocorrelation function.</span>
 <a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a>
 <a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a><span class="sd">    Used to exclude temporally-correlated neighbours from divergence /</span>
 <a id="__codelineno-7-58" name="__codelineno-7-58" href="#__codelineno-7-58"></a><span class="sd">    Jacobian estimates. Falls back to the 1/e decay time, then to 1.</span>
-<a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a><span class="sd">    """</span>
 <a id="__codelineno-7-60" name="__codelineno-7-60" href="#__codelineno-7-60"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">time_series</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <a id="__codelineno-7-61" name="__codelineno-7-61" href="#__codelineno-7-61"></a>    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
 <a id="__codelineno-7-62" name="__codelineno-7-62" href="#__codelineno-7-62"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
@@ -2306,7 +2278,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.embedding</code></p>
 <a id="__codelineno-7-64" name="__codelineno-7-64" href="#__codelineno-7-64"></a>    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <a id="__codelineno-7-65" name="__codelineno-7-65" href="#__codelineno-7-65"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
 <a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a>        <span class="k">return</span> <span class="mi">1</span>
-<a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a>    <span class="n">ac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">)[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:]</span>
+<a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a>    <span class="n">ac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"full"</span><span class="p">)[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:]</span>
 <a id="__codelineno-7-68" name="__codelineno-7-68" href="#__codelineno-7-68"></a>    <span class="k">if</span> <span class="n">ac</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 <a id="__codelineno-7-69" name="__codelineno-7-69" href="#__codelineno-7-69"></a>        <span class="k">return</span> <span class="mi">1</span>
 <a id="__codelineno-7-70" name="__codelineno-7-70" href="#__codelineno-7-70"></a>    <span class="n">ac</span> <span class="o">=</span> <span class="n">ac</span> <span class="o">/</span> <span class="n">ac</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2322,7 +2294,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.embedding</code></p>
 <a id="__codelineno-7-80" name="__codelineno-7-80" href="#__codelineno-7-80"></a>
 <a id="__codelineno-7-81" name="__codelineno-7-81" href="#__codelineno-7-81"></a>
 <a id="__codelineno-7-82" name="__codelineno-7-82" href="#__codelineno-7-82"></a><span class="k">def</span><span class="w"> </span><span class="nf">_mutual_information</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<a id="__codelineno-7-83" name="__codelineno-7-83" href="#__codelineno-7-83"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Histogram-based mutual information of two equal-length series (nats).&quot;&quot;&quot;</span>
+<a id="__codelineno-7-83" name="__codelineno-7-83" href="#__codelineno-7-83"></a><span class="w">    </span><span class="sd">"""Histogram-based mutual information of two equal-length series (nats)."""</span>
 <a id="__codelineno-7-84" name="__codelineno-7-84" href="#__codelineno-7-84"></a>    <span class="n">c_xy</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
 <a id="__codelineno-7-85" name="__codelineno-7-85" href="#__codelineno-7-85"></a>    <span class="n">p_xy</span> <span class="o">=</span> <span class="n">c_xy</span> <span class="o">/</span> <span class="n">c_xy</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <a id="__codelineno-7-86" name="__codelineno-7-86" href="#__codelineno-7-86"></a>    <span class="n">p_x</span> <span class="o">=</span> <span class="n">p_xy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -2333,12 +2305,12 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.embedding</code></p>
 <a id="__codelineno-7-91" name="__codelineno-7-91" href="#__codelineno-7-91"></a>
 <a id="__codelineno-7-92" name="__codelineno-7-92" href="#__codelineno-7-92"></a>
 <a id="__codelineno-7-93" name="__codelineno-7-93" href="#__codelineno-7-93"></a><span class="k">def</span><span class="w"> </span><span class="nf">mutual_information_delay</span><span class="p">(</span><span class="n">time_series</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">max_delay</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<a id="__codelineno-7-94" name="__codelineno-7-94" href="#__codelineno-7-94"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Time delay = first local minimum of time-delayed mutual information.</span>
+<a id="__codelineno-7-94" name="__codelineno-7-94" href="#__codelineno-7-94"></a><span class="w">    </span><span class="sd">"""Time delay = first local minimum of time-delayed mutual information.</span>
 <a id="__codelineno-7-95" name="__codelineno-7-95" href="#__codelineno-7-95"></a>
 <a id="__codelineno-7-96" name="__codelineno-7-96" href="#__codelineno-7-96"></a><span class="sd">    Fraser–Swinney method. Bin count via a Freedman–Diaconis-like rule.</span>
 <a id="__codelineno-7-97" name="__codelineno-7-97" href="#__codelineno-7-97"></a><span class="sd">    If no local minimum is found, returns the delay of the global minimum</span>
 <a id="__codelineno-7-98" name="__codelineno-7-98" href="#__codelineno-7-98"></a><span class="sd">    within [1, max_delay]; if MI is monotone/degenerate, returns 1.</span>
-<a id="__codelineno-7-99" name="__codelineno-7-99" href="#__codelineno-7-99"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-7-99" name="__codelineno-7-99" href="#__codelineno-7-99"></a><span class="sd">    """</span>
 <a id="__codelineno-7-100" name="__codelineno-7-100" href="#__codelineno-7-100"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">time_series</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <a id="__codelineno-7-101" name="__codelineno-7-101" href="#__codelineno-7-101"></a>    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
 <a id="__codelineno-7-102" name="__codelineno-7-102" href="#__codelineno-7-102"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
@@ -2363,11 +2335,11 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.embedding</code></p>
 <a id="__codelineno-7-121" name="__codelineno-7-121" href="#__codelineno-7-121"></a>    <span class="n">delay</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 <a id="__codelineno-7-122" name="__codelineno-7-122" href="#__codelineno-7-122"></a>    <span class="n">max_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
 <a id="__codelineno-7-123" name="__codelineno-7-123" href="#__codelineno-7-123"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<a id="__codelineno-7-124" name="__codelineno-7-124" href="#__codelineno-7-124"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Minimum embedding dimension via Cao&#39;s (1997) E1 statistic.</span>
+<a id="__codelineno-7-124" name="__codelineno-7-124" href="#__codelineno-7-124"></a><span class="w">    </span><span class="sd">"""Minimum embedding dimension via Cao's (1997) E1 statistic.</span>
 <a id="__codelineno-7-125" name="__codelineno-7-125" href="#__codelineno-7-125"></a>
 <a id="__codelineno-7-126" name="__codelineno-7-126" href="#__codelineno-7-126"></a><span class="sd">    E1(d) saturates near 1 once the attractor is unfolded. Returns the</span>
 <a id="__codelineno-7-127" name="__codelineno-7-127" href="#__codelineno-7-127"></a><span class="sd">    smallest d where the relative change in E1 drops below 5% (or max_dim).</span>
-<a id="__codelineno-7-128" name="__codelineno-7-128" href="#__codelineno-7-128"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-7-128" name="__codelineno-7-128" href="#__codelineno-7-128"></a><span class="sd">    """</span>
 <a id="__codelineno-7-129" name="__codelineno-7-129" href="#__codelineno-7-129"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">time_series</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <a id="__codelineno-7-130" name="__codelineno-7-130" href="#__codelineno-7-130"></a>    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
 <a id="__codelineno-7-131" name="__codelineno-7-131" href="#__codelineno-7-131"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
@@ -2407,7 +2379,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.embedding</code></p>
 <a id="__codelineno-7-165" name="__codelineno-7-165" href="#__codelineno-7-165"></a>    <span class="n">max_dimension</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
 <a id="__codelineno-7-166" name="__codelineno-7-166" href="#__codelineno-7-166"></a>    <span class="n">max_delay</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
 <a id="__codelineno-7-167" name="__codelineno-7-167" href="#__codelineno-7-167"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<a id="__codelineno-7-168" name="__codelineno-7-168" href="#__codelineno-7-168"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate (embedding_dimension, time_delay) via MI delay + Cao dimension.&quot;&quot;&quot;</span>
+<a id="__codelineno-7-168" name="__codelineno-7-168" href="#__codelineno-7-168"></a><span class="w">    </span><span class="sd">"""Estimate (embedding_dimension, time_delay) via MI delay + Cao dimension."""</span>
 <a id="__codelineno-7-169" name="__codelineno-7-169" href="#__codelineno-7-169"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">time_series</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <a id="__codelineno-7-170" name="__codelineno-7-170" href="#__codelineno-7-170"></a>    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
 <a id="__codelineno-7-171" name="__codelineno-7-171" href="#__codelineno-7-171"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
@@ -2424,7 +2396,7 @@ Expected: PASS (all). If <code>test_lorenz_dimension</code> or <code>test_recove
 <li>[ ] <strong>Step 5: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git<span class="w"> </span>add<span class="w"> </span>src/mneme/core/embedding.py<span class="w"> </span>tests/test_embedding.py
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: embedding module (MI delay, Cao dimension, Theiler window)&quot;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: embedding module (MI delay, Cao dimension, Theiler window)"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-4-lyapunovpy">Task 4: <code>lyapunov.py</code><a class="headerlink" href="#task-4-lyapunovpy" title="Permanent link">&para;</a></h2>
@@ -2435,7 +2407,7 @@ Expected: PASS (all). If <code>test_lorenz_dimension</code> or <code>test_recove
 <li>[ ] <strong>Step 1: Write the failing validation tests</strong></li>
 </ul>
 <p>Replace the contents of <code>tests/test_lyapunov.py</code> with:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="sd">&quot;&quot;&quot;Validation tests for mneme.core.lyapunov against known systems.&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="sd">"""Validation tests for mneme.core.lyapunov against known systems."""</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
@@ -2489,7 +2461,7 @@ Expected: PASS (all). If <code>test_lorenz_dimension</code> or <code>test_recove
 <a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a>        <span class="k">assert</span> <span class="o">-</span><span class="mf">16.0</span> <span class="o">&lt;=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">spec</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mf">11.0</span>
 <a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a>
 <a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_short_trajectory_raises</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a>        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;too short&quot;</span><span class="p">):</span>
+<a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a>        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">"too short"</span><span class="p">):</span>
 <a id="__codelineno-9-56" name="__codelineno-9-56" href="#__codelineno-9-56"></a>            <span class="n">lyapunov_spectrum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">20.0</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 </code></pre></div>
 <ul>
@@ -2500,12 +2472,12 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.lyapunov</code></p>
 <ul>
 <li>[ ] <strong>Step 3: Create <code>src/mneme/core/lyapunov.py</code></strong></li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="sd">&quot;&quot;&quot;Largest Lyapunov exponent (Rosenstein 1993) and an exploratory spectrum.</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="sd">"""Largest Lyapunov exponent (Rosenstein 1993) and an exploratory spectrum.</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="sd">`largest_lyapunov` is the headline, robust estimator. `lyapunov_spectrum`</span>
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="sd">(corrected Sano-Sawada) is explicitly exploratory and emits a RuntimeWarning.</span>
 <a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="sd">Pure numpy/scipy; no new dependencies.</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="sd">"""</span>
 <a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
 <a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 <a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
@@ -2529,7 +2501,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.lyapunov</code></p>
 <a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>
 <a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="nd">@dataclass</span>
 <a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="k">class</span><span class="w"> </span><span class="nc">LyapunovResult</span><span class="p">:</span>
-<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Result of a largest-Lyapunov-exponent estimate.&quot;&quot;&quot;</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="w">    </span><span class="sd">"""Result of a largest-Lyapunov-exponent estimate."""</span>
 <a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>
 <a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>    <span class="n">lambda1</span><span class="p">:</span> <span class="nb">float</span>
 <a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>    <span class="n">divergence_curve</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
@@ -2545,7 +2517,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.lyapunov</code></p>
 <a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a>    <span class="n">emb_dim</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
 <a id="__codelineno-10-44" name="__codelineno-10-44" href="#__codelineno-10-44"></a>    <span class="n">delay</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
 <a id="__codelineno-10-45" name="__codelineno-10-45" href="#__codelineno-10-45"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Embed a 1-D series, estimating parameters when not supplied.&quot;&quot;&quot;</span>
+<a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a><span class="w">    </span><span class="sd">"""Embed a 1-D series, estimating parameters when not supplied."""</span>
 <a id="__codelineno-10-47" name="__codelineno-10-47" href="#__codelineno-10-47"></a>    <span class="k">if</span> <span class="n">delay</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-10-48" name="__codelineno-10-48" href="#__codelineno-10-48"></a>        <span class="n">delay</span> <span class="o">=</span> <span class="n">mutual_information_delay</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">max_delay</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 <a id="__codelineno-10-49" name="__codelineno-10-49" href="#__codelineno-10-49"></a>    <span class="k">if</span> <span class="n">emb_dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -2556,12 +2528,12 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.lyapunov</code></p>
 <a id="__codelineno-10-54" name="__codelineno-10-54" href="#__codelineno-10-54"></a>
 <a id="__codelineno-10-55" name="__codelineno-10-55" href="#__codelineno-10-55"></a>
 <a id="__codelineno-10-56" name="__codelineno-10-56" href="#__codelineno-10-56"></a><span class="k">def</span><span class="w"> </span><span class="nf">_linear_region</span><span class="p">(</span><span class="n">curve</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<a id="__codelineno-10-57" name="__codelineno-10-57" href="#__codelineno-10-57"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Pick the linear scaling region of a Rosenstein divergence curve.</span>
+<a id="__codelineno-10-57" name="__codelineno-10-57" href="#__codelineno-10-57"></a><span class="w">    </span><span class="sd">"""Pick the linear scaling region of a Rosenstein divergence curve.</span>
 <a id="__codelineno-10-58" name="__codelineno-10-58" href="#__codelineno-10-58"></a>
 <a id="__codelineno-10-59" name="__codelineno-10-59" href="#__codelineno-10-59"></a><span class="sd">    Skip the first few samples (initial transient), then extend while the</span>
 <a id="__codelineno-10-60" name="__codelineno-10-60" href="#__codelineno-10-60"></a><span class="sd">    local slope stays above half the early slope (plateau onset). Returns</span>
 <a id="__codelineno-10-61" name="__codelineno-10-61" href="#__codelineno-10-61"></a><span class="sd">    inclusive-exclusive (start, end) with at least two points.</span>
-<a id="__codelineno-10-62" name="__codelineno-10-62" href="#__codelineno-10-62"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-10-62" name="__codelineno-10-62" href="#__codelineno-10-62"></a><span class="sd">    """</span>
 <a id="__codelineno-10-63" name="__codelineno-10-63" href="#__codelineno-10-63"></a>    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
 <a id="__codelineno-10-64" name="__codelineno-10-64" href="#__codelineno-10-64"></a>    <span class="n">start</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">))</span>
 <a id="__codelineno-10-65" name="__codelineno-10-65" href="#__codelineno-10-65"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
@@ -2590,7 +2562,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.lyapunov</code></p>
 <a id="__codelineno-10-88" name="__codelineno-10-88" href="#__codelineno-10-88"></a>    <span class="n">theiler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-10-89" name="__codelineno-10-89" href="#__codelineno-10-89"></a>    <span class="n">max_steps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-10-90" name="__codelineno-10-90" href="#__codelineno-10-90"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LyapunovResult</span><span class="p">:</span>
-<a id="__codelineno-10-91" name="__codelineno-10-91" href="#__codelineno-10-91"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Largest Lyapunov exponent via Rosenstein et al. (1993).</span>
+<a id="__codelineno-10-91" name="__codelineno-10-91" href="#__codelineno-10-91"></a><span class="w">    </span><span class="sd">"""Largest Lyapunov exponent via Rosenstein et al. (1993).</span>
 <a id="__codelineno-10-92" name="__codelineno-10-92" href="#__codelineno-10-92"></a>
 <a id="__codelineno-10-93" name="__codelineno-10-93" href="#__codelineno-10-93"></a><span class="sd">    Tracks the mean log Euclidean divergence of nearest-neighbour pairs</span>
 <a id="__codelineno-10-94" name="__codelineno-10-94" href="#__codelineno-10-94"></a><span class="sd">    (excluding neighbours within the Theiler window) and fits a line over</span>
@@ -2606,7 +2578,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.lyapunov</code></p>
 <a id="__codelineno-10-104" name="__codelineno-10-104" href="#__codelineno-10-104"></a><span class="sd">        Embedding/Theiler parameters; estimated from the data when None.</span>
 <a id="__codelineno-10-105" name="__codelineno-10-105" href="#__codelineno-10-105"></a><span class="sd">    max_steps : int, optional</span>
 <a id="__codelineno-10-106" name="__codelineno-10-106" href="#__codelineno-10-106"></a><span class="sd">        Divergence horizon (samples). Default = 2 * theiler, min 10.</span>
-<a id="__codelineno-10-107" name="__codelineno-10-107" href="#__codelineno-10-107"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-10-107" name="__codelineno-10-107" href="#__codelineno-10-107"></a><span class="sd">    """</span>
 <a id="__codelineno-10-108" name="__codelineno-10-108" href="#__codelineno-10-108"></a>    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <a id="__codelineno-10-109" name="__codelineno-10-109" href="#__codelineno-10-109"></a>    <span class="n">raw_1d</span> <span class="o">=</span> <span class="n">arr</span> <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">arr</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
 <a id="__codelineno-10-110" name="__codelineno-10-110" href="#__codelineno-10-110"></a>
@@ -2624,13 +2596,13 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.lyapunov</code></p>
 <a id="__codelineno-10-122" name="__codelineno-10-122" href="#__codelineno-10-122"></a>    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span>
 <a id="__codelineno-10-123" name="__codelineno-10-123" href="#__codelineno-10-123"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">MIN_TRAJECTORY_LENGTH</span><span class="p">:</span>
 <a id="__codelineno-10-124" name="__codelineno-10-124" href="#__codelineno-10-124"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<a id="__codelineno-10-125" name="__codelineno-10-125" href="#__codelineno-10-125"></a>            <span class="sa">f</span><span class="s2">&quot;Trajectory too short (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points). &quot;</span>
-<a id="__codelineno-10-126" name="__codelineno-10-126" href="#__codelineno-10-126"></a>            <span class="sa">f</span><span class="s2">&quot;Need at least </span><span class="si">{</span><span class="n">MIN_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">.&quot;</span>
+<a id="__codelineno-10-125" name="__codelineno-10-125" href="#__codelineno-10-125"></a>            <span class="sa">f</span><span class="s2">"Trajectory too short (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points). "</span>
+<a id="__codelineno-10-126" name="__codelineno-10-126" href="#__codelineno-10-126"></a>            <span class="sa">f</span><span class="s2">"Need at least </span><span class="si">{</span><span class="n">MIN_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">."</span>
 <a id="__codelineno-10-127" name="__codelineno-10-127" href="#__codelineno-10-127"></a>        <span class="p">)</span>
 <a id="__codelineno-10-128" name="__codelineno-10-128" href="#__codelineno-10-128"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">RECOMMENDED_TRAJECTORY_LENGTH</span><span class="p">:</span>
 <a id="__codelineno-10-129" name="__codelineno-10-129" href="#__codelineno-10-129"></a>        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-<a id="__codelineno-10-130" name="__codelineno-10-130" href="#__codelineno-10-130"></a>            <span class="sa">f</span><span class="s2">&quot;largest_lyapunov on a short trajectory (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points; &quot;</span>
-<a id="__codelineno-10-131" name="__codelineno-10-131" href="#__codelineno-10-131"></a>            <span class="sa">f</span><span class="s2">&quot;recommended &gt;= </span><span class="si">{</span><span class="n">RECOMMENDED_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">). Treat as exploratory.&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-130" name="__codelineno-10-130" href="#__codelineno-10-130"></a>            <span class="sa">f</span><span class="s2">"largest_lyapunov on a short trajectory (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points; "</span>
+<a id="__codelineno-10-131" name="__codelineno-10-131" href="#__codelineno-10-131"></a>            <span class="sa">f</span><span class="s2">"recommended &gt;= </span><span class="si">{</span><span class="n">RECOMMENDED_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">). Treat as exploratory."</span><span class="p">,</span>
 <a id="__codelineno-10-132" name="__codelineno-10-132" href="#__codelineno-10-132"></a>            <span class="ne">RuntimeWarning</span><span class="p">,</span>
 <a id="__codelineno-10-133" name="__codelineno-10-133" href="#__codelineno-10-133"></a>            <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <a id="__codelineno-10-134" name="__codelineno-10-134" href="#__codelineno-10-134"></a>        <span class="p">)</span>
@@ -2693,16 +2665,16 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.lyapunov</code></p>
 <a id="__codelineno-10-191" name="__codelineno-10-191" href="#__codelineno-10-191"></a>    <span class="n">theiler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-10-192" name="__codelineno-10-192" href="#__codelineno-10-192"></a>    <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
 <a id="__codelineno-10-193" name="__codelineno-10-193" href="#__codelineno-10-193"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-10-194" name="__codelineno-10-194" href="#__codelineno-10-194"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;EXPLORATORY full Lyapunov spectrum (corrected Sano-Sawada).</span>
+<a id="__codelineno-10-194" name="__codelineno-10-194" href="#__codelineno-10-194"></a><span class="w">    </span><span class="sd">"""EXPLORATORY full Lyapunov spectrum (corrected Sano-Sawada).</span>
 <a id="__codelineno-10-195" name="__codelineno-10-195" href="#__codelineno-10-195"></a>
 <a id="__codelineno-10-196" name="__codelineno-10-196" href="#__codelineno-10-196"></a><span class="sd">    Local-Jacobian QR method with Theiler exclusion, ridge-regularised</span>
 <a id="__codelineno-10-197" name="__codelineno-10-197" href="#__codelineno-10-197"></a><span class="sd">    neighbour regression, and consistent log-growth / time normalisation.</span>
 <a id="__codelineno-10-198" name="__codelineno-10-198" href="#__codelineno-10-198"></a><span class="sd">    Emits a RuntimeWarning: prefer `largest_lyapunov` for the headline λ₁.</span>
-<a id="__codelineno-10-199" name="__codelineno-10-199" href="#__codelineno-10-199"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-10-199" name="__codelineno-10-199" href="#__codelineno-10-199"></a><span class="sd">    """</span>
 <a id="__codelineno-10-200" name="__codelineno-10-200" href="#__codelineno-10-200"></a>    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-<a id="__codelineno-10-201" name="__codelineno-10-201" href="#__codelineno-10-201"></a>        <span class="s2">&quot;lyapunov_spectrum is EXPLORATORY (full-spectrum estimates on short/&quot;</span>
-<a id="__codelineno-10-202" name="__codelineno-10-202" href="#__codelineno-10-202"></a>        <span class="s2">&quot;noisy data are unreliable). Use largest_lyapunov for the headline &quot;</span>
-<a id="__codelineno-10-203" name="__codelineno-10-203" href="#__codelineno-10-203"></a>        <span class="s2">&quot;exponent.&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-201" name="__codelineno-10-201" href="#__codelineno-10-201"></a>        <span class="s2">"lyapunov_spectrum is EXPLORATORY (full-spectrum estimates on short/"</span>
+<a id="__codelineno-10-202" name="__codelineno-10-202" href="#__codelineno-10-202"></a>        <span class="s2">"noisy data are unreliable). Use largest_lyapunov for the headline "</span>
+<a id="__codelineno-10-203" name="__codelineno-10-203" href="#__codelineno-10-203"></a>        <span class="s2">"exponent."</span><span class="p">,</span>
 <a id="__codelineno-10-204" name="__codelineno-10-204" href="#__codelineno-10-204"></a>        <span class="ne">RuntimeWarning</span><span class="p">,</span>
 <a id="__codelineno-10-205" name="__codelineno-10-205" href="#__codelineno-10-205"></a>        <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <a id="__codelineno-10-206" name="__codelineno-10-206" href="#__codelineno-10-206"></a>    <span class="p">)</span>
@@ -2720,8 +2692,8 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.lyapunov</code></p>
 <a id="__codelineno-10-218" name="__codelineno-10-218" href="#__codelineno-10-218"></a>    <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">emb</span><span class="o">.</span><span class="n">shape</span>
 <a id="__codelineno-10-219" name="__codelineno-10-219" href="#__codelineno-10-219"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">MIN_TRAJECTORY_LENGTH</span><span class="p">:</span>
 <a id="__codelineno-10-220" name="__codelineno-10-220" href="#__codelineno-10-220"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<a id="__codelineno-10-221" name="__codelineno-10-221" href="#__codelineno-10-221"></a>            <span class="sa">f</span><span class="s2">&quot;Trajectory too short (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points). &quot;</span>
-<a id="__codelineno-10-222" name="__codelineno-10-222" href="#__codelineno-10-222"></a>            <span class="sa">f</span><span class="s2">&quot;Need at least </span><span class="si">{</span><span class="n">MIN_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">.&quot;</span>
+<a id="__codelineno-10-221" name="__codelineno-10-221" href="#__codelineno-10-221"></a>            <span class="sa">f</span><span class="s2">"Trajectory too short (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> points). "</span>
+<a id="__codelineno-10-222" name="__codelineno-10-222" href="#__codelineno-10-222"></a>            <span class="sa">f</span><span class="s2">"Need at least </span><span class="si">{</span><span class="n">MIN_TRAJECTORY_LENGTH</span><span class="si">}</span><span class="s2">."</span>
 <a id="__codelineno-10-223" name="__codelineno-10-223" href="#__codelineno-10-223"></a>        <span class="p">)</span>
 <a id="__codelineno-10-224" name="__codelineno-10-224" href="#__codelineno-10-224"></a>
 <a id="__codelineno-10-225" name="__codelineno-10-225" href="#__codelineno-10-225"></a>    <span class="n">tree</span> <span class="o">=</span> <span class="n">cKDTree</span><span class="p">(</span><span class="n">emb</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -2749,7 +2721,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.lyapunov</code></p>
 <a id="__codelineno-10-247" name="__codelineno-10-247" href="#__codelineno-10-247"></a>        <span class="n">n_steps</span> <span class="o">+=</span> <span class="mi">1</span>
 <a id="__codelineno-10-248" name="__codelineno-10-248" href="#__codelineno-10-248"></a>
 <a id="__codelineno-10-249" name="__codelineno-10-249" href="#__codelineno-10-249"></a>    <span class="k">if</span> <span class="n">n_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-<a id="__codelineno-10-250" name="__codelineno-10-250" href="#__codelineno-10-250"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not estimate Jacobians. Check trajectory quality.&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-250" name="__codelineno-10-250" href="#__codelineno-10-250"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Could not estimate Jacobians. Check trajectory quality."</span><span class="p">)</span>
 <a id="__codelineno-10-251" name="__codelineno-10-251" href="#__codelineno-10-251"></a>    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">lyap_sums</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_steps</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
 <a id="__codelineno-10-252" name="__codelineno-10-252" href="#__codelineno-10-252"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </code></pre></div>
@@ -2763,7 +2735,7 @@ Expected: PASS. The fragile gate is <code>test_lorenz_lambda1</code> / <code>tes
 </ul>
 <p>Append to <code>tests/test_lyapunov.py</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_lorenz_lambda1_runs_in_default_ci</span><span class="p">(</span><span class="n">lorenz_rk4</span><span class="p">):</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Downsized, NOT marked slow — guards the headline claim in default CI.&quot;&quot;&quot;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="sd">"""Downsized, NOT marked slow — guards the headline claim in default CI."""</span>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    <span class="n">traj</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">lorenz_rk4</span>
 <a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="n">res</span> <span class="o">=</span> <span class="n">largest_lyapunov</span><span class="p">(</span><span class="n">traj</span><span class="p">[:</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="k">assert</span> <span class="n">res</span><span class="o">.</span><span class="n">lambda1</span> <span class="o">&gt;</span> <span class="mf">0.3</span>  <span class="c1"># clearly positive, fast</span>
@@ -2774,7 +2746,7 @@ Expected: PASS (all).</p>
 <li>[ ] <strong>Step 6: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>git<span class="w"> </span>add<span class="w"> </span>src/mneme/core/lyapunov.py<span class="w"> </span>tests/test_lyapunov.py
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: Rosenstein largest_lyapunov + exploratory Sano-Sawada spectrum&quot;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: Rosenstein largest_lyapunov + exploratory Sano-Sawada spectrum"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-5-surrogatespy">Task 5: <code>surrogates.py</code><a class="headerlink" href="#task-5-surrogatespy" title="Permanent link">&para;</a></h2>
@@ -2785,7 +2757,7 @@ Expected: PASS (all).</p>
 <li>[ ] <strong>Step 1: Write the failing tests</strong></li>
 </ul>
 <p>Create <code>tests/test_surrogates.py</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="sd">&quot;&quot;&quot;Tests for mneme.core.surrogates (IAAFT + surrogate significance test).&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="sd">"""Tests for mneme.core.surrogates (IAAFT + surrogate significance test)."""</span>
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
 <a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
@@ -2825,7 +2797,7 @@ Expected: PASS (all).</p>
 <a id="__codelineno-13-38" name="__codelineno-13-38" href="#__codelineno-13-38"></a><span class="k">class</span><span class="w"> </span><span class="nc">TestSurrogateTest</span><span class="p">:</span>
 <a id="__codelineno-13-39" name="__codelineno-13-39" href="#__codelineno-13-39"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_white_noise_not_significant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <a id="__codelineno-13-40" name="__codelineno-13-40" href="#__codelineno-13-40"></a>        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<a id="__codelineno-13-41" name="__codelineno-13-41" href="#__codelineno-13-41"></a>        <span class="n">res</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1500</span><span class="p">),</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;lambda1&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-13-41" name="__codelineno-13-41" href="#__codelineno-13-41"></a>        <span class="n">res</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1500</span><span class="p">),</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">"lambda1"</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <a id="__codelineno-13-42" name="__codelineno-13-42" href="#__codelineno-13-42"></a>        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">SurrogateResult</span><span class="p">)</span>
 <a id="__codelineno-13-43" name="__codelineno-13-43" href="#__codelineno-13-43"></a>        <span class="k">assert</span> <span class="n">res</span><span class="o">.</span><span class="n">significant</span> <span class="ow">is</span> <span class="kc">False</span>
 <a id="__codelineno-13-44" name="__codelineno-13-44" href="#__codelineno-13-44"></a>
@@ -2834,13 +2806,13 @@ Expected: PASS (all).</p>
 <a id="__codelineno-13-47" name="__codelineno-13-47" href="#__codelineno-13-47"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1500</span><span class="p">)</span>
 <a id="__codelineno-13-48" name="__codelineno-13-48" href="#__codelineno-13-48"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1500</span><span class="p">):</span>
 <a id="__codelineno-13-49" name="__codelineno-13-49" href="#__codelineno-13-49"></a>            <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.7</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">()</span>
-<a id="__codelineno-13-50" name="__codelineno-13-50" href="#__codelineno-13-50"></a>        <span class="n">res</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;lambda1&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-13-50" name="__codelineno-13-50" href="#__codelineno-13-50"></a>        <span class="n">res</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">"lambda1"</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <a id="__codelineno-13-51" name="__codelineno-13-51" href="#__codelineno-13-51"></a>        <span class="k">assert</span> <span class="n">res</span><span class="o">.</span><span class="n">significant</span> <span class="ow">is</span> <span class="kc">False</span>
 <a id="__codelineno-13-52" name="__codelineno-13-52" href="#__codelineno-13-52"></a>
 <a id="__codelineno-13-53" name="__codelineno-13-53" href="#__codelineno-13-53"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_lorenz_is_significant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lorenz_rk4</span><span class="p">):</span>
 <a id="__codelineno-13-54" name="__codelineno-13-54" href="#__codelineno-13-54"></a>        <span class="n">traj</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">lorenz_rk4</span>
 <a id="__codelineno-13-55" name="__codelineno-13-55" href="#__codelineno-13-55"></a>        <span class="n">res</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span>
-<a id="__codelineno-13-56" name="__codelineno-13-56" href="#__codelineno-13-56"></a>            <span class="n">traj</span><span class="p">[:</span><span class="mi">2500</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;lambda1&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span>
+<a id="__codelineno-13-56" name="__codelineno-13-56" href="#__codelineno-13-56"></a>            <span class="n">traj</span><span class="p">[:</span><span class="mi">2500</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">"lambda1"</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span>
 <a id="__codelineno-13-57" name="__codelineno-13-57" href="#__codelineno-13-57"></a>        <span class="p">)</span>
 <a id="__codelineno-13-58" name="__codelineno-13-58" href="#__codelineno-13-58"></a>        <span class="k">assert</span> <span class="n">res</span><span class="o">.</span><span class="n">significant</span> <span class="ow">is</span> <span class="kc">True</span>
 <a id="__codelineno-13-59" name="__codelineno-13-59" href="#__codelineno-13-59"></a>        <span class="k">assert</span> <span class="n">res</span><span class="o">.</span><span class="n">p_value</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
@@ -2853,11 +2825,11 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.surrogates</code></p>
 <ul>
 <li>[ ] <strong>Step 3: Create <code>src/mneme/core/surrogates.py</code></strong></li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="sd">&quot;&quot;&quot;IAAFT surrogate data and rank-based significance testing.</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="sd">"""IAAFT surrogate data and rank-based significance testing.</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="sd">Implements the Schreiber–Schmitz iterative amplitude-adjusted Fourier</span>
 <a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="sd">transform and a one-sided rank test that gates chaos claims.</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="sd">"""</span>
 <a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
 <a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 <a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
@@ -2877,7 +2849,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.surrogates</code></p>
 <a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>    <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">,</span>
 <a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate `n` IAAFT surrogates of a 1-D series.</span>
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="w">    </span><span class="sd">"""Generate `n` IAAFT surrogates of a 1-D series.</span>
 <a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a>
 <a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a><span class="sd">    Each surrogate preserves the amplitude distribution and (closely) the</span>
 <a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a><span class="sd">    power spectrum of `x` while randomising nonlinear structure.</span>
@@ -2886,7 +2858,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.surrogates</code></p>
 <a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a><span class="sd">    -------</span>
 <a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a><span class="sd">    np.ndarray</span>
 <a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="sd">        Shape (n, len(x)).</span>
-<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="sd">    """</span>
 <a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
 <a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 <a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a>    <span class="n">sorted_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -2913,7 +2885,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.surrogates</code></p>
 <a id="__codelineno-14-58" name="__codelineno-14-58" href="#__codelineno-14-58"></a>
 <a id="__codelineno-14-59" name="__codelineno-14-59" href="#__codelineno-14-59"></a><span class="nd">@dataclass</span>
 <a id="__codelineno-14-60" name="__codelineno-14-60" href="#__codelineno-14-60"></a><span class="k">class</span><span class="w"> </span><span class="nc">SurrogateResult</span><span class="p">:</span>
-<a id="__codelineno-14-61" name="__codelineno-14-61" href="#__codelineno-14-61"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Outcome of a surrogate-data significance test.&quot;&quot;&quot;</span>
+<a id="__codelineno-14-61" name="__codelineno-14-61" href="#__codelineno-14-61"></a><span class="w">    </span><span class="sd">"""Outcome of a surrogate-data significance test."""</span>
 <a id="__codelineno-14-62" name="__codelineno-14-62" href="#__codelineno-14-62"></a>
 <a id="__codelineno-14-63" name="__codelineno-14-63" href="#__codelineno-14-63"></a>    <span class="n">statistic_name</span><span class="p">:</span> <span class="nb">str</span>
 <a id="__codelineno-14-64" name="__codelineno-14-64" href="#__codelineno-14-64"></a>    <span class="n">statistic_value</span><span class="p">:</span> <span class="nb">float</span>
@@ -2928,29 +2900,29 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.surrogates</code></p>
 <a id="__codelineno-14-73" name="__codelineno-14-73" href="#__codelineno-14-73"></a>    <span class="k">return</span> <span class="n">largest_lyapunov</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span><span class="o">.</span><span class="n">lambda1</span>
 <a id="__codelineno-14-74" name="__codelineno-14-74" href="#__codelineno-14-74"></a>
 <a id="__codelineno-14-75" name="__codelineno-14-75" href="#__codelineno-14-75"></a>
-<a id="__codelineno-14-76" name="__codelineno-14-76" href="#__codelineno-14-76"></a><span class="n">_STATISTICS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lambda1&quot;</span><span class="p">:</span> <span class="n">_lambda1_stat</span><span class="p">}</span>
+<a id="__codelineno-14-76" name="__codelineno-14-76" href="#__codelineno-14-76"></a><span class="n">_STATISTICS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"lambda1"</span><span class="p">:</span> <span class="n">_lambda1_stat</span><span class="p">}</span>
 <a id="__codelineno-14-77" name="__codelineno-14-77" href="#__codelineno-14-77"></a>
 <a id="__codelineno-14-78" name="__codelineno-14-78" href="#__codelineno-14-78"></a>
 <a id="__codelineno-14-79" name="__codelineno-14-79" href="#__codelineno-14-79"></a><span class="k">def</span><span class="w"> </span><span class="nf">surrogate_test</span><span class="p">(</span>
 <a id="__codelineno-14-80" name="__codelineno-14-80" href="#__codelineno-14-80"></a>    <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-<a id="__codelineno-14-81" name="__codelineno-14-81" href="#__codelineno-14-81"></a>    <span class="n">statistic</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;lambda1&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-81" name="__codelineno-14-81" href="#__codelineno-14-81"></a>    <span class="n">statistic</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"lambda1"</span><span class="p">,</span>
 <a id="__codelineno-14-82" name="__codelineno-14-82" href="#__codelineno-14-82"></a>    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
 <a id="__codelineno-14-83" name="__codelineno-14-83" href="#__codelineno-14-83"></a>    <span class="o">*</span><span class="p">,</span>
 <a id="__codelineno-14-84" name="__codelineno-14-84" href="#__codelineno-14-84"></a>    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
 <a id="__codelineno-14-85" name="__codelineno-14-85" href="#__codelineno-14-85"></a>    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-14-86" name="__codelineno-14-86" href="#__codelineno-14-86"></a>    <span class="o">**</span><span class="n">stat_kwargs</span><span class="p">,</span>
 <a id="__codelineno-14-87" name="__codelineno-14-87" href="#__codelineno-14-87"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SurrogateResult</span><span class="p">:</span>
-<a id="__codelineno-14-88" name="__codelineno-14-88" href="#__codelineno-14-88"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;One-sided IAAFT surrogate test.</span>
+<a id="__codelineno-14-88" name="__codelineno-14-88" href="#__codelineno-14-88"></a><span class="w">    </span><span class="sd">"""One-sided IAAFT surrogate test.</span>
 <a id="__codelineno-14-89" name="__codelineno-14-89" href="#__codelineno-14-89"></a>
 <a id="__codelineno-14-90" name="__codelineno-14-90" href="#__codelineno-14-90"></a><span class="sd">    H0: the discriminating statistic of `trajectory` is consistent with a</span>
 <a id="__codelineno-14-91" name="__codelineno-14-91" href="#__codelineno-14-91"></a><span class="sd">    linear stochastic process. Rejected when the original statistic exceeds</span>
 <a id="__codelineno-14-92" name="__codelineno-14-92" href="#__codelineno-14-92"></a><span class="sd">    the surrogate null distribution at level `alpha`.</span>
 <a id="__codelineno-14-93" name="__codelineno-14-93" href="#__codelineno-14-93"></a>
 <a id="__codelineno-14-94" name="__codelineno-14-94" href="#__codelineno-14-94"></a><span class="sd">    p_value = (1 + #{surrogate &gt;= original}) / (n + 1)</span>
-<a id="__codelineno-14-95" name="__codelineno-14-95" href="#__codelineno-14-95"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-14-95" name="__codelineno-14-95" href="#__codelineno-14-95"></a><span class="sd">    """</span>
 <a id="__codelineno-14-96" name="__codelineno-14-96" href="#__codelineno-14-96"></a>    <span class="k">if</span> <span class="n">statistic</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_STATISTICS</span><span class="p">:</span>
 <a id="__codelineno-14-97" name="__codelineno-14-97" href="#__codelineno-14-97"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<a id="__codelineno-14-98" name="__codelineno-14-98" href="#__codelineno-14-98"></a>            <span class="sa">f</span><span class="s2">&quot;Unknown statistic </span><span class="si">{</span><span class="n">statistic</span><span class="si">!r}</span><span class="s2">. Available: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">_STATISTICS</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-14-98" name="__codelineno-14-98" href="#__codelineno-14-98"></a>            <span class="sa">f</span><span class="s2">"Unknown statistic </span><span class="si">{</span><span class="n">statistic</span><span class="si">!r}</span><span class="s2">. Available: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">_STATISTICS</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
 <a id="__codelineno-14-99" name="__codelineno-14-99" href="#__codelineno-14-99"></a>        <span class="p">)</span>
 <a id="__codelineno-14-100" name="__codelineno-14-100" href="#__codelineno-14-100"></a>    <span class="n">stat_fn</span> <span class="o">=</span> <span class="n">_STATISTICS</span><span class="p">[</span><span class="n">statistic</span><span class="p">]</span>
 <a id="__codelineno-14-101" name="__codelineno-14-101" href="#__codelineno-14-101"></a>
@@ -2982,7 +2954,7 @@ Expected: PASS. <code>test_white_noise_not_significant</code> / <code>test_ar1_n
 <li>[ ] <strong>Step 5: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git<span class="w"> </span>add<span class="w"> </span>src/mneme/core/surrogates.py<span class="w"> </span>tests/test_surrogates.py
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: IAAFT surrogates + rank-based significance test&quot;</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: IAAFT surrogates + rank-based significance test"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-6-classifypy">Task 6: <code>classify.py</code><a class="headerlink" href="#task-6-classifypy" title="Permanent link">&para;</a></h2>
@@ -2993,7 +2965,7 @@ Expected: PASS. <code>test_white_noise_not_significant</code> / <code>test_ar1_n
 <li>[ ] <strong>Step 1: Write the failing tests</strong></li>
 </ul>
 <p>Replace the contents of <code>tests/test_classify.py</code> with:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="sd">&quot;&quot;&quot;Tests for mneme.core.classify — gated classification + Kaplan-Yorke.&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="sd">"""Tests for mneme.core.classify — gated classification + Kaplan-Yorke."""</span>
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
 <a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
@@ -3004,7 +2976,7 @@ Expected: PASS. <code>test_white_noise_not_significant</code> / <code>test_ar1_n
 <a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
 <a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">_sig</span><span class="p">(</span><span class="n">significant</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SurrogateResult</span><span class="p">:</span>
 <a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>    <span class="k">return</span> <span class="n">SurrogateResult</span><span class="p">(</span>
-<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>        <span class="n">statistic_name</span><span class="o">=</span><span class="s2">&quot;lambda1&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>        <span class="n">statistic_name</span><span class="o">=</span><span class="s2">"lambda1"</span><span class="p">,</span>
 <a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>        <span class="n">statistic_value</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
 <a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>        <span class="n">null_distribution</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
 <a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>        <span class="n">p_value</span><span class="o">=</span><span class="mf">0.001</span> <span class="k">if</span> <span class="n">significant</span> <span class="k">else</span> <span class="mf">0.5</span><span class="p">,</span>
@@ -3015,7 +2987,7 @@ Expected: PASS. <code>test_white_noise_not_significant</code> / <code>test_ar1_n
 <a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>
 <a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>
 <a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_undetermined_member_exists</span><span class="p">():</span>
-<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>    <span class="k">assert</span> <span class="n">AttractorType</span><span class="o">.</span><span class="n">UNDETERMINED</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;undetermined&quot;</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>    <span class="k">assert</span> <span class="n">AttractorType</span><span class="o">.</span><span class="n">UNDETERMINED</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"undetermined"</span>
 <a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>
 <a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>
 <a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="k">class</span><span class="w"> </span><span class="nc">TestClassifyAttractor</span><span class="p">:</span>
@@ -3054,12 +3026,12 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.classify</code></p>
 <ul>
 <li>[ ] <strong>Step 3: Create <code>src/mneme/core/classify.py</code></strong></li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="sd">&quot;&quot;&quot;Surrogate-gated attractor classification and Kaplan-Yorke dimension.</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="sd">"""Surrogate-gated attractor classification and Kaplan-Yorke dimension.</span>
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
 <a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="sd">`classify_attractor` REFUSES to return STRANGE without passed surrogate</span>
 <a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="sd">evidence — positive λ₁ alone yields UNDETERMINED. This is the central</span>
 <a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="sd">credibility fix.</span>
-<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="sd">"""</span>
 <a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
 <a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 <a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
@@ -3078,7 +3050,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.classify</code></p>
 <a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>    <span class="n">oscillatory</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>    <span class="n">zero_tol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AttractorType</span><span class="p">:</span>
-<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Classify an attractor from λ₁, gating chaos on surrogate evidence.</span>
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="w">    </span><span class="sd">"""Classify an attractor from λ₁, gating chaos on surrogate evidence.</span>
 <a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>
 <a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a><span class="sd">    ----------</span>
@@ -3090,7 +3062,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.classify</code></p>
 <a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a><span class="sd">    oscillatory : bool</span>
 <a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a><span class="sd">        Hint that near-zero λ₁ corresponds to a limit cycle vs fixed point.</span>
 <a id="__codelineno-17-36" name="__codelineno-17-36" href="#__codelineno-17-36"></a><span class="sd">    zero_tol : float, optional</span>
-<a id="__codelineno-17-37" name="__codelineno-17-37" href="#__codelineno-17-37"></a><span class="sd">        Half-width of the &quot;λ₁ ≈ 0&quot; band. Defaults to the surrogate null</span>
+<a id="__codelineno-17-37" name="__codelineno-17-37" href="#__codelineno-17-37"></a><span class="sd">        Half-width of the "λ₁ ≈ 0" band. Defaults to the surrogate null</span>
 <a id="__codelineno-17-38" name="__codelineno-17-38" href="#__codelineno-17-38"></a><span class="sd">        spread (std) when available, else 0.01.</span>
 <a id="__codelineno-17-39" name="__codelineno-17-39" href="#__codelineno-17-39"></a>
 <a id="__codelineno-17-40" name="__codelineno-17-40" href="#__codelineno-17-40"></a><span class="sd">    Returns</span>
@@ -3099,7 +3071,7 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.classify</code></p>
 <a id="__codelineno-17-43" name="__codelineno-17-43" href="#__codelineno-17-43"></a><span class="sd">        STRANGE only with significant surrogate evidence; otherwise</span>
 <a id="__codelineno-17-44" name="__codelineno-17-44" href="#__codelineno-17-44"></a><span class="sd">        UNDETERMINED (positive λ₁), LIMIT_CYCLE / FIXED_POINT (≈0), or</span>
 <a id="__codelineno-17-45" name="__codelineno-17-45" href="#__codelineno-17-45"></a><span class="sd">        FIXED_POINT (negative).</span>
-<a id="__codelineno-17-46" name="__codelineno-17-46" href="#__codelineno-17-46"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-17-46" name="__codelineno-17-46" href="#__codelineno-17-46"></a><span class="sd">    """</span>
 <a id="__codelineno-17-47" name="__codelineno-17-47" href="#__codelineno-17-47"></a>    <span class="k">if</span> <span class="n">zero_tol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-17-48" name="__codelineno-17-48" href="#__codelineno-17-48"></a>        <span class="k">if</span> <span class="n">surrogate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">surrogate</span><span class="o">.</span><span class="n">null_distribution</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
 <a id="__codelineno-17-49" name="__codelineno-17-49" href="#__codelineno-17-49"></a>            <span class="n">zero_tol</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">surrogate</span><span class="o">.</span><span class="n">null_distribution</span><span class="p">)))</span>
@@ -3119,11 +3091,11 @@ Expected: FAIL — <code>ModuleNotFoundError: mneme.core.classify</code></p>
 <a id="__codelineno-17-63" name="__codelineno-17-63" href="#__codelineno-17-63"></a>
 <a id="__codelineno-17-64" name="__codelineno-17-64" href="#__codelineno-17-64"></a>
 <a id="__codelineno-17-65" name="__codelineno-17-65" href="#__codelineno-17-65"></a><span class="k">def</span><span class="w"> </span><span class="nf">kaplan_yorke_dimension</span><span class="p">(</span><span class="n">spectrum</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<a id="__codelineno-17-66" name="__codelineno-17-66" href="#__codelineno-17-66"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Kaplan-Yorke (Lyapunov) dimension from a Lyapunov spectrum.</span>
+<a id="__codelineno-17-66" name="__codelineno-17-66" href="#__codelineno-17-66"></a><span class="w">    </span><span class="sd">"""Kaplan-Yorke (Lyapunov) dimension from a Lyapunov spectrum.</span>
 <a id="__codelineno-17-67" name="__codelineno-17-67" href="#__codelineno-17-67"></a>
 <a id="__codelineno-17-68" name="__codelineno-17-68" href="#__codelineno-17-68"></a><span class="sd">    D_KY = j + (λ_1 + ... + λ_j) / |λ_{j+1}|, where j is the largest index</span>
 <a id="__codelineno-17-69" name="__codelineno-17-69" href="#__codelineno-17-69"></a><span class="sd">    whose partial sum is non-negative. Formula unchanged from prior code.</span>
-<a id="__codelineno-17-70" name="__codelineno-17-70" href="#__codelineno-17-70"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-17-70" name="__codelineno-17-70" href="#__codelineno-17-70"></a><span class="sd">    """</span>
 <a id="__codelineno-17-71" name="__codelineno-17-71" href="#__codelineno-17-71"></a>    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <a id="__codelineno-17-72" name="__codelineno-17-72" href="#__codelineno-17-72"></a>    <span class="n">cumsum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
 <a id="__codelineno-17-73" name="__codelineno-17-73" href="#__codelineno-17-73"></a>    <span class="n">j_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cumsum</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -3145,7 +3117,7 @@ Expected: PASS (all).</p>
 <li>[ ] <strong>Step 5: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>git<span class="w"> </span>add<span class="w"> </span>src/mneme/core/classify.py<span class="w"> </span>tests/test_classify.py
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: surrogate-gated classify_attractor + Kaplan-Yorke (moved)&quot;</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: surrogate-gated classify_attractor + Kaplan-Yorke (moved)"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-7-clean-break-in-attractorspy">Task 7: Clean break in <code>attractors.py</code><a class="headerlink" href="#task-7-clean-break-in-attractorspy" title="Permanent link">&para;</a></h2>
@@ -3165,11 +3137,11 @@ Expected: PASS (all).</p>
 <a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>        <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
 <a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>        <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
 <a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;EXPLORATORY full Lyapunov spectrum (delegates to lyapunov module).</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">        </span><span class="sd">"""EXPLORATORY full Lyapunov spectrum (delegates to lyapunov module).</span>
 <a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>
 <a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="sd">        Prefer ``mneme.core.largest_lyapunov`` for the headline exponent;</span>
 <a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="sd">        this returns the exploratory Sano-Sawada spectrum.</span>
-<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="sd">        """</span>
 <a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>        <span class="k">return</span> <span class="n">lyapunov_spectrum</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
 </code></pre></div>
 <ul>
@@ -3187,7 +3159,7 @@ Expected: <code>False True</code> (module-level function gone; class kept)</p>
 <li>[ ] <strong>Step 4: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>git<span class="w"> </span>add<span class="w"> </span>src/mneme/core/attractors.py
-<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;refactor: remove old Lyapunov code from attractors.py (clean break)&quot;</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"refactor: remove old Lyapunov code from attractors.py (clean break)"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-8-update-mnemecore__init__py">Task 8: Update <code>mneme/core/__init__.py</code><a class="headerlink" href="#task-8-update-mnemecore__init__py" title="Permanent link">&para;</a></h2>
@@ -3197,7 +3169,7 @@ Expected: <code>False True</code> (module-level function gone; class kept)</p>
 <li>[ ] <strong>Step 1: Write the failing test</strong></li>
 </ul>
 <p>Create <code>tests/test_core_exports.py</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="sd">&quot;&quot;&quot;Public API surface of mneme.core after the Tier 0 clean break.&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="sd">"""Public API surface of mneme.core after the Tier 0 clean break."""</span>
 <a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
 <a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 <a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
@@ -3205,19 +3177,19 @@ Expected: <code>False True</code> (module-level function gone; class kept)</p>
 <a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_new_names_exported</span><span class="p">():</span>
 <a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">mneme.core</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">c</span>
 <a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>
-<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;largest_lyapunov&quot;</span><span class="p">)</span>
-<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;lyapunov_spectrum&quot;</span><span class="p">)</span>
-<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;surrogate_test&quot;</span><span class="p">)</span>
-<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;classify_attractor&quot;</span><span class="p">)</span>
-<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;kaplan_yorke_dimension&quot;</span><span class="p">)</span>
-<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;embed_trajectory&quot;</span><span class="p">)</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">"largest_lyapunov"</span><span class="p">)</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">"lyapunov_spectrum"</span><span class="p">)</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">"surrogate_test"</span><span class="p">)</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">"classify_attractor"</span><span class="p">)</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">"kaplan_yorke_dimension"</span><span class="p">)</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">"embed_trajectory"</span><span class="p">)</span>
 <a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>
 <a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>
 <a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_old_names_removed</span><span class="p">():</span>
 <a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">mneme.core</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">c</span>
 <a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>
-<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;compute_lyapunov_spectrum&quot;</span><span class="p">)</span>
-<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">&quot;classify_attractor_by_lyapunov&quot;</span><span class="p">)</span>
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">"compute_lyapunov_spectrum"</span><span class="p">)</span>
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s2">"classify_attractor_by_lyapunov"</span><span class="p">)</span>
 </code></pre></div>
 <ul>
 <li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
@@ -3235,31 +3207,31 @@ Expected: FAIL — <code>largest_lyapunov</code> not found</p>
 <a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>
 <a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
 <a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>    <span class="c1"># Modules</span>
-<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>    <span class="s2">&quot;field_theory&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>    <span class="s2">&quot;topology&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>    <span class="s2">&quot;attractors&quot;</span><span class="p">,</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>    <span class="s2">"field_theory"</span><span class="p">,</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>    <span class="s2">"topology"</span><span class="p">,</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>    <span class="s2">"attractors"</span><span class="p">,</span>
 <a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>    <span class="c1"># Reconstructors</span>
-<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>    <span class="s2">&quot;FieldReconstructor&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>    <span class="s2">&quot;SparseGPReconstructor&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>    <span class="s2">&quot;DenseIFTReconstructor&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>    <span class="s2">&quot;GaussianProcessReconstructor&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>    <span class="s2">&quot;NeuralFieldReconstructor&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>    <span class="s2">&quot;create_reconstructor&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>    <span class="s2">&quot;create_grid_points&quot;</span><span class="p">,</span>
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>    <span class="s2">"FieldReconstructor"</span><span class="p">,</span>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>    <span class="s2">"SparseGPReconstructor"</span><span class="p">,</span>
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>    <span class="s2">"DenseIFTReconstructor"</span><span class="p">,</span>
+<a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>    <span class="s2">"GaussianProcessReconstructor"</span><span class="p">,</span>
+<a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>    <span class="s2">"NeuralFieldReconstructor"</span><span class="p">,</span>
+<a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>    <span class="s2">"create_reconstructor"</span><span class="p">,</span>
+<a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>    <span class="s2">"create_grid_points"</span><span class="p">,</span>
 <a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>    <span class="c1"># Embedding</span>
-<a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>    <span class="s2">&quot;embed_trajectory&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a>    <span class="s2">&quot;estimate_embedding_parameters&quot;</span><span class="p">,</span>
+<a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>    <span class="s2">"embed_trajectory"</span><span class="p">,</span>
+<a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a>    <span class="s2">"estimate_embedding_parameters"</span><span class="p">,</span>
 <a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a>    <span class="c1"># Lyapunov analysis</span>
-<a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a>    <span class="s2">&quot;LyapunovResult&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a>    <span class="s2">&quot;largest_lyapunov&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a>    <span class="s2">&quot;lyapunov_spectrum&quot;</span><span class="p">,</span>
+<a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a>    <span class="s2">"LyapunovResult"</span><span class="p">,</span>
+<a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a>    <span class="s2">"largest_lyapunov"</span><span class="p">,</span>
+<a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a>    <span class="s2">"lyapunov_spectrum"</span><span class="p">,</span>
 <a id="__codelineno-23-26" name="__codelineno-23-26" href="#__codelineno-23-26"></a>    <span class="c1"># Surrogate significance</span>
-<a id="__codelineno-23-27" name="__codelineno-23-27" href="#__codelineno-23-27"></a>    <span class="s2">&quot;SurrogateResult&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-28" name="__codelineno-23-28" href="#__codelineno-23-28"></a>    <span class="s2">&quot;iaaft_surrogates&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-29" name="__codelineno-23-29" href="#__codelineno-23-29"></a>    <span class="s2">&quot;surrogate_test&quot;</span><span class="p">,</span>
+<a id="__codelineno-23-27" name="__codelineno-23-27" href="#__codelineno-23-27"></a>    <span class="s2">"SurrogateResult"</span><span class="p">,</span>
+<a id="__codelineno-23-28" name="__codelineno-23-28" href="#__codelineno-23-28"></a>    <span class="s2">"iaaft_surrogates"</span><span class="p">,</span>
+<a id="__codelineno-23-29" name="__codelineno-23-29" href="#__codelineno-23-29"></a>    <span class="s2">"surrogate_test"</span><span class="p">,</span>
 <a id="__codelineno-23-30" name="__codelineno-23-30" href="#__codelineno-23-30"></a>    <span class="c1"># Classification</span>
-<a id="__codelineno-23-31" name="__codelineno-23-31" href="#__codelineno-23-31"></a>    <span class="s2">&quot;classify_attractor&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-32" name="__codelineno-23-32" href="#__codelineno-23-32"></a>    <span class="s2">&quot;kaplan_yorke_dimension&quot;</span><span class="p">,</span>
+<a id="__codelineno-23-31" name="__codelineno-23-31" href="#__codelineno-23-31"></a>    <span class="s2">"classify_attractor"</span><span class="p">,</span>
+<a id="__codelineno-23-32" name="__codelineno-23-32" href="#__codelineno-23-32"></a>    <span class="s2">"kaplan_yorke_dimension"</span><span class="p">,</span>
 <a id="__codelineno-23-33" name="__codelineno-23-33" href="#__codelineno-23-33"></a><span class="p">]</span>
 </code></pre></div>
 <ul>
@@ -3271,7 +3243,7 @@ Expected: PASS</p>
 <li>[ ] <strong>Step 5: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>git<span class="w"> </span>add<span class="w"> </span>src/mneme/core/__init__.py<span class="w"> </span>tests/test_core_exports.py
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: export new Tier 0 API from mneme.core; drop old names&quot;</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: export new Tier 0 API from mneme.core; drop old names"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-9-migrate-teststest_attractorspy">Task 9: Migrate <code>tests/test_attractors.py</code><a class="headerlink" href="#task-9-migrate-teststest_attractorspy" title="Permanent link">&para;</a></h2>
@@ -3304,7 +3276,7 @@ Expected: PASS (Recurrence/AttractorDetector/CorrelationDimension classes only; 
 <li>[ ] <strong>Step 4: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>git<span class="w"> </span>add<span class="w"> </span>tests/test_attractors.py
-<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;test: drop attractors tests superseded by Tier 0 modules&quot;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"test: drop attractors tests superseded by Tier 0 modules"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-10-migrate-the-3-analysis-scripts-smoke-test">Task 10: Migrate the 3 analysis scripts + smoke test<a class="headerlink" href="#task-10-migrate-the-3-analysis-scripts-smoke-test" title="Permanent link">&para;</a></h2>
@@ -3323,7 +3295,7 @@ Expected: PASS (Recurrence/AttractorDetector/CorrelationDimension classes only; 
 <a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>    <span class="n">classify_attractor</span><span class="p">,</span> <span class="n">kaplan_yorke_dimension</span><span class="p">,</span>
 <a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="p">)</span>
 <a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="n">lyap</span> <span class="o">=</span> <span class="n">largest_lyapunov</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">DT</span><span class="p">)</span>
-<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="n">sur</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;lambda1&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">DT</span><span class="p">)</span>
+<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="n">sur</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">"lambda1"</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">DT</span><span class="p">)</span>
 <a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="n">atype</span> <span class="o">=</span> <span class="n">classify_attractor</span><span class="p">(</span><span class="n">lyap</span><span class="o">.</span><span class="n">lambda1</span><span class="p">,</span> <span class="n">surrogate</span><span class="o">=</span><span class="n">sur</span><span class="p">)</span>
 <a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a><span class="n">spectrum</span> <span class="o">=</span> <span class="n">lyapunov_spectrum</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">DT</span><span class="p">)</span>   <span class="c1"># exploratory; for D_KY only</span>
 <a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="n">d_ky</span> <span class="o">=</span> <span class="n">kaplan_yorke_dimension</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
@@ -3344,20 +3316,20 @@ Expected: PASS (Recurrence/AttractorDetector/CorrelationDimension classes only; 
 </code></pre></div>
 <p>Replace the analysis block (old lines 40-51) inside <code>analyze_ecg_hrv</code> with:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>    <span class="n">lyap</span> <span class="o">=</span> <span class="n">largest_lyapunov</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt_hrv</span><span class="p">)</span>
-<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    <span class="n">sur</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;lambda1&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt_hrv</span><span class="p">)</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    <span class="n">sur</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">"lambda1"</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt_hrv</span><span class="p">)</span>
 <a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    <span class="n">atype</span> <span class="o">=</span> <span class="n">classify_attractor</span><span class="p">(</span><span class="n">lyap</span><span class="o">.</span><span class="n">lambda1</span><span class="p">,</span> <span class="n">surrogate</span><span class="o">=</span><span class="n">sur</span><span class="p">)</span>
 <a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">lyapunov_spectrum</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt_hrv</span><span class="p">)</span>
 <a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>    <span class="n">d_ky</span> <span class="o">=</span> <span class="n">kaplan_yorke_dimension</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
 <a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>
 <a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>    <span class="k">return</span> <span class="p">{</span>
-<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>        <span class="s1">&#39;n_beats&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">peaks</span><span class="p">),</span>
-<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>        <span class="s1">&#39;mean_hr&#39;</span><span class="p">:</span> <span class="mi">60000</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rr_intervals</span><span class="p">),</span>
-<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>        <span class="s1">&#39;rr_std&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">rr_intervals</span><span class="p">),</span>
-<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>        <span class="s1">&#39;lambda1&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">lyap</span><span class="o">.</span><span class="n">lambda1</span><span class="p">),</span>
-<a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>        <span class="s1">&#39;surrogate_p&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">sur</span><span class="o">.</span><span class="n">p_value</span><span class="p">),</span>
-<a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>        <span class="s1">&#39;spectrum&#39;</span><span class="p">:</span> <span class="n">spectrum</span><span class="p">,</span>
-<a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a>        <span class="s1">&#39;d_ky&#39;</span><span class="p">:</span> <span class="n">d_ky</span><span class="p">,</span>
-<a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a>        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">atype</span><span class="p">),</span>
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>        <span class="s1">'n_beats'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">peaks</span><span class="p">),</span>
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>        <span class="s1">'mean_hr'</span><span class="p">:</span> <span class="mi">60000</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rr_intervals</span><span class="p">),</span>
+<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>        <span class="s1">'rr_std'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">rr_intervals</span><span class="p">),</span>
+<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>        <span class="s1">'lambda1'</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">lyap</span><span class="o">.</span><span class="n">lambda1</span><span class="p">),</span>
+<a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>        <span class="s1">'surrogate_p'</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">sur</span><span class="o">.</span><span class="n">p_value</span><span class="p">),</span>
+<a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>        <span class="s1">'spectrum'</span><span class="p">:</span> <span class="n">spectrum</span><span class="p">,</span>
+<a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a>        <span class="s1">'d_ky'</span><span class="p">:</span> <span class="n">d_ky</span><span class="p">,</span>
+<a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a>        <span class="s1">'type'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">atype</span><span class="p">),</span>
 <a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a>    <span class="p">}</span>
 </code></pre></div>
 <ul>
@@ -3372,11 +3344,11 @@ Expected: PASS (Recurrence/AttractorDetector/CorrelationDimension classes only; 
 <li>[ ] <strong>Step 4: Write the smoke test</strong></li>
 </ul>
 <p>Create <code>tests/test_scripts_smoke.py</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="sd">&quot;&quot;&quot;Import-and-run smoke test for the migrated analysis scripts.</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="sd">"""Import-and-run smoke test for the migrated analysis scripts.</span>
 <a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>
 <a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="sd">Only checks the scripts import and their Lyapunov code path runs against</span>
 <a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="sd">synthetic data with the new API. Numeric reconciliation is Tier 1.</span>
-<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="sd">"""</span>
 <a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>
 <a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">importlib.util</span>
 <a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
@@ -3385,11 +3357,11 @@ Expected: PASS (Recurrence/AttractorDetector/CorrelationDimension classes only; 
 <a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 <a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>
-<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a><span class="n">SCRIPTS</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="s2">&quot;scripts&quot;</span>
+<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a><span class="n">SCRIPTS</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="s2">"scripts"</span>
 <a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>
 <a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>
 <a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">_load</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>    <span class="n">spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">SCRIPTS</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.py&quot;</span><span class="p">)</span>
+<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>    <span class="n">spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">SCRIPTS</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.py"</span><span class="p">)</span>
 <a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>    <span class="n">mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
 <a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a>    <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">mod</span>
 <a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a>    <span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
@@ -3397,19 +3369,19 @@ Expected: PASS (Recurrence/AttractorDetector/CorrelationDimension classes only; 
 <a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a>
 <a id="__codelineno-30-24" name="__codelineno-30-24" href="#__codelineno-30-24"></a>
 <a id="__codelineno-30-25" name="__codelineno-30-25" href="#__codelineno-30-25"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_analyze_physionet_imports</span><span class="p">():</span>
-<a id="__codelineno-30-26" name="__codelineno-30-26" href="#__codelineno-30-26"></a>    <span class="n">_load</span><span class="p">(</span><span class="s2">&quot;analyze_physionet&quot;</span><span class="p">)</span>  <span class="c1"># must not raise (old API names are gone)</span>
+<a id="__codelineno-30-26" name="__codelineno-30-26" href="#__codelineno-30-26"></a>    <span class="n">_load</span><span class="p">(</span><span class="s2">"analyze_physionet"</span><span class="p">)</span>  <span class="c1"># must not raise (old API names are gone)</span>
 <a id="__codelineno-30-27" name="__codelineno-30-27" href="#__codelineno-30-27"></a>
 <a id="__codelineno-30-28" name="__codelineno-30-28" href="#__codelineno-30-28"></a>
 <a id="__codelineno-30-29" name="__codelineno-30-29" href="#__codelineno-30-29"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_deep_analysis_lyapunov_path_runs</span><span class="p">():</span>
-<a id="__codelineno-30-30" name="__codelineno-30-30" href="#__codelineno-30-30"></a>    <span class="n">mod</span> <span class="o">=</span> <span class="n">_load</span><span class="p">(</span><span class="s2">&quot;deep_analysis&quot;</span><span class="p">)</span>
+<a id="__codelineno-30-30" name="__codelineno-30-30" href="#__codelineno-30-30"></a>    <span class="n">mod</span> <span class="o">=</span> <span class="n">_load</span><span class="p">(</span><span class="s2">"deep_analysis"</span><span class="p">)</span>
 <a id="__codelineno-30-31" name="__codelineno-30-31" href="#__codelineno-30-31"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <a id="__codelineno-30-32" name="__codelineno-30-32" href="#__codelineno-30-32"></a>    <span class="n">pca</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1200</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<a id="__codelineno-30-33" name="__codelineno-30-33" href="#__codelineno-30-33"></a>    <span class="n">res</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">lyapunov_from_pca</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;smoke&quot;</span><span class="p">)</span>
-<a id="__codelineno-30-34" name="__codelineno-30-34" href="#__codelineno-30-34"></a>    <span class="k">assert</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="n">res</span> <span class="ow">or</span> <span class="s2">&quot;lambda1&quot;</span> <span class="ow">in</span> <span class="n">res</span>
+<a id="__codelineno-30-33" name="__codelineno-30-33" href="#__codelineno-30-33"></a>    <span class="n">res</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">lyapunov_from_pca</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"smoke"</span><span class="p">)</span>
+<a id="__codelineno-30-34" name="__codelineno-30-34" href="#__codelineno-30-34"></a>    <span class="k">assert</span> <span class="s2">"error"</span> <span class="ow">in</span> <span class="n">res</span> <span class="ow">or</span> <span class="s2">"lambda1"</span> <span class="ow">in</span> <span class="n">res</span>
 <a id="__codelineno-30-35" name="__codelineno-30-35" href="#__codelineno-30-35"></a>
 <a id="__codelineno-30-36" name="__codelineno-30-36" href="#__codelineno-30-36"></a>
 <a id="__codelineno-30-37" name="__codelineno-30-37" href="#__codelineno-30-37"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_analyze_betse_imports</span><span class="p">():</span>
-<a id="__codelineno-30-38" name="__codelineno-30-38" href="#__codelineno-30-38"></a>    <span class="n">_load</span><span class="p">(</span><span class="s2">&quot;analyze_betse&quot;</span><span class="p">)</span>
+<a id="__codelineno-30-38" name="__codelineno-30-38" href="#__codelineno-30-38"></a>    <span class="n">_load</span><span class="p">(</span><span class="s2">"analyze_betse"</span><span class="p">)</span>
 </code></pre></div>
 <ul>
 <li>[ ] <strong>Step 5: Run the smoke test</strong></li>
@@ -3420,7 +3392,7 @@ Expected: PASS (3 passed). If a script imports a heavy optional dep at module to
 <li>[ ] <strong>Step 6: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>git<span class="w"> </span>add<span class="w"> </span>scripts/analyze_physionet.py<span class="w"> </span>scripts/deep_analysis.py<span class="w"> </span>scripts/analyze_betse.py<span class="w"> </span>tests/test_scripts_smoke.py
-<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;refactor: migrate analysis scripts to Tier 0 API + smoke test&quot;</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"refactor: migrate analysis scripts to Tier 0 API + smoke test"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-11-update-docs">Task 11: Update docs<a class="headerlink" href="#task-11-update-docs" title="Permanent link">&para;</a></h2>
@@ -3433,7 +3405,7 @@ Expected: PASS (3 passed). If a script imports a heavy optional dep at module to
 <div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mneme.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">largest_lyapunov</span><span class="p">,</span> <span class="n">surrogate_test</span><span class="p">,</span> <span class="n">classify_attractor</span><span class="p">,</span> <span class="n">lyapunov_spectrum</span><span class="p">,</span> <span class="n">kaplan_yorke_dimension</span>
 <a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>
 <a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="n">res</span> <span class="o">=</span> <span class="n">largest_lyapunov</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>          <span class="c1"># robust λ₁ (Rosenstein)</span>
-<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="n">sur</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;lambda1&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="n">sur</span> <span class="o">=</span> <span class="n">surrogate_test</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">"lambda1"</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 <a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="n">attractor_type</span> <span class="o">=</span> <span class="n">classify_attractor</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">lambda1</span><span class="p">,</span> <span class="n">surrogate</span><span class="o">=</span><span class="n">sur</span><span class="p">)</span>  <span class="c1"># STRANGE only if sur.significant</span>
 <a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="n">spectrum</span> <span class="o">=</span> <span class="n">lyapunov_spectrum</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>    <span class="c1"># EXPLORATORY full spectrum</span>
 <a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="n">d_ky</span> <span class="o">=</span> <span class="n">kaplan_yorke_dimension</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
@@ -3463,7 +3435,7 @@ Expected: PASS (3 passed). If a script imports a heavy optional dep at module to
 <li>[ ] <strong>Step 4: Commit</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>git<span class="w"> </span>add<span class="w"> </span>CLAUDE.md<span class="w"> </span>README.md<span class="w"> </span>CHANGELOG.md
-<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;docs: update API + withdraw unvalidated Lyapunov claims (Tier 0)&quot;</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"docs: update API + withdraw unvalidated Lyapunov claims (Tier 0)"</span>
 </code></pre></div>
 <hr />
 <h2 id="task-12-full-suite-verification">Task 12: Full-suite verification<a class="headerlink" href="#task-12-full-suite-verification" title="Permanent link">&para;</a></h2>
@@ -3480,7 +3452,7 @@ Expected: ALL PASS, no collection errors, no <code>ModuleNotFoundError</code>. N
 <li>[ ] <strong>Step 3: Final verification commit (if fixes were made)</strong></li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>git<span class="w"> </span>add<span class="w"> </span>-A
-<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;test: Tier 0 full-suite green&quot;</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"test: Tier 0 full-suite green"</span>
 </code></pre></div>
 <ul>
 <li>[ ] <strong>Step 4: Report</strong></li>
@@ -3551,7 +3523,7 @@ Expected: ALL PASS, no collection errors, no <code>ModuleNotFoundError</code>. N
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

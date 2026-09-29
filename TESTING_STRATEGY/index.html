@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -492,34 +492,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -1962,8 +1934,8 @@
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">class</span><span class="w"> </span><span class="nc">TestFieldReconstructor</span><span class="p">:</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_initialization</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="n">reconstructor</span> <span class="o">=</span> <span class="n">FieldReconstructor</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;gaussian_process&#39;</span><span class="p">)</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="k">assert</span> <span class="n">reconstructor</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;gaussian_process&#39;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="n">reconstructor</span> <span class="o">=</span> <span class="n">FieldReconstructor</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'gaussian_process'</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="k">assert</span> <span class="n">reconstructor</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'gaussian_process'</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="k">assert</span> <span class="n">reconstructor</span><span class="o">.</span><span class="n">resolution</span> <span class="o">==</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_fit_with_valid_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1991,7 +1963,7 @@
 <a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>        <span class="k">assert</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
 <a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>        <span class="k">assert</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
 <a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
-<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;method&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gaussian_process&#39;</span><span class="p">,</span> <span class="s1">&#39;ift&#39;</span><span class="p">,</span> <span class="s1">&#39;neural_field&#39;</span><span class="p">])</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">"method"</span><span class="p">,</span> <span class="p">[</span><span class="s1">'gaussian_process'</span><span class="p">,</span> <span class="s1">'ift'</span><span class="p">,</span> <span class="s1">'neural_field'</span><span class="p">])</span>
 <a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_different_methods</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
 <a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>        <span class="n">reconstructor</span> <span class="o">=</span> <span class="n">FieldReconstructor</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
 <a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        <span class="c1"># Test method-specific behavior</span>
@@ -2010,34 +1982,34 @@
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="n">field_data</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate_dynamic</span><span class="p">(</span>
 <a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> 
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>            <span class="n">timesteps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>            <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;noise_level&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>            <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">'noise_level'</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
 <a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="p">)</span>
 <a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
 <a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        <span class="c1"># Create and run pipeline</span>
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        <span class="n">pipeline</span> <span class="o">=</span> <span class="n">MnemePipeline</span><span class="p">({</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>            <span class="s1">&#39;preprocessing&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;normalize&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>            <span class="s1">&#39;reconstruction&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;ift&#39;</span><span class="p">},</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>            <span class="s1">&#39;analysis&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;compute_topology&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>            <span class="s1">'preprocessing'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'normalize'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>            <span class="s1">'reconstruction'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'method'</span><span class="p">:</span> <span class="s1">'ift'</span><span class="p">},</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>            <span class="s1">'analysis'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'compute_topology'</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
 <a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>        <span class="p">})</span>
 <a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>        <span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">({</span><span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="n">field_data</span><span class="p">})</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>        <span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">({</span><span class="s1">'field'</span><span class="p">:</span> <span class="n">field_data</span><span class="p">})</span>
 <a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
 <a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>        <span class="c1"># Verify all expected outputs</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>        <span class="k">assert</span> <span class="s1">&#39;reconstructed_field&#39;</span> <span class="ow">in</span> <span class="n">results</span>
-<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>        <span class="k">assert</span> <span class="s1">&#39;persistence_diagrams&#39;</span> <span class="ow">in</span> <span class="n">results</span>
-<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>        <span class="k">assert</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;reconstructed_field&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>        <span class="k">assert</span> <span class="s1">'reconstructed_field'</span> <span class="ow">in</span> <span class="n">results</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>        <span class="k">assert</span> <span class="s1">'persistence_diagrams'</span> <span class="ow">in</span> <span class="n">results</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>        <span class="k">assert</span> <span class="n">results</span><span class="p">[</span><span class="s1">'reconstructed_field'</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
 <a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
 <a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_pipeline_stage_dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>        <span class="c1"># Test that stages execute in correct order</span>
 <a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>        <span class="n">pipeline</span> <span class="o">=</span> <span class="n">MnemePipeline</span><span class="p">({})</span>
 <a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>
 <a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>        <span class="c1"># Add stages with dependencies</span>
-<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>        <span class="n">pipeline</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span><span class="s1">&#39;preprocess&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;raw&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;processed&#39;</span><span class="p">])</span>
-<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>        <span class="n">pipeline</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span><span class="s1">&#39;analyze&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;processed&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">])</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>        <span class="n">pipeline</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span><span class="s1">'preprocess'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="s1">'raw'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'processed'</span><span class="p">])</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>        <span class="n">pipeline</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span><span class="s1">'analyze'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="s1">'processed'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'results'</span><span class="p">])</span>
 <a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>
 <a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>        <span class="c1"># Verify dependency resolution</span>
 <a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>        <span class="n">order</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">_resolve_execution_order</span><span class="p">()</span>
-<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>        <span class="k">assert</span> <span class="n">order</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;preprocess&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">order</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;analyze&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>        <span class="k">assert</span> <span class="n">order</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'preprocess'</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">order</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'analyze'</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="3-property-based-tests">3. Property-Based Tests<a class="headerlink" href="#3-property-based-tests" title="Permanent link">&para;</a></h3>
 <p>Use hypothesis for generative testing.</p>
@@ -2082,17 +2054,17 @@
 <a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        <span class="n">observations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 <a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        <span class="n">reconstructor</span> <span class="o">=</span> <span class="n">FieldReconstructor</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;gaussian_process&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        <span class="n">reconstructor</span> <span class="o">=</span> <span class="n">FieldReconstructor</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'gaussian_process'</span><span class="p">)</span>
 <a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>        <span class="n">reconstructor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">observations</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
 <a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
 <a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>        <span class="c1"># Benchmark reconstruction</span>
 <a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">(</span><span class="n">reconstructor</span><span class="o">.</span><span class="n">reconstruct</span><span class="p">)</span>
 <a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
 <a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>        <span class="c1"># Assert performance threshold</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>        <span class="k">assert</span> <span class="n">benchmark</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">1.0</span>  <span class="c1"># Should complete in &lt; 1 second</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>        <span class="k">assert</span> <span class="n">benchmark</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s1">'mean'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">1.0</span>  <span class="c1"># Should complete in &lt; 1 second</span>
 <a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
 <a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">performance</span>
-<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">])</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">"size"</span><span class="p">,</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">])</span>
 <a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_scaling_behavior</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
 <a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>        <span class="n">observations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
 <a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -2138,7 +2110,7 @@
 <a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>        <span class="n">is_valid</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">invalid_data</span><span class="p">)</span>
 <a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>
 <a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>        <span class="k">assert</span> <span class="ow">not</span> <span class="n">is_valid</span>
-<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>        <span class="k">assert</span> <span class="s1">&#39;shape&#39;</span> <span class="ow">in</span> <span class="n">errors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>        <span class="k">assert</span> <span class="s1">'shape'</span> <span class="ow">in</span> <span class="n">errors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>
 <a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_out_of_range_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>        <span class="n">schema</span> <span class="o">=</span> <span class="n">FieldDataSchema</span><span class="p">(</span><span class="n">value_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -2148,7 +2120,7 @@
 <a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>        <span class="n">is_valid</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">invalid_data</span><span class="p">)</span>
 <a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>
 <a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>        <span class="k">assert</span> <span class="ow">not</span> <span class="n">is_valid</span>
-<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>        <span class="k">assert</span> <span class="s1">&#39;value_range&#39;</span> <span class="ow">in</span> <span class="n">errors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>        <span class="k">assert</span> <span class="s1">'value_range'</span> <span class="ow">in</span> <span class="n">errors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </code></pre></div>
 <h3 id="6-fixture-and-mock-tests">6. Fixture and Mock Tests<a class="headerlink" href="#6-fixture-and-mock-tests" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># tests/conftest.py</span>
@@ -2158,23 +2130,23 @@
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">sample_field</span><span class="p">():</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a sample field for testing.&quot;&quot;&quot;</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="sd">"""Generate a sample field for testing."""</span>
 <a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="n">generator</span> <span class="o">=</span> <span class="n">SyntheticFieldGenerator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="k">return</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate_static</span><span class="p">(</span>
 <a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;pattern&#39;</span><span class="p">:</span> <span class="s1">&#39;gaussian_blob&#39;</span><span class="p">,</span> <span class="s1">&#39;noise&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">'pattern'</span><span class="p">:</span> <span class="s1">'gaussian_blob'</span><span class="p">,</span> <span class="s1">'noise'</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
 <a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="p">)</span>
 <a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
 <a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
 <a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">mock_bioelectric_data</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">):</span>
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Create mock bioelectric data file.&quot;&quot;&quot;</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="sd">"""Create mock bioelectric data file."""</span>
 <a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
 <a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="n">data_file</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;mock_data.h5&quot;</span>
-<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>        <span class="n">f</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s1">&#39;voltage_fields&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span>
-<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>        <span class="n">f</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s1">&#39;timestamps&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>        <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;sampling_rate_hz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="n">data_file</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">"mock_data.h5"</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>        <span class="n">f</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s1">'voltage_fields'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>        <span class="n">f</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s1">'timestamps'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>        <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">'sampling_rate_hz'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span>
 <a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>
 <a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>    <span class="k">return</span> <span class="n">data_file</span>
 <a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>
@@ -2216,13 +2188,13 @@
 <a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>pytest<span class="w"> </span>tests/unit/test_field_theory.py
 <a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
 <a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Run tests matching pattern</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>pytest<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;reconstruction&quot;</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>pytest<span class="w"> </span>-k<span class="w"> </span><span class="s2">"reconstruction"</span>
 <a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
 <a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># Run with coverage</span>
 <a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>pytest<span class="w"> </span>--cov<span class="o">=</span>mneme<span class="w"> </span>--cov-report<span class="o">=</span>html
 <a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
 <a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># Run only marked tests</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not slow&quot;</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">"not slow"</span>
 </code></pre></div>
 <h3 id="test-markers">Test Markers<a class="headerlink" href="#test-markers" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Mark slow tests</span>
@@ -2254,7 +2226,7 @@
 <a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
 <a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="nt">strategy</span><span class="p">:</span>
 <a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">      </span><span class="nt">matrix</span><span class="p">:</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">        </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">3.8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">3.9</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;3.10&quot;</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">        </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">3.8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">3.9</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"3.10"</span><span class="p p-Indicator">]</span>
 <a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
 <a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
 <a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
@@ -2363,7 +2335,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

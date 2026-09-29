@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -496,34 +496,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -1994,7 +1966,7 @@
 
 
 <a href="#mneme.data.betse_loader.betse_to_field" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">betse_to_field</span><span class="p">(</span><span class="n">vmem_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_GRID_RESOLUTION</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;cubic&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Field</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">betse_to_field</span><span class="p">(</span><span class="n">vmem_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_GRID_RESOLUTION</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'cubic'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Field</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -2143,9 +2115,9 @@ frames, or (rows, cols) for a single frame.</p>
 <span class="normal"><a href="#__codelineno-0-294">294</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-247" name="__codelineno-0-247"></a><span class="k">def</span><span class="w"> </span><span class="nf">betse_to_field</span><span class="p">(</span>
 <a id="__codelineno-0-248" name="__codelineno-0-248"></a>    <span class="n">vmem_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
 <a id="__codelineno-0-249" name="__codelineno-0-249"></a>    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_GRID_RESOLUTION</span><span class="p">,</span>
-<a id="__codelineno-0-250" name="__codelineno-0-250"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cubic&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-250" name="__codelineno-0-250"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"cubic"</span><span class="p">,</span>
 <a id="__codelineno-0-251" name="__codelineno-0-251"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Field</span><span class="p">:</span>
-<a id="__codelineno-0-252" name="__codelineno-0-252"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Load BETSE data and return a Mneme Field object.</span>
+<a id="__codelineno-0-252" name="__codelineno-0-252"></a><span class="w">    </span><span class="sd">"""Load BETSE data and return a Mneme Field object.</span>
 <a id="__codelineno-0-253" name="__codelineno-0-253"></a>
 <a id="__codelineno-0-254" name="__codelineno-0-254"></a><span class="sd">    This is the main entry point for feeding BETSE simulation output</span>
 <a id="__codelineno-0-255" name="__codelineno-0-255"></a><span class="sd">    into the Mneme analysis pipeline.</span>
@@ -2157,21 +2129,21 @@ frames, or (rows, cols) for a single frame.</p>
 <a id="__codelineno-0-261" name="__codelineno-0-261"></a><span class="sd">    resolution : Tuple[int, int]</span>
 <a id="__codelineno-0-262" name="__codelineno-0-262"></a><span class="sd">        Grid resolution for interpolation.</span>
 <a id="__codelineno-0-263" name="__codelineno-0-263"></a><span class="sd">    method : str</span>
-<a id="__codelineno-0-264" name="__codelineno-0-264"></a><span class="sd">        Interpolation method (&#39;linear&#39;, &#39;cubic&#39;, &#39;nearest&#39;).</span>
+<a id="__codelineno-0-264" name="__codelineno-0-264"></a><span class="sd">        Interpolation method ('linear', 'cubic', 'nearest').</span>
 <a id="__codelineno-0-265" name="__codelineno-0-265"></a>
 <a id="__codelineno-0-266" name="__codelineno-0-266"></a><span class="sd">    Returns</span>
 <a id="__codelineno-0-267" name="__codelineno-0-267"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-268" name="__codelineno-0-268"></a><span class="sd">    field : Field</span>
 <a id="__codelineno-0-269" name="__codelineno-0-269"></a><span class="sd">        Mneme Field with shape (n_timesteps, rows, cols) if multiple</span>
 <a id="__codelineno-0-270" name="__codelineno-0-270"></a><span class="sd">        frames, or (rows, cols) for a single frame.</span>
-<a id="__codelineno-0-271" name="__codelineno-0-271"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-271" name="__codelineno-0-271"></a><span class="sd">    """</span>
 <a id="__codelineno-0-272" name="__codelineno-0-272"></a>    <span class="n">field_sequence</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">load_betse_timeseries</span><span class="p">(</span>
 <a id="__codelineno-0-273" name="__codelineno-0-273"></a>        <span class="n">vmem_dir</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="n">resolution</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span>
 <a id="__codelineno-0-274" name="__codelineno-0-274"></a>    <span class="p">)</span>
 <a id="__codelineno-0-275" name="__codelineno-0-275"></a>
 <a id="__codelineno-0-276" name="__codelineno-0-276"></a>    <span class="c1"># Build 2-D coordinate array for the regular grid</span>
-<a id="__codelineno-0-277" name="__codelineno-0-277"></a>    <span class="n">grid_x</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;grid_x&quot;</span><span class="p">]</span>
-<a id="__codelineno-0-278" name="__codelineno-0-278"></a>    <span class="n">grid_y</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;grid_y&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-277" name="__codelineno-0-277"></a>    <span class="n">grid_x</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">"grid_x"</span><span class="p">]</span>
+<a id="__codelineno-0-278" name="__codelineno-0-278"></a>    <span class="n">grid_y</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">"grid_y"</span><span class="p">]</span>
 <a id="__codelineno-0-279" name="__codelineno-0-279"></a>    <span class="n">gx</span><span class="p">,</span> <span class="n">gy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span><span class="p">)</span>
 <a id="__codelineno-0-280" name="__codelineno-0-280"></a>    <span class="n">coordinates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">gx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">gy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
 <a id="__codelineno-0-281" name="__codelineno-0-281"></a>
@@ -2183,8 +2155,8 @@ frames, or (rows, cols) for a single frame.</p>
 <a id="__codelineno-0-287" name="__codelineno-0-287"></a>        <span class="n">coordinates</span><span class="o">=</span><span class="n">coordinates</span><span class="p">,</span>
 <a id="__codelineno-0-288" name="__codelineno-0-288"></a>        <span class="n">resolution</span><span class="o">=</span><span class="n">resolution</span><span class="p">,</span>
 <a id="__codelineno-0-289" name="__codelineno-0-289"></a>        <span class="n">bounds</span><span class="o">=</span><span class="p">(</span>
-<a id="__codelineno-0-290" name="__codelineno-0-290"></a>            <span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;x_bounds&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;x_bounds&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
-<a id="__codelineno-0-291" name="__codelineno-0-291"></a>            <span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;y_bounds&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;y_bounds&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+<a id="__codelineno-0-290" name="__codelineno-0-290"></a>            <span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s2">"x_bounds"</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">"x_bounds"</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+<a id="__codelineno-0-291" name="__codelineno-0-291"></a>            <span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s2">"y_bounds"</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">"y_bounds"</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
 <a id="__codelineno-0-292" name="__codelineno-0-292"></a>        <span class="p">),</span>
 <a id="__codelineno-0-293" name="__codelineno-0-293"></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
 <a id="__codelineno-0-294" name="__codelineno-0-294"></a>    <span class="p">)</span>
@@ -2203,7 +2175,7 @@ frames, or (rows, cols) for a single frame.</p>
 
 
 <a href="#mneme.data.betse_loader.load_betse_timeseries" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">load_betse_timeseries</span><span class="p">(</span><span class="n">vmem_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_GRID_RESOLUTION</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;cubic&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">load_betse_timeseries</span><span class="p">(</span><span class="n">vmem_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_GRID_RESOLUTION</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'cubic'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -2418,9 +2390,9 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <span class="normal"><a href="#__codelineno-0-219">219</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-120" name="__codelineno-0-120"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_betse_timeseries</span><span class="p">(</span>
 <a id="__codelineno-0-121" name="__codelineno-0-121"></a>    <span class="n">vmem_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
 <a id="__codelineno-0-122" name="__codelineno-0-122"></a>    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_GRID_RESOLUTION</span><span class="p">,</span>
-<a id="__codelineno-0-123" name="__codelineno-0-123"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cubic&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-123" name="__codelineno-0-123"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"cubic"</span><span class="p">,</span>
 <a id="__codelineno-0-124" name="__codelineno-0-124"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
-<a id="__codelineno-0-125" name="__codelineno-0-125"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a BETSE Vmem2D time series from a directory of CSV files.</span>
+<a id="__codelineno-0-125" name="__codelineno-0-125"></a><span class="w">    </span><span class="sd">"""Load a BETSE Vmem2D time series from a directory of CSV files.</span>
 <a id="__codelineno-0-126" name="__codelineno-0-126"></a>
 <a id="__codelineno-0-127" name="__codelineno-0-127"></a><span class="sd">    Reads all ``Vmem2D_*.csv`` files, interpolates each onto a common</span>
 <a id="__codelineno-0-128" name="__codelineno-0-128"></a><span class="sd">    regular grid, and stacks them into a 3-D array (time, rows, cols).</span>
@@ -2445,19 +2417,19 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <a id="__codelineno-0-147" name="__codelineno-0-147"></a><span class="sd">        - ``grid_x``, ``grid_y``: 1-D coordinate arrays for the regular grid</span>
 <a id="__codelineno-0-148" name="__codelineno-0-148"></a><span class="sd">        - ``x_bounds``, ``y_bounds``: spatial extent in micrometres</span>
 <a id="__codelineno-0-149" name="__codelineno-0-149"></a><span class="sd">        - ``source_dir``: path to source directory</span>
-<a id="__codelineno-0-150" name="__codelineno-0-150"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-150" name="__codelineno-0-150"></a><span class="sd">    """</span>
 <a id="__codelineno-0-151" name="__codelineno-0-151"></a>    <span class="n">vmem_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">vmem_dir</span><span class="p">)</span>
 <a id="__codelineno-0-152" name="__codelineno-0-152"></a>    <span class="n">csv_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
-<a id="__codelineno-0-153" name="__codelineno-0-153"></a>        <span class="n">vmem_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;Vmem2D_*.csv&quot;</span><span class="p">),</span>
-<a id="__codelineno-0-154" name="__codelineno-0-154"></a>        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\d+)&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span>
+<a id="__codelineno-0-153" name="__codelineno-0-153"></a>        <span class="n">vmem_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"Vmem2D_*.csv"</span><span class="p">),</span>
+<a id="__codelineno-0-154" name="__codelineno-0-154"></a>        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\d+)"</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span>
 <a id="__codelineno-0-155" name="__codelineno-0-155"></a>    <span class="p">)</span>
 <a id="__codelineno-0-156" name="__codelineno-0-156"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">csv_files</span><span class="p">:</span>
 <a id="__codelineno-0-157" name="__codelineno-0-157"></a>        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
-<a id="__codelineno-0-158" name="__codelineno-0-158"></a>            <span class="sa">f</span><span class="s2">&quot;No Vmem2D_*.csv files found in </span><span class="si">{</span><span class="n">vmem_dir</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-158" name="__codelineno-0-158"></a>            <span class="sa">f</span><span class="s2">"No Vmem2D_*.csv files found in </span><span class="si">{</span><span class="n">vmem_dir</span><span class="si">}</span><span class="s2">"</span>
 <a id="__codelineno-0-159" name="__codelineno-0-159"></a>        <span class="p">)</span>
 <a id="__codelineno-0-160" name="__codelineno-0-160"></a>
 <a id="__codelineno-0-161" name="__codelineno-0-161"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-<a id="__codelineno-0-162" name="__codelineno-0-162"></a>        <span class="s2">&quot;Loading </span><span class="si">%d</span><span class="s2"> BETSE Vmem frames from </span><span class="si">%s</span><span class="s2"> at resolution </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-162" name="__codelineno-0-162"></a>        <span class="s2">"Loading </span><span class="si">%d</span><span class="s2"> BETSE Vmem frames from </span><span class="si">%s</span><span class="s2"> at resolution </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span>
 <a id="__codelineno-0-163" name="__codelineno-0-163"></a>        <span class="nb">len</span><span class="p">(</span><span class="n">csv_files</span><span class="p">),</span> <span class="n">vmem_dir</span><span class="p">,</span> <span class="n">resolution</span><span class="p">,</span>
 <a id="__codelineno-0-164" name="__codelineno-0-164"></a>    <span class="p">)</span>
 <a id="__codelineno-0-165" name="__codelineno-0-165"></a>
@@ -2489,28 +2461,28 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <a id="__codelineno-0-191" name="__codelineno-0-191"></a>        <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
 <a id="__codelineno-0-192" name="__codelineno-0-192"></a>        <span class="n">grid</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">vmem</span><span class="p">,</span> <span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
 <a id="__codelineno-0-193" name="__codelineno-0-193"></a>        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">grid</span><span class="p">)):</span>
-<a id="__codelineno-0-194" name="__codelineno-0-194"></a>            <span class="n">grid_nn</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">vmem</span><span class="p">,</span> <span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-194" name="__codelineno-0-194"></a>            <span class="n">grid_nn</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">vmem</span><span class="p">,</span> <span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s2">"nearest"</span><span class="p">)</span>
 <a id="__codelineno-0-195" name="__codelineno-0-195"></a>            <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="n">grid_nn</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
 <a id="__codelineno-0-196" name="__codelineno-0-196"></a>        <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
 <a id="__codelineno-0-197" name="__codelineno-0-197"></a>
 <a id="__codelineno-0-198" name="__codelineno-0-198"></a>    <span class="n">field_sequence</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <a id="__codelineno-0-199" name="__codelineno-0-199"></a>
 <a id="__codelineno-0-200" name="__codelineno-0-200"></a>    <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-0-201" name="__codelineno-0-201"></a>        <span class="s2">&quot;n_cells&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
-<a id="__codelineno-0-202" name="__codelineno-0-202"></a>        <span class="s2">&quot;n_timesteps&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">),</span>
-<a id="__codelineno-0-203" name="__codelineno-0-203"></a>        <span class="s2">&quot;grid_x&quot;</span><span class="p">:</span> <span class="n">grid_x</span><span class="p">,</span>
-<a id="__codelineno-0-204" name="__codelineno-0-204"></a>        <span class="s2">&quot;grid_y&quot;</span><span class="p">:</span> <span class="n">grid_y</span><span class="p">,</span>
-<a id="__codelineno-0-205" name="__codelineno-0-205"></a>        <span class="s2">&quot;x_bounds&quot;</span><span class="p">:</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x_min</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">x_max</span><span class="p">)),</span>
-<a id="__codelineno-0-206" name="__codelineno-0-206"></a>        <span class="s2">&quot;y_bounds&quot;</span><span class="p">:</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">y_min</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">y_max</span><span class="p">)),</span>
-<a id="__codelineno-0-207" name="__codelineno-0-207"></a>        <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="n">resolution</span><span class="p">,</span>
-<a id="__codelineno-0-208" name="__codelineno-0-208"></a>        <span class="s2">&quot;interpolation_method&quot;</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span>
-<a id="__codelineno-0-209" name="__codelineno-0-209"></a>        <span class="s2">&quot;source_dir&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">vmem_dir</span><span class="p">),</span>
-<a id="__codelineno-0-210" name="__codelineno-0-210"></a>        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;BETSE&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-211" name="__codelineno-0-211"></a>        <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;spatial&quot;</span><span class="p">:</span> <span class="s2">&quot;um&quot;</span><span class="p">,</span> <span class="s2">&quot;voltage&quot;</span><span class="p">:</span> <span class="s2">&quot;mV&quot;</span><span class="p">},</span>
+<a id="__codelineno-0-201" name="__codelineno-0-201"></a>        <span class="s2">"n_cells"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+<a id="__codelineno-0-202" name="__codelineno-0-202"></a>        <span class="s2">"n_timesteps"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">),</span>
+<a id="__codelineno-0-203" name="__codelineno-0-203"></a>        <span class="s2">"grid_x"</span><span class="p">:</span> <span class="n">grid_x</span><span class="p">,</span>
+<a id="__codelineno-0-204" name="__codelineno-0-204"></a>        <span class="s2">"grid_y"</span><span class="p">:</span> <span class="n">grid_y</span><span class="p">,</span>
+<a id="__codelineno-0-205" name="__codelineno-0-205"></a>        <span class="s2">"x_bounds"</span><span class="p">:</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x_min</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">x_max</span><span class="p">)),</span>
+<a id="__codelineno-0-206" name="__codelineno-0-206"></a>        <span class="s2">"y_bounds"</span><span class="p">:</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">y_min</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">y_max</span><span class="p">)),</span>
+<a id="__codelineno-0-207" name="__codelineno-0-207"></a>        <span class="s2">"resolution"</span><span class="p">:</span> <span class="n">resolution</span><span class="p">,</span>
+<a id="__codelineno-0-208" name="__codelineno-0-208"></a>        <span class="s2">"interpolation_method"</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span>
+<a id="__codelineno-0-209" name="__codelineno-0-209"></a>        <span class="s2">"source_dir"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">vmem_dir</span><span class="p">),</span>
+<a id="__codelineno-0-210" name="__codelineno-0-210"></a>        <span class="s2">"source"</span><span class="p">:</span> <span class="s2">"BETSE"</span><span class="p">,</span>
+<a id="__codelineno-0-211" name="__codelineno-0-211"></a>        <span class="s2">"units"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"spatial"</span><span class="p">:</span> <span class="s2">"um"</span><span class="p">,</span> <span class="s2">"voltage"</span><span class="p">:</span> <span class="s2">"mV"</span><span class="p">},</span>
 <a id="__codelineno-0-212" name="__codelineno-0-212"></a>    <span class="p">}</span>
 <a id="__codelineno-0-213" name="__codelineno-0-213"></a>
 <a id="__codelineno-0-214" name="__codelineno-0-214"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-<a id="__codelineno-0-215" name="__codelineno-0-215"></a>        <span class="s2">&quot;Loaded BETSE field sequence: shape=</span><span class="si">%s</span><span class="s2">, Vmem range=[</span><span class="si">%.2f</span><span class="s2">, </span><span class="si">%.2f</span><span class="s2">] mV&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-215" name="__codelineno-0-215"></a>        <span class="s2">"Loaded BETSE field sequence: shape=</span><span class="si">%s</span><span class="s2">, Vmem range=[</span><span class="si">%.2f</span><span class="s2">, </span><span class="si">%.2f</span><span class="s2">] mV"</span><span class="p">,</span>
 <a id="__codelineno-0-216" name="__codelineno-0-216"></a>        <span class="n">field_sequence</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">field_sequence</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">field_sequence</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
 <a id="__codelineno-0-217" name="__codelineno-0-217"></a>    <span class="p">)</span>
 <a id="__codelineno-0-218" name="__codelineno-0-218"></a>
@@ -2642,7 +2614,7 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <span class="normal"><a href="#__codelineno-0-64">64</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_betse_vmem_csv</span><span class="p">(</span>
 <a id="__codelineno-0-39" name="__codelineno-0-39"></a>    <span class="n">csv_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
 <a id="__codelineno-0-40" name="__codelineno-0-40"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-<a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a single BETSE Vmem2D CSV file.</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="w">    </span><span class="sd">"""Load a single BETSE Vmem2D CSV file.</span>
 <a id="__codelineno-0-42" name="__codelineno-0-42"></a>
 <a id="__codelineno-0-43" name="__codelineno-0-43"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-44" name="__codelineno-0-44"></a><span class="sd">    ----------</span>
@@ -2657,13 +2629,13 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <a id="__codelineno-0-53" name="__codelineno-0-53"></a><span class="sd">        Cell y-coordinates in micrometres, shape (n_cells,).</span>
 <a id="__codelineno-0-54" name="__codelineno-0-54"></a><span class="sd">    vmem : np.ndarray</span>
 <a id="__codelineno-0-55" name="__codelineno-0-55"></a><span class="sd">        Transmembrane voltage in millivolts, shape (n_cells,).</span>
-<a id="__codelineno-0-56" name="__codelineno-0-56"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a><span class="sd">    """</span>
 <a id="__codelineno-0-57" name="__codelineno-0-57"></a>    <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
-<a id="__codelineno-0-58" name="__codelineno-0-58"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">","</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-0-59" name="__codelineno-0-59"></a>    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
 <a id="__codelineno-0-60" name="__codelineno-0-60"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<a id="__codelineno-0-61" name="__codelineno-0-61"></a>            <span class="sa">f</span><span class="s2">&quot;Expected CSV with at least 3 columns (x, y, Vmem), &quot;</span>
-<a id="__codelineno-0-62" name="__codelineno-0-62"></a>            <span class="sa">f</span><span class="s2">&quot;got shape </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">csv_path</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a>            <span class="sa">f</span><span class="s2">"Expected CSV with at least 3 columns (x, y, Vmem), "</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62"></a>            <span class="sa">f</span><span class="s2">"got shape </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">csv_path</span><span class="si">}</span><span class="s2">"</span>
 <a id="__codelineno-0-63" name="__codelineno-0-63"></a>        <span class="p">)</span>
 <a id="__codelineno-0-64" name="__codelineno-0-64"></a>    <span class="k">return</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
@@ -2779,7 +2751,7 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <span class="normal"><a href="#__codelineno-0-244">244</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-222" name="__codelineno-0-222"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_betse_exported_data</span><span class="p">(</span>
 <a id="__codelineno-0-223" name="__codelineno-0-223"></a>    <span class="n">csv_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
 <a id="__codelineno-0-224" name="__codelineno-0-224"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-<a id="__codelineno-0-225" name="__codelineno-0-225"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a BETSE ExportedData.csv single-cell time series.</span>
+<a id="__codelineno-0-225" name="__codelineno-0-225"></a><span class="w">    </span><span class="sd">"""Load a BETSE ExportedData.csv single-cell time series.</span>
 <a id="__codelineno-0-226" name="__codelineno-0-226"></a>
 <a id="__codelineno-0-227" name="__codelineno-0-227"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-228" name="__codelineno-0-228"></a><span class="sd">    ----------</span>
@@ -2792,12 +2764,12 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <a id="__codelineno-0-235" name="__codelineno-0-235"></a><span class="sd">        Shape (n_timesteps, n_columns) array.</span>
 <a id="__codelineno-0-236" name="__codelineno-0-236"></a><span class="sd">    columns : List[str]</span>
 <a id="__codelineno-0-237" name="__codelineno-0-237"></a><span class="sd">        Column names from the CSV header.</span>
-<a id="__codelineno-0-238" name="__codelineno-0-238"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-238" name="__codelineno-0-238"></a><span class="sd">    """</span>
 <a id="__codelineno-0-239" name="__codelineno-0-239"></a>    <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
-<a id="__codelineno-0-240" name="__codelineno-0-240"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<a id="__codelineno-0-240" name="__codelineno-0-240"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 <a id="__codelineno-0-241" name="__codelineno-0-241"></a>        <span class="n">header</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-<a id="__codelineno-0-242" name="__codelineno-0-242"></a>    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)]</span>
-<a id="__codelineno-0-243" name="__codelineno-0-243"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-242" name="__codelineno-0-242"></a>    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)]</span>
+<a id="__codelineno-0-243" name="__codelineno-0-243"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">","</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-0-244" name="__codelineno-0-244"></a>    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">columns</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2814,7 +2786,7 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 
 
 <a href="#mneme.data.betse_loader.interpolate_to_grid" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">interpolate_to_grid</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_GRID_RESOLUTION</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;cubic&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">interpolate_to_grid</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_GRID_RESOLUTION</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'cubic'</span><span class="p">,</span> <span class="n">padding</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -3033,10 +3005,10 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <a id="__codelineno-0-69" name="__codelineno-0-69"></a>    <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
 <a id="__codelineno-0-70" name="__codelineno-0-70"></a>    <span class="n">values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
 <a id="__codelineno-0-71" name="__codelineno-0-71"></a>    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_GRID_RESOLUTION</span><span class="p">,</span>
-<a id="__codelineno-0-72" name="__codelineno-0-72"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cubic&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"cubic"</span><span class="p">,</span>
 <a id="__codelineno-0-73" name="__codelineno-0-73"></a>    <span class="n">padding</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
 <a id="__codelineno-0-74" name="__codelineno-0-74"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-<a id="__codelineno-0-75" name="__codelineno-0-75"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Interpolate scattered cell data onto a regular grid.</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75"></a><span class="w">    </span><span class="sd">"""Interpolate scattered cell data onto a regular grid.</span>
 <a id="__codelineno-0-76" name="__codelineno-0-76"></a>
 <a id="__codelineno-0-77" name="__codelineno-0-77"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-78" name="__codelineno-0-78"></a><span class="sd">    ----------</span>
@@ -3047,7 +3019,7 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <a id="__codelineno-0-83" name="__codelineno-0-83"></a><span class="sd">    resolution : Tuple[int, int]</span>
 <a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="sd">        Target grid resolution (rows, cols).</span>
 <a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="sd">    method : str</span>
-<a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="sd">        Interpolation method (&#39;linear&#39;, &#39;cubic&#39;, &#39;nearest&#39;).</span>
+<a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="sd">        Interpolation method ('linear', 'cubic', 'nearest').</span>
 <a id="__codelineno-0-87" name="__codelineno-0-87"></a><span class="sd">    padding : float</span>
 <a id="__codelineno-0-88" name="__codelineno-0-88"></a><span class="sd">        Fractional padding around data extent (0.05 = 5%).</span>
 <a id="__codelineno-0-89" name="__codelineno-0-89"></a>
@@ -3059,7 +3031,7 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <a id="__codelineno-0-95" name="__codelineno-0-95"></a><span class="sd">        1-D array of x-coordinates for the regular grid.</span>
 <a id="__codelineno-0-96" name="__codelineno-0-96"></a><span class="sd">    grid_y : np.ndarray</span>
 <a id="__codelineno-0-97" name="__codelineno-0-97"></a><span class="sd">        1-D array of y-coordinates for the regular grid.</span>
-<a id="__codelineno-0-98" name="__codelineno-0-98"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-98" name="__codelineno-0-98"></a><span class="sd">    """</span>
 <a id="__codelineno-0-99" name="__codelineno-0-99"></a>    <span class="c1"># Compute data extent with padding</span>
 <a id="__codelineno-0-100" name="__codelineno-0-100"></a>    <span class="n">x_range</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 <a id="__codelineno-0-101" name="__codelineno-0-101"></a>    <span class="n">y_range</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
@@ -3075,7 +3047,7 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
 <a id="__codelineno-0-111" name="__codelineno-0-111"></a>
 <a id="__codelineno-0-112" name="__codelineno-0-112"></a>    <span class="c1"># Fill NaN regions (outside convex hull) with nearest-neighbour values</span>
 <a id="__codelineno-0-113" name="__codelineno-0-113"></a>    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">grid</span><span class="p">)):</span>
-<a id="__codelineno-0-114" name="__codelineno-0-114"></a>        <span class="n">grid_nn</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-114" name="__codelineno-0-114"></a>        <span class="n">grid_nn</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s2">"nearest"</span><span class="p">)</span>
 <a id="__codelineno-0-115" name="__codelineno-0-115"></a>        <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="n">grid_nn</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
 <a id="__codelineno-0-116" name="__codelineno-0-116"></a>
 <a id="__codelineno-0-117" name="__codelineno-0-117"></a>    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span>
@@ -3142,7 +3114,7 @@ regular grid, and stacks them into a 3-D array (time, rows, cols).</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

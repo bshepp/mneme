@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -496,34 +496,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -2353,7 +2325,7 @@ a field time series and runs symbolic regression to find governing equations.</p
 <a id="__codelineno-0-429" name="__codelineno-0-429"></a>    <span class="n">niterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
 <a id="__codelineno-0-430" name="__codelineno-0-430"></a>    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
 <a id="__codelineno-0-431" name="__codelineno-0-431"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<a id="__codelineno-0-432" name="__codelineno-0-432"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Discover symbolic equations governing field evolution.</span>
+<a id="__codelineno-0-432" name="__codelineno-0-432"></a><span class="w">    </span><span class="sd">"""Discover symbolic equations governing field evolution.</span>
 <a id="__codelineno-0-433" name="__codelineno-0-433"></a>
 <a id="__codelineno-0-434" name="__codelineno-0-434"></a><span class="sd">    This is a convenience function that extracts relevant features from</span>
 <a id="__codelineno-0-435" name="__codelineno-0-435"></a><span class="sd">    a field time series and runs symbolic regression to find governing equations.</span>
@@ -2375,21 +2347,21 @@ a field time series and runs symbolic regression to find governing equations.</p
 <a id="__codelineno-0-451" name="__codelineno-0-451"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-452" name="__codelineno-0-452"></a><span class="sd">    result : Dict[str, Any]</span>
 <a id="__codelineno-0-453" name="__codelineno-0-453"></a><span class="sd">        Dictionary containing:</span>
-<a id="__codelineno-0-454" name="__codelineno-0-454"></a><span class="sd">        - &#39;equations&#39;: List of discovered equations</span>
-<a id="__codelineno-0-455" name="__codelineno-0-455"></a><span class="sd">        - &#39;best_equation&#39;: Best equation string</span>
-<a id="__codelineno-0-456" name="__codelineno-0-456"></a><span class="sd">        - &#39;regressor&#39;: Fitted SymbolicRegressor</span>
-<a id="__codelineno-0-457" name="__codelineno-0-457"></a><span class="sd">        - &#39;features_used&#39;: Names of input features</span>
-<a id="__codelineno-0-458" name="__codelineno-0-458"></a><span class="sd">        - &#39;r2_score&#39;: R² score on training data</span>
-<a id="__codelineno-0-459" name="__codelineno-0-459"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-454" name="__codelineno-0-454"></a><span class="sd">        - 'equations': List of discovered equations</span>
+<a id="__codelineno-0-455" name="__codelineno-0-455"></a><span class="sd">        - 'best_equation': Best equation string</span>
+<a id="__codelineno-0-456" name="__codelineno-0-456"></a><span class="sd">        - 'regressor': Fitted SymbolicRegressor</span>
+<a id="__codelineno-0-457" name="__codelineno-0-457"></a><span class="sd">        - 'features_used': Names of input features</span>
+<a id="__codelineno-0-458" name="__codelineno-0-458"></a><span class="sd">        - 'r2_score': R² score on training data</span>
+<a id="__codelineno-0-459" name="__codelineno-0-459"></a><span class="sd">    """</span>
 <a id="__codelineno-0-460" name="__codelineno-0-460"></a>    <span class="k">if</span> <span class="n">field_sequence</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
-<a id="__codelineno-0-461" name="__codelineno-0-461"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;field_sequence must be 3D (timesteps, height, width)&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-461" name="__codelineno-0-461"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"field_sequence must be 3D (timesteps, height, width)"</span><span class="p">)</span>
 <a id="__codelineno-0-462" name="__codelineno-0-462"></a>
 <a id="__codelineno-0-463" name="__codelineno-0-463"></a>    <span class="n">T</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">field_sequence</span><span class="o">.</span><span class="n">shape</span>
 <a id="__codelineno-0-464" name="__codelineno-0-464"></a>
 <a id="__codelineno-0-465" name="__codelineno-0-465"></a>    <span class="c1"># Extract features and targets</span>
 <a id="__codelineno-0-466" name="__codelineno-0-466"></a>    <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
 <a id="__codelineno-0-467" name="__codelineno-0-467"></a>    <span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
-<a id="__codelineno-0-468" name="__codelineno-0-468"></a>    <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">]</span>  <span class="c1"># Field value</span>
+<a id="__codelineno-0-468" name="__codelineno-0-468"></a>    <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'u'</span><span class="p">]</span>  <span class="c1"># Field value</span>
 <a id="__codelineno-0-469" name="__codelineno-0-469"></a>
 <a id="__codelineno-0-470" name="__codelineno-0-470"></a>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
 <a id="__codelineno-0-471" name="__codelineno-0-471"></a>        <span class="n">current</span> <span class="o">=</span> <span class="n">field_sequence</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
@@ -2426,7 +2398,7 @@ a field time series and runs symbolic regression to find governing equations.</p
 <a id="__codelineno-0-502" name="__codelineno-0-502"></a>                <span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">du_dt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
 <a id="__codelineno-0-503" name="__codelineno-0-503"></a>
 <a id="__codelineno-0-504" name="__codelineno-0-504"></a>    <span class="k">if</span> <span class="n">spatial_features</span><span class="p">:</span>
-<a id="__codelineno-0-505" name="__codelineno-0-505"></a>        <span class="n">feature_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;laplacian_u&#39;</span><span class="p">,</span> <span class="s1">&#39;du_dx&#39;</span><span class="p">,</span> <span class="s1">&#39;du_dy&#39;</span><span class="p">])</span>
+<a id="__codelineno-0-505" name="__codelineno-0-505"></a>        <span class="n">feature_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">'laplacian_u'</span><span class="p">,</span> <span class="s1">'du_dx'</span><span class="p">,</span> <span class="s1">'du_dy'</span><span class="p">])</span>
 <a id="__codelineno-0-506" name="__codelineno-0-506"></a>
 <a id="__codelineno-0-507" name="__codelineno-0-507"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
 <a id="__codelineno-0-508" name="__codelineno-0-508"></a>    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
@@ -2436,11 +2408,11 @@ a field time series and runs symbolic regression to find governing equations.</p
 <a id="__codelineno-0-512" name="__codelineno-0-512"></a>    <span class="n">sr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">variable_names</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 <a id="__codelineno-0-513" name="__codelineno-0-513"></a>
 <a id="__codelineno-0-514" name="__codelineno-0-514"></a>    <span class="k">return</span> <span class="p">{</span>
-<a id="__codelineno-0-515" name="__codelineno-0-515"></a>        <span class="s1">&#39;equations&#39;</span><span class="p">:</span> <span class="n">sr</span><span class="o">.</span><span class="n">get_equations</span><span class="p">(),</span>
-<a id="__codelineno-0-516" name="__codelineno-0-516"></a>        <span class="s1">&#39;best_equation&#39;</span><span class="p">:</span> <span class="n">sr</span><span class="o">.</span><span class="n">get_best_equation</span><span class="p">(),</span>
-<a id="__codelineno-0-517" name="__codelineno-0-517"></a>        <span class="s1">&#39;regressor&#39;</span><span class="p">:</span> <span class="n">sr</span><span class="p">,</span>
-<a id="__codelineno-0-518" name="__codelineno-0-518"></a>        <span class="s1">&#39;features_used&#39;</span><span class="p">:</span> <span class="n">feature_names</span><span class="p">,</span>
-<a id="__codelineno-0-519" name="__codelineno-0-519"></a>        <span class="s1">&#39;r2_score&#39;</span><span class="p">:</span> <span class="n">sr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+<a id="__codelineno-0-515" name="__codelineno-0-515"></a>        <span class="s1">'equations'</span><span class="p">:</span> <span class="n">sr</span><span class="o">.</span><span class="n">get_equations</span><span class="p">(),</span>
+<a id="__codelineno-0-516" name="__codelineno-0-516"></a>        <span class="s1">'best_equation'</span><span class="p">:</span> <span class="n">sr</span><span class="o">.</span><span class="n">get_best_equation</span><span class="p">(),</span>
+<a id="__codelineno-0-517" name="__codelineno-0-517"></a>        <span class="s1">'regressor'</span><span class="p">:</span> <span class="n">sr</span><span class="p">,</span>
+<a id="__codelineno-0-518" name="__codelineno-0-518"></a>        <span class="s1">'features_used'</span><span class="p">:</span> <span class="n">feature_names</span><span class="p">,</span>
+<a id="__codelineno-0-519" name="__codelineno-0-519"></a>        <span class="s1">'r2_score'</span><span class="p">:</span> <span class="n">sr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
 <a id="__codelineno-0-520" name="__codelineno-0-520"></a>    <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2458,7 +2430,7 @@ a field time series and runs symbolic regression to find governing equations.</p
 
 
 <a href="#mneme.models.symbolic.SymbolicRegressor" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SymbolicRegressor</span><span class="p">(</span><span class="n">operators</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">complexity_penalty</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">max_complexity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">populations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">niterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">binary_operators</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">unary_operators</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">extra_sympy_mappings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">loss</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;L2DistLoss()&#39;</span><span class="p">,</span> <span class="n">denoise</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">select_k_features</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SymbolicRegressor</span><span class="p">(</span><span class="n">operators</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">complexity_penalty</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">max_complexity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">populations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">niterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">binary_operators</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">unary_operators</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">extra_sympy_mappings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">loss</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'L2DistLoss()'</span><span class="p">,</span> <span class="n">denoise</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">select_k_features</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -2692,7 +2664,7 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="gp">&gt;&gt;&gt; </span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Fit symbolic regressor</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">sr</span> <span class="o">=</span> <span class="n">SymbolicRegressor</span><span class="p">(</span><span class="n">niterations</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">sr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">variable_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;sin_t&#39;</span><span class="p">])</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">sr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">variable_names</span><span class="o">=</span><span class="p">[</span><span class="s1">'t'</span><span class="p">,</span> <span class="s1">'sin_t'</span><span class="p">])</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="gp">&gt;&gt;&gt; </span>
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get discovered equations</span>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">equations</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">get_equations</span><span class="p">()</span>
@@ -2767,7 +2739,7 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-91" name="__codelineno-0-91"></a>    <span class="n">binary_operators</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-0-92" name="__codelineno-0-92"></a>    <span class="n">unary_operators</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-0-93" name="__codelineno-0-93"></a>    <span class="n">extra_sympy_mappings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-94" name="__codelineno-0-94"></a>    <span class="n">loss</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;L2DistLoss()&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-94" name="__codelineno-0-94"></a>    <span class="n">loss</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"L2DistLoss()"</span><span class="p">,</span>
 <a id="__codelineno-0-95" name="__codelineno-0-95"></a>    <span class="n">denoise</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <a id="__codelineno-0-96" name="__codelineno-0-96"></a>    <span class="n">select_k_features</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-0-97" name="__codelineno-0-97"></a>    <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -2789,14 +2761,14 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-113" name="__codelineno-0-113"></a>    <span class="k">if</span> <span class="n">binary_operators</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-114" name="__codelineno-0-114"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">binary_operators</span> <span class="o">=</span> <span class="n">binary_operators</span>
 <a id="__codelineno-0-115" name="__codelineno-0-115"></a>    <span class="k">elif</span> <span class="n">operators</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-116" name="__codelineno-0-116"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">binary_operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">operators</span> <span class="k">if</span> <span class="n">op</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;pow&#39;</span><span class="p">,</span> <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="s1">&#39;**&#39;</span><span class="p">]]</span>
+<a id="__codelineno-0-116" name="__codelineno-0-116"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">binary_operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">operators</span> <span class="k">if</span> <span class="n">op</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'+'</span><span class="p">,</span> <span class="s1">'-'</span><span class="p">,</span> <span class="s1">'*'</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="s1">'pow'</span><span class="p">,</span> <span class="s1">'^'</span><span class="p">,</span> <span class="s1">'**'</span><span class="p">]]</span>
 <a id="__codelineno-0-117" name="__codelineno-0-117"></a>    <span class="k">else</span><span class="p">:</span>
 <a id="__codelineno-0-118" name="__codelineno-0-118"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">binary_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_BINARY_OPS</span>
 <a id="__codelineno-0-119" name="__codelineno-0-119"></a>
 <a id="__codelineno-0-120" name="__codelineno-0-120"></a>    <span class="k">if</span> <span class="n">unary_operators</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-121" name="__codelineno-0-121"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">unary_operators</span> <span class="o">=</span> <span class="n">unary_operators</span>
 <a id="__codelineno-0-122" name="__codelineno-0-122"></a>    <span class="k">elif</span> <span class="n">operators</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-123" name="__codelineno-0-123"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">unary_operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">operators</span> <span class="k">if</span> <span class="n">op</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;sin&#39;</span><span class="p">,</span> <span class="s1">&#39;cos&#39;</span><span class="p">,</span> <span class="s1">&#39;tan&#39;</span><span class="p">,</span> <span class="s1">&#39;exp&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">,</span> <span class="s1">&#39;abs&#39;</span><span class="p">,</span> <span class="s1">&#39;neg&#39;</span><span class="p">,</span> <span class="s1">&#39;square&#39;</span><span class="p">,</span> <span class="s1">&#39;cube&#39;</span><span class="p">]]</span>
+<a id="__codelineno-0-123" name="__codelineno-0-123"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">unary_operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">operators</span> <span class="k">if</span> <span class="n">op</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'sin'</span><span class="p">,</span> <span class="s1">'cos'</span><span class="p">,</span> <span class="s1">'tan'</span><span class="p">,</span> <span class="s1">'exp'</span><span class="p">,</span> <span class="s1">'log'</span><span class="p">,</span> <span class="s1">'sqrt'</span><span class="p">,</span> <span class="s1">'abs'</span><span class="p">,</span> <span class="s1">'neg'</span><span class="p">,</span> <span class="s1">'square'</span><span class="p">,</span> <span class="s1">'cube'</span><span class="p">]]</span>
 <a id="__codelineno-0-124" name="__codelineno-0-124"></a>    <span class="k">else</span><span class="p">:</span>
 <a id="__codelineno-0-125" name="__codelineno-0-125"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">unary_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_UNARY_OPS</span>
 <a id="__codelineno-0-126" name="__codelineno-0-126"></a>
@@ -2855,7 +2827,7 @@ Maps to PySR's parsimony parameter.</p>
 
 
 <a href="#mneme.models.symbolic.SymbolicRegressor.fit" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">fit</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span> <span class="n">variable_names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;SymbolicRegressor&#39;</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">fit</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span> <span class="n">variable_names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'SymbolicRegressor'</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3020,8 +2992,8 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-143" name="__codelineno-0-143"></a>    <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span>
 <a id="__codelineno-0-144" name="__codelineno-0-144"></a>    <span class="n">variable_names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-0-145" name="__codelineno-0-145"></a>    <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-146" name="__codelineno-0-146"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;SymbolicRegressor&#39;</span><span class="p">:</span>
-<a id="__codelineno-0-147" name="__codelineno-0-147"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit symbolic regressor to discover equations.</span>
+<a id="__codelineno-0-146" name="__codelineno-0-146"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'SymbolicRegressor'</span><span class="p">:</span>
+<a id="__codelineno-0-147" name="__codelineno-0-147"></a><span class="w">    </span><span class="sd">"""Fit symbolic regressor to discover equations.</span>
 <a id="__codelineno-0-148" name="__codelineno-0-148"></a>
 <a id="__codelineno-0-149" name="__codelineno-0-149"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-150" name="__codelineno-0-150"></a><span class="sd">    ----------</span>
@@ -3038,7 +3010,7 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-161" name="__codelineno-0-161"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-162" name="__codelineno-0-162"></a><span class="sd">    self : SymbolicRegressor</span>
 <a id="__codelineno-0-163" name="__codelineno-0-163"></a><span class="sd">        Fitted regressor.</span>
-<a id="__codelineno-0-164" name="__codelineno-0-164"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-164" name="__codelineno-0-164"></a><span class="sd">    """</span>
 <a id="__codelineno-0-165" name="__codelineno-0-165"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <a id="__codelineno-0-166" name="__codelineno-0-166"></a>    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <a id="__codelineno-0-167" name="__codelineno-0-167"></a>
@@ -3046,7 +3018,7 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-169" name="__codelineno-0-169"></a>        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-0-170" name="__codelineno-0-170"></a>
 <a id="__codelineno-0-171" name="__codelineno-0-171"></a>    <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<a id="__codelineno-0-172" name="__codelineno-0-172"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_variable_names</span> <span class="o">=</span> <span class="n">variable_names</span> <span class="ow">or</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;x</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">)]</span>
+<a id="__codelineno-0-172" name="__codelineno-0-172"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_variable_names</span> <span class="o">=</span> <span class="n">variable_names</span> <span class="ow">or</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"x</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">)]</span>
 <a id="__codelineno-0-173" name="__codelineno-0-173"></a>
 <a id="__codelineno-0-174" name="__codelineno-0-174"></a>    <span class="k">if</span> <span class="n">_PYSR_AVAILABLE</span> <span class="ow">and</span> <span class="n">_PySRRegressor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-175" name="__codelineno-0-175"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_fit_pysr</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
@@ -3055,8 +3027,8 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-178" name="__codelineno-0-178"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_fit_fallback</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <a id="__codelineno-0-179" name="__codelineno-0-179"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_using_pysr</span> <span class="o">=</span> <span class="kc">False</span>
 <a id="__codelineno-0-180" name="__codelineno-0-180"></a>        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-<a id="__codelineno-0-181" name="__codelineno-0-181"></a>            <span class="s2">&quot;PySR not available. Using fallback placeholder. &quot;</span>
-<a id="__codelineno-0-182" name="__codelineno-0-182"></a>            <span class="s2">&quot;Install with: pip install pysr&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-181" name="__codelineno-0-181"></a>            <span class="s2">"PySR not available. Using fallback placeholder. "</span>
+<a id="__codelineno-0-182" name="__codelineno-0-182"></a>            <span class="s2">"Install with: pip install pysr"</span><span class="p">,</span>
 <a id="__codelineno-0-183" name="__codelineno-0-183"></a>            <span class="ne">UserWarning</span>
 <a id="__codelineno-0-184" name="__codelineno-0-184"></a>        <span class="p">)</span>
 <a id="__codelineno-0-185" name="__codelineno-0-185"></a>
@@ -3168,7 +3140,7 @@ Maps to PySR's parsimony parameter.</p>
 <span class="normal"><a href="#__codelineno-0-302">302</a></span>
 <span class="normal"><a href="#__codelineno-0-303">303</a></span>
 <span class="normal"><a href="#__codelineno-0-304">304</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-277" name="__codelineno-0-277"></a><span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-278" name="__codelineno-0-278"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict using the best discovered equation.</span>
+<a id="__codelineno-0-278" name="__codelineno-0-278"></a><span class="w">    </span><span class="sd">"""Predict using the best discovered equation.</span>
 <a id="__codelineno-0-279" name="__codelineno-0-279"></a>
 <a id="__codelineno-0-280" name="__codelineno-0-280"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-281" name="__codelineno-0-281"></a><span class="sd">    ----------</span>
@@ -3179,9 +3151,9 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-286" name="__codelineno-0-286"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-287" name="__codelineno-0-287"></a><span class="sd">    y_pred : np.ndarray of shape (n_samples,)</span>
 <a id="__codelineno-0-288" name="__codelineno-0-288"></a><span class="sd">        Predictions.</span>
-<a id="__codelineno-0-289" name="__codelineno-0-289"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-289" name="__codelineno-0-289"></a><span class="sd">    """</span>
 <a id="__codelineno-0-290" name="__codelineno-0-290"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-291" name="__codelineno-0-291"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;SymbolicRegressor must be fitted before prediction&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-291" name="__codelineno-0-291"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"SymbolicRegressor must be fitted before prediction"</span><span class="p">)</span>
 <a id="__codelineno-0-292" name="__codelineno-0-292"></a>
 <a id="__codelineno-0-293" name="__codelineno-0-293"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <a id="__codelineno-0-294" name="__codelineno-0-294"></a>    <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -3191,7 +3163,7 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-298" name="__codelineno-0-298"></a>        <span class="k">try</span><span class="p">:</span>
 <a id="__codelineno-0-299" name="__codelineno-0-299"></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <a id="__codelineno-0-300" name="__codelineno-0-300"></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-<a id="__codelineno-0-301" name="__codelineno-0-301"></a>            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-301" name="__codelineno-0-301"></a>            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Prediction failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <a id="__codelineno-0-302" name="__codelineno-0-302"></a>            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
 <a id="__codelineno-0-303" name="__codelineno-0-303"></a>
 <a id="__codelineno-0-304" name="__codelineno-0-304"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
@@ -3289,7 +3261,7 @@ Maps to PySR's parsimony parameter.</p>
 <span class="normal"><a href="#__codelineno-0-319">319</a></span>
 <span class="normal"><a href="#__codelineno-0-320">320</a></span>
 <span class="normal"><a href="#__codelineno-0-321">321</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-306" name="__codelineno-0-306"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_equations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_best</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<a id="__codelineno-0-307" name="__codelineno-0-307"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get discovered equations.</span>
+<a id="__codelineno-0-307" name="__codelineno-0-307"></a><span class="w">    </span><span class="sd">"""Get discovered equations.</span>
 <a id="__codelineno-0-308" name="__codelineno-0-308"></a>
 <a id="__codelineno-0-309" name="__codelineno-0-309"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-310" name="__codelineno-0-310"></a><span class="sd">    ----------</span>
@@ -3300,7 +3272,7 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-315" name="__codelineno-0-315"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-316" name="__codelineno-0-316"></a><span class="sd">    equations : List[str]</span>
 <a id="__codelineno-0-317" name="__codelineno-0-317"></a><span class="sd">        List of equation strings, sorted by score (best first).</span>
-<a id="__codelineno-0-318" name="__codelineno-0-318"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-318" name="__codelineno-0-318"></a><span class="sd">    """</span>
 <a id="__codelineno-0-319" name="__codelineno-0-319"></a>    <span class="k">if</span> <span class="n">n_best</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-320" name="__codelineno-0-320"></a>        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_equations</span><span class="p">)</span>
 <a id="__codelineno-0-321" name="__codelineno-0-321"></a>    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_equations</span><span class="p">[:</span><span class="n">n_best</span><span class="p">])</span>
@@ -3362,16 +3334,16 @@ Maps to PySR's parsimony parameter.</p>
 <span class="normal"><a href="#__codelineno-0-331">331</a></span>
 <span class="normal"><a href="#__codelineno-0-332">332</a></span>
 <span class="normal"><a href="#__codelineno-0-333">333</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-323" name="__codelineno-0-323"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_best_equation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a id="__codelineno-0-324" name="__codelineno-0-324"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the single best equation.</span>
+<a id="__codelineno-0-324" name="__codelineno-0-324"></a><span class="w">    </span><span class="sd">"""Get the single best equation.</span>
 <a id="__codelineno-0-325" name="__codelineno-0-325"></a>
 <a id="__codelineno-0-326" name="__codelineno-0-326"></a><span class="sd">    Returns</span>
 <a id="__codelineno-0-327" name="__codelineno-0-327"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-328" name="__codelineno-0-328"></a><span class="sd">    equation : str</span>
 <a id="__codelineno-0-329" name="__codelineno-0-329"></a><span class="sd">        Best equation string.</span>
-<a id="__codelineno-0-330" name="__codelineno-0-330"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-330" name="__codelineno-0-330"></a><span class="sd">    """</span>
 <a id="__codelineno-0-331" name="__codelineno-0-331"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_equations</span><span class="p">:</span>
 <a id="__codelineno-0-332" name="__codelineno-0-332"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_equations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<a id="__codelineno-0-333" name="__codelineno-0-333"></a>    <span class="k">return</span> <span class="s2">&quot;&lt;no_equation_found&gt;&quot;</span>
+<a id="__codelineno-0-333" name="__codelineno-0-333"></a>    <span class="k">return</span> <span class="s2">"&lt;no_equation_found&gt;"</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -3428,13 +3400,13 @@ Maps to PySR's parsimony parameter.</p>
 <span class="normal"><a href="#__codelineno-0-341">341</a></span>
 <span class="normal"><a href="#__codelineno-0-342">342</a></span>
 <span class="normal"><a href="#__codelineno-0-343">343</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-335" name="__codelineno-0-335"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_equation_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-<a id="__codelineno-0-336" name="__codelineno-0-336"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get scores for all equations.</span>
+<a id="__codelineno-0-336" name="__codelineno-0-336"></a><span class="w">    </span><span class="sd">"""Get scores for all equations.</span>
 <a id="__codelineno-0-337" name="__codelineno-0-337"></a>
 <a id="__codelineno-0-338" name="__codelineno-0-338"></a><span class="sd">    Returns</span>
 <a id="__codelineno-0-339" name="__codelineno-0-339"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-340" name="__codelineno-0-340"></a><span class="sd">    scores : List[float]</span>
 <a id="__codelineno-0-341" name="__codelineno-0-341"></a><span class="sd">        Loss/score values for each equation (lower is better).</span>
-<a id="__codelineno-0-342" name="__codelineno-0-342"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-342" name="__codelineno-0-342"></a><span class="sd">    """</span>
 <a id="__codelineno-0-343" name="__codelineno-0-343"></a>    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_equation_scores</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -3538,7 +3510,7 @@ Maps to PySR's parsimony parameter.</p>
 <span class="normal"><a href="#__codelineno-0-366">366</a></span>
 <span class="normal"><a href="#__codelineno-0-367">367</a></span>
 <span class="normal"><a href="#__codelineno-0-368">368</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-345" name="__codelineno-0-345"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_sympy_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">equation_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<a id="__codelineno-0-346" name="__codelineno-0-346"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get SymPy expression for an equation.</span>
+<a id="__codelineno-0-346" name="__codelineno-0-346"></a><span class="w">    </span><span class="sd">"""Get SymPy expression for an equation.</span>
 <a id="__codelineno-0-347" name="__codelineno-0-347"></a>
 <a id="__codelineno-0-348" name="__codelineno-0-348"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-349" name="__codelineno-0-349"></a><span class="sd">    ----------</span>
@@ -3549,7 +3521,7 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-354" name="__codelineno-0-354"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-355" name="__codelineno-0-355"></a><span class="sd">    expr : sympy.Expr or None</span>
 <a id="__codelineno-0-356" name="__codelineno-0-356"></a><span class="sd">        SymPy expression, or None if not available.</span>
-<a id="__codelineno-0-357" name="__codelineno-0-357"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-357" name="__codelineno-0-357"></a><span class="sd">    """</span>
 <a id="__codelineno-0-358" name="__codelineno-0-358"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_using_pysr</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-359" name="__codelineno-0-359"></a>        <span class="k">try</span><span class="p">:</span>
 <a id="__codelineno-0-360" name="__codelineno-0-360"></a>            <span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span>
@@ -3664,7 +3636,7 @@ Maps to PySR's parsimony parameter.</p>
 <span class="normal"><a href="#__codelineno-0-392">392</a></span>
 <span class="normal"><a href="#__codelineno-0-393">393</a></span>
 <span class="normal"><a href="#__codelineno-0-394">394</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-370" name="__codelineno-0-370"></a><span class="k">def</span><span class="w"> </span><span class="nf">latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">equation_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a id="__codelineno-0-371" name="__codelineno-0-371"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get LaTeX representation of an equation.</span>
+<a id="__codelineno-0-371" name="__codelineno-0-371"></a><span class="w">    </span><span class="sd">"""Get LaTeX representation of an equation.</span>
 <a id="__codelineno-0-372" name="__codelineno-0-372"></a>
 <a id="__codelineno-0-373" name="__codelineno-0-373"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-374" name="__codelineno-0-374"></a><span class="sd">    ----------</span>
@@ -3675,7 +3647,7 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-379" name="__codelineno-0-379"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-380" name="__codelineno-0-380"></a><span class="sd">    latex_str : str</span>
 <a id="__codelineno-0-381" name="__codelineno-0-381"></a><span class="sd">        LaTeX string for the equation.</span>
-<a id="__codelineno-0-382" name="__codelineno-0-382"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-382" name="__codelineno-0-382"></a><span class="sd">    """</span>
 <a id="__codelineno-0-383" name="__codelineno-0-383"></a>    <span class="n">expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sympy_expression</span><span class="p">(</span><span class="n">equation_index</span><span class="p">)</span>
 <a id="__codelineno-0-384" name="__codelineno-0-384"></a>    <span class="k">if</span> <span class="n">expr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-385" name="__codelineno-0-385"></a>        <span class="k">try</span><span class="p">:</span>
@@ -3687,7 +3659,7 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-391" name="__codelineno-0-391"></a>    <span class="c1"># Fallback: return raw equation</span>
 <a id="__codelineno-0-392" name="__codelineno-0-392"></a>    <span class="k">if</span> <span class="n">equation_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_equations</span><span class="p">):</span>
 <a id="__codelineno-0-393" name="__codelineno-0-393"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_equations</span><span class="p">[</span><span class="n">equation_index</span><span class="p">]</span>
-<a id="__codelineno-0-394" name="__codelineno-0-394"></a>    <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-0-394" name="__codelineno-0-394"></a>    <span class="k">return</span> <span class="s2">""</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -3809,7 +3781,7 @@ Maps to PySR's parsimony parameter.</p>
 <span class="normal"><a href="#__codelineno-0-420">420</a></span>
 <span class="normal"><a href="#__codelineno-0-421">421</a></span>
 <span class="normal"><a href="#__codelineno-0-422">422</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-396" name="__codelineno-0-396"></a><span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<a id="__codelineno-0-397" name="__codelineno-0-397"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute R² score on test data.</span>
+<a id="__codelineno-0-397" name="__codelineno-0-397"></a><span class="w">    </span><span class="sd">"""Compute R² score on test data.</span>
 <a id="__codelineno-0-398" name="__codelineno-0-398"></a>
 <a id="__codelineno-0-399" name="__codelineno-0-399"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-400" name="__codelineno-0-400"></a><span class="sd">    ----------</span>
@@ -3822,7 +3794,7 @@ Maps to PySR's parsimony parameter.</p>
 <a id="__codelineno-0-407" name="__codelineno-0-407"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-408" name="__codelineno-0-408"></a><span class="sd">    r2 : float</span>
 <a id="__codelineno-0-409" name="__codelineno-0-409"></a><span class="sd">        R² score (1.0 = perfect, 0.0 = baseline).</span>
-<a id="__codelineno-0-410" name="__codelineno-0-410"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-410" name="__codelineno-0-410"></a><span class="sd">    """</span>
 <a id="__codelineno-0-411" name="__codelineno-0-411"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <a id="__codelineno-0-412" name="__codelineno-0-412"></a>    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <a id="__codelineno-0-413" name="__codelineno-0-413"></a>
@@ -3906,7 +3878,7 @@ Maps to PySR's parsimony parameter.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

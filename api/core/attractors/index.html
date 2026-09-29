@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -496,34 +496,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -2465,7 +2437,7 @@
 <a id="__codelineno-0-91" name="__codelineno-0-91"></a>    <span class="n">embedding_dimension</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
 <a id="__codelineno-0-92" name="__codelineno-0-92"></a>    <span class="n">time_delay</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
 <a id="__codelineno-0-93" name="__codelineno-0-93"></a><span class="p">):</span>
-<a id="__codelineno-0-94" name="__codelineno-0-94"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-94" name="__codelineno-0-94"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-95" name="__codelineno-0-95"></a><span class="sd">    Initialize recurrence-based detector.</span>
 <a id="__codelineno-0-96" name="__codelineno-0-96"></a>
 <a id="__codelineno-0-97" name="__codelineno-0-97"></a><span class="sd">    Parameters</span>
@@ -2478,7 +2450,7 @@
 <a id="__codelineno-0-104" name="__codelineno-0-104"></a><span class="sd">        Embedding dimension for delay embedding</span>
 <a id="__codelineno-0-105" name="__codelineno-0-105"></a><span class="sd">    time_delay : int</span>
 <a id="__codelineno-0-106" name="__codelineno-0-106"></a><span class="sd">        Time delay for embedding</span>
-<a id="__codelineno-0-107" name="__codelineno-0-107"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-107" name="__codelineno-0-107"></a><span class="sd">    """</span>
 <a id="__codelineno-0-108" name="__codelineno-0-108"></a>    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span>
 <a id="__codelineno-0-109" name="__codelineno-0-109"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">min_persistence</span> <span class="o">=</span> <span class="n">min_persistence</span>
 <a id="__codelineno-0-110" name="__codelineno-0-110"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">embedding_dimension</span> <span class="o">=</span> <span class="n">embedding_dimension</span>
@@ -2535,7 +2507,7 @@
 <span class="normal"><a href="#__codelineno-0-128">128</a></span>
 <span class="normal"><a href="#__codelineno-0-129">129</a></span>
 <span class="normal"><a href="#__codelineno-0-130">130</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-113" name="__codelineno-0-113"></a><span class="k">def</span><span class="w"> </span><span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Attractor</span><span class="p">]:</span>
-<a id="__codelineno-0-114" name="__codelineno-0-114"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect attractors using recurrence analysis.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-114" name="__codelineno-0-114"></a><span class="w">    </span><span class="sd">"""Detect attractors using recurrence analysis."""</span>
 <a id="__codelineno-0-115" name="__codelineno-0-115"></a>    <span class="c1"># Embed trajectory if needed</span>
 <a id="__codelineno-0-116" name="__codelineno-0-116"></a>    <span class="k">if</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
 <a id="__codelineno-0-117" name="__codelineno-0-117"></a>        <span class="n">embedded_trajectory</span> <span class="o">=</span> <span class="n">embed_trajectory</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding_dimension</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_delay</span><span class="p">)</span>
@@ -2606,7 +2578,7 @@
 <span class="normal"><a href="#__codelineno-0-239">239</a></span>
 <span class="normal"><a href="#__codelineno-0-240">240</a></span>
 <span class="normal"><a href="#__codelineno-0-241">241</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-212" name="__codelineno-0-212"></a><span class="k">def</span><span class="w"> </span><span class="nf">characterize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attractor</span><span class="p">:</span> <span class="n">Attractor</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<a id="__codelineno-0-213" name="__codelineno-0-213"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Characterize attractor using recurrence quantification.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-213" name="__codelineno-0-213"></a><span class="w">    </span><span class="sd">"""Characterize attractor using recurrence quantification."""</span>
 <a id="__codelineno-0-214" name="__codelineno-0-214"></a>    <span class="k">if</span> <span class="n">attractor</span><span class="o">.</span><span class="n">trajectory_indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-215" name="__codelineno-0-215"></a>        <span class="k">return</span> <span class="p">{}</span>
 <a id="__codelineno-0-216" name="__codelineno-0-216"></a>
@@ -2620,19 +2592,19 @@
 <a id="__codelineno-0-224" name="__codelineno-0-224"></a>    <span class="n">properties</span> <span class="o">=</span> <span class="p">{}</span>
 <a id="__codelineno-0-225" name="__codelineno-0-225"></a>
 <a id="__codelineno-0-226" name="__codelineno-0-226"></a>    <span class="c1"># Recurrence rate</span>
-<a id="__codelineno-0-227" name="__codelineno-0-227"></a>    <span class="n">properties</span><span class="p">[</span><span class="s1">&#39;recurrence_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">recurrence_matrix</span><span class="p">)</span> <span class="o">/</span> <span class="n">recurrence_matrix</span><span class="o">.</span><span class="n">size</span>
+<a id="__codelineno-0-227" name="__codelineno-0-227"></a>    <span class="n">properties</span><span class="p">[</span><span class="s1">'recurrence_rate'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">recurrence_matrix</span><span class="p">)</span> <span class="o">/</span> <span class="n">recurrence_matrix</span><span class="o">.</span><span class="n">size</span>
 <a id="__codelineno-0-228" name="__codelineno-0-228"></a>
 <a id="__codelineno-0-229" name="__codelineno-0-229"></a>    <span class="c1"># Determinism (fraction of recurrent points forming diagonal lines)</span>
-<a id="__codelineno-0-230" name="__codelineno-0-230"></a>    <span class="n">properties</span><span class="p">[</span><span class="s1">&#39;determinism&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_determinism</span><span class="p">(</span><span class="n">recurrence_matrix</span><span class="p">)</span>
+<a id="__codelineno-0-230" name="__codelineno-0-230"></a>    <span class="n">properties</span><span class="p">[</span><span class="s1">'determinism'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_determinism</span><span class="p">(</span><span class="n">recurrence_matrix</span><span class="p">)</span>
 <a id="__codelineno-0-231" name="__codelineno-0-231"></a>
 <a id="__codelineno-0-232" name="__codelineno-0-232"></a>    <span class="c1"># Average diagonal line length</span>
-<a id="__codelineno-0-233" name="__codelineno-0-233"></a>    <span class="n">properties</span><span class="p">[</span><span class="s1">&#39;avg_diagonal_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_avg_diagonal_length</span><span class="p">(</span><span class="n">recurrence_matrix</span><span class="p">)</span>
+<a id="__codelineno-0-233" name="__codelineno-0-233"></a>    <span class="n">properties</span><span class="p">[</span><span class="s1">'avg_diagonal_length'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_avg_diagonal_length</span><span class="p">(</span><span class="n">recurrence_matrix</span><span class="p">)</span>
 <a id="__codelineno-0-234" name="__codelineno-0-234"></a>
 <a id="__codelineno-0-235" name="__codelineno-0-235"></a>    <span class="c1"># Laminarity (fraction of recurrent points forming vertical lines)</span>
-<a id="__codelineno-0-236" name="__codelineno-0-236"></a>    <span class="n">properties</span><span class="p">[</span><span class="s1">&#39;laminarity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_laminarity</span><span class="p">(</span><span class="n">recurrence_matrix</span><span class="p">)</span>
+<a id="__codelineno-0-236" name="__codelineno-0-236"></a>    <span class="n">properties</span><span class="p">[</span><span class="s1">'laminarity'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_laminarity</span><span class="p">(</span><span class="n">recurrence_matrix</span><span class="p">)</span>
 <a id="__codelineno-0-237" name="__codelineno-0-237"></a>
 <a id="__codelineno-0-238" name="__codelineno-0-238"></a>    <span class="c1"># Entropy of diagonal line lengths</span>
-<a id="__codelineno-0-239" name="__codelineno-0-239"></a>    <span class="n">properties</span><span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_entropy</span><span class="p">(</span><span class="n">recurrence_matrix</span><span class="p">)</span>
+<a id="__codelineno-0-239" name="__codelineno-0-239"></a>    <span class="n">properties</span><span class="p">[</span><span class="s1">'entropy'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_entropy</span><span class="p">(</span><span class="n">recurrence_matrix</span><span class="p">)</span>
 <a id="__codelineno-0-240" name="__codelineno-0-240"></a>
 <a id="__codelineno-0-241" name="__codelineno-0-241"></a>    <span class="k">return</span> <span class="n">properties</span>
 </code></pre></div></td></tr></table></div>
@@ -2738,7 +2710,7 @@
 <span class="normal"><a href="#__codelineno-0-344">344</a></span>
 <span class="normal"><a href="#__codelineno-0-345">345</a></span>
 <span class="normal"><a href="#__codelineno-0-346">346</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-322" name="__codelineno-0-322"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_recurrence_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-323" name="__codelineno-0-323"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-323" name="__codelineno-0-323"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-324" name="__codelineno-0-324"></a><span class="sd">    Compute recurrence matrix for trajectory.</span>
 <a id="__codelineno-0-325" name="__codelineno-0-325"></a>
 <a id="__codelineno-0-326" name="__codelineno-0-326"></a><span class="sd">    Parameters</span>
@@ -2750,7 +2722,7 @@
 <a id="__codelineno-0-332" name="__codelineno-0-332"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-333" name="__codelineno-0-333"></a><span class="sd">    recurrence_matrix : np.ndarray</span>
 <a id="__codelineno-0-334" name="__codelineno-0-334"></a><span class="sd">        Binary recurrence matrix</span>
-<a id="__codelineno-0-335" name="__codelineno-0-335"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-335" name="__codelineno-0-335"></a><span class="sd">    """</span>
 <a id="__codelineno-0-336" name="__codelineno-0-336"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">pdist</span><span class="p">,</span> <span class="n">squareform</span>
 <a id="__codelineno-0-337" name="__codelineno-0-337"></a>
 <a id="__codelineno-0-338" name="__codelineno-0-338"></a>    <span class="n">n_points</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">trajectory</span><span class="p">)</span>
@@ -2897,7 +2869,7 @@
 <a id="__codelineno-0-355" name="__codelineno-0-355"></a>    <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
 <a id="__codelineno-0-356" name="__codelineno-0-356"></a>    <span class="n">evolution_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
 <a id="__codelineno-0-357" name="__codelineno-0-357"></a><span class="p">):</span>
-<a id="__codelineno-0-358" name="__codelineno-0-358"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-358" name="__codelineno-0-358"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-359" name="__codelineno-0-359"></a><span class="sd">    Initialize Lyapunov-based detector.</span>
 <a id="__codelineno-0-360" name="__codelineno-0-360"></a>
 <a id="__codelineno-0-361" name="__codelineno-0-361"></a><span class="sd">    Parameters</span>
@@ -2908,7 +2880,7 @@
 <a id="__codelineno-0-366" name="__codelineno-0-366"></a><span class="sd">        Number of neighbors for local analysis</span>
 <a id="__codelineno-0-367" name="__codelineno-0-367"></a><span class="sd">    evolution_time : int</span>
 <a id="__codelineno-0-368" name="__codelineno-0-368"></a><span class="sd">        Time steps for evolution</span>
-<a id="__codelineno-0-369" name="__codelineno-0-369"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-369" name="__codelineno-0-369"></a><span class="sd">    """</span>
 <a id="__codelineno-0-370" name="__codelineno-0-370"></a>    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span>
 <a id="__codelineno-0-371" name="__codelineno-0-371"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
 <a id="__codelineno-0-372" name="__codelineno-0-372"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">evolution_time</span> <span class="o">=</span> <span class="n">evolution_time</span>
@@ -2964,7 +2936,7 @@
 <span class="normal"><a href="#__codelineno-0-389">389</a></span>
 <span class="normal"><a href="#__codelineno-0-390">390</a></span>
 <span class="normal"><a href="#__codelineno-0-391">391</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-374" name="__codelineno-0-374"></a><span class="k">def</span><span class="w"> </span><span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Attractor</span><span class="p">]:</span>
-<a id="__codelineno-0-375" name="__codelineno-0-375"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect attractors using Lyapunov analysis.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-375" name="__codelineno-0-375"></a><span class="w">    </span><span class="sd">"""Detect attractors using Lyapunov analysis."""</span>
 <a id="__codelineno-0-376" name="__codelineno-0-376"></a>    <span class="c1"># Embed trajectory if needed</span>
 <a id="__codelineno-0-377" name="__codelineno-0-377"></a>    <span class="k">if</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
 <a id="__codelineno-0-378" name="__codelineno-0-378"></a>        <span class="n">embedded_trajectory</span> <span class="o">=</span> <span class="n">embed_trajectory</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -3018,7 +2990,7 @@
 <span class="normal"><a href="#__codelineno-0-496">496</a></span>
 <span class="normal"><a href="#__codelineno-0-497">497</a></span>
 <span class="normal"><a href="#__codelineno-0-498">498</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-486" name="__codelineno-0-486"></a><span class="k">def</span><span class="w"> </span><span class="nf">characterize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attractor</span><span class="p">:</span> <span class="n">Attractor</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<a id="__codelineno-0-487" name="__codelineno-0-487"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute basic Lyapunov characterization for an attractor (MVP).&quot;&quot;&quot;</span>
+<a id="__codelineno-0-487" name="__codelineno-0-487"></a><span class="w">    </span><span class="sd">"""Compute basic Lyapunov characterization for an attractor (MVP)."""</span>
 <a id="__codelineno-0-488" name="__codelineno-0-488"></a>    <span class="k">if</span> <span class="n">attractor</span><span class="o">.</span><span class="n">trajectory_indices</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">attractor</span><span class="o">.</span><span class="n">trajectory_indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 <a id="__codelineno-0-489" name="__codelineno-0-489"></a>        <span class="k">return</span> <span class="p">{}</span>
 <a id="__codelineno-0-490" name="__codelineno-0-490"></a>    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">attractor</span><span class="o">.</span><span class="n">trajectory_indices</span><span class="p">)</span>
@@ -3028,8 +3000,8 @@
 <a id="__codelineno-0-494" name="__codelineno-0-494"></a>        <span class="k">return</span> <span class="p">{}</span>
 <a id="__codelineno-0-495" name="__codelineno-0-495"></a>    <span class="n">vals</span> <span class="o">=</span> <span class="n">local_exponents</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span>
 <a id="__codelineno-0-496" name="__codelineno-0-496"></a>    <span class="n">mean_lyap</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vals</span><span class="p">))</span>
-<a id="__codelineno-0-497" name="__codelineno-0-497"></a>    <span class="n">stability</span> <span class="o">=</span> <span class="s1">&#39;attracting&#39;</span> <span class="k">if</span> <span class="n">mean_lyap</span> <span class="o">&lt;</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="k">else</span> <span class="s1">&#39;neutral&#39;</span> <span class="k">if</span> <span class="n">mean_lyap</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="k">else</span> <span class="s1">&#39;repelling&#39;</span>
-<a id="__codelineno-0-498" name="__codelineno-0-498"></a>    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;mean_lyapunov&#39;</span><span class="p">:</span> <span class="n">mean_lyap</span><span class="p">,</span> <span class="s1">&#39;stability&#39;</span><span class="p">:</span> <span class="n">stability</span><span class="p">}</span>
+<a id="__codelineno-0-497" name="__codelineno-0-497"></a>    <span class="n">stability</span> <span class="o">=</span> <span class="s1">'attracting'</span> <span class="k">if</span> <span class="n">mean_lyap</span> <span class="o">&lt;</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="k">else</span> <span class="s1">'neutral'</span> <span class="k">if</span> <span class="n">mean_lyap</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="k">else</span> <span class="s1">'repelling'</span>
+<a id="__codelineno-0-498" name="__codelineno-0-498"></a>    <span class="k">return</span> <span class="p">{</span><span class="s1">'mean_lyapunov'</span><span class="p">:</span> <span class="n">mean_lyap</span><span class="p">,</span> <span class="s1">'stability'</span><span class="p">:</span> <span class="n">stability</span><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -3071,11 +3043,11 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 <a id="__codelineno-0-502" name="__codelineno-0-502"></a>    <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
 <a id="__codelineno-0-503" name="__codelineno-0-503"></a>    <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
 <a id="__codelineno-0-504" name="__codelineno-0-504"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-505" name="__codelineno-0-505"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;EXPLORATORY full Lyapunov spectrum (delegates to lyapunov module).</span>
+<a id="__codelineno-0-505" name="__codelineno-0-505"></a><span class="w">    </span><span class="sd">"""EXPLORATORY full Lyapunov spectrum (delegates to lyapunov module).</span>
 <a id="__codelineno-0-506" name="__codelineno-0-506"></a>
 <a id="__codelineno-0-507" name="__codelineno-0-507"></a><span class="sd">    Prefer ``mneme.core.largest_lyapunov`` for the headline exponent;</span>
 <a id="__codelineno-0-508" name="__codelineno-0-508"></a><span class="sd">    this returns the exploratory Sano-Sawada spectrum.</span>
-<a id="__codelineno-0-509" name="__codelineno-0-509"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-509" name="__codelineno-0-509"></a><span class="sd">    """</span>
 <a id="__codelineno-0-510" name="__codelineno-0-510"></a>    <span class="k">return</span> <span class="n">lyapunov_spectrum</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -3276,7 +3248,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 <a id="__codelineno-0-730" name="__codelineno-0-730"></a>    <span class="n">r_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
 <a id="__codelineno-0-731" name="__codelineno-0-731"></a>    <span class="n">n_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
 <a id="__codelineno-0-732" name="__codelineno-0-732"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<a id="__codelineno-0-733" name="__codelineno-0-733"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-733" name="__codelineno-0-733"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-734" name="__codelineno-0-734"></a><span class="sd">    Compute correlation dimension of attractor.</span>
 <a id="__codelineno-0-735" name="__codelineno-0-735"></a>
 <a id="__codelineno-0-736" name="__codelineno-0-736"></a><span class="sd">    Parameters</span>
@@ -3292,7 +3264,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 <a id="__codelineno-0-746" name="__codelineno-0-746"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-747" name="__codelineno-0-747"></a><span class="sd">    dimension : float</span>
 <a id="__codelineno-0-748" name="__codelineno-0-748"></a><span class="sd">        Correlation dimension</span>
-<a id="__codelineno-0-749" name="__codelineno-0-749"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-749" name="__codelineno-0-749"></a><span class="sd">    """</span>
 <a id="__codelineno-0-750" name="__codelineno-0-750"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">pdist</span>
 <a id="__codelineno-0-751" name="__codelineno-0-751"></a>
 <a id="__codelineno-0-752" name="__codelineno-0-752"></a>    <span class="c1"># Compute pairwise distances</span>
@@ -3345,7 +3317,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 
 
 <a href="#mneme.core.attractors.ClusteringDetector" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">ClusteringDetector</span><span class="p">(</span><span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">min_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">clustering_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dbscan&#39;</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">ClusteringDetector</span><span class="p">(</span><span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">min_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">clustering_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'dbscan'</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -3454,9 +3426,9 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 <a id="__codelineno-0-517" name="__codelineno-0-517"></a>    <span class="bp">self</span><span class="p">,</span>
 <a id="__codelineno-0-518" name="__codelineno-0-518"></a>    <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
 <a id="__codelineno-0-519" name="__codelineno-0-519"></a>    <span class="n">min_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-<a id="__codelineno-0-520" name="__codelineno-0-520"></a>    <span class="n">clustering_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dbscan&quot;</span>
+<a id="__codelineno-0-520" name="__codelineno-0-520"></a>    <span class="n">clustering_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"dbscan"</span>
 <a id="__codelineno-0-521" name="__codelineno-0-521"></a><span class="p">):</span>
-<a id="__codelineno-0-522" name="__codelineno-0-522"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-522" name="__codelineno-0-522"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-523" name="__codelineno-0-523"></a><span class="sd">    Initialize clustering-based detector.</span>
 <a id="__codelineno-0-524" name="__codelineno-0-524"></a>
 <a id="__codelineno-0-525" name="__codelineno-0-525"></a><span class="sd">    Parameters</span>
@@ -3467,7 +3439,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 <a id="__codelineno-0-530" name="__codelineno-0-530"></a><span class="sd">        Minimum samples per cluster</span>
 <a id="__codelineno-0-531" name="__codelineno-0-531"></a><span class="sd">    clustering_method : str</span>
 <a id="__codelineno-0-532" name="__codelineno-0-532"></a><span class="sd">        Clustering algorithm to use</span>
-<a id="__codelineno-0-533" name="__codelineno-0-533"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-533" name="__codelineno-0-533"></a><span class="sd">    """</span>
 <a id="__codelineno-0-534" name="__codelineno-0-534"></a>    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span>
 <a id="__codelineno-0-535" name="__codelineno-0-535"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">min_samples</span> <span class="o">=</span> <span class="n">min_samples</span>
 <a id="__codelineno-0-536" name="__codelineno-0-536"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">clustering_method</span> <span class="o">=</span> <span class="n">clustering_method</span>
@@ -3561,7 +3533,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 <span class="normal"><a href="#__codelineno-0-591">591</a></span>
 <span class="normal"><a href="#__codelineno-0-592">592</a></span>
 <span class="normal"><a href="#__codelineno-0-593">593</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-538" name="__codelineno-0-538"></a><span class="k">def</span><span class="w"> </span><span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Attractor</span><span class="p">]:</span>
-<a id="__codelineno-0-539" name="__codelineno-0-539"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect attractors using clustering.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-539" name="__codelineno-0-539"></a><span class="w">    </span><span class="sd">"""Detect attractors using clustering."""</span>
 <a id="__codelineno-0-540" name="__codelineno-0-540"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">DBSCAN</span>
 <a id="__codelineno-0-541" name="__codelineno-0-541"></a>
 <a id="__codelineno-0-542" name="__codelineno-0-542"></a>    <span class="c1"># Embed trajectory if needed</span>
@@ -3571,7 +3543,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 <a id="__codelineno-0-546" name="__codelineno-0-546"></a>        <span class="n">embedded_trajectory</span> <span class="o">=</span> <span class="n">trajectory</span>
 <a id="__codelineno-0-547" name="__codelineno-0-547"></a>
 <a id="__codelineno-0-548" name="__codelineno-0-548"></a>    <span class="c1"># Apply clustering</span>
-<a id="__codelineno-0-549" name="__codelineno-0-549"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clustering_method</span> <span class="o">==</span> <span class="s2">&quot;dbscan&quot;</span><span class="p">:</span>
+<a id="__codelineno-0-549" name="__codelineno-0-549"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clustering_method</span> <span class="o">==</span> <span class="s2">"dbscan"</span><span class="p">:</span>
 <a id="__codelineno-0-550" name="__codelineno-0-550"></a>        <span class="n">clustering</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_samples</span><span class="p">)</span>
 <a id="__codelineno-0-551" name="__codelineno-0-551"></a>        <span class="n">labels</span> <span class="o">=</span> <span class="n">clustering</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">embedded_trajectory</span><span class="p">)</span>
 <a id="__codelineno-0-552" name="__codelineno-0-552"></a>    <span class="k">else</span><span class="p">:</span>
@@ -3652,16 +3624,16 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 <span class="normal"><a href="#__codelineno-0-657">657</a></span>
 <span class="normal"><a href="#__codelineno-0-658">658</a></span>
 <span class="normal"><a href="#__codelineno-0-659">659</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-648" name="__codelineno-0-648"></a><span class="k">def</span><span class="w"> </span><span class="nf">characterize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attractor</span><span class="p">:</span> <span class="n">Attractor</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<a id="__codelineno-0-649" name="__codelineno-0-649"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Characterize attractor geometry using clustering (MVP).&quot;&quot;&quot;</span>
+<a id="__codelineno-0-649" name="__codelineno-0-649"></a><span class="w">    </span><span class="sd">"""Characterize attractor geometry using clustering (MVP)."""</span>
 <a id="__codelineno-0-650" name="__codelineno-0-650"></a>    <span class="k">if</span> <span class="n">attractor</span><span class="o">.</span><span class="n">trajectory_indices</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">attractor</span><span class="o">.</span><span class="n">trajectory_indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 <a id="__codelineno-0-651" name="__codelineno-0-651"></a>        <span class="k">return</span> <span class="p">{}</span>
 <a id="__codelineno-0-652" name="__codelineno-0-652"></a>    <span class="n">pts</span> <span class="o">=</span> <span class="n">trajectory</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">attractor</span><span class="o">.</span><span class="n">trajectory_indices</span><span class="p">)]</span>
 <a id="__codelineno-0-653" name="__codelineno-0-653"></a>    <span class="n">centroid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <a id="__codelineno-0-654" name="__codelineno-0-654"></a>    <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pts</span> <span class="o">-</span> <span class="n">centroid</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-0-655" name="__codelineno-0-655"></a>    <span class="k">return</span> <span class="p">{</span>
-<a id="__codelineno-0-656" name="__codelineno-0-656"></a>        <span class="s1">&#39;radius_mean&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dists</span><span class="p">)),</span>
-<a id="__codelineno-0-657" name="__codelineno-0-657"></a>        <span class="s1">&#39;radius_std&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dists</span><span class="p">)),</span>
-<a id="__codelineno-0-658" name="__codelineno-0-658"></a>        <span class="s1">&#39;num_points&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)),</span>
+<a id="__codelineno-0-656" name="__codelineno-0-656"></a>        <span class="s1">'radius_mean'</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dists</span><span class="p">)),</span>
+<a id="__codelineno-0-657" name="__codelineno-0-657"></a>        <span class="s1">'radius_std'</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dists</span><span class="p">)),</span>
+<a id="__codelineno-0-658" name="__codelineno-0-658"></a>        <span class="s1">'num_points'</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)),</span>
 <a id="__codelineno-0-659" name="__codelineno-0-659"></a>    <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -3687,7 +3659,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 
 
 <a href="#mneme.core.attractors.AttractorDetector" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">AttractorDetector</span><span class="p">(</span><span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;recurrence&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">AttractorDetector</span><span class="p">(</span><span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'recurrence'</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -3792,22 +3764,22 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 <span class="normal"><a href="#__codelineno-0-685">685</a></span>
 <span class="normal"><a href="#__codelineno-0-686">686</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-665" name="__codelineno-0-665"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 <a id="__codelineno-0-666" name="__codelineno-0-666"></a>    <span class="bp">self</span><span class="p">,</span>
-<a id="__codelineno-0-667" name="__codelineno-0-667"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;recurrence&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-667" name="__codelineno-0-667"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"recurrence"</span><span class="p">,</span>
 <a id="__codelineno-0-668" name="__codelineno-0-668"></a>    <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
 <a id="__codelineno-0-669" name="__codelineno-0-669"></a>    <span class="o">**</span><span class="n">kwargs</span>
 <a id="__codelineno-0-670" name="__codelineno-0-670"></a><span class="p">):</span>
-<a id="__codelineno-0-671" name="__codelineno-0-671"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-671" name="__codelineno-0-671"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-672" name="__codelineno-0-672"></a><span class="sd">    Initialize attractor detector.</span>
 <a id="__codelineno-0-673" name="__codelineno-0-673"></a>
 <a id="__codelineno-0-674" name="__codelineno-0-674"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-675" name="__codelineno-0-675"></a><span class="sd">    ----------</span>
 <a id="__codelineno-0-676" name="__codelineno-0-676"></a><span class="sd">    method : str</span>
-<a id="__codelineno-0-677" name="__codelineno-0-677"></a><span class="sd">        Detection method (&#39;recurrence&#39;, &#39;lyapunov&#39;, &#39;clustering&#39;)</span>
+<a id="__codelineno-0-677" name="__codelineno-0-677"></a><span class="sd">        Detection method ('recurrence', 'lyapunov', 'clustering')</span>
 <a id="__codelineno-0-678" name="__codelineno-0-678"></a><span class="sd">    threshold : float</span>
 <a id="__codelineno-0-679" name="__codelineno-0-679"></a><span class="sd">        Detection threshold</span>
 <a id="__codelineno-0-680" name="__codelineno-0-680"></a><span class="sd">    **kwargs</span>
 <a id="__codelineno-0-681" name="__codelineno-0-681"></a><span class="sd">        Method-specific parameters</span>
-<a id="__codelineno-0-682" name="__codelineno-0-682"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-682" name="__codelineno-0-682"></a><span class="sd">    """</span>
 <a id="__codelineno-0-683" name="__codelineno-0-683"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
 <a id="__codelineno-0-684" name="__codelineno-0-684"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
 <a id="__codelineno-0-685" name="__codelineno-0-685"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">method_params</span> <span class="o">=</span> <span class="n">kwargs</span>
@@ -3849,7 +3821,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-699">699</a></span>
 <span class="normal"><a href="#__codelineno-0-700">700</a></span>
 <span class="normal"><a href="#__codelineno-0-701">701</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-699" name="__codelineno-0-699"></a><span class="k">def</span><span class="w"> </span><span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Attractor</span><span class="p">]:</span>
-<a id="__codelineno-0-700" name="__codelineno-0-700"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect attractors in trajectory.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-700" name="__codelineno-0-700"></a><span class="w">    </span><span class="sd">"""Detect attractors in trajectory."""</span>
 <a id="__codelineno-0-701" name="__codelineno-0-701"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">trajectory</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -3878,7 +3850,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-703">703</a></span>
 <span class="normal"><a href="#__codelineno-0-704">704</a></span>
 <span class="normal"><a href="#__codelineno-0-705">705</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-703" name="__codelineno-0-703"></a><span class="k">def</span><span class="w"> </span><span class="nf">characterize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attractor</span><span class="p">:</span> <span class="n">Attractor</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<a id="__codelineno-0-704" name="__codelineno-0-704"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Characterize attractor properties.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-704" name="__codelineno-0-704"></a><span class="w">    </span><span class="sd">"""Characterize attractor properties."""</span>
 <a id="__codelineno-0-705" name="__codelineno-0-705"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span><span class="o">.</span><span class="n">characterize</span><span class="p">(</span><span class="n">attractor</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -3922,7 +3894,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
 <span class="normal"><a href="#__codelineno-0-722">722</a></span>
 <span class="normal"><a href="#__codelineno-0-723">723</a></span>
 <span class="normal"><a href="#__codelineno-0-724">724</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-707" name="__codelineno-0-707"></a><span class="k">def</span><span class="w"> </span><span class="nf">classify_attractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attractor</span><span class="p">:</span> <span class="n">Attractor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AttractorType</span><span class="p">:</span>
-<a id="__codelineno-0-708" name="__codelineno-0-708"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Classify attractor type based on simple heuristics (MVP).&quot;&quot;&quot;</span>
+<a id="__codelineno-0-708" name="__codelineno-0-708"></a><span class="w">    </span><span class="sd">"""Classify attractor type based on simple heuristics (MVP)."""</span>
 <a id="__codelineno-0-709" name="__codelineno-0-709"></a>    <span class="k">if</span> <span class="n">attractor</span><span class="o">.</span><span class="n">dimension</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-710" name="__codelineno-0-710"></a>        <span class="k">if</span> <span class="n">attractor</span><span class="o">.</span><span class="n">dimension</span> <span class="o">&lt;</span> <span class="mf">0.2</span><span class="p">:</span>
 <a id="__codelineno-0-711" name="__codelineno-0-711"></a>            <span class="k">return</span> <span class="n">AttractorType</span><span class="o">.</span><span class="n">FIXED_POINT</span>
@@ -4010,7 +3982,7 @@ this returns the exploratory Sano-Sawada spectrum.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

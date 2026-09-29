@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -596,34 +596,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -1921,7 +1893,7 @@
 <li><strong>Field Reconstruction</strong> -- Scalable Sparse GP (default), Dense IFT, Standard GP, and Neural Field backends. Handles 256x256 fields in sub-second time.</li>
 <li><strong>Topology Analysis</strong> -- Full GUDHI integration for cubical, Rips, and Alpha complexes. Persistence diagrams, landscapes, images, Wasserstein/bottleneck distances.</li>
 <li><strong>Attractor Detection</strong> -- Recurrence-based, Lyapunov, and clustering detectors for identifying stable states in temporal field data.</li>
-<li><strong>Lyapunov Spectrum</strong> -- Full Wolf algorithm for computing Lyapunov exponents. Kaplan-Yorke dimension and automatic attractor classification.</li>
+<li><strong>Lyapunov Analysis (exploratory)</strong> -- Rosenstein largest-exponent estimate with IAAFT surrogate testing. Not yet validated on biological data.</li>
 <li><strong>Symbolic Regression</strong> -- PySR integration for discovering governing PDEs from field dynamics.</li>
 <li><strong>Latent Space Analysis</strong> -- Convolutional VAE for learning compressed field representations with interpolation and sampling.</li>
 <li><strong>BETSE Integration</strong> -- Direct ingestion of BETSE bioelectric tissue simulation output.</li>
@@ -1937,13 +1909,13 @@
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># Run analysis pipeline</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">pipe</span> <span class="o">=</span> <span class="n">create_bioelectric_pipeline</span><span class="p">()</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">result</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">({</span><span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pipeline completed in </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">execution_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">result</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">({</span><span class="s1">'field'</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Pipeline completed in </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">execution_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s"</span><span class="p">)</span>
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1"># Reconstruct field from sparse observations</span>
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">observations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">rec</span> <span class="o">=</span> <span class="n">create_reconstructor</span><span class="p">(</span><span class="s1">&#39;ift&#39;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">rec</span> <span class="o">=</span> <span class="n">create_reconstructor</span><span class="p">(</span><span class="s1">'ift'</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">rec</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">observations</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="n">field</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">reconstruct</span><span class="p">()</span>
 </code></pre></div>
@@ -1964,7 +1936,6 @@
 <li><strong><a href="PROJECT_STRUCTURE/">Project Structure</a></strong> -- Code organization and architecture</li>
 <li><strong><a href="api/">API Reference</a></strong> -- Auto-generated reference for all modules</li>
 <li><strong><a href="DATA_PIPELINE/">Data Pipeline</a></strong> -- Pipeline architecture and stages</li>
-<li><strong><a href="BETSE_ANALYSIS_REPORT/">BETSE Analysis</a></strong> -- Results from BETSE simulation analysis</li>
 <li><strong><a href="course/">Course</a></strong> -- 11-module learning course</li>
 </ul>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
@@ -2027,7 +1998,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

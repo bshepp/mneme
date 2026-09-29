@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -837,34 +837,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -2414,25 +2386,25 @@
 <h4 id="bioelectric-imaging-data">Bioelectric Imaging Data<a class="headerlink" href="#bioelectric-imaging-data" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Standard format: HDF5 with structured metadata</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">{</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="s1">&#39;voltage_fields&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>  <span class="c1"># Shape: (time, height, width)</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="s1">&#39;timestamps&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>      <span class="c1"># Shape: (time,)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="s1">&#39;specimen_id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="s1">&#39;experiment_date&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="s1">&#39;sampling_rate_hz&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="s1">&#39;voltage_unit&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="s1">&#39;spatial_resolution_mm&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="s1">&#39;experimental_conditions&#39;</span><span class="p">:</span> <span class="nb">dict</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="s1">'voltage_fields'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>  <span class="c1"># Shape: (time, height, width)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="s1">'timestamps'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>      <span class="c1"># Shape: (time,)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="s1">'metadata'</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="s1">'specimen_id'</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="s1">'experiment_date'</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="s1">'sampling_rate_hz'</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="s1">'voltage_unit'</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="s1">'spatial_resolution_mm'</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="s1">'experimental_conditions'</span><span class="p">:</span> <span class="nb">dict</span>
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="p">}</span>
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="p">}</span>
 </code></pre></div>
 <h4 id="gene-expression-data">Gene Expression Data<a class="headerlink" href="#gene-expression-data" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Format: Spatial expression matrices</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">{</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="s1">&#39;expression_matrix&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>  <span class="c1"># Shape: (genes, spatial_points)</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="s1">&#39;gene_names&#39;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="s1">&#39;spatial_coordinates&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>  <span class="c1"># Shape: (spatial_points, 2)</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="s1">&#39;time_point&#39;</span><span class="p">:</span> <span class="nb">float</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="s1">'expression_matrix'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>  <span class="c1"># Shape: (genes, spatial_points)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="s1">'gene_names'</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="s1">'spatial_coordinates'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>  <span class="c1"># Shape: (spatial_points, 2)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="s1">'time_point'</span><span class="p">:</span> <span class="nb">float</span>
 <a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="2-processed-data-format">2. Processed Data Format<a class="headerlink" href="#2-processed-data-format" title="Permanent link">&para;</a></h3>
@@ -2453,8 +2425,8 @@
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Bioelectric data loader</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">loader</span> <span class="o">=</span> <span class="n">loaders</span><span class="o">.</span><span class="n">BioelectricLoader</span><span class="p">(</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;data/raw/planarian/&quot;</span><span class="p">,</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">file_pattern</span><span class="o">=</span><span class="s2">&quot;*.h5&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">data_dir</span><span class="o">=</span><span class="s2">"data/raw/planarian/"</span><span class="p">,</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">file_pattern</span><span class="o">=</span><span class="s2">"*.h5"</span><span class="p">,</span>
 <a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">lazy_load</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># Load data on demand</span>
 <a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">)</span>
 <a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
@@ -2479,16 +2451,16 @@
 <a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="k">if</span> <span class="n">report</span><span class="o">.</span><span class="n">passed</span><span class="p">:</span>
 <a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="n">processed_field</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">voltage_field</span><span class="p">)</span>
 <a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Quality check failed: </span><span class="si">{</span><span class="n">report</span><span class="o">.</span><span class="n">issues</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Quality check failed: </span><span class="si">{</span><span class="n">report</span><span class="o">.</span><span class="n">issues</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="stage-3-preprocessing">Stage 3: Preprocessing<a class="headerlink" href="#stage-3-preprocessing" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mneme.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocessors</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># Create preprocessing pipeline</span>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">preprocessor</span> <span class="o">=</span> <span class="n">preprocessors</span><span class="o">.</span><span class="n">FieldPreprocessor</span><span class="p">([</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">preprocessors</span><span class="o">.</span><span class="n">Denoiser</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;wavelet&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="s1">&#39;soft&#39;</span><span class="p">),</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="n">preprocessors</span><span class="o">.</span><span class="n">Registrator</span><span class="p">(</span><span class="n">reference</span><span class="o">=</span><span class="s1">&#39;first_frame&#39;</span><span class="p">),</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="n">preprocessors</span><span class="o">.</span><span class="n">Normalizer</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;z_score&#39;</span><span class="p">,</span> <span class="n">per_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">preprocessors</span><span class="o">.</span><span class="n">Denoiser</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'wavelet'</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="s1">'soft'</span><span class="p">),</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="n">preprocessors</span><span class="o">.</span><span class="n">Registrator</span><span class="p">(</span><span class="n">reference</span><span class="o">=</span><span class="s1">'first_frame'</span><span class="p">),</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="n">preprocessors</span><span class="o">.</span><span class="n">Normalizer</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'z_score'</span><span class="p">,</span> <span class="n">per_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
 <a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">preprocessors</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="n">target_resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">])</span>
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
@@ -2544,7 +2516,7 @@
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mneme.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">autoencoders</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
 <a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># 1. Field reconstruction</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">reconstructor</span> <span class="o">=</span> <span class="n">field_theory</span><span class="o">.</span><span class="n">FieldReconstructor</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;ift&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">reconstructor</span> <span class="o">=</span> <span class="n">field_theory</span><span class="o">.</span><span class="n">FieldReconstructor</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'ift'</span><span class="p">)</span>
 <a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">continuous_field</span> <span class="o">=</span> <span class="n">reconstructor</span><span class="o">.</span><span class="n">fit_reconstruct</span><span class="p">(</span><span class="n">processed_field</span><span class="p">)</span>
 <a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
 <a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c1"># 2. Topology analysis</span>
@@ -2553,7 +2525,7 @@
 <a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">persistence_diagrams</span> <span class="o">=</span> <span class="n">tda</span><span class="o">.</span><span class="n">compute_persistence</span><span class="p">(</span><span class="n">continuous_field</span><span class="p">)</span>
 <a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
 <a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="c1"># Point-cloud backends</span>
-<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="n">pc</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">field_to_point_cloud</span><span class="p">(</span><span class="n">continuous_field</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;peaks&#39;</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mf">95.0</span><span class="p">)</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="n">pc</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">field_to_point_cloud</span><span class="p">(</span><span class="n">continuous_field</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'peaks'</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mf">95.0</span><span class="p">)</span>
 <a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="n">rips</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">RipsComplex</span><span class="p">(</span><span class="n">max_dimension</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="n">rips_diagrams</span> <span class="o">=</span> <span class="n">rips</span><span class="o">.</span><span class="n">compute_persistence</span><span class="p">(</span><span class="n">pc</span><span class="p">)</span>
 <a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
@@ -2562,7 +2534,7 @@
 <a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="n">latent_representation</span> <span class="o">=</span> <span class="n">autoencoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">continuous_field</span><span class="p">)</span>
 <a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>
 <a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="c1"># 4. Attractor detection (recurrence default; lyapunov/clustering also available)</span>
-<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="n">detector</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">AttractorDetector</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;recurrence&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="n">detector</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">AttractorDetector</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'recurrence'</span><span class="p">)</span>
 <a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="n">attractors</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">latent_trajectory</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="stage-6-results-generation-roadmap">Stage 6: Results Generation (roadmap)<a class="headerlink" href="#stage-6-results-generation-roadmap" title="Permanent link">&para;</a></h3>
@@ -2571,29 +2543,29 @@
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># Generate comprehensive results</span>
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">result_generator</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">ResultGenerator</span><span class="p">()</span>
 <a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">results</span> <span class="o">=</span> <span class="n">result_generator</span><span class="o">.</span><span class="n">compile</span><span class="p">({</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="s1">&#39;raw_data&#39;</span><span class="p">:</span> <span class="n">voltage_field</span><span class="p">,</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="s1">&#39;processed_data&#39;</span><span class="p">:</span> <span class="n">processed_field</span><span class="p">,</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    <span class="s1">&#39;reconstruction&#39;</span><span class="p">:</span> <span class="n">continuous_field</span><span class="p">,</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="s1">&#39;topology&#39;</span><span class="p">:</span> <span class="n">persistence_diagrams</span><span class="p">,</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    <span class="s1">&#39;attractors&#39;</span><span class="p">:</span> <span class="n">attractors</span><span class="p">,</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    <span class="s1">&#39;latent_space&#39;</span><span class="p">:</span> <span class="n">latent_representation</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="s1">'raw_data'</span><span class="p">:</span> <span class="n">voltage_field</span><span class="p">,</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="s1">'processed_data'</span><span class="p">:</span> <span class="n">processed_field</span><span class="p">,</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    <span class="s1">'reconstruction'</span><span class="p">:</span> <span class="n">continuous_field</span><span class="p">,</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="s1">'topology'</span><span class="p">:</span> <span class="n">persistence_diagrams</span><span class="p">,</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    <span class="s1">'attractors'</span><span class="p">:</span> <span class="n">attractors</span><span class="p">,</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    <span class="s1">'latent_space'</span><span class="p">:</span> <span class="n">latent_representation</span>
 <a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="p">})</span>
 <a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
 <a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="c1"># Save results</span>
-<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="n">results</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;experiments/results/exp_001/&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="n">results</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"experiments/results/exp_001/"</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="data-pipeline-configuration">Data Pipeline Configuration<a class="headerlink" href="#data-pipeline-configuration" title="Permanent link">&para;</a></h2>
 <h3 id="configuration-file-configpipelineyaml">Configuration File (<code>config/pipeline.yaml</code>)<a class="headerlink" href="#configuration-file-configpipelineyaml" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">pipeline</span><span class="p">:</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;standard_bioelectric_pipeline&quot;</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.0&quot;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"standard_bioelectric_pipeline"</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"1.0"</span>
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
 <a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">stages</span><span class="p">:</span>
 <a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="nt">ingestion</span><span class="p">:</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">      </span><span class="nt">loader</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;BioelectricLoader&quot;</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">      </span><span class="nt">loader</span><span class="p">:</span><span class="w"> </span><span class="s">"BioelectricLoader"</span>
 <a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">      </span><span class="nt">params</span><span class="p">:</span>
 <a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">        </span><span class="nt">lazy_load</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">        </span><span class="nt">cache_size</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2GB&quot;</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">        </span><span class="nt">cache_size</span><span class="p">:</span><span class="w"> </span><span class="s">"2GB"</span>
 <a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
 <a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">    </span><span class="nt">quality_control</span><span class="p">:</span>
 <a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">      </span><span class="nt">checks</span><span class="p">:</span>
@@ -2603,56 +2575,56 @@
 <a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>
 <a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">    </span><span class="nt">preprocessing</span><span class="p">:</span>
 <a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">      </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;denoise&quot;</span>
-<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">          </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wavelet&quot;</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"denoise"</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">          </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">"wavelet"</span>
 <a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="w">          </span><span class="nt">params</span><span class="p">:</span>
-<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="w">            </span><span class="nt">wavelet</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;db4&quot;</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="w">            </span><span class="nt">wavelet</span><span class="p">:</span><span class="w"> </span><span class="s">"db4"</span>
 <a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="w">            </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>
-<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;normalize&quot;</span>
-<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">          </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;z_score&quot;</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"normalize"</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">          </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">"z_score"</span>
 <a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="w">          </span><span class="nt">params</span><span class="p">:</span>
 <a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="w">            </span><span class="nt">per_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>
-<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;interpolate&quot;</span>
-<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="w">          </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bicubic&quot;</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"interpolate"</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="w">          </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">"bicubic"</span>
 <a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="w">          </span><span class="nt">params</span><span class="p">:</span>
 <a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="w">            </span><span class="nt">target_shape</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">256</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">]</span>
 <a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>
 <a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="w">    </span><span class="nt">analysis</span><span class="p">:</span>
 <a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="w">      </span><span class="nt">field_reconstruction</span><span class="p">:</span>
-<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="w">        </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ift&quot;</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="w">        </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">"ift"</span>
 <a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a><span class="w">        </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">512</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">512</span><span class="p p-Indicator">]</span>
 <a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a>
 <a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a><span class="w">      </span><span class="nt">topology</span><span class="p">:</span>
 <a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a><span class="w">        </span><span class="nt">max_dimension</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a><span class="w">        </span><span class="nt">filtration</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sublevel&quot;</span>
+<a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a><span class="w">        </span><span class="nt">filtration</span><span class="p">:</span><span class="w"> </span><span class="s">"sublevel"</span>
 <a id="__codelineno-10-44" name="__codelineno-10-44" href="#__codelineno-10-44"></a>
 <a id="__codelineno-10-45" name="__codelineno-10-45" href="#__codelineno-10-45"></a><span class="w">      </span><span class="nt">attractors</span><span class="p">:</span>
-<a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a><span class="w">        </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;recurrence&quot;</span>
+<a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a><span class="w">        </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">"recurrence"</span>
 <a id="__codelineno-10-47" name="__codelineno-10-47" href="#__codelineno-10-47"></a><span class="w">        </span><span class="nt">threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
 <a id="__codelineno-10-48" name="__codelineno-10-48" href="#__codelineno-10-48"></a>
 <a id="__codelineno-10-49" name="__codelineno-10-49" href="#__codelineno-10-49"></a><span class="w">  </span><span class="nt">output</span><span class="p">:</span>
-<a id="__codelineno-10-50" name="__codelineno-10-50" href="#__codelineno-10-50"></a><span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hdf5&quot;</span>
-<a id="__codelineno-10-51" name="__codelineno-10-51" href="#__codelineno-10-51"></a><span class="w">    </span><span class="nt">compression</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gzip&quot;</span>
+<a id="__codelineno-10-50" name="__codelineno-10-50" href="#__codelineno-10-50"></a><span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"hdf5"</span>
+<a id="__codelineno-10-51" name="__codelineno-10-51" href="#__codelineno-10-51"></a><span class="w">    </span><span class="nt">compression</span><span class="p">:</span><span class="w"> </span><span class="s">"gzip"</span>
 <a id="__codelineno-10-52" name="__codelineno-10-52" href="#__codelineno-10-52"></a><span class="w">    </span><span class="nt">save_intermediate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 <h3 id="running-the-pipeline">Running the Pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mneme.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">pipeline</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># Load configuration</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">config</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="s2">&quot;config/pipeline.yaml&quot;</span><span class="p">)</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">config</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="s2">"config/pipeline.yaml"</span><span class="p">)</span>
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
 <a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1"># Create pipeline</span>
 <a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">DataPipeline</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 <a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
 <a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c1"># Run on single dataset</span>
-<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="n">results</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;data/raw/experiment_001.h5&quot;</span><span class="p">)</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="n">results</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">"data/raw/experiment_001.h5"</span><span class="p">)</span>
 <a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
 <a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="c1"># Batch processing</span>
 <a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="n">results</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run_batch</span><span class="p">(</span>
-<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>    <span class="n">input_pattern</span><span class="o">=</span><span class="s2">&quot;data/raw/*.h5&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;results/&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>    <span class="n">input_pattern</span><span class="o">=</span><span class="s2">"data/raw/*.h5"</span><span class="p">,</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>    <span class="n">output_dir</span><span class="o">=</span><span class="s2">"results/"</span><span class="p">,</span>
 <a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>    <span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>    <span class="n">n_workers</span><span class="o">=</span><span class="mi">4</span>
 <a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="p">)</span>
@@ -2663,7 +2635,7 @@
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># Parallel pipeline for large datasets</span>
 <a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">parallel_pipeline</span> <span class="o">=</span> <span class="n">parallel</span><span class="o">.</span><span class="n">ParallelPipeline</span><span class="p">(</span>
 <a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    <span class="n">pipeline</span><span class="o">=</span><span class="n">pipe</span><span class="p">,</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;multiprocessing&#39;</span><span class="p">,</span>  <span class="c1"># MVP</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="n">backend</span><span class="o">=</span><span class="s1">'multiprocessing'</span><span class="p">,</span>  <span class="c1"># MVP</span>
 <a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    <span class="n">n_workers</span><span class="o">=</span><span class="mi">8</span>
 <a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="p">)</span>
 <a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
@@ -2678,7 +2650,7 @@
 <a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>  <span class="c1"># Time dimension can vary</span>
 <a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
 <a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    <span class="n">value_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>  <span class="c1"># mV</span>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="n">required_metadata</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;specimen_id&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">]</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="n">required_metadata</span><span class="o">=</span><span class="p">[</span><span class="s1">'specimen_id'</span><span class="p">,</span> <span class="s1">'timestamp'</span><span class="p">]</span>
 <a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="p">)</span>
 <a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
 <a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="c1"># Validate data</span>
@@ -2689,13 +2661,13 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mneme.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1"># Enable caching for expensive operations</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="nd">@cache</span><span class="o">.</span><span class="n">memoize</span><span class="p">(</span><span class="n">cache_dir</span><span class="o">=</span><span class="s2">&quot;cache/preprocessing/&quot;</span><span class="p">)</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="nd">@cache</span><span class="o">.</span><span class="n">memoize</span><span class="p">(</span><span class="n">cache_dir</span><span class="o">=</span><span class="s2">"cache/preprocessing/"</span><span class="p">)</span>
 <a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">expensive_preprocessing</span><span class="p">(</span><span class="n">field</span><span class="p">):</span>
 <a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>    <span class="k">return</span> <span class="n">heavy_computation</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
 <a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
 <a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="c1"># LRU cache for frequent access</span>
-<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="n">field_cache</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">FieldCache</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="s2">&quot;10GB&quot;</span><span class="p">)</span>
-<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="n">field_cache</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;exp_001&quot;</span><span class="p">,</span> <span class="n">processed_field</span><span class="p">)</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="n">field_cache</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">FieldCache</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="s2">"10GB"</span><span class="p">)</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="n">field_cache</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">"exp_001"</span><span class="p">,</span> <span class="n">processed_field</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="monitoring-and-logging-mvp">Monitoring and Logging (MVP)<a class="headerlink" href="#monitoring-and-logging-mvp" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mneme.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">monitoring</span>
@@ -2704,12 +2676,12 @@
 <a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">monitor</span> <span class="o">=</span> <span class="n">monitoring</span><span class="o">.</span><span class="n">PipelineMonitor</span><span class="p">()</span>
 <a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="n">monitor</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
-<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="k">with</span> <span class="n">monitor</span><span class="o">.</span><span class="n">track_stage</span><span class="p">(</span><span class="s2">&quot;preprocessing&quot;</span><span class="p">):</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="k">with</span> <span class="n">monitor</span><span class="o">.</span><span class="n">track_stage</span><span class="p">(</span><span class="s2">"preprocessing"</span><span class="p">):</span>
 <a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>    <span class="n">processed</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
 <a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="c1"># Get performance metrics</span>
 <a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="n">metrics</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">()</span>
-<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Preprocessing durations: </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;stage_durations_s&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Preprocessing durations: </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="s1">'stage_durations_s'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="error-handling-and-recovery-roadmap">Error Handling and Recovery (roadmap)<a class="headerlink" href="#error-handling-and-recovery-roadmap" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mneme.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">recovery</span>
@@ -2717,7 +2689,7 @@
 <a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1"># Checkpoint-based recovery</span>
 <a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">pipeline_with_checkpoints</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">DataPipeline</span><span class="p">(</span>
 <a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>    <span class="n">checkpoint_dir</span><span class="o">=</span><span class="s2">&quot;checkpoints/&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>    <span class="n">checkpoint_dir</span><span class="o">=</span><span class="s2">"checkpoints/"</span><span class="p">,</span>
 <a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>    <span class="n">checkpoint_frequency</span><span class="o">=</span><span class="mi">10</span>  <span class="c1"># Every 10 samples</span>
 <a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="p">)</span>
 <a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
@@ -2795,7 +2767,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

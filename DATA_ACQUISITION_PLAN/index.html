@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -492,34 +492,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -2079,7 +2051,7 @@
 </table>
 <p><strong>Download command:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">wfdb</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">record</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s1">&#39;record_name&#39;</span><span class="p">,</span> <span class="n">pn_dir</span><span class="o">=</span><span class="s1">&#39;database_name&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">record</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s1">'record_name'</span><span class="p">,</span> <span class="n">pn_dir</span><span class="o">=</span><span class="s1">'database_name'</span><span class="p">)</span>
 </code></pre></div></p>
 <h3 id="tier-2-other-public-repositories">Tier 2: Other Public Repositories<a class="headerlink" href="#tier-2-other-public-repositories" title="Permanent link">&para;</a></h3>
 <table>
@@ -2171,12 +2143,12 @@
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># Load exported CSV from Mind Monitor</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">eeg_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;my_meditation_session.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">eeg_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">'my_meditation_session.csv'</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">','</span><span class="p">)</span>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Compute Lyapunov spectrum for each channel</span>
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">compute_lyapunov_spectrum</span><span class="p">(</span><span class="n">eeg_data</span><span class="p">[:,</span> <span class="n">channel</span><span class="p">],</span> <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">256</span><span class="p">)</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Channel </span><span class="si">{</span><span class="n">channel</span><span class="si">}</span><span class="s2">: λ₁ = </span><span class="si">{</span><span class="n">spectrum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Channel </span><span class="si">{</span><span class="n">channel</span><span class="si">}</span><span class="s2">: λ₁ = </span><span class="si">{</span><span class="n">spectrum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div></p>
 <h3 id="option-b-research-grade-eeg-500-2000">Option B: Research-Grade EEG (~$500-2000)<a class="headerlink" href="#option-b-research-grade-eeg-500-2000" title="Permanent link">&para;</a></h3>
 <p><strong>OpenBCI Cyton Board</strong>
@@ -2286,22 +2258,22 @@
 <h2 id="part-4-recommended-analysis-pipeline">Part 4: Recommended Analysis Pipeline<a class="headerlink" href="#part-4-recommended-analysis-pipeline" title="Permanent link">&para;</a></h2>
 <h3 id="phase-1-public-data-validation-week-1-2">Phase 1: Public Data Validation (Week 1-2)<a class="headerlink" href="#phase-1-public-data-validation-week-1-2" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Download and analyze multiple PhysioNet datasets</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="s2">import wfdb</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="s2">from mneme.core import compute_lyapunov_spectrum, kaplan_yorke_dimension</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="s2"># 1. Sleep EEG - brain state transitions</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="s2">record = wfdb.rdrecord(&#39;slp01a&#39;, pn_dir=&#39;slpdb&#39;, sampto=100000)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="s2">record = wfdb.rdrecord('slp01a', pn_dir='slpdb', sampto=100000)</span>
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="s2"># Analyze...</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="s2"># 2. Gait dynamics - motor control</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="s2">record = wfdb.rdrecord(&#39;ga02&#39;, pn_dir=&#39;gaitdb&#39;)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="s2">record = wfdb.rdrecord('ga02', pn_dir='gaitdb')</span>
 <a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="s2"># Analyze...</span>
 <a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
 <a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="s2"># 3. More ECG for HRV benchmarking</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="s2">record = wfdb.rdrecord(&#39;16265&#39;, pn_dir=&#39;nsrdb&#39;, sampto=100000)</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="s2">record = wfdb.rdrecord('16265', pn_dir='nsrdb', sampto=100000)</span>
 <a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="s2"># Analyze...</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="s2">&quot;</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="s2">"</span>
 </code></pre></div>
 <p><strong>Goal:</strong> Build a table of Lyapunov spectra across different physiological systems.</p>
 <h3 id="phase-2-own-body-data-week-3-4">Phase 2: Own Body Data (Week 3-4)<a class="headerlink" href="#phase-2-own-body-data-week-3-4" title="Permanent link">&para;</a></h3>
@@ -2394,10 +2366,10 @@
 4. <strong>Clear application</strong> - specific hypothesis for their data</p>
 <hr />
 <h2 id="appendix-python-code-for-multi-dataset-analysis">Appendix: Python Code for Multi-Dataset Analysis<a class="headerlink" href="#appendix-python-code-for-multi-dataset-analysis" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="sd">"""</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="sd">Comprehensive bioelectric analysis script.</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="sd">Run on multiple PhysioNet datasets to build validation table.</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="sd">"""</span>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
 <a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">wfdb</span>
@@ -2405,10 +2377,10 @@
 <a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mneme.core.attractors</span><span class="w"> </span><span class="kn">import</span> <span class="n">classify_attractor_by_lyapunov</span><span class="p">,</span> <span class="n">embed_trajectory</span>
 <a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
 <a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">DATASETS</span> <span class="o">=</span> <span class="p">[</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">,</span> <span class="s1">&#39;mitdb&#39;</span><span class="p">,</span> <span class="s1">&#39;ECG Arrhythmia&#39;</span><span class="p">),</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="p">(</span><span class="s1">&#39;slp01a&#39;</span><span class="p">,</span> <span class="s1">&#39;slpdb&#39;</span><span class="p">,</span> <span class="s1">&#39;Sleep Polysomnography&#39;</span><span class="p">),</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="p">(</span><span class="s1">&#39;ga02&#39;</span><span class="p">,</span> <span class="s1">&#39;gaitdb&#39;</span><span class="p">,</span> <span class="s1">&#39;Gait Dynamics&#39;</span><span class="p">),</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="p">(</span><span class="s1">&#39;chf01&#39;</span><span class="p">,</span> <span class="s1">&#39;chfdb&#39;</span><span class="p">,</span> <span class="s1">&#39;Congestive Heart Failure&#39;</span><span class="p">),</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="p">(</span><span class="s1">'100'</span><span class="p">,</span> <span class="s1">'mitdb'</span><span class="p">,</span> <span class="s1">'ECG Arrhythmia'</span><span class="p">),</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="p">(</span><span class="s1">'slp01a'</span><span class="p">,</span> <span class="s1">'slpdb'</span><span class="p">,</span> <span class="s1">'Sleep Polysomnography'</span><span class="p">),</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="p">(</span><span class="s1">'ga02'</span><span class="p">,</span> <span class="s1">'gaitdb'</span><span class="p">,</span> <span class="s1">'Gait Dynamics'</span><span class="p">),</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="p">(</span><span class="s1">'chf01'</span><span class="p">,</span> <span class="s1">'chfdb'</span><span class="p">,</span> <span class="s1">'Congestive Heart Failure'</span><span class="p">),</span>
 <a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="p">]</span>
 <a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>
 <a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2424,14 +2396,14 @@
 <a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>        <span class="n">spectrum</span> <span class="o">=</span> <span class="n">compute_lyapunov_spectrum</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">fs</span><span class="p">)</span>
 <a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>
 <a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>            <span class="s1">&#39;dataset&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
-<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>            <span class="s1">&#39;lambda_1&#39;</span><span class="p">:</span> <span class="n">spectrum</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>            <span class="s1">&#39;d_ky&#39;</span><span class="p">:</span> <span class="n">kaplan_yorke_dimension</span><span class="p">(</span><span class="n">spectrum</span><span class="p">),</span>
-<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">classify_attractor_by_lyapunov</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>            <span class="s1">'dataset'</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>            <span class="s1">'lambda_1'</span><span class="p">:</span> <span class="n">spectrum</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>            <span class="s1">'d_ky'</span><span class="p">:</span> <span class="n">kaplan_yorke_dimension</span><span class="p">(</span><span class="n">spectrum</span><span class="p">),</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>            <span class="s1">'type'</span><span class="p">:</span> <span class="n">classify_attractor_by_lyapunov</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
 <a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>        <span class="p">})</span>
-<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✓ </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">: λ₁=</span><span class="si">{</span><span class="n">spectrum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, D_KY=</span><span class="si">{</span><span class="n">kaplan_yorke_dimension</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">: λ₁=</span><span class="si">{</span><span class="n">spectrum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, D_KY=</span><span class="si">{</span><span class="n">kaplan_yorke_dimension</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✗ </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✗ </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <hr />
 <h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
@@ -2535,7 +2507,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

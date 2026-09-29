@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -496,34 +496,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -2550,7 +2522,7 @@
 
 
 <a href="#mneme.core.field_theory.create_reconstructor" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">create_reconstructor</span><span class="p">(</span><span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ift&#39;</span><span class="p">,</span> <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseFieldReconstructor</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">create_reconstructor</span><span class="p">(</span><span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'ift'</span><span class="p">,</span> <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseFieldReconstructor</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -2687,21 +2659,21 @@
 <span class="normal"><a href="#__codelineno-0-952">952</a></span>
 <span class="normal"><a href="#__codelineno-0-953">953</a></span>
 <span class="normal"><a href="#__codelineno-0-954">954</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-917" name="__codelineno-0-917"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_reconstructor</span><span class="p">(</span>
-<a id="__codelineno-0-918" name="__codelineno-0-918"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ift&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-918" name="__codelineno-0-918"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"ift"</span><span class="p">,</span>
 <a id="__codelineno-0-919" name="__codelineno-0-919"></a>    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
 <a id="__codelineno-0-920" name="__codelineno-0-920"></a>    <span class="o">**</span><span class="n">kwargs</span>
 <a id="__codelineno-0-921" name="__codelineno-0-921"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseFieldReconstructor</span><span class="p">:</span>
-<a id="__codelineno-0-922" name="__codelineno-0-922"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-922" name="__codelineno-0-922"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-923" name="__codelineno-0-923"></a><span class="sd">    Factory function to create field reconstructors.</span>
 <a id="__codelineno-0-924" name="__codelineno-0-924"></a>
 <a id="__codelineno-0-925" name="__codelineno-0-925"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-926" name="__codelineno-0-926"></a><span class="sd">    ----------</span>
 <a id="__codelineno-0-927" name="__codelineno-0-927"></a><span class="sd">    method : str</span>
 <a id="__codelineno-0-928" name="__codelineno-0-928"></a><span class="sd">        Reconstruction method:</span>
-<a id="__codelineno-0-929" name="__codelineno-0-929"></a><span class="sd">        - &#39;ift&#39; or &#39;sparse_gp&#39;: Sparse GP (scalable, default)</span>
-<a id="__codelineno-0-930" name="__codelineno-0-930"></a><span class="sd">        - &#39;dense_ift&#39;: Dense matrix IFT (exact, slow)</span>
-<a id="__codelineno-0-931" name="__codelineno-0-931"></a><span class="sd">        - &#39;gp&#39; or &#39;gaussian_process&#39;: Standard GP</span>
-<a id="__codelineno-0-932" name="__codelineno-0-932"></a><span class="sd">        - &#39;neural&#39; or &#39;neural_field&#39;: Neural network</span>
+<a id="__codelineno-0-929" name="__codelineno-0-929"></a><span class="sd">        - 'ift' or 'sparse_gp': Sparse GP (scalable, default)</span>
+<a id="__codelineno-0-930" name="__codelineno-0-930"></a><span class="sd">        - 'dense_ift': Dense matrix IFT (exact, slow)</span>
+<a id="__codelineno-0-931" name="__codelineno-0-931"></a><span class="sd">        - 'gp' or 'gaussian_process': Standard GP</span>
+<a id="__codelineno-0-932" name="__codelineno-0-932"></a><span class="sd">        - 'neural' or 'neural_field': Neural network</span>
 <a id="__codelineno-0-933" name="__codelineno-0-933"></a><span class="sd">    resolution : Tuple[int, int]</span>
 <a id="__codelineno-0-934" name="__codelineno-0-934"></a><span class="sd">        Output field resolution</span>
 <a id="__codelineno-0-935" name="__codelineno-0-935"></a><span class="sd">    **kwargs</span>
@@ -2711,19 +2683,19 @@
 <a id="__codelineno-0-939" name="__codelineno-0-939"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-940" name="__codelineno-0-940"></a><span class="sd">    reconstructor : BaseFieldReconstructor</span>
 <a id="__codelineno-0-941" name="__codelineno-0-941"></a><span class="sd">        Configured reconstructor</span>
-<a id="__codelineno-0-942" name="__codelineno-0-942"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-942" name="__codelineno-0-942"></a><span class="sd">    """</span>
 <a id="__codelineno-0-943" name="__codelineno-0-943"></a>    <span class="n">method_lower</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 <a id="__codelineno-0-944" name="__codelineno-0-944"></a>
-<a id="__codelineno-0-945" name="__codelineno-0-945"></a>    <span class="k">if</span> <span class="n">method_lower</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;ift&#39;</span><span class="p">,</span> <span class="s1">&#39;sparse_gp&#39;</span><span class="p">,</span> <span class="s1">&#39;sparse&#39;</span><span class="p">):</span>
+<a id="__codelineno-0-945" name="__codelineno-0-945"></a>    <span class="k">if</span> <span class="n">method_lower</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'ift'</span><span class="p">,</span> <span class="s1">'sparse_gp'</span><span class="p">,</span> <span class="s1">'sparse'</span><span class="p">):</span>
 <a id="__codelineno-0-946" name="__codelineno-0-946"></a>        <span class="k">return</span> <span class="n">SparseGPReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<a id="__codelineno-0-947" name="__codelineno-0-947"></a>    <span class="k">elif</span> <span class="n">method_lower</span> <span class="o">==</span> <span class="s1">&#39;dense_ift&#39;</span><span class="p">:</span>
+<a id="__codelineno-0-947" name="__codelineno-0-947"></a>    <span class="k">elif</span> <span class="n">method_lower</span> <span class="o">==</span> <span class="s1">'dense_ift'</span><span class="p">:</span>
 <a id="__codelineno-0-948" name="__codelineno-0-948"></a>        <span class="k">return</span> <span class="n">DenseIFTReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<a id="__codelineno-0-949" name="__codelineno-0-949"></a>    <span class="k">elif</span> <span class="n">method_lower</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;gp&#39;</span><span class="p">,</span> <span class="s1">&#39;gaussian_process&#39;</span><span class="p">):</span>
+<a id="__codelineno-0-949" name="__codelineno-0-949"></a>    <span class="k">elif</span> <span class="n">method_lower</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'gp'</span><span class="p">,</span> <span class="s1">'gaussian_process'</span><span class="p">):</span>
 <a id="__codelineno-0-950" name="__codelineno-0-950"></a>        <span class="k">return</span> <span class="n">GaussianProcessReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<a id="__codelineno-0-951" name="__codelineno-0-951"></a>    <span class="k">elif</span> <span class="n">method_lower</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;neural&#39;</span><span class="p">,</span> <span class="s1">&#39;neural_field&#39;</span><span class="p">):</span>
+<a id="__codelineno-0-951" name="__codelineno-0-951"></a>    <span class="k">elif</span> <span class="n">method_lower</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'neural'</span><span class="p">,</span> <span class="s1">'neural_field'</span><span class="p">):</span>
 <a id="__codelineno-0-952" name="__codelineno-0-952"></a>        <span class="k">return</span> <span class="n">NeuralFieldReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 <a id="__codelineno-0-953" name="__codelineno-0-953"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-954" name="__codelineno-0-954"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown reconstruction method: </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-954" name="__codelineno-0-954"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown reconstruction method: </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2740,7 +2712,7 @@
 
 
 <a href="#mneme.core.field_theory.SparseGPReconstructor" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SparseGPReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">n_inducing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">kernel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">length_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">noise_level</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">optimize_hyperparameters</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">correlation_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">power_spectrum_model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SparseGPReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">n_inducing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">kernel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'rbf'</span><span class="p">,</span> <span class="n">length_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">noise_level</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">optimize_hyperparameters</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">correlation_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">power_spectrum_model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -2938,7 +2910,7 @@ Default 500 works well for most bioelectric fields.</p>
 <a id="__codelineno-0-272" name="__codelineno-0-272"></a>    <span class="bp">self</span><span class="p">,</span>
 <a id="__codelineno-0-273" name="__codelineno-0-273"></a>    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
 <a id="__codelineno-0-274" name="__codelineno-0-274"></a>    <span class="n">n_inducing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
-<a id="__codelineno-0-275" name="__codelineno-0-275"></a>    <span class="n">kernel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rbf&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-275" name="__codelineno-0-275"></a>    <span class="n">kernel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"rbf"</span><span class="p">,</span>
 <a id="__codelineno-0-276" name="__codelineno-0-276"></a>    <span class="n">length_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
 <a id="__codelineno-0-277" name="__codelineno-0-277"></a>    <span class="n">noise_level</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
 <a id="__codelineno-0-278" name="__codelineno-0-278"></a>    <span class="n">optimize_hyperparameters</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -2962,11 +2934,11 @@ Default 500 works well for most bioelectric fields.</p>
 <a id="__codelineno-0-296" name="__codelineno-0-296"></a>    <span class="k">if</span> <span class="n">power_spectrum_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-297" name="__codelineno-0-297"></a>        <span class="c1"># Map power spectrum model to kernel type</span>
 <a id="__codelineno-0-298" name="__codelineno-0-298"></a>        <span class="n">kernel_map</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-0-299" name="__codelineno-0-299"></a>            <span class="s1">&#39;power_law&#39;</span><span class="p">:</span> <span class="s1">&#39;rbf&#39;</span><span class="p">,</span>
-<a id="__codelineno-0-300" name="__codelineno-0-300"></a>            <span class="s1">&#39;gaussian&#39;</span><span class="p">:</span> <span class="s1">&#39;rbf&#39;</span><span class="p">,</span>
-<a id="__codelineno-0-301" name="__codelineno-0-301"></a>            <span class="s1">&#39;exponential&#39;</span><span class="p">:</span> <span class="s1">&#39;matern&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-299" name="__codelineno-0-299"></a>            <span class="s1">'power_law'</span><span class="p">:</span> <span class="s1">'rbf'</span><span class="p">,</span>
+<a id="__codelineno-0-300" name="__codelineno-0-300"></a>            <span class="s1">'gaussian'</span><span class="p">:</span> <span class="s1">'rbf'</span><span class="p">,</span>
+<a id="__codelineno-0-301" name="__codelineno-0-301"></a>            <span class="s1">'exponential'</span><span class="p">:</span> <span class="s1">'matern'</span><span class="p">,</span>
 <a id="__codelineno-0-302" name="__codelineno-0-302"></a>        <span class="p">}</span>
-<a id="__codelineno-0-303" name="__codelineno-0-303"></a>        <span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">power_spectrum_model</span><span class="p">,</span> <span class="s1">&#39;rbf&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-303" name="__codelineno-0-303"></a>        <span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">power_spectrum_model</span><span class="p">,</span> <span class="s1">'rbf'</span><span class="p">)</span>
 <a id="__codelineno-0-304" name="__codelineno-0-304"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel</span>
 <a id="__codelineno-0-305" name="__codelineno-0-305"></a>
 <a id="__codelineno-0-306" name="__codelineno-0-306"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">noise_level</span> <span class="o">=</span> <span class="n">noise_level</span>
@@ -3062,12 +3034,12 @@ when the number of observations exceeds n_inducing.</p>
 <span class="normal"><a href="#__codelineno-0-384">384</a></span>
 <span class="normal"><a href="#__codelineno-0-385">385</a></span>
 <span class="normal"><a href="#__codelineno-0-386">386</a></span>
-<span class="normal"><a href="#__codelineno-0-387">387</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-337" name="__codelineno-0-337"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;SparseGPReconstructor&#39;</span><span class="p">:</span>
-<a id="__codelineno-0-338" name="__codelineno-0-338"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit Sparse GP to observations using inducing points.</span>
+<span class="normal"><a href="#__codelineno-0-387">387</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-337" name="__codelineno-0-337"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'SparseGPReconstructor'</span><span class="p">:</span>
+<a id="__codelineno-0-338" name="__codelineno-0-338"></a><span class="w">    </span><span class="sd">"""Fit Sparse GP to observations using inducing points.</span>
 <a id="__codelineno-0-339" name="__codelineno-0-339"></a>
 <a id="__codelineno-0-340" name="__codelineno-0-340"></a><span class="sd">    For efficiency, we subsample the observations to create inducing points</span>
 <a id="__codelineno-0-341" name="__codelineno-0-341"></a><span class="sd">    when the number of observations exceeds n_inducing.</span>
-<a id="__codelineno-0-342" name="__codelineno-0-342"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-342" name="__codelineno-0-342"></a><span class="sd">    """</span>
 <a id="__codelineno-0-343" name="__codelineno-0-343"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.gaussian_process</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianProcessRegressor</span>
 <a id="__codelineno-0-344" name="__codelineno-0-344"></a>
 <a id="__codelineno-0-345" name="__codelineno-0-345"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="n">observations</span>
@@ -3175,9 +3147,9 @@ when the number of observations exceeds n_inducing.</p>
 <span class="normal"><a href="#__codelineno-0-424">424</a></span>
 <span class="normal"><a href="#__codelineno-0-425">425</a></span>
 <span class="normal"><a href="#__codelineno-0-426">426</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-389" name="__codelineno-0-389"></a><span class="k">def</span><span class="w"> </span><span class="nf">reconstruct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_points</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-390" name="__codelineno-0-390"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Reconstruct field using the fitted Sparse GP.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-390" name="__codelineno-0-390"></a><span class="w">    </span><span class="sd">"""Reconstruct field using the fitted Sparse GP."""</span>
 <a id="__codelineno-0-391" name="__codelineno-0-391"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-392" name="__codelineno-0-392"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;SparseGP reconstructor must be fitted first&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-392" name="__codelineno-0-392"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"SparseGP reconstructor must be fitted first"</span><span class="p">)</span>
 <a id="__codelineno-0-393" name="__codelineno-0-393"></a>
 <a id="__codelineno-0-394" name="__codelineno-0-394"></a>    <span class="k">if</span> <span class="n">grid_points</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-395" name="__codelineno-0-395"></a>        <span class="n">grid_points</span> <span class="o">=</span> <span class="n">create_grid_points</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
@@ -3251,9 +3223,9 @@ when the number of observations exceeds n_inducing.</p>
 <span class="normal"><a href="#__codelineno-0-440">440</a></span>
 <span class="normal"><a href="#__codelineno-0-441">441</a></span>
 <span class="normal"><a href="#__codelineno-0-442">442</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-428" name="__codelineno-0-428"></a><span class="k">def</span><span class="w"> </span><span class="nf">uncertainty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-429" name="__codelineno-0-429"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return uncertainty estimates from Sparse GP.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-429" name="__codelineno-0-429"></a><span class="w">    </span><span class="sd">"""Return uncertainty estimates from Sparse GP."""</span>
 <a id="__codelineno-0-430" name="__codelineno-0-430"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-431" name="__codelineno-0-431"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;SparseGP reconstructor must be fitted first&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-431" name="__codelineno-0-431"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"SparseGP reconstructor must be fitted first"</span><span class="p">)</span>
 <a id="__codelineno-0-432" name="__codelineno-0-432"></a>
 <a id="__codelineno-0-433" name="__codelineno-0-433"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_std</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-434" name="__codelineno-0-434"></a>        <span class="c1"># Need to run reconstruct first</span>
@@ -3288,7 +3260,7 @@ when the number of observations exceeds n_inducing.</p>
 
 
 <a href="#mneme.core.field_theory.DenseIFTReconstructor" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">DenseIFTReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">power_spectrum_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">correlation_length</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">noise_var</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">DenseIFTReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">power_spectrum_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'gaussian'</span><span class="p">,</span> <span class="n">correlation_length</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">noise_var</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -3418,7 +3390,7 @@ complexity. It will be very slow or run out of memory for large fields
 <span class="normal"><a href="#__codelineno-0-493">493</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-473" name="__codelineno-0-473"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 <a id="__codelineno-0-474" name="__codelineno-0-474"></a>    <span class="bp">self</span><span class="p">,</span>
 <a id="__codelineno-0-475" name="__codelineno-0-475"></a>    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
-<a id="__codelineno-0-476" name="__codelineno-0-476"></a>    <span class="n">power_spectrum_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gaussian&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-476" name="__codelineno-0-476"></a>    <span class="n">power_spectrum_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"gaussian"</span><span class="p">,</span>
 <a id="__codelineno-0-477" name="__codelineno-0-477"></a>    <span class="n">correlation_length</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
 <a id="__codelineno-0-478" name="__codelineno-0-478"></a>    <span class="n">noise_var</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
 <a id="__codelineno-0-479" name="__codelineno-0-479"></a><span class="p">):</span>
@@ -3431,9 +3403,9 @@ complexity. It will be very slow or run out of memory for large fields
 <a id="__codelineno-0-486" name="__codelineno-0-486"></a>    <span class="n">n_grid</span> <span class="o">=</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <a id="__codelineno-0-487" name="__codelineno-0-487"></a>    <span class="k">if</span> <span class="n">n_grid</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_RECOMMENDED_SIZE</span><span class="p">:</span>
 <a id="__codelineno-0-488" name="__codelineno-0-488"></a>        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-<a id="__codelineno-0-489" name="__codelineno-0-489"></a>            <span class="sa">f</span><span class="s2">&quot;DenseIFTReconstructor with resolution </span><span class="si">{</span><span class="n">resolution</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">n_grid</span><span class="si">}</span><span class="s2"> points) &quot;</span>
-<a id="__codelineno-0-490" name="__codelineno-0-490"></a>            <span class="sa">f</span><span class="s2">&quot;will require </span><span class="si">{</span><span class="n">n_grid</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e9</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> GB of memory and be very slow. &quot;</span>
-<a id="__codelineno-0-491" name="__codelineno-0-491"></a>            <span class="sa">f</span><span class="s2">&quot;Consider using the default SparseGPReconstructor instead (method=&#39;ift&#39;).&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-489" name="__codelineno-0-489"></a>            <span class="sa">f</span><span class="s2">"DenseIFTReconstructor with resolution </span><span class="si">{</span><span class="n">resolution</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">n_grid</span><span class="si">}</span><span class="s2"> points) "</span>
+<a id="__codelineno-0-490" name="__codelineno-0-490"></a>            <span class="sa">f</span><span class="s2">"will require </span><span class="si">{</span><span class="n">n_grid</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e9</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> GB of memory and be very slow. "</span>
+<a id="__codelineno-0-491" name="__codelineno-0-491"></a>            <span class="sa">f</span><span class="s2">"Consider using the default SparseGPReconstructor instead (method='ift')."</span><span class="p">,</span>
 <a id="__codelineno-0-492" name="__codelineno-0-492"></a>            <span class="ne">UserWarning</span>
 <a id="__codelineno-0-493" name="__codelineno-0-493"></a>        <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -3486,8 +3458,8 @@ complexity. It will be very slow or run out of memory for large fields
 <span class="normal"><a href="#__codelineno-0-508">508</a></span>
 <span class="normal"><a href="#__codelineno-0-509">509</a></span>
 <span class="normal"><a href="#__codelineno-0-510">510</a></span>
-<span class="normal"><a href="#__codelineno-0-511">511</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-495" name="__codelineno-0-495"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;DenseIFTReconstructor&#39;</span><span class="p">:</span>
-<a id="__codelineno-0-496" name="__codelineno-0-496"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit IFT model to observations using dense matrices.&quot;&quot;&quot;</span>
+<span class="normal"><a href="#__codelineno-0-511">511</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-495" name="__codelineno-0-495"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'DenseIFTReconstructor'</span><span class="p">:</span>
+<a id="__codelineno-0-496" name="__codelineno-0-496"></a><span class="w">    </span><span class="sd">"""Fit IFT model to observations using dense matrices."""</span>
 <a id="__codelineno-0-497" name="__codelineno-0-497"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="n">observations</span>
 <a id="__codelineno-0-498" name="__codelineno-0-498"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">positions</span>
 <a id="__codelineno-0-499" name="__codelineno-0-499"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">n_observations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">observations</span><span class="p">)</span>
@@ -3541,9 +3513,9 @@ complexity. It will be very slow or run out of memory for large fields
 <span class="normal"><a href="#__codelineno-0-576">576</a></span>
 <span class="normal"><a href="#__codelineno-0-577">577</a></span>
 <span class="normal"><a href="#__codelineno-0-578">578</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-565" name="__codelineno-0-565"></a><span class="k">def</span><span class="w"> </span><span class="nf">reconstruct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_points</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-566" name="__codelineno-0-566"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Reconstruct field using dense IFT.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-566" name="__codelineno-0-566"></a><span class="w">    </span><span class="sd">"""Reconstruct field using dense IFT."""</span>
 <a id="__codelineno-0-567" name="__codelineno-0-567"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-568" name="__codelineno-0-568"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;DenseIFT reconstructor must be fitted first&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-568" name="__codelineno-0-568"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"DenseIFT reconstructor must be fitted first"</span><span class="p">)</span>
 <a id="__codelineno-0-569" name="__codelineno-0-569"></a>
 <a id="__codelineno-0-570" name="__codelineno-0-570"></a>    <span class="k">if</span> <span class="n">grid_points</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-571" name="__codelineno-0-571"></a>        <span class="n">field_1d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">posterior_mean</span>
@@ -3585,9 +3557,9 @@ complexity. It will be very slow or run out of memory for large fields
 <span class="normal"><a href="#__codelineno-0-584">584</a></span>
 <span class="normal"><a href="#__codelineno-0-585">585</a></span>
 <span class="normal"><a href="#__codelineno-0-586">586</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-580" name="__codelineno-0-580"></a><span class="k">def</span><span class="w"> </span><span class="nf">uncertainty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-581" name="__codelineno-0-581"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute IFT uncertainty estimates.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-581" name="__codelineno-0-581"></a><span class="w">    </span><span class="sd">"""Compute IFT uncertainty estimates."""</span>
 <a id="__codelineno-0-582" name="__codelineno-0-582"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-583" name="__codelineno-0-583"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;DenseIFT reconstructor must be fitted first&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-583" name="__codelineno-0-583"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"DenseIFT reconstructor must be fitted first"</span><span class="p">)</span>
 <a id="__codelineno-0-584" name="__codelineno-0-584"></a>
 <a id="__codelineno-0-585" name="__codelineno-0-585"></a>    <span class="n">uncertainty_1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posterior_cov</span><span class="p">))</span>
 <a id="__codelineno-0-586" name="__codelineno-0-586"></a>    <span class="k">return</span> <span class="n">uncertainty_1d</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
@@ -3614,7 +3586,7 @@ complexity. It will be very slow or run out of memory for large fields
 
 
 <a href="#mneme.core.field_theory.GaussianProcessReconstructor" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">GaussianProcessReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">kernel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">length_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">noise_level</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">GaussianProcessReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">kernel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'rbf'</span><span class="p">,</span> <span class="n">length_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">noise_level</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -3728,7 +3700,7 @@ inducing point approximation. Good for moderate-sized datasets.</p>
 <span class="normal"><a href="#__codelineno-0-621">621</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-611" name="__codelineno-0-611"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 <a id="__codelineno-0-612" name="__codelineno-0-612"></a>    <span class="bp">self</span><span class="p">,</span>
 <a id="__codelineno-0-613" name="__codelineno-0-613"></a>    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
-<a id="__codelineno-0-614" name="__codelineno-0-614"></a>    <span class="n">kernel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rbf&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-614" name="__codelineno-0-614"></a>    <span class="n">kernel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"rbf"</span><span class="p">,</span>
 <a id="__codelineno-0-615" name="__codelineno-0-615"></a>    <span class="n">length_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
 <a id="__codelineno-0-616" name="__codelineno-0-616"></a>    <span class="n">noise_level</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
 <a id="__codelineno-0-617" name="__codelineno-0-617"></a><span class="p">):</span>
@@ -3793,8 +3765,8 @@ inducing point approximation. Good for moderate-sized datasets.</p>
 <span class="normal"><a href="#__codelineno-0-643">643</a></span>
 <span class="normal"><a href="#__codelineno-0-644">644</a></span>
 <span class="normal"><a href="#__codelineno-0-645">645</a></span>
-<span class="normal"><a href="#__codelineno-0-646">646</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-623" name="__codelineno-0-623"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GaussianProcessReconstructor&#39;</span><span class="p">:</span>
-<a id="__codelineno-0-624" name="__codelineno-0-624"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit Gaussian Process to observations.&quot;&quot;&quot;</span>
+<span class="normal"><a href="#__codelineno-0-646">646</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-623" name="__codelineno-0-623"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'GaussianProcessReconstructor'</span><span class="p">:</span>
+<a id="__codelineno-0-624" name="__codelineno-0-624"></a><span class="w">    </span><span class="sd">"""Fit Gaussian Process to observations."""</span>
 <a id="__codelineno-0-625" name="__codelineno-0-625"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="n">observations</span>
 <a id="__codelineno-0-626" name="__codelineno-0-626"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">positions</span>
 <a id="__codelineno-0-627" name="__codelineno-0-627"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">n_observations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">observations</span><span class="p">)</span>
@@ -3860,9 +3832,9 @@ inducing point approximation. Good for moderate-sized datasets.</p>
 <span class="normal"><a href="#__codelineno-0-682">682</a></span>
 <span class="normal"><a href="#__codelineno-0-683">683</a></span>
 <span class="normal"><a href="#__codelineno-0-684">684</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-666" name="__codelineno-0-666"></a><span class="k">def</span><span class="w"> </span><span class="nf">reconstruct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_points</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-667" name="__codelineno-0-667"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Reconstruct field using Gaussian Process.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-667" name="__codelineno-0-667"></a><span class="w">    </span><span class="sd">"""Reconstruct field using Gaussian Process."""</span>
 <a id="__codelineno-0-668" name="__codelineno-0-668"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-669" name="__codelineno-0-669"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;GP reconstructor must be fitted first&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-669" name="__codelineno-0-669"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"GP reconstructor must be fitted first"</span><span class="p">)</span>
 <a id="__codelineno-0-670" name="__codelineno-0-670"></a>
 <a id="__codelineno-0-671" name="__codelineno-0-671"></a>    <span class="k">if</span> <span class="n">grid_points</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-672" name="__codelineno-0-672"></a>        <span class="n">grid_points</span> <span class="o">=</span> <span class="n">create_grid_points</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
@@ -3918,12 +3890,12 @@ inducing point approximation. Good for moderate-sized datasets.</p>
 <span class="normal"><a href="#__codelineno-0-699">699</a></span>
 <span class="normal"><a href="#__codelineno-0-700">700</a></span>
 <span class="normal"><a href="#__codelineno-0-701">701</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-686" name="__codelineno-0-686"></a><span class="k">def</span><span class="w"> </span><span class="nf">uncertainty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-687" name="__codelineno-0-687"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute GP uncertainty (posterior variance).&quot;&quot;&quot;</span>
+<a id="__codelineno-0-687" name="__codelineno-0-687"></a><span class="w">    </span><span class="sd">"""Compute GP uncertainty (posterior variance)."""</span>
 <a id="__codelineno-0-688" name="__codelineno-0-688"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-689" name="__codelineno-0-689"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;GP reconstructor must be fitted first&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-689" name="__codelineno-0-689"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"GP reconstructor must be fitted first"</span><span class="p">)</span>
 <a id="__codelineno-0-690" name="__codelineno-0-690"></a>
-<a id="__codelineno-0-691" name="__codelineno-0-691"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_last_grid_points&#39;</span><span class="p">):</span>
-<a id="__codelineno-0-692" name="__codelineno-0-692"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Must call reconstruct() before uncertainty()&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-691" name="__codelineno-0-691"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'_last_grid_points'</span><span class="p">):</span>
+<a id="__codelineno-0-692" name="__codelineno-0-692"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"Must call reconstruct() before uncertainty()"</span><span class="p">)</span>
 <a id="__codelineno-0-693" name="__codelineno-0-693"></a>
 <a id="__codelineno-0-694" name="__codelineno-0-694"></a>    <span class="n">K_star_star</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_kernel_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_grid_points</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_grid_points</span><span class="p">)</span>
 <a id="__codelineno-0-695" name="__codelineno-0-695"></a>    <span class="n">var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">K_star_star</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_K_star</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_inv</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_K_star</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
@@ -3956,7 +3928,7 @@ inducing point approximation. Good for moderate-sized datasets.</p>
 
 
 <a href="#mneme.core.field_theory.NeuralFieldReconstructor" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">NeuralFieldReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">hidden_dims</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">activation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">positional_encoding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">n_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">NeuralFieldReconstructor</span><span class="p">(</span><span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">hidden_dims</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">activation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'relu'</span><span class="p">,</span> <span class="n">positional_encoding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">n_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -4110,7 +4082,7 @@ high-frequency detail capture.</p>
 <a id="__codelineno-0-728" name="__codelineno-0-728"></a>    <span class="bp">self</span><span class="p">,</span>
 <a id="__codelineno-0-729" name="__codelineno-0-729"></a>    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
 <a id="__codelineno-0-730" name="__codelineno-0-730"></a>    <span class="n">hidden_dims</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
-<a id="__codelineno-0-731" name="__codelineno-0-731"></a>    <span class="n">activation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-731" name="__codelineno-0-731"></a>    <span class="n">activation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"relu"</span><span class="p">,</span>
 <a id="__codelineno-0-732" name="__codelineno-0-732"></a>    <span class="n">positional_encoding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
 <a id="__codelineno-0-733" name="__codelineno-0-733"></a>    <span class="n">n_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
 <a id="__codelineno-0-734" name="__codelineno-0-734"></a>    <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span>
@@ -4204,8 +4176,8 @@ high-frequency detail capture.</p>
 <span class="normal"><a href="#__codelineno-0-789">789</a></span>
 <span class="normal"><a href="#__codelineno-0-790">790</a></span>
 <span class="normal"><a href="#__codelineno-0-791">791</a></span>
-<span class="normal"><a href="#__codelineno-0-792">792</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-745" name="__codelineno-0-745"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;NeuralFieldReconstructor&#39;</span><span class="p">:</span>
-<a id="__codelineno-0-746" name="__codelineno-0-746"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Train neural field on observations.&quot;&quot;&quot;</span>
+<span class="normal"><a href="#__codelineno-0-792">792</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-745" name="__codelineno-0-745"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'NeuralFieldReconstructor'</span><span class="p">:</span>
+<a id="__codelineno-0-746" name="__codelineno-0-746"></a><span class="w">    </span><span class="sd">"""Train neural field on observations."""</span>
 <a id="__codelineno-0-747" name="__codelineno-0-747"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <a id="__codelineno-0-748" name="__codelineno-0-748"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 <a id="__codelineno-0-749" name="__codelineno-0-749"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
@@ -4248,7 +4220,7 @@ high-frequency detail capture.</p>
 <a id="__codelineno-0-786" name="__codelineno-0-786"></a>        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 <a id="__codelineno-0-787" name="__codelineno-0-787"></a>
 <a id="__codelineno-0-788" name="__codelineno-0-788"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="ow">and</span> <span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-<a id="__codelineno-0-789" name="__codelineno-0-789"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_epochs</span><span class="si">}</span><span class="s2">, Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-789" name="__codelineno-0-789"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_epochs</span><span class="si">}</span><span class="s2">, Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <a id="__codelineno-0-790" name="__codelineno-0-790"></a>
 <a id="__codelineno-0-791" name="__codelineno-0-791"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
 <a id="__codelineno-0-792" name="__codelineno-0-792"></a>    <span class="k">return</span> <span class="bp">self</span>
@@ -4304,9 +4276,9 @@ high-frequency detail capture.</p>
 <span class="normal"><a href="#__codelineno-0-870">870</a></span>
 <span class="normal"><a href="#__codelineno-0-871">871</a></span>
 <span class="normal"><a href="#__codelineno-0-872">872</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-845" name="__codelineno-0-845"></a><span class="k">def</span><span class="w"> </span><span class="nf">reconstruct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_points</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-846" name="__codelineno-0-846"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Reconstruct field using trained neural network.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-846" name="__codelineno-0-846"></a><span class="w">    </span><span class="sd">"""Reconstruct field using trained neural network."""</span>
 <a id="__codelineno-0-847" name="__codelineno-0-847"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-848" name="__codelineno-0-848"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Neural field must be fitted first&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-848" name="__codelineno-0-848"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"Neural field must be fitted first"</span><span class="p">)</span>
 <a id="__codelineno-0-849" name="__codelineno-0-849"></a>
 <a id="__codelineno-0-850" name="__codelineno-0-850"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <a id="__codelineno-0-851" name="__codelineno-0-851"></a>
@@ -4363,11 +4335,11 @@ high-frequency detail capture.</p>
 <span class="normal"><a href="#__codelineno-0-879">879</a></span>
 <span class="normal"><a href="#__codelineno-0-880">880</a></span>
 <span class="normal"><a href="#__codelineno-0-881">881</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-874" name="__codelineno-0-874"></a><span class="k">def</span><span class="w"> </span><span class="nf">uncertainty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-875" name="__codelineno-0-875"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate uncertainty (placeholder - returns zeros).&quot;&quot;&quot;</span>
+<a id="__codelineno-0-875" name="__codelineno-0-875"></a><span class="w">    </span><span class="sd">"""Estimate uncertainty (placeholder - returns zeros)."""</span>
 <a id="__codelineno-0-876" name="__codelineno-0-876"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-877" name="__codelineno-0-877"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Neural field must be fitted first&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-877" name="__codelineno-0-877"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"Neural field must be fitted first"</span><span class="p">)</span>
 <a id="__codelineno-0-878" name="__codelineno-0-878"></a>
-<a id="__codelineno-0-879" name="__codelineno-0-879"></a>    <span class="c1"># Neural fields don&#39;t provide uncertainty by default</span>
+<a id="__codelineno-0-879" name="__codelineno-0-879"></a>    <span class="c1"># Neural fields don't provide uncertainty by default</span>
 <a id="__codelineno-0-880" name="__codelineno-0-880"></a>    <span class="c1"># Could be improved with MC dropout or ensemble methods</span>
 <a id="__codelineno-0-881" name="__codelineno-0-881"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -4460,14 +4432,14 @@ high-frequency detail capture.</p>
 <span class="normal"><a href="#__codelineno-0-43">43</a></span>
 <span class="normal"><a href="#__codelineno-0-44">44</a></span>
 <span class="normal"><a href="#__codelineno-0-45">45</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)):</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="sd">    Initialize field reconstructor.</span>
 <a id="__codelineno-0-36" name="__codelineno-0-36"></a>
 <a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="sd">    ----------</span>
 <a id="__codelineno-0-39" name="__codelineno-0-39"></a><span class="sd">    resolution : Tuple[int, int]</span>
 <a id="__codelineno-0-40" name="__codelineno-0-40"></a><span class="sd">        Output field resolution (height, width)</span>
-<a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="sd">    """</span>
 <a id="__codelineno-0-42" name="__codelineno-0-42"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span> <span class="o">=</span> <span class="n">resolution</span>
 <a id="__codelineno-0-43" name="__codelineno-0-43"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span> <span class="o">=</span> <span class="kc">False</span>
 <a id="__codelineno-0-44" name="__codelineno-0-44"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="kc">None</span>
@@ -4598,8 +4570,8 @@ high-frequency detail capture.</p>
 <span class="normal"><a href="#__codelineno-0-62">62</a></span>
 <span class="normal"><a href="#__codelineno-0-63">63</a></span>
 <span class="normal"><a href="#__codelineno-0-64">64</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-47" name="__codelineno-0-47"></a><span class="nd">@abstractmethod</span>
-<a id="__codelineno-0-48" name="__codelineno-0-48"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;BaseFieldReconstructor&#39;</span><span class="p">:</span>
-<a id="__codelineno-0-49" name="__codelineno-0-49"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'BaseFieldReconstructor'</span><span class="p">:</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-50" name="__codelineno-0-50"></a><span class="sd">    Fit the reconstructor to observations.</span>
 <a id="__codelineno-0-51" name="__codelineno-0-51"></a>
 <a id="__codelineno-0-52" name="__codelineno-0-52"></a><span class="sd">    Parameters</span>
@@ -4613,7 +4585,7 @@ high-frequency detail capture.</p>
 <a id="__codelineno-0-60" name="__codelineno-0-60"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-61" name="__codelineno-0-61"></a><span class="sd">    self : BaseFieldReconstructor</span>
 <a id="__codelineno-0-62" name="__codelineno-0-62"></a><span class="sd">        Fitted reconstructor</span>
-<a id="__codelineno-0-63" name="__codelineno-0-63"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63"></a><span class="sd">    """</span>
 <a id="__codelineno-0-64" name="__codelineno-0-64"></a>    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -4716,7 +4688,7 @@ If None, uses regular grid based on resolution</p>
 <span class="normal"><a href="#__codelineno-0-81">81</a></span>
 <span class="normal"><a href="#__codelineno-0-82">82</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-66" name="__codelineno-0-66"></a><span class="nd">@abstractmethod</span>
 <a id="__codelineno-0-67" name="__codelineno-0-67"></a><span class="k">def</span><span class="w"> </span><span class="nf">reconstruct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_points</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-68" name="__codelineno-0-68"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-68" name="__codelineno-0-68"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-69" name="__codelineno-0-69"></a><span class="sd">    Reconstruct the continuous field.</span>
 <a id="__codelineno-0-70" name="__codelineno-0-70"></a>
 <a id="__codelineno-0-71" name="__codelineno-0-71"></a><span class="sd">    Parameters</span>
@@ -4729,7 +4701,7 @@ If None, uses regular grid based on resolution</p>
 <a id="__codelineno-0-78" name="__codelineno-0-78"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-79" name="__codelineno-0-79"></a><span class="sd">    field : np.ndarray</span>
 <a id="__codelineno-0-80" name="__codelineno-0-80"></a><span class="sd">        Reconstructed field values</span>
-<a id="__codelineno-0-81" name="__codelineno-0-81"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-81" name="__codelineno-0-81"></a><span class="sd">    """</span>
 <a id="__codelineno-0-82" name="__codelineno-0-82"></a>    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -4794,14 +4766,14 @@ If None, uses regular grid based on resolution</p>
 <span class="normal"><a href="#__codelineno-0-93">93</a></span>
 <span class="normal"><a href="#__codelineno-0-94">94</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="nd">@abstractmethod</span>
 <a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="k">def</span><span class="w"> </span><span class="nf">uncertainty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-87" name="__codelineno-0-87"></a><span class="sd">    Return reconstruction uncertainty estimates.</span>
 <a id="__codelineno-0-88" name="__codelineno-0-88"></a>
 <a id="__codelineno-0-89" name="__codelineno-0-89"></a><span class="sd">    Returns</span>
 <a id="__codelineno-0-90" name="__codelineno-0-90"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-91" name="__codelineno-0-91"></a><span class="sd">    uncertainty : np.ndarray</span>
 <a id="__codelineno-0-92" name="__codelineno-0-92"></a><span class="sd">        Uncertainty values at each grid point</span>
-<a id="__codelineno-0-93" name="__codelineno-0-93"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-93" name="__codelineno-0-93"></a><span class="sd">    """</span>
 <a id="__codelineno-0-94" name="__codelineno-0-94"></a>    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -4967,7 +4939,7 @@ to specialized backend implementations based on the chosen method.</p>
 <a id="__codelineno-0-142" name="__codelineno-0-142"></a>    <span class="c1"># Handle string method names</span>
 <a id="__codelineno-0-143" name="__codelineno-0-143"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
 <a id="__codelineno-0-144" name="__codelineno-0-144"></a>        <span class="n">method_lower</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-<a id="__codelineno-0-145" name="__codelineno-0-145"></a>        <span class="k">if</span> <span class="n">method_lower</span> <span class="o">==</span> <span class="s1">&#39;dense_ift&#39;</span><span class="p">:</span>
+<a id="__codelineno-0-145" name="__codelineno-0-145"></a>        <span class="k">if</span> <span class="n">method_lower</span> <span class="o">==</span> <span class="s1">'dense_ift'</span><span class="p">:</span>
 <a id="__codelineno-0-146" name="__codelineno-0-146"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">ReconstructionMethod</span><span class="o">.</span><span class="n">IFT</span>
 <a id="__codelineno-0-147" name="__codelineno-0-147"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_use_dense</span> <span class="o">=</span> <span class="kc">True</span>
 <a id="__codelineno-0-148" name="__codelineno-0-148"></a>        <span class="k">else</span><span class="p">:</span>
@@ -4975,7 +4947,7 @@ to specialized backend implementations based on the chosen method.</p>
 <a id="__codelineno-0-150" name="__codelineno-0-150"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_use_dense</span> <span class="o">=</span> <span class="kc">False</span>
 <a id="__codelineno-0-151" name="__codelineno-0-151"></a>    <span class="k">else</span><span class="p">:</span>
 <a id="__codelineno-0-152" name="__codelineno-0-152"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
-<a id="__codelineno-0-153" name="__codelineno-0-153"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_use_dense</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;use_dense&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-0-153" name="__codelineno-0-153"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_use_dense</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'use_dense'</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 <a id="__codelineno-0-154" name="__codelineno-0-154"></a>
 <a id="__codelineno-0-155" name="__codelineno-0-155"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">method_params</span> <span class="o">=</span> <span class="n">kwargs</span>
 <a id="__codelineno-0-156" name="__codelineno-0-156"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="kc">None</span>
@@ -5020,8 +4992,8 @@ to specialized backend implementations based on the chosen method.</p>
 <span class="normal"><a href="#__codelineno-0-178">178</a></span>
 <span class="normal"><a href="#__codelineno-0-179">179</a></span>
 <span class="normal"><a href="#__codelineno-0-180">180</a></span>
-<span class="normal"><a href="#__codelineno-0-181">181</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-175" name="__codelineno-0-175"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;FieldReconstructor&#39;</span><span class="p">:</span>
-<a id="__codelineno-0-176" name="__codelineno-0-176"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit the reconstructor to observations.&quot;&quot;&quot;</span>
+<span class="normal"><a href="#__codelineno-0-181">181</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-175" name="__codelineno-0-175"></a><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'FieldReconstructor'</span><span class="p">:</span>
+<a id="__codelineno-0-176" name="__codelineno-0-176"></a><span class="w">    </span><span class="sd">"""Fit the reconstructor to observations."""</span>
 <a id="__codelineno-0-177" name="__codelineno-0-177"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">observations</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
 <a id="__codelineno-0-178" name="__codelineno-0-178"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
 <a id="__codelineno-0-179" name="__codelineno-0-179"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="n">observations</span>
@@ -5056,9 +5028,9 @@ to specialized backend implementations based on the chosen method.</p>
 <span class="normal"><a href="#__codelineno-0-185">185</a></span>
 <span class="normal"><a href="#__codelineno-0-186">186</a></span>
 <span class="normal"><a href="#__codelineno-0-187">187</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-183" name="__codelineno-0-183"></a><span class="k">def</span><span class="w"> </span><span class="nf">reconstruct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_points</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-184" name="__codelineno-0-184"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Reconstruct the continuous field.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-184" name="__codelineno-0-184"></a><span class="w">    </span><span class="sd">"""Reconstruct the continuous field."""</span>
 <a id="__codelineno-0-185" name="__codelineno-0-185"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-186" name="__codelineno-0-186"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Reconstructor must be fitted before reconstruction&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-186" name="__codelineno-0-186"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"Reconstructor must be fitted before reconstruction"</span><span class="p">)</span>
 <a id="__codelineno-0-187" name="__codelineno-0-187"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">reconstruct</span><span class="p">(</span><span class="n">grid_points</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -5089,9 +5061,9 @@ to specialized backend implementations based on the chosen method.</p>
 <span class="normal"><a href="#__codelineno-0-191">191</a></span>
 <span class="normal"><a href="#__codelineno-0-192">192</a></span>
 <span class="normal"><a href="#__codelineno-0-193">193</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-189" name="__codelineno-0-189"></a><span class="k">def</span><span class="w"> </span><span class="nf">uncertainty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-190" name="__codelineno-0-190"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return reconstruction uncertainty estimates.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-190" name="__codelineno-0-190"></a><span class="w">    </span><span class="sd">"""Return reconstruction uncertainty estimates."""</span>
 <a id="__codelineno-0-191" name="__codelineno-0-191"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
-<a id="__codelineno-0-192" name="__codelineno-0-192"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Reconstructor must be fitted before computing uncertainty&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-192" name="__codelineno-0-192"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"Reconstructor must be fitted before computing uncertainty"</span><span class="p">)</span>
 <a id="__codelineno-0-193" name="__codelineno-0-193"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">uncertainty</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -5253,7 +5225,7 @@ to specialized backend implementations based on the chosen method.</p>
 <a id="__codelineno-0-198" name="__codelineno-0-198"></a>    <span class="n">positions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
 <a id="__codelineno-0-199" name="__codelineno-0-199"></a>    <span class="n">grid_points</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <a id="__codelineno-0-200" name="__codelineno-0-200"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReconstructionResult</span><span class="p">:</span>
-<a id="__codelineno-0-201" name="__codelineno-0-201"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-201" name="__codelineno-0-201"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-202" name="__codelineno-0-202"></a><span class="sd">    Convenience method to fit and reconstruct in one call.</span>
 <a id="__codelineno-0-203" name="__codelineno-0-203"></a>
 <a id="__codelineno-0-204" name="__codelineno-0-204"></a><span class="sd">    Parameters</span>
@@ -5269,7 +5241,7 @@ to specialized backend implementations based on the chosen method.</p>
 <a id="__codelineno-0-214" name="__codelineno-0-214"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-215" name="__codelineno-0-215"></a><span class="sd">    result : ReconstructionResult</span>
 <a id="__codelineno-0-216" name="__codelineno-0-216"></a><span class="sd">        Complete reconstruction result</span>
-<a id="__codelineno-0-217" name="__codelineno-0-217"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-217" name="__codelineno-0-217"></a><span class="sd">    """</span>
 <a id="__codelineno-0-218" name="__codelineno-0-218"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <a id="__codelineno-0-219" name="__codelineno-0-219"></a>    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <a id="__codelineno-0-220" name="__codelineno-0-220"></a>
@@ -5282,7 +5254,7 @@ to specialized backend implementations based on the chosen method.</p>
 <a id="__codelineno-0-227" name="__codelineno-0-227"></a>    <span class="n">field</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
 <a id="__codelineno-0-228" name="__codelineno-0-228"></a>        <span class="n">data</span><span class="o">=</span><span class="n">field_data</span><span class="p">,</span>
 <a id="__codelineno-0-229" name="__codelineno-0-229"></a>        <span class="n">resolution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">,</span>
-<a id="__codelineno-0-230" name="__codelineno-0-230"></a>        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">value</span><span class="p">}</span>
+<a id="__codelineno-0-230" name="__codelineno-0-230"></a>        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">"method"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">value</span><span class="p">}</span>
 <a id="__codelineno-0-231" name="__codelineno-0-231"></a>    <span class="p">)</span>
 <a id="__codelineno-0-232" name="__codelineno-0-232"></a>
 <a id="__codelineno-0-233" name="__codelineno-0-233"></a>    <span class="k">return</span> <span class="n">ReconstructionResult</span><span class="p">(</span>
@@ -5363,7 +5335,7 @@ to specialized backend implementations based on the chosen method.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -496,34 +496,6 @@
     
   
     API Design
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../BETSE_ANALYSIS_REPORT/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    BETSE Analysis Report
   
 
     
@@ -2472,7 +2444,7 @@
 <a id="__codelineno-0-79" name="__codelineno-0-79"></a>    <span class="n">persistence_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
 <a id="__codelineno-0-80" name="__codelineno-0-80"></a>    <span class="n">compute_cycles</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 <a id="__codelineno-0-81" name="__codelineno-0-81"></a><span class="p">):</span>
-<a id="__codelineno-0-82" name="__codelineno-0-82"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-82" name="__codelineno-0-82"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-83" name="__codelineno-0-83"></a><span class="sd">    Initialize persistent homology analyzer.</span>
 <a id="__codelineno-0-84" name="__codelineno-0-84"></a>
 <a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="sd">    Parameters</span>
@@ -2485,7 +2457,7 @@
 <a id="__codelineno-0-92" name="__codelineno-0-92"></a><span class="sd">        Minimum persistence to consider significant</span>
 <a id="__codelineno-0-93" name="__codelineno-0-93"></a><span class="sd">    compute_cycles : bool</span>
 <a id="__codelineno-0-94" name="__codelineno-0-94"></a><span class="sd">        Whether to compute representative cycles</span>
-<a id="__codelineno-0-95" name="__codelineno-0-95"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-95" name="__codelineno-0-95"></a><span class="sd">    """</span>
 <a id="__codelineno-0-96" name="__codelineno-0-96"></a>    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">max_dimension</span><span class="p">)</span>
 <a id="__codelineno-0-97" name="__codelineno-0-97"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">filtration</span> <span class="o">=</span> <span class="n">FiltrationMethod</span><span class="p">(</span><span class="n">filtration</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filtration</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">filtration</span>
 <a id="__codelineno-0-98" name="__codelineno-0-98"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">persistence_threshold</span> <span class="o">=</span> <span class="n">persistence_threshold</span>
@@ -2584,7 +2556,7 @@
 <span class="normal"><a href="#__codelineno-0-158">158</a></span>
 <span class="normal"><a href="#__codelineno-0-159">159</a></span>
 <span class="normal"><a href="#__codelineno-0-160">160</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-102" name="__codelineno-0-102"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_persistence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">PersistenceDiagram</span><span class="p">]:</span>
-<a id="__codelineno-0-103" name="__codelineno-0-103"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute persistence diagrams using GUDHI.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-103" name="__codelineno-0-103"></a><span class="w">    </span><span class="sd">"""Compute persistence diagrams using GUDHI."""</span>
 <a id="__codelineno-0-104" name="__codelineno-0-104"></a>    <span class="k">try</span><span class="p">:</span>
 <a id="__codelineno-0-105" name="__codelineno-0-105"></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">gudhi</span>
 <a id="__codelineno-0-106" name="__codelineno-0-106"></a>    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
@@ -2592,7 +2564,7 @@
 <a id="__codelineno-0-108" name="__codelineno-0-108"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_persistence_simple</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
 <a id="__codelineno-0-109" name="__codelineno-0-109"></a>
 <a id="__codelineno-0-110" name="__codelineno-0-110"></a>    <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-<a id="__codelineno-0-111" name="__codelineno-0-111"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Persistence computation only supports 2D fields&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-111" name="__codelineno-0-111"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Persistence computation only supports 2D fields"</span><span class="p">)</span>
 <a id="__codelineno-0-112" name="__codelineno-0-112"></a>
 <a id="__codelineno-0-113" name="__codelineno-0-113"></a>    <span class="c1"># Create cubical complex</span>
 <a id="__codelineno-0-114" name="__codelineno-0-114"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filtration</span> <span class="o">==</span> <span class="n">FiltrationMethod</span><span class="o">.</span><span class="n">SUBLEVEL</span><span class="p">:</span>
@@ -2710,12 +2682,12 @@ Guards against NaN/Inf and division by zero.</p>
 <span class="normal"><a href="#__codelineno-0-296">296</a></span>
 <span class="normal"><a href="#__codelineno-0-297">297</a></span>
 <span class="normal"><a href="#__codelineno-0-298">298</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-257" name="__codelineno-0-257"></a><span class="k">def</span><span class="w"> </span><span class="nf">extract_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diagrams</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">PersistenceDiagram</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-258" name="__codelineno-0-258"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-258" name="__codelineno-0-258"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-259" name="__codelineno-0-259"></a><span class="sd">    Extract topological features from persistence diagrams.</span>
 <a id="__codelineno-0-260" name="__codelineno-0-260"></a>
 <a id="__codelineno-0-261" name="__codelineno-0-261"></a><span class="sd">    Features per dimension: count, total, max, mean, entropy, std.</span>
 <a id="__codelineno-0-262" name="__codelineno-0-262"></a><span class="sd">    Guards against NaN/Inf and division by zero.</span>
-<a id="__codelineno-0-263" name="__codelineno-0-263"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-263" name="__codelineno-0-263"></a><span class="sd">    """</span>
 <a id="__codelineno-0-264" name="__codelineno-0-264"></a>    <span class="n">features</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 <a id="__codelineno-0-265" name="__codelineno-0-265"></a>
 <a id="__codelineno-0-266" name="__codelineno-0-266"></a>    <span class="k">for</span> <span class="n">diagram</span> <span class="ow">in</span> <span class="n">diagrams</span><span class="p">:</span>
@@ -2732,7 +2704,7 @@ Guards against NaN/Inf and division by zero.</p>
 <a id="__codelineno-0-277" name="__codelineno-0-277"></a>                <span class="n">total_persistence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">finite_vals</span><span class="p">))</span>
 <a id="__codelineno-0-278" name="__codelineno-0-278"></a>                <span class="n">max_persistence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">finite_vals</span><span class="p">))</span>
 <a id="__codelineno-0-279" name="__codelineno-0-279"></a>                <span class="n">mean_persistence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">finite_vals</span><span class="p">))</span>
-<a id="__codelineno-0-280" name="__codelineno-0-280"></a>                <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+<a id="__codelineno-0-280" name="__codelineno-0-280"></a>                <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">):</span>
 <a id="__codelineno-0-281" name="__codelineno-0-281"></a>                    <span class="k">if</span> <span class="n">total_persistence</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
 <a id="__codelineno-0-282" name="__codelineno-0-282"></a>                        <span class="n">p_norm</span> <span class="o">=</span> <span class="n">finite_vals</span> <span class="o">/</span> <span class="n">total_persistence</span>
 <a id="__codelineno-0-283" name="__codelineno-0-283"></a>                        <span class="n">entropy</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p_norm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_norm</span> <span class="o">+</span> <span class="n">_ENTROPY_EPS</span><span class="p">)))</span>
@@ -2808,14 +2780,14 @@ Guards against NaN/Inf and division by zero.</p>
 <span class="normal"><a href="#__codelineno-0-307">307</a></span>
 <span class="normal"><a href="#__codelineno-0-308">308</a></span>
 <span class="normal"><a href="#__codelineno-0-309">309</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-300" name="__codelineno-0-300"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_cycles</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]:</span>
-<a id="__codelineno-0-301" name="__codelineno-0-301"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-301" name="__codelineno-0-301"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-302" name="__codelineno-0-302"></a><span class="sd">    Get representative cycles for persistent features.</span>
 <a id="__codelineno-0-303" name="__codelineno-0-303"></a>
 <a id="__codelineno-0-304" name="__codelineno-0-304"></a><span class="sd">    Returns</span>
 <a id="__codelineno-0-305" name="__codelineno-0-305"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-306" name="__codelineno-0-306"></a><span class="sd">    cycles : List[np.ndarray] or None</span>
 <a id="__codelineno-0-307" name="__codelineno-0-307"></a><span class="sd">        Representative cycles if computed</span>
-<a id="__codelineno-0-308" name="__codelineno-0-308"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-308" name="__codelineno-0-308"></a><span class="sd">    """</span>
 <a id="__codelineno-0-309" name="__codelineno-0-309"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cycles</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2993,7 +2965,7 @@ Guards against NaN/Inf and division by zero.</p>
 <a id="__codelineno-0-314" name="__codelineno-0-314"></a>    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
 <a id="__codelineno-0-315" name="__codelineno-0-315"></a>    <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
 <a id="__codelineno-0-316" name="__codelineno-0-316"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-317" name="__codelineno-0-317"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-317" name="__codelineno-0-317"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-318" name="__codelineno-0-318"></a><span class="sd">    Compute persistence image from diagram.</span>
 <a id="__codelineno-0-319" name="__codelineno-0-319"></a>
 <a id="__codelineno-0-320" name="__codelineno-0-320"></a><span class="sd">    Parameters</span>
@@ -3009,7 +2981,7 @@ Guards against NaN/Inf and division by zero.</p>
 <a id="__codelineno-0-330" name="__codelineno-0-330"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-331" name="__codelineno-0-331"></a><span class="sd">    image : np.ndarray</span>
 <a id="__codelineno-0-332" name="__codelineno-0-332"></a><span class="sd">        Persistence image</span>
-<a id="__codelineno-0-333" name="__codelineno-0-333"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-333" name="__codelineno-0-333"></a><span class="sd">    """</span>
 <a id="__codelineno-0-334" name="__codelineno-0-334"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">diagram</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 <a id="__codelineno-0-335" name="__codelineno-0-335"></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span>
 <a id="__codelineno-0-336" name="__codelineno-0-336"></a>
@@ -3030,7 +3002,7 @@ Guards against NaN/Inf and division by zero.</p>
 <a id="__codelineno-0-351" name="__codelineno-0-351"></a>    <span class="n">birth_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">birth_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">birth_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <a id="__codelineno-0-352" name="__codelineno-0-352"></a>    <span class="n">pers_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">pers_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pers_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 <a id="__codelineno-0-353" name="__codelineno-0-353"></a>
-<a id="__codelineno-0-354" name="__codelineno-0-354"></a>    <span class="n">B</span><span class="p">,</span> <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">birth_coords</span><span class="p">,</span> <span class="n">pers_coords</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-354" name="__codelineno-0-354"></a>    <span class="n">B</span><span class="p">,</span> <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">birth_coords</span><span class="p">,</span> <span class="n">pers_coords</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">'ij'</span><span class="p">)</span>
 <a id="__codelineno-0-355" name="__codelineno-0-355"></a>
 <a id="__codelineno-0-356" name="__codelineno-0-356"></a>    <span class="c1"># Initialize image</span>
 <a id="__codelineno-0-357" name="__codelineno-0-357"></a>    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span>
@@ -3223,7 +3195,7 @@ Guards against NaN/Inf and division by zero.</p>
 <a id="__codelineno-0-376" name="__codelineno-0-376"></a>    <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
 <a id="__codelineno-0-377" name="__codelineno-0-377"></a>    <span class="n">resolution</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
 <a id="__codelineno-0-378" name="__codelineno-0-378"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-379" name="__codelineno-0-379"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-379" name="__codelineno-0-379"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-380" name="__codelineno-0-380"></a><span class="sd">    Compute persistence landscape.</span>
 <a id="__codelineno-0-381" name="__codelineno-0-381"></a>
 <a id="__codelineno-0-382" name="__codelineno-0-382"></a><span class="sd">    Parameters</span>
@@ -3239,7 +3211,7 @@ Guards against NaN/Inf and division by zero.</p>
 <a id="__codelineno-0-392" name="__codelineno-0-392"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-393" name="__codelineno-0-393"></a><span class="sd">    landscape : np.ndarray</span>
 <a id="__codelineno-0-394" name="__codelineno-0-394"></a><span class="sd">        Persistence landscape functions</span>
-<a id="__codelineno-0-395" name="__codelineno-0-395"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-395" name="__codelineno-0-395"></a><span class="sd">    """</span>
 <a id="__codelineno-0-396" name="__codelineno-0-396"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">diagram</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 <a id="__codelineno-0-397" name="__codelineno-0-397"></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">resolution</span><span class="p">))</span>
 <a id="__codelineno-0-398" name="__codelineno-0-398"></a>
@@ -3391,7 +3363,7 @@ Guards against NaN/Inf and division by zero.</p>
 <a id="__codelineno-0-440" name="__codelineno-0-440"></a>    <span class="n">max_dimension</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
 <a id="__codelineno-0-441" name="__codelineno-0-441"></a>    <span class="n">max_edge_length</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
 <a id="__codelineno-0-442" name="__codelineno-0-442"></a><span class="p">):</span>
-<a id="__codelineno-0-443" name="__codelineno-0-443"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-443" name="__codelineno-0-443"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-444" name="__codelineno-0-444"></a><span class="sd">    Initialize Rips complex analyzer.</span>
 <a id="__codelineno-0-445" name="__codelineno-0-445"></a>
 <a id="__codelineno-0-446" name="__codelineno-0-446"></a><span class="sd">    Parameters</span>
@@ -3400,7 +3372,7 @@ Guards against NaN/Inf and division by zero.</p>
 <a id="__codelineno-0-449" name="__codelineno-0-449"></a><span class="sd">        Maximum dimension for complex</span>
 <a id="__codelineno-0-450" name="__codelineno-0-450"></a><span class="sd">    max_edge_length : float</span>
 <a id="__codelineno-0-451" name="__codelineno-0-451"></a><span class="sd">        Maximum edge length in complex</span>
-<a id="__codelineno-0-452" name="__codelineno-0-452"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-452" name="__codelineno-0-452"></a><span class="sd">    """</span>
 <a id="__codelineno-0-453" name="__codelineno-0-453"></a>    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">max_dimension</span><span class="p">)</span>
 <a id="__codelineno-0-454" name="__codelineno-0-454"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">max_edge_length</span> <span class="o">=</span> <span class="n">max_edge_length</span>
 </code></pre></div></td></tr></table></div>
@@ -3504,7 +3476,7 @@ is not installed.  The fallback only computes 0-dimensional persistence
 <span class="normal"><a href="#__codelineno-0-486">486</a></span>
 <span class="normal"><a href="#__codelineno-0-487">487</a></span>
 <span class="normal"><a href="#__codelineno-0-488">488</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-456" name="__codelineno-0-456"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_persistence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point_cloud</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">PersistenceDiagram</span><span class="p">]:</span>
-<a id="__codelineno-0-457" name="__codelineno-0-457"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute persistence diagrams for a 2D/ND point cloud using GUDHI Rips.</span>
+<a id="__codelineno-0-457" name="__codelineno-0-457"></a><span class="w">    </span><span class="sd">"""Compute persistence diagrams for a 2D/ND point cloud using GUDHI Rips.</span>
 <a id="__codelineno-0-458" name="__codelineno-0-458"></a>
 <a id="__codelineno-0-459" name="__codelineno-0-459"></a><span class="sd">    Falls back to a scipy-based distance-matrix approximation when GUDHI</span>
 <a id="__codelineno-0-460" name="__codelineno-0-460"></a><span class="sd">    is not installed.  The fallback only computes 0-dimensional persistence</span>
@@ -3514,9 +3486,9 @@ is not installed.  The fallback only computes 0-dimensional persistence
 <a id="__codelineno-0-464" name="__codelineno-0-464"></a><span class="sd">    ----------</span>
 <a id="__codelineno-0-465" name="__codelineno-0-465"></a><span class="sd">    point_cloud : np.ndarray</span>
 <a id="__codelineno-0-466" name="__codelineno-0-466"></a><span class="sd">        Array of shape (n_points, n_dims)</span>
-<a id="__codelineno-0-467" name="__codelineno-0-467"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-467" name="__codelineno-0-467"></a><span class="sd">    """</span>
 <a id="__codelineno-0-468" name="__codelineno-0-468"></a>    <span class="k">if</span> <span class="n">point_cloud</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-<a id="__codelineno-0-469" name="__codelineno-0-469"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;point_cloud must be 2D (n_points, n_dims)&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-469" name="__codelineno-0-469"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"point_cloud must be 2D (n_points, n_dims)"</span><span class="p">)</span>
 <a id="__codelineno-0-470" name="__codelineno-0-470"></a>
 <a id="__codelineno-0-471" name="__codelineno-0-471"></a>    <span class="k">try</span><span class="p">:</span>
 <a id="__codelineno-0-472" name="__codelineno-0-472"></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">gudhi</span>
@@ -3586,7 +3558,7 @@ is not installed.  The fallback only computes 0-dimensional persistence
 <span class="normal"><a href="#__codelineno-0-556">556</a></span>
 <span class="normal"><a href="#__codelineno-0-557">557</a></span>
 <span class="normal"><a href="#__codelineno-0-558">558</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-533" name="__codelineno-0-533"></a><span class="k">def</span><span class="w"> </span><span class="nf">extract_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diagrams</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">PersistenceDiagram</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-534" name="__codelineno-0-534"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract topological features from Rips persistence (mirrors cubical).&quot;&quot;&quot;</span>
+<a id="__codelineno-0-534" name="__codelineno-0-534"></a><span class="w">    </span><span class="sd">"""Extract topological features from Rips persistence (mirrors cubical)."""</span>
 <a id="__codelineno-0-535" name="__codelineno-0-535"></a>    <span class="n">features</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 <a id="__codelineno-0-536" name="__codelineno-0-536"></a>    <span class="k">for</span> <span class="n">diagram</span> <span class="ow">in</span> <span class="n">diagrams</span><span class="p">:</span>
 <a id="__codelineno-0-537" name="__codelineno-0-537"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">diagram</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -3601,7 +3573,7 @@ is not installed.  The fallback only computes 0-dimensional persistence
 <a id="__codelineno-0-546" name="__codelineno-0-546"></a>                <span class="n">total_persistence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">finite_vals</span><span class="p">))</span>
 <a id="__codelineno-0-547" name="__codelineno-0-547"></a>                <span class="n">max_persistence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">finite_vals</span><span class="p">))</span>
 <a id="__codelineno-0-548" name="__codelineno-0-548"></a>                <span class="n">mean_persistence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">finite_vals</span><span class="p">))</span>
-<a id="__codelineno-0-549" name="__codelineno-0-549"></a>                <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+<a id="__codelineno-0-549" name="__codelineno-0-549"></a>                <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">):</span>
 <a id="__codelineno-0-550" name="__codelineno-0-550"></a>                    <span class="k">if</span> <span class="n">total_persistence</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
 <a id="__codelineno-0-551" name="__codelineno-0-551"></a>                        <span class="n">p_norm</span> <span class="o">=</span> <span class="n">finite_vals</span> <span class="o">/</span> <span class="n">total_persistence</span>
 <a id="__codelineno-0-552" name="__codelineno-0-552"></a>                        <span class="n">entropy</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p_norm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_norm</span> <span class="o">+</span> <span class="n">_ENTROPY_EPS</span><span class="p">)))</span>
@@ -3697,14 +3669,14 @@ is not installed.  The fallback only computes 0-dimensional persistence
 <span class="normal"><a href="#__codelineno-0-571">571</a></span>
 <span class="normal"><a href="#__codelineno-0-572">572</a></span>
 <span class="normal"><a href="#__codelineno-0-573">573</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-564" name="__codelineno-0-564"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_dimension</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
-<a id="__codelineno-0-565" name="__codelineno-0-565"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-565" name="__codelineno-0-565"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-566" name="__codelineno-0-566"></a><span class="sd">    Initialize Alpha complex analyzer.</span>
 <a id="__codelineno-0-567" name="__codelineno-0-567"></a>
 <a id="__codelineno-0-568" name="__codelineno-0-568"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-569" name="__codelineno-0-569"></a><span class="sd">    ----------</span>
 <a id="__codelineno-0-570" name="__codelineno-0-570"></a><span class="sd">    max_dimension : int</span>
 <a id="__codelineno-0-571" name="__codelineno-0-571"></a><span class="sd">        Maximum dimension for complex</span>
-<a id="__codelineno-0-572" name="__codelineno-0-572"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-572" name="__codelineno-0-572"></a><span class="sd">    """</span>
 <a id="__codelineno-0-573" name="__codelineno-0-573"></a>    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">max_dimension</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
                   </details>
@@ -3769,13 +3741,13 @@ installed (0-dimensional persistence only).</p>
 <span class="normal"><a href="#__codelineno-0-599">599</a></span>
 <span class="normal"><a href="#__codelineno-0-600">600</a></span>
 <span class="normal"><a href="#__codelineno-0-601">601</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-575" name="__codelineno-0-575"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_persistence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point_cloud</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">PersistenceDiagram</span><span class="p">]:</span>
-<a id="__codelineno-0-576" name="__codelineno-0-576"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute persistence using GUDHI Alpha complex.</span>
+<a id="__codelineno-0-576" name="__codelineno-0-576"></a><span class="w">    </span><span class="sd">"""Compute persistence using GUDHI Alpha complex.</span>
 <a id="__codelineno-0-577" name="__codelineno-0-577"></a>
 <a id="__codelineno-0-578" name="__codelineno-0-578"></a><span class="sd">    Falls back to a Delaunay-based scipy approximation when GUDHI is not</span>
 <a id="__codelineno-0-579" name="__codelineno-0-579"></a><span class="sd">    installed (0-dimensional persistence only).</span>
-<a id="__codelineno-0-580" name="__codelineno-0-580"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-580" name="__codelineno-0-580"></a><span class="sd">    """</span>
 <a id="__codelineno-0-581" name="__codelineno-0-581"></a>    <span class="k">if</span> <span class="n">point_cloud</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">point_cloud</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-<a id="__codelineno-0-582" name="__codelineno-0-582"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;point_cloud must be (n_points, n_dims&gt;=2)&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-582" name="__codelineno-0-582"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"point_cloud must be (n_points, n_dims&gt;=2)"</span><span class="p">)</span>
 <a id="__codelineno-0-583" name="__codelineno-0-583"></a>
 <a id="__codelineno-0-584" name="__codelineno-0-584"></a>    <span class="k">try</span><span class="p">:</span>
 <a id="__codelineno-0-585" name="__codelineno-0-585"></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">gudhi</span>
@@ -3845,7 +3817,7 @@ installed (0-dimensional persistence only).</p>
 <span class="normal"><a href="#__codelineno-0-659">659</a></span>
 <span class="normal"><a href="#__codelineno-0-660">660</a></span>
 <span class="normal"><a href="#__codelineno-0-661">661</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-636" name="__codelineno-0-636"></a><span class="k">def</span><span class="w"> </span><span class="nf">extract_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diagrams</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">PersistenceDiagram</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-637" name="__codelineno-0-637"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract topological features from Alpha persistence (mirrors cubical).&quot;&quot;&quot;</span>
+<a id="__codelineno-0-637" name="__codelineno-0-637"></a><span class="w">    </span><span class="sd">"""Extract topological features from Alpha persistence (mirrors cubical)."""</span>
 <a id="__codelineno-0-638" name="__codelineno-0-638"></a>    <span class="n">features</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 <a id="__codelineno-0-639" name="__codelineno-0-639"></a>    <span class="k">for</span> <span class="n">diagram</span> <span class="ow">in</span> <span class="n">diagrams</span><span class="p">:</span>
 <a id="__codelineno-0-640" name="__codelineno-0-640"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">diagram</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -3860,7 +3832,7 @@ installed (0-dimensional persistence only).</p>
 <a id="__codelineno-0-649" name="__codelineno-0-649"></a>                <span class="n">total_persistence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">finite_vals</span><span class="p">))</span>
 <a id="__codelineno-0-650" name="__codelineno-0-650"></a>                <span class="n">max_persistence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">finite_vals</span><span class="p">))</span>
 <a id="__codelineno-0-651" name="__codelineno-0-651"></a>                <span class="n">mean_persistence</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">finite_vals</span><span class="p">))</span>
-<a id="__codelineno-0-652" name="__codelineno-0-652"></a>                <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+<a id="__codelineno-0-652" name="__codelineno-0-652"></a>                <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">):</span>
 <a id="__codelineno-0-653" name="__codelineno-0-653"></a>                    <span class="k">if</span> <span class="n">total_persistence</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
 <a id="__codelineno-0-654" name="__codelineno-0-654"></a>                        <span class="n">p_norm</span> <span class="o">=</span> <span class="n">finite_vals</span> <span class="o">/</span> <span class="n">total_persistence</span>
 <a id="__codelineno-0-655" name="__codelineno-0-655"></a>                        <span class="n">entropy</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p_norm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_norm</span> <span class="o">+</span> <span class="n">_ENTROPY_EPS</span><span class="p">)))</span>
@@ -4046,7 +4018,7 @@ installed (0-dimensional persistence only).</p>
 <a id="__codelineno-0-667" name="__codelineno-0-667"></a>    <span class="n">diagram2</span><span class="p">:</span> <span class="n">PersistenceDiagram</span><span class="p">,</span>
 <a id="__codelineno-0-668" name="__codelineno-0-668"></a>    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span>
 <a id="__codelineno-0-669" name="__codelineno-0-669"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<a id="__codelineno-0-670" name="__codelineno-0-670"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-670" name="__codelineno-0-670"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-671" name="__codelineno-0-671"></a><span class="sd">    Compute Wasserstein distance between persistence diagrams.</span>
 <a id="__codelineno-0-672" name="__codelineno-0-672"></a>
 <a id="__codelineno-0-673" name="__codelineno-0-673"></a><span class="sd">    Parameters</span>
@@ -4060,7 +4032,7 @@ installed (0-dimensional persistence only).</p>
 <a id="__codelineno-0-681" name="__codelineno-0-681"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-682" name="__codelineno-0-682"></a><span class="sd">    distance : float</span>
 <a id="__codelineno-0-683" name="__codelineno-0-683"></a><span class="sd">        Wasserstein distance</span>
-<a id="__codelineno-0-684" name="__codelineno-0-684"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-684" name="__codelineno-0-684"></a><span class="sd">    """</span>
 <a id="__codelineno-0-685" name="__codelineno-0-685"></a>    <span class="k">try</span><span class="p">:</span>
 <a id="__codelineno-0-686" name="__codelineno-0-686"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">gudhi.wasserstein</span><span class="w"> </span><span class="kn">import</span> <span class="n">wasserstein_distance</span> <span class="k">as</span> <span class="n">_gudhi_wasserstein</span>
 <a id="__codelineno-0-687" name="__codelineno-0-687"></a>        <span class="c1"># Use GUDHI implementation if available</span>
@@ -4241,7 +4213,7 @@ installed (0-dimensional persistence only).</p>
 <a id="__codelineno-0-721" name="__codelineno-0-721"></a>    <span class="n">diagram1</span><span class="p">:</span> <span class="n">PersistenceDiagram</span><span class="p">,</span>
 <a id="__codelineno-0-722" name="__codelineno-0-722"></a>    <span class="n">diagram2</span><span class="p">:</span> <span class="n">PersistenceDiagram</span>
 <a id="__codelineno-0-723" name="__codelineno-0-723"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<a id="__codelineno-0-724" name="__codelineno-0-724"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-724" name="__codelineno-0-724"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-725" name="__codelineno-0-725"></a><span class="sd">    Compute bottleneck distance between persistence diagrams.</span>
 <a id="__codelineno-0-726" name="__codelineno-0-726"></a>
 <a id="__codelineno-0-727" name="__codelineno-0-727"></a><span class="sd">    Parameters</span>
@@ -4253,7 +4225,7 @@ installed (0-dimensional persistence only).</p>
 <a id="__codelineno-0-733" name="__codelineno-0-733"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-734" name="__codelineno-0-734"></a><span class="sd">    distance : float</span>
 <a id="__codelineno-0-735" name="__codelineno-0-735"></a><span class="sd">        Bottleneck distance</span>
-<a id="__codelineno-0-736" name="__codelineno-0-736"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-736" name="__codelineno-0-736"></a><span class="sd">    """</span>
 <a id="__codelineno-0-737" name="__codelineno-0-737"></a>    <span class="k">try</span><span class="p">:</span>
 <a id="__codelineno-0-738" name="__codelineno-0-738"></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">gudhi</span>
 <a id="__codelineno-0-739" name="__codelineno-0-739"></a>        <span class="c1"># Use GUDHI implementation if available</span>
@@ -4412,7 +4384,7 @@ installed (0-dimensional persistence only).</p>
 <a id="__codelineno-0-802" name="__codelineno-0-802"></a>    <span class="n">diagram</span><span class="p">:</span> <span class="n">PersistenceDiagram</span><span class="p">,</span>
 <a id="__codelineno-0-803" name="__codelineno-0-803"></a>    <span class="n">filtration_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
 <a id="__codelineno-0-804" name="__codelineno-0-804"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-805" name="__codelineno-0-805"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-805" name="__codelineno-0-805"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-806" name="__codelineno-0-806"></a><span class="sd">    Compute Betti curve from persistence diagram.</span>
 <a id="__codelineno-0-807" name="__codelineno-0-807"></a>
 <a id="__codelineno-0-808" name="__codelineno-0-808"></a><span class="sd">    Parameters</span>
@@ -4426,7 +4398,7 @@ installed (0-dimensional persistence only).</p>
 <a id="__codelineno-0-816" name="__codelineno-0-816"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-817" name="__codelineno-0-817"></a><span class="sd">    betti_curve : np.ndarray</span>
 <a id="__codelineno-0-818" name="__codelineno-0-818"></a><span class="sd">        Betti numbers at each filtration value</span>
-<a id="__codelineno-0-819" name="__codelineno-0-819"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-819" name="__codelineno-0-819"></a><span class="sd">    """</span>
 <a id="__codelineno-0-820" name="__codelineno-0-820"></a>    <span class="n">betti_curve</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">filtration_values</span><span class="p">)</span>
 <a id="__codelineno-0-821" name="__codelineno-0-821"></a>
 <a id="__codelineno-0-822" name="__codelineno-0-822"></a>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">filtration_values</span><span class="p">):</span>
@@ -4560,7 +4532,7 @@ installed (0-dimensional persistence only).</p>
 <a id="__codelineno-0-773" name="__codelineno-0-773"></a>    <span class="n">diagram</span><span class="p">:</span> <span class="n">PersistenceDiagram</span><span class="p">,</span>
 <a id="__codelineno-0-774" name="__codelineno-0-774"></a>    <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span>
 <a id="__codelineno-0-775" name="__codelineno-0-775"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PersistenceDiagram</span><span class="p">:</span>
-<a id="__codelineno-0-776" name="__codelineno-0-776"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-776" name="__codelineno-0-776"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-777" name="__codelineno-0-777"></a><span class="sd">    Filter persistence diagram by persistence threshold.</span>
 <a id="__codelineno-0-778" name="__codelineno-0-778"></a>
 <a id="__codelineno-0-779" name="__codelineno-0-779"></a><span class="sd">    Parameters</span>
@@ -4574,7 +4546,7 @@ installed (0-dimensional persistence only).</p>
 <a id="__codelineno-0-787" name="__codelineno-0-787"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-788" name="__codelineno-0-788"></a><span class="sd">    filtered : PersistenceDiagram</span>
 <a id="__codelineno-0-789" name="__codelineno-0-789"></a><span class="sd">        Filtered diagram</span>
-<a id="__codelineno-0-790" name="__codelineno-0-790"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-790" name="__codelineno-0-790"></a><span class="sd">    """</span>
 <a id="__codelineno-0-791" name="__codelineno-0-791"></a>    <span class="n">persistence</span> <span class="o">=</span> <span class="n">diagram</span><span class="o">.</span><span class="n">persistence</span>
 <a id="__codelineno-0-792" name="__codelineno-0-792"></a>    <span class="n">mask</span> <span class="o">=</span> <span class="n">persistence</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
 <a id="__codelineno-0-793" name="__codelineno-0-793"></a>
@@ -4597,7 +4569,7 @@ installed (0-dimensional persistence only).</p>
 
 
 <a href="#mneme.core.topology.field_to_point_cloud" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">field_to_point_cloud</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;peaks&#39;</span><span class="p">,</span> <span class="n">percentile</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">95.0</span><span class="p">,</span> <span class="n">max_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_MAX_POINTS</span><span class="p">,</span> <span class="n">normalize_coords</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">field_to_point_cloud</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'peaks'</span><span class="p">,</span> <span class="n">percentile</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">95.0</span><span class="p">,</span> <span class="n">max_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_MAX_POINTS</span><span class="p">,</span> <span class="n">normalize_coords</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -4813,20 +4785,20 @@ candidate points exceeds <em>max_points</em>.</p>
 <span class="normal"><a href="#__codelineno-0-899">899</a></span>
 <span class="normal"><a href="#__codelineno-0-900">900</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-831" name="__codelineno-0-831"></a><span class="k">def</span><span class="w"> </span><span class="nf">field_to_point_cloud</span><span class="p">(</span>
 <a id="__codelineno-0-832" name="__codelineno-0-832"></a>    <span class="n">field</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-<a id="__codelineno-0-833" name="__codelineno-0-833"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;peaks&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-833" name="__codelineno-0-833"></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'peaks'</span><span class="p">,</span>
 <a id="__codelineno-0-834" name="__codelineno-0-834"></a>    <span class="n">percentile</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">95.0</span><span class="p">,</span>
 <a id="__codelineno-0-835" name="__codelineno-0-835"></a>    <span class="n">max_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_MAX_POINTS</span><span class="p">,</span>
 <a id="__codelineno-0-836" name="__codelineno-0-836"></a>    <span class="n">normalize_coords</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <a id="__codelineno-0-837" name="__codelineno-0-837"></a>    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-0-838" name="__codelineno-0-838"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="__codelineno-0-839" name="__codelineno-0-839"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a 2D field into a 2D point cloud for Rips/Alpha backends.</span>
+<a id="__codelineno-0-839" name="__codelineno-0-839"></a><span class="w">    </span><span class="sd">"""Convert a 2D field into a 2D point cloud for Rips/Alpha backends.</span>
 <a id="__codelineno-0-840" name="__codelineno-0-840"></a>
 <a id="__codelineno-0-841" name="__codelineno-0-841"></a><span class="sd">    Parameters</span>
 <a id="__codelineno-0-842" name="__codelineno-0-842"></a><span class="sd">    ----------</span>
 <a id="__codelineno-0-843" name="__codelineno-0-843"></a><span class="sd">    field : np.ndarray</span>
 <a id="__codelineno-0-844" name="__codelineno-0-844"></a><span class="sd">        2D array (H, W)</span>
 <a id="__codelineno-0-845" name="__codelineno-0-845"></a><span class="sd">    method : str</span>
-<a id="__codelineno-0-846" name="__codelineno-0-846"></a><span class="sd">        &#39;peaks&#39; (local maxima above percentile) or &#39;threshold&#39; (all pixels above percentile)</span>
+<a id="__codelineno-0-846" name="__codelineno-0-846"></a><span class="sd">        'peaks' (local maxima above percentile) or 'threshold' (all pixels above percentile)</span>
 <a id="__codelineno-0-847" name="__codelineno-0-847"></a><span class="sd">    percentile : float</span>
 <a id="__codelineno-0-848" name="__codelineno-0-848"></a><span class="sd">        Value percentile for thresholding</span>
 <a id="__codelineno-0-849" name="__codelineno-0-849"></a><span class="sd">    max_points : int</span>
@@ -4841,14 +4813,14 @@ candidate points exceeds <em>max_points</em>.</p>
 <a id="__codelineno-0-858" name="__codelineno-0-858"></a><span class="sd">    -------</span>
 <a id="__codelineno-0-859" name="__codelineno-0-859"></a><span class="sd">    pc : np.ndarray</span>
 <a id="__codelineno-0-860" name="__codelineno-0-860"></a><span class="sd">        Point cloud of shape (N, 2)</span>
-<a id="__codelineno-0-861" name="__codelineno-0-861"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-861" name="__codelineno-0-861"></a><span class="sd">    """</span>
 <a id="__codelineno-0-862" name="__codelineno-0-862"></a>    <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-<a id="__codelineno-0-863" name="__codelineno-0-863"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;field_to_point_cloud expects a 2D array&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-863" name="__codelineno-0-863"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"field_to_point_cloud expects a 2D array"</span><span class="p">)</span>
 <a id="__codelineno-0-864" name="__codelineno-0-864"></a>
 <a id="__codelineno-0-865" name="__codelineno-0-865"></a>    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span>
 <a id="__codelineno-0-866" name="__codelineno-0-866"></a>    <span class="n">thr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">percentile</span><span class="p">))</span>
 <a id="__codelineno-0-867" name="__codelineno-0-867"></a>
-<a id="__codelineno-0-868" name="__codelineno-0-868"></a>    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;peaks&#39;</span><span class="p">:</span>
+<a id="__codelineno-0-868" name="__codelineno-0-868"></a>    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">'peaks'</span><span class="p">:</span>
 <a id="__codelineno-0-869" name="__codelineno-0-869"></a>        <span class="k">try</span><span class="p">:</span>
 <a id="__codelineno-0-870" name="__codelineno-0-870"></a>            <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">maximum_filter</span>
 <a id="__codelineno-0-871" name="__codelineno-0-871"></a>            <span class="n">size</span> <span class="o">=</span> <span class="mi">3</span>
@@ -4944,7 +4916,7 @@ candidate points exceeds <em>max_points</em>.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
