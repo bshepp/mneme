@@ -53,7 +53,7 @@ def analyze(run_root: Path, prefix: str, group, out: Path | None = None, dt: flo
             continue
         if not any((d / "init" / "Vmem2D_TextExport").glob("Vmem2D_*.csv")):
             continue
-        v, t, x, y = load_phase(d, "init", dt)
+        v, t, _, _ = load_phase(d, "init", dt)
         rep = assess_steady_state(v, t, rate_tolerance=RATE_TOLERANCE,
                                   drift_tolerance=DRIFT_TOLERANCE, sustain=SUSTAIN)
         dist = {k: max_diff(v[-1], r) for k, r in refs.items()}

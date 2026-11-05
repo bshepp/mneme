@@ -4,14 +4,17 @@
 # Each queue line is  <name>|<PHASES>|<SKIP_SEED>  (the last two may be empty),
 # e.g.  pert_A_ctrl|sim,plot sim|1   or   settle_A||1
 # Lines are taken from the top of the file, so prepend urgent runs. The file
-# may be edited while this runs. Runs already in progress (any run_one.sh
-# process) count toward the limit. Stops when the queue is empty and
+# may be edited while this runs. Runs already in progress (a logs/<name>.out
+# without its logs/<name>.done) count toward the limit. Stops when the queue is empty and
 # nothing is running; a line "STOP" stops it at once.
 set -u
 queue="$1"; run_dir="$2"; max=${3:-4}
 here="$(cd "$(dirname "$0")" && pwd)"
 while true; do
-  running=$(pgrep -fc "convergence/run_one.sh" || true)
+  # A run is in progress when run_one.sh has written logs/<name>.out but
+  # not yet logs/<name>.done. (Counting processes over-counts: the pipeline
+  # inside run_one.sh forks copies of the script.)
+  running=$(( $(ls "$run_dir"/logs/*.out 2>/dev/null | wc -l) - $(ls "$run_dir"/logs/*.done 2>/dev/null | wc -l) ))
   if [ -s "$queue" ] && [ "$running" -lt "$max" ]; then
     line=$(head -n 1 "$queue")
     tail -n +2 "$queue" > "$queue.tmp" && mv "$queue.tmp" "$queue"

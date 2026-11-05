@@ -84,8 +84,8 @@ def main(argv=None) -> int:
     )
     for thr in THRESHOLDS_MV:
         ab[topo_label(thr)] = topo_distance(ref_pd[thr]["A"], ref_pd[thr]["B"])
-    for k in refs:
-        print(f"{k}: mean {refs[k].mean():.3f} mV; features (H0, H1) at thresholds "
+    for k, ref in refs.items():
+        print(f"{k}: mean {ref.mean():.3f} mV; features (H0, H1) at thresholds "
               + ", ".join(f"{thr:g} mV: ({len(ref_pd[thr][k][0].points)}, {len(ref_pd[thr][k][1].points)})"
                           for thr in THRESHOLDS_MV))
     print("A vs B: " + "; ".join(f"{k} {v:.3f} mV" for k, v in ab.items()) + "\n")

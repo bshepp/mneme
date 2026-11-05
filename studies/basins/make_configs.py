@@ -22,7 +22,7 @@ from PIL import Image
 from scipy.ndimage import gaussian_filter
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from grn_common import grn_config, yaml  # noqa: E402
+from grn_common import grn_config, yaml
 
 HERE = Path(".")
 WORLD = "world_perturb_grn.betse.gz"    # shared with studies/perturbation
