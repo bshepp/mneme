@@ -6,6 +6,7 @@ the settled state by a stated amount, and continues the run.
 
 usage: make_configs.py settle            # two settling runs: pattern A and B
        make_configs.py perturb           # perturbed continuations of both
+       make_configs.py continue <run> <seconds>   # carry a finished run on
 
 Run from a directory holding paper_grn.yaml (patterns_2018.yaml) with its
 geo/ and extra_configs/ directories; see studies/betse_configs/README.md.
@@ -29,6 +30,11 @@ pattern's memory) and the per-cell voltage (fast, its readout):
               (S = 0.25, 0.5, 1.0; R = 1, 2)
   vm_only     shift the depolarised cells' voltage 20 mV toward the
               polarised value, Anion untouched (short run)
+
+``continue`` takes the state saved at the end of a finished run's sim phase
+(SIMS/sim_<run>.betse.gz) as the init file of a new run cont_<run>, and runs
+a sim phase of the given length from it. Used to check whether a run that
+had not settled, or settled somewhere new, stays there.
 """
 import json
 import sys
@@ -152,8 +158,23 @@ def main(mode):
                     vm_shift_mV=float(-vshift.min() * 1e3) if kind == "vm" else 0.0,
                 )
         (HERE / "perturbations.json").write_text(json.dumps(record, indent=1), encoding="utf-8")
+    elif mode == "continue":
+        import shutil
+        run, seconds = sys.argv[2], float(sys.argv[3])
+        label = run.split("_")[1] if run.startswith("pert_") else run.split("_")[1]
+        name = f"cont_{run}"
+        shutil.copyfile(HERE / "SIMS" / f"sim_{run}.betse.gz", HERE / "INITS" / f"init_{name}.betse.gz")
+        _, cfg = settle_config(label)
+        cfg["init file saving"]["file"] = f"init_{name}.betse.gz"
+        cfg["sim file saving"]["file"] = f"sim_{name}.betse.gz"
+        cfg["results file saving"]["init directory"] = f"RESULTS/{name}/init"
+        cfg["results file saving"]["sim directory"] = f"RESULTS/{name}/sim"
+        cfg["sim time settings"]["total time"] = seconds
+        with open(HERE / f"{name}.yaml", "w", encoding="utf-8") as f:
+            yaml.dump(cfg, f)
+        names.append(name)
     else:
-        raise SystemExit("mode must be settle or perturb")
+        raise SystemExit("mode must be settle, perturb or continue")
 
     (HERE / f"{mode}_runs.txt").write_text("\n".join(names) + "\n", encoding="utf-8", newline="\n")
     print("\n".join(names))

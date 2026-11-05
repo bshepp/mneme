@@ -1,5 +1,7 @@
 """Analyse the perturbation study: does a settled pattern return after a
 stated displacement, flip to the other pattern, or end somewhere else?
+A run cont_pert_<P>_<label> is a continuation of pert_<P>_<label> from its
+final state; its times restart at zero.
 
 usage: python studies/perturbation/analyze.py <run_root> [--out results.json]
 
@@ -105,10 +107,12 @@ def main(argv=None) -> int:
               f"{'d_other end':>11s} {'settled':>7s} {'outcome':>8s} {'t_return[s]':>11s}")
     print(header)
     runs = {}
-    run_dirs = sorted(d for d in results.iterdir() if d.name.startswith("pert_")
+    run_dirs = sorted(d for d in results.iterdir()
+                      if (d.name.startswith("pert_") or d.name.startswith("cont_pert_"))
                       and any((d / "sim" / "Vmem2D_TextExport").glob("Vmem2D_*.csv")))
     for d in run_dirs:
-        own = d.name.split("_")[1]
+        # pert_<P>_<label>, or cont_pert_<P>_<label> for a continuation of it
+        own = d.name.split("_")[2 if d.name.startswith("cont_") else 1]
         other = "B" if own == "A" else "A"
         v, t, _, _ = load_phase(d, "sim", dt)
         d_own = np.array([max_diff(f, ref[own]) for f in v])
@@ -122,7 +126,7 @@ def main(argv=None) -> int:
         else:
             outcome = "other"
         t_return = first_sustained_below(d_own, t, SAME_STATE_THRESHOLD)
-        m = meta.get(own, {}).get("runs", {}).get(d.name, {})
+        m = meta.get(own, {}).get("runs", {}).get(d.name.removeprefix("cont_"), {})
         runs[d.name] = dict(
             pattern=own, kind=m.get("kind"), parameter=m.get("parameter"),
             anion_max_relative_change=m.get("anion_max_relative_change"),
@@ -145,13 +149,49 @@ def main(argv=None) -> int:
               f"{d_other[-1]:11.3f} {str(rep.settled):>7s} {outcome:>8s} "
               f"{'-' if t_return is None else f'{t_return:.0f}':>11s}")
 
+    # --- describe end states that are neither A nor B ----------------------
+    def depolarised(v):
+        return v > 0.5 * (v.min() + v.max())
+
+    masks = {k: depolarised(ref[k]) for k in ref}
+    others = {}
+    for d in run_dirs:
+        r = runs[d.name]
+        if r["outcome"] != "other":
+            continue
+        v = load_phase(d, "sim", dt)[0][-1]
+        m = depolarised(v)
+        others[d.name] = dict(
+            n_depolarised=int(m.sum()), shared_with_A=int((m & masks["A"]).sum()),
+            shared_with_B=int((m & masks["B"]).sum()), mean_mV=float(v.mean()),
+            spread_mV=float(np.ptp(v)), depolarised_mV=float(v[m].mean()),
+            polarised_mV=float(v[~m].mean()),
+        )
+        runs[d.name]["end_state"] = others[d.name]
+    if others:
+        print(f"\nEnd states that are neither A nor B (A has {int(masks['A'].sum())} depolarised cells, "
+              f"B {int(masks['B'].sum())}, {int((masks['A'] & masks['B']).sum())} shared):")
+        for n, o in others.items():
+            print(f"  {n}: {o['n_depolarised']} depolarised cells, {o['shared_with_A']} shared with A, "
+                  f"{o['shared_with_B']} with B; mean {o['mean_mV']:.2f} mV, "
+                  f"{o['depolarised_mV']:.1f} / {o['polarised_mV']:.1f} mV")
+    pairs = {}
+    other_names = list(others)
+    for i, a in enumerate(other_names):
+        for b in other_names[i + 1:]:
+            va = load_phase(results / a, "sim", dt)[0][-1]
+            vb = load_phase(results / b, "sim", dt)[0][-1]
+            pairs[f"{a} vs {b}"] = max_diff(va, vb)
+    if pairs:
+        print("  distances between them [mV]: " + "; ".join(f"{k}: {v:.3f}" for k, v in pairs.items()))
+
     if args.out is not None:
         payload = dict(
             criteria=dict(rate_tolerance=RATE_TOLERANCE, drift_tolerance=DRIFT_TOLERANCE,
                           sustain=SUSTAIN, same_state_threshold=SAME_STATE_THRESHOLD),
             reference=settle, A_vs_B_mV=ab,
             targets={k: {kk: vv for kk, vv in meta[k].items() if kk != "runs"} for k in meta},
-            runs=runs,
+            runs=runs, other_end_states=others, other_pairwise_mV=pairs,
         )
         args.out.write_text(json.dumps(payload, indent=1, default=float), encoding="utf-8")
         print(f"\nWrote {args.out}")
