@@ -35,6 +35,15 @@ def max_diff(a, b):
     return float(np.max(np.abs(a - b)))
 
 
+# The third state of studies/perturbation, reached from the midpoint of the
+# A-B line and held for a further 6,000 s, is a reference too when present.
+EXTRA_REFERENCES = {"C": "cont_pert_A_toward_f50/sim"}
+
+
+def depolarised(v):
+    return v > 0.5 * (v.min() + v.max())
+
+
 def analyze(run_root: Path, prefix: str, group, out: Path | None = None, dt: float = 30.0,
             extra=None):
     results = run_root / "RESULTS"
@@ -43,9 +52,15 @@ def analyze(run_root: Path, prefix: str, group, out: Path | None = None, dt: flo
         d = results / f"settle_{label}" / "sim" / "Vmem2D_TextExport"
         if d.is_dir():
             refs[label] = load_betse_cells(d)[0][-1]
+    for label, rel in EXTRA_REFERENCES.items():
+        d = results / rel / "Vmem2D_TextExport"
+        if d.is_dir():
+            refs[label] = load_betse_cells(d)[0][-1]
     ab = max_diff(refs["A"], refs["B"]) if len(refs) == 2 else None
     print(f"References: {sorted(refs)}; A vs B {ab if ab is None else f'{ab:.2f}'} mV; "
           f"same-state threshold {SAME_STATE_THRESHOLD} mV")
+    masks = {k: depolarised(r) for k, r in refs.items()}
+    print("Depolarised cells: " + ", ".join(f"{k} {int(m.sum())}" for k, m in masks.items()))
 
     runs = {}
     for d in sorted(results.iterdir()):
@@ -70,13 +85,36 @@ def analyze(run_root: Path, prefix: str, group, out: Path | None = None, dt: flo
         if extra is not None:
             runs[d.name].update(extra(d.name))
 
+    ref_cols = sorted(refs)
     print(f"\n{'run':28s} {'frames':>6s} {'start mean':>10s} {'end mean':>8s} {'spread':>7s} "
-          f"{'to go':>7s} {'settled':>7s} {'d(A)':>7s} {'d(B)':>7s} {'state':>6s}")
+          f"{'to go':>7s} {'settled':>7s} " + " ".join(f"{'d(' + k + ')':>7s}" for k in ref_cols)
+          + f" {'state':>6s}")
     for n, r in runs.items():
         print(f"{n:28s} {r['n_frames']:6d} {r['start_mean']:10.2f} {r['end_mean']:8.2f} "
               f"{r['end_spread']:7.2f} {r['remaining_drift']:7.3f} {str(r['settled']):>7s} "
-              f"{r['distance_to'].get('A', float('nan')):7.2f} "
-              f"{r['distance_to'].get('B', float('nan')):7.2f} {r['state']:>6s}")
+              + " ".join(f"{r['distance_to'][k]:7.2f}" for k in ref_cols) + f" {r['state']:>6s}")
+
+    # Describe end states that match no reference, and compare them with each other.
+    others = [n for n, r in runs.items() if r["state"] == "other"]
+    for n in others:
+        v = runs[n]["end"]
+        m = depolarised(v)
+        runs[n]["end_state"] = dict(
+            n_depolarised=int(m.sum()),
+            shared_with={k: int((m & mk).sum()) for k, mk in masks.items()},
+            depolarised_mV=float(v[m].mean()), polarised_mV=float(v[~m].mean()),
+        )
+    if others:
+        print("\nEnd states matching no reference:")
+        for n in others:
+            e = runs[n]["end_state"]
+            print(f"  {n}: {e['n_depolarised']} depolarised cells, shared "
+                  + ", ".join(f"{k} {c}" for k, c in e["shared_with"].items())
+                  + f"; {e['depolarised_mV']:.1f} / {e['polarised_mV']:.1f} mV")
+        pairs = {f"{a} vs {b}": max_diff(runs[a]["end"], runs[b]["end"])
+                 for i, a in enumerate(others) for b in others[i + 1:]}
+        if pairs:
+            print("  between them [mV]: " + "; ".join(f"{k}: {v:.2f}" for k, v in pairs.items()))
 
     groups = {}
     for g in sorted({r["group"] for r in runs.values()}):
