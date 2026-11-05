@@ -6,11 +6,11 @@ Developer context for the Mneme project. Useful for both AI assistants and human
 
 Mneme is an exploratory research toolkit for studying field-like memory in biological tissue, starting with simulated bioelectric data (BETSE).
 
-## Current Status (2026-09-27)
+## Current Status (2026-11-05)
 
 **No scientific result produced with Mneme is currently asserted.** A review in September 2026 found that the BETSE analysis report and the PhysioNet Lyapunov numbers were produced by defective code. Both are withdrawn. The defects are fixed; the analyses have not been re-run.
 
-The plan is in [project_plan.md](project_plan.md). Two studies under [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md) are done: the published 2016 configuration has one stable state ([studies/convergence](studies/convergence/RESULTS.md)); the 2018 gene-network configuration has two stable voltage patterns under one parameter set, while Kir2.1 plus a Na⁺ leak gives one ([studies/multistability](studies/multistability/RESULTS.md)). These are simulation results with one geometry and one parameter set each.
+The plan is in [project_plan.md](project_plan.md). Studies under [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md): the published 2016 configuration has one stable state ([studies/convergence](studies/convergence/RESULTS.md)); the 2018 gene-network configuration has two stable voltage patterns under one parameter set, while Kir2.1 plus a Na⁺ leak gives one ([studies/multistability](studies/multistability/RESULTS.md)); both gene-network patterns return from displacements of up to 20 mV, displacement toward the other pattern flips them, and the midpoint between them is a third stable state ([studies/perturbation](studies/perturbation/RESULTS.md)); persistent homology tells the two patterns apart under 2 to 5 mV of noise where the mean voltage cannot ([studies/topology](studies/topology/RESULTS.md)). These are simulation results with one geometry and one parameter set each.
 
 ### Component tiers
 
@@ -88,6 +88,11 @@ studies/betse_configs/     # the BETSE paper configurations the studies start fr
 studies/convergence/       # BETSE convergence study: configs, runner, analysis, results
 studies/multistability/    # gene-network and channel studies: configs, results
 studies/perturbation/      # perturbation study (protocol step 4) on the gene-network patterns
+studies/basins/            # random Anion starts on the gene-network tissue
+studies/sweep/             # coupling sweep (protocol step 5)
+studies/topology/          # persistent homology vs mean voltage on the two patterns
+studies/grn_common.py      # shared GRN config setup; grn_endstates.py: shared end-state analysis
+studies/run_queue.sh       # keeps N BETSE runs going from a queue file
 review_artifacts/          # probe scripts and outputs behind the measured numbers
 ```
 

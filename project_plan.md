@@ -1,6 +1,6 @@
 # Mneme Project Plan v3
 
-**Last updated:** 2026-09-27
+**Last updated:** 2026-11-05
 **Previous versions:** v2 is in git history (`project_plan.md` before 2026-09-27). v1 is [docs/mneme_project_plan_v1_original.md](docs/mneme_project_plan_v1_original.md).
 
 ---
@@ -43,8 +43,8 @@ Mneme studies whether biological tissue stores pattern memory in its bioelectric
 | 0. Withdraw unsupported claims | Done. Pending merge of the withdrawal to the public site. |
 | 1. Correctness fixes with regression tests | Done |
 | 2. Measure and document the Lyapunov operating range; freeze | Done |
-| 3. Multistability experiment | Two studies done. The published 2016 configuration has one state ([studies/convergence](studies/convergence/RESULTS.md)). Adding a voltage-coupled gene network gives two stable patterns; adding Kir2.1 plus a Na⁺ leak does not ([studies/multistability](studies/multistability/RESULTS.md)). Perturbation and sweep steps still to do. |
-| 4. Rewrite the BETSE report from new results | Done for both studies, as their RESULTS.md files. |
+| 3. Multistability experiment | Steps 3.1 to 3.3 done; 3.4 in progress. The published 2016 configuration has one state ([studies/convergence](studies/convergence/RESULTS.md)). Adding a voltage-coupled gene network gives two stable patterns; adding Kir2.1 plus a Na⁺ leak does not ([studies/multistability](studies/multistability/RESULTS.md)). Both gene-network patterns return from every displacement of up to 20 mV that is not aimed at the other pattern; displacement along the line between them flips the pattern, and the midpoint settles into a third stable state ([studies/perturbation](studies/perturbation/RESULTS.md)). |
+| 4. Rewrite the BETSE report from new results | Done for each study, as its RESULTS.md file. |
 | 5. JOSS submission | Not ready. See below. |
 
 ## Stage 3: Multistability experiment
@@ -63,6 +63,12 @@ The original runs cannot stand in for this. They differ in cell count and in a f
 **First study (2026-09-27):** the published 2016 configuration, with and without coupling. Every run reached the same state.
 
 **Second study (2026-09-29):** two mechanisms added. A gene network coupled to voltage (the 2018 patterns configuration) gave two distinct stable voltage patterns under one parameter set, each reached from more than one start, with the uniform state an unstable saddle. Kir2.1 plus a Na⁺ leak gave one state at all three leak strengths tried. Steps 3.3 (perturbing a patterned state) and 3.4 (sweep) are still to do, on the gene-network system.
+
+**Third study (2026-11-05), step 3.3:** [studies/perturbation](studies/perturbation/RESULTS.md). A new seeded world of the gene-network tissue (254 cells) reached patterns A and B from the same two starts. Each pattern returned, to within 0.01 mV, from eleven displacements of up to 20 mV: partial and complete erasure of its depolarised region's Anion, and multiplicative Anion noise of up to 17-fold in single cells. Moving the Anion field along the line from one pattern to the other is what flips it: 25 % from A returns to A, 25 % from B leaves B, and the midpoint settles into a third stable state, C, that held for 9,000 s. A voltage-only displacement leaves no trace by the first sample. BETSE's scheduled interventions do nothing under the fast solver, so the saved state was displaced directly.
+
+**Topology against mean voltage (2026-11-05), open question 4:** [studies/topology](studies/topology/RESULTS.md). The two patterns' means differ by 0.57 mV; their persistence diagrams differ by 18.6 mV (2-Wasserstein). Under 2 to 5 mV of per-cell noise, topology assigns a noisy sample to the right pattern 100 % of the time and the mean 95 % falling to 87.5 %. At 10 mV and above both fail, topology first. The per-cell comparison, which knows cell identities, beats both at every noise level.
+
+**In progress:** random Anion starts ([studies/basins](studies/basins/README.md)) and the coupling sweep, step 3.4 ([studies/sweep](studies/sweep/README.md)).
 
 ## Stage 5: JOSS
 
@@ -90,9 +96,9 @@ Submission should wait for stage 4.
 
 ## Open questions
 
-1. Does simulated tissue show more than one stable voltage pattern under the same parameters?
-2. If so, how large a disturbance does each pattern survive?
-3. Does the number of stable patterns change as gap-junction coupling changes?
-4. Can persistent homology of the voltage field tell the stable patterns apart better than the mean voltage can?
+1. Does simulated tissue show more than one stable voltage pattern under the same parameters? *Yes, for the gene-network tissue: at least three, under one parameter set (studies/multistability, studies/perturbation).*
+2. If so, how large a disturbance does each pattern survive? *Every displacement tried of up to 20 mV that was not aimed at another pattern; a displacement a quarter of the way toward the other pattern flips B but not A. Measured along one line only (studies/perturbation).*
+3. Does the number of stable patterns change as gap-junction coupling changes? *In progress (studies/sweep).*
+4. Can persistent homology of the voltage field tell the stable patterns apart better than the mean voltage can? *Yes, under 2 to 5 mV of noise; neither works at 10 mV and above (studies/topology).*
 
 Question 4 is where Mneme's topology code earns its place, and it has a built-in baseline.

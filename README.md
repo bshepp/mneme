@@ -2,7 +2,7 @@
 
 An exploratory research toolkit for studying field-like memory in biological tissue, starting with simulated bioelectric data.
 
-> **Validation status (2026-09-29):** Two earlier results were withdrawn after a review found defects in the code that produced them; see [Withdrawn results](#withdrawn-results). The defects are fixed. The only results currently asserted are the two simulation studies under `studies/`, and those are from one geometry and one parameter set each.
+> **Validation status (2026-11-05):** Two earlier results were withdrawn after a review found defects in the code that produced them; see [Withdrawn results](#withdrawn-results). The defects are fixed. The only results currently asserted are the simulation studies under `studies/` (convergence, multistability, perturbation, topology), and those are from one geometry and one parameter set each.
 
 ## What it does
 

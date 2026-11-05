@@ -9,7 +9,17 @@ All notable changes to this project will be documented in this file.
     network files) that the studies start from, copied from BETSE 1.5.0 with
     its BSD-2 license, so the studies reproduce without a BETSE checkout.
   - `studies/perturbation/`: protocol step 4 on the gene-network patterns.
-    `make_configs.py settle` and `perturb`, `analyze.py`.
+    Both patterns returned, to within 0.01 mV, from eleven displacements of
+    up to 20 mV (Anion erasure, multiplicative Anion noise); displacement
+    along the line between them flips the pattern, and the midpoint is a
+    third stable state. BETSE's scheduled interventions do nothing under the
+    fast solver, so the saved state is displaced directly.
+  - `studies/topology/`: persistent homology against the mean voltage for
+    telling the two patterns apart under noise. Topology wins at 2 to 5 mV;
+    both fail at 10 mV and above.
+  - `studies/basins/`, `studies/sweep/`: random Anion starts and the coupling
+    sweep (protocol step 5); generators, analysis, design notes.
+  - `studies/grn_common.py`, `studies/grn_endstates.py`, `studies/run_queue.sh`.
   - `studies/convergence/run_one.sh` takes an optional run directory and a
     `PHASES` list, and only uses a backslash log path on Windows.
   - ### Changed
