@@ -84,8 +84,10 @@ src/mneme/
     └── io.py
 
 scripts/                   # not re-run since the fixes; see Known Issues
+studies/betse_configs/     # the BETSE paper configurations the studies start from (vendored)
 studies/convergence/       # BETSE convergence study: configs, runner, analysis, results
 studies/multistability/    # gene-network and channel studies: configs, results
+studies/perturbation/      # perturbation study (protocol step 4) on the gene-network patterns
 review_artifacts/          # probe scripts and outputs behind the measured numbers
 ```
 

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 
 - Unreleased
+  - ### Added (2026-11)
+  - `studies/betse_configs/`: the BETSE paper configurations
+    (`patterns_2018.yaml`, `attractors_2016_1.yaml`, with their geometry and
+    network files) that the studies start from, copied from BETSE 1.5.0 with
+    its BSD-2 license, so the studies reproduce without a BETSE checkout.
+  - `studies/perturbation/`: protocol step 4 on the gene-network patterns.
+    `make_configs.py settle` and `perturb`, `analyze.py`.
+  - `studies/convergence/run_one.sh` takes an optional run directory and a
+    `PHASES` list, and only uses a backslash log path on Windows.
+  - ### Changed
+  - `ExperimentConfig` uses pydantic's `ConfigDict` (was a deprecated inner
+    `Config` class).
+  - `project_plan.md`: the JOSS section notes the January 2026 change to the
+    effort criterion.
   - ### Withdrawn (2026-09-27)
   - The BETSE analysis report is withdrawn. Its time-dependent results were
     computed on frames loaded out of time order.

@@ -66,15 +66,15 @@ The original runs cannot stand in for this. They differ in cell count and in a f
 
 ## Stage 5: JOSS
 
-JOSS revised its criteria in January 2026. Check the current wording before planning around this table.
+JOSS revised its criteria in January 2026 (blog post "Preparing JOSS for a generative AI future", 2026-01). The fixed "three months of work" benchmark is gone. Editors now weigh evidence of scholarly contribution: a development history over months or years, contributions from more than one developer, evolution through community feedback, and research impact. Codebases generated largely by AI prompting do not by themselves meet the bar. The review-criteria page could not be reached from the development environment on 2026-11-05, so the exact checklist wording below is from the search summary and should be confirmed against https://joss.readthedocs.io/en/latest/review_criteria.html before submitting.
 
 | Criterion | Mneme today | Needed |
 |---|---|---|
-| Six months of public development history | Commits since July 2025 | Confirm the repo was public throughout |
+| Development history (no fixed length since 2026-01; very new projects get extra scrutiny) | Commits since July 2025, one developer | Confirm the repo was public throughout; contributions from a second person would help |
 | Releases | None | Tag a release once stage 1 is merged |
 | Public issues and pull requests | 0 issues, 2 pull requests | Track work in issues |
 | Evidence of research use | None | At least one reproducible analysis that holds up |
-| AI usage disclosure | Not written | Write it; development has been AI-assisted |
+| AI usage disclosure | Not written | Write it; development has been AI-assisted, and JOSS now says AI-generated code alone is not a scholarly contribution |
 | Validation | Core components tested against known answers | A validation section built from stage 3 |
 
 Submission should wait for stage 4.

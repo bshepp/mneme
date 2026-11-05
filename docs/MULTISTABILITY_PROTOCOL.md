@@ -1,6 +1,6 @@
 # Multistability Experiment Protocol
 
-**Status:** first study complete. It found one stable state in the published 2016 configuration. Results are in `studies/convergence/RESULTS.md` in the repository. Perturbation and parameter-sweep steps are still to do.
+**Status:** steps 1 to 3 done twice. The published 2016 configuration has one stable state (`studies/convergence/RESULTS.md`). The 2018 gene-network configuration has two stable patterns under one parameter set (`studies/multistability/RESULTS.md`). Step 4 (perturbation) is in progress in `studies/perturbation`; step 5 (sweep) is still to do.
 
 ## Question
 

@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from enum import Enum
 import numpy as np
 import torch
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 import numpy.typing as npt
 
 # Type aliases
@@ -124,8 +124,7 @@ class ExperimentConfig(BaseModel):
     analysis: Dict[str, Any]
     random_seed: int = 42
     
-    class Config:
-        extra = "allow"  # Allow additional fields
+    model_config = ConfigDict(extra="allow")  # Allow additional fields
 
 class PipelineStage(BaseModel):
     """Pipeline stage configuration."""
