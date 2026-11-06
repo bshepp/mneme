@@ -32,7 +32,8 @@ GJ_SURFACE_VALUES = [1.0e-9, 1.0e-7]              # paper: 1e-8, already run
 
 
 def label(v):
-    return f"{v:.0e}".replace("e-", "em").replace("+", "")
+    """5e-15 -> 5em15, 1.5e-13 -> 1p5em13."""
+    return f"{v:.2g}".replace(".", "p").replace("e-", "em").replace("+", "")
 
 
 def main(which):

@@ -17,8 +17,14 @@ All notable changes to this project will be documented in this file.
   - `studies/topology/`: persistent homology against the mean voltage for
     telling the two patterns apart under noise. Topology wins at 2 to 5 mV;
     both fail at 10 mV and above.
-  - `studies/basins/`, `studies/sweep/`: random Anion starts and the coupling
-    sweep (protocol step 5); generators, analysis, design notes.
+  - `studies/basins/`: eight random Anion starts reached six distinct stable
+    patterns; fine-grained starts went to A or B, coarse starts mostly to
+    patterns not seen before.
+  - `studies/sweep/` (protocol step 5): the pattern count depends on the
+    Anion's gap-junction diffusion constant (none at a tenth of the paper's
+    value, one at three times it); ionic coupling a tenth of the paper's
+    kept two patterns; ten times the paper's crashes BETSE.
+  - `end_states.csv` in both: the final per-cell voltages of every end state.
   - `studies/grn_common.py`, `studies/grn_endstates.py`, `studies/run_queue.sh`.
   - `studies/convergence/run_one.sh` takes an optional run directory and a
     `PHASES` list, and only uses a backslash log path on Windows.

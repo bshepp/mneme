@@ -73,7 +73,12 @@ def analyze(run_root: Path, prefix: str, group, out: Path | None = None, dt: flo
                                   drift_tolerance=DRIFT_TOLERANCE, sustain=SUSTAIN)
         dist = {k: max_diff(v[-1], r) for k, r in refs.items()}
         nearest = min(dist, key=dist.get) if dist else None
-        state = nearest if nearest and dist[nearest] < SAME_STATE_THRESHOLD else "other"
+        if nearest and dist[nearest] < SAME_STATE_THRESHOLD:
+            state = nearest
+        elif np.ptp(v[-1]) < SAME_STATE_THRESHOLD:
+            state = "uniform"      # every cell at the same voltage: no pattern
+        else:
+            state = "other"
         runs[d.name] = dict(
             group=group(d.name), n_frames=int(len(v)), t_end=float(t[-1]),
             start_mean=float(v[0].mean()), start_spread=float(np.ptp(v[0])),
@@ -95,7 +100,7 @@ def analyze(run_root: Path, prefix: str, group, out: Path | None = None, dt: flo
               + " ".join(f"{r['distance_to'][k]:7.2f}" for k in ref_cols) + f" {r['state']:>6s}")
 
     # Describe end states that match no reference, and compare them with each other.
-    others = [n for n, r in runs.items() if r["state"] == "other"]
+    others = [n for n, r in runs.items() if r["state"] in ("other", "uniform")]
     for n in others:
         v = runs[n]["end"]
         m = depolarised(v)
@@ -124,9 +129,10 @@ def analyze(run_root: Path, prefix: str, group, out: Path | None = None, dt: flo
         found = count_distinct_states(ends + [refs[k] for k in sorted(refs)], SAME_STATE_THRESHOLD)
         labels = found.labels.tolist()
         new_states = len(set(labels[: len(members)]) - set(labels[len(members):]))
+        n_uniform = sum(runs[n]["state"] == "uniform" for n in members)
         groups[g] = dict(
             members=members, n_distinct_with_references=found.n_states,
-            n_states_not_A_or_B=new_states,
+            n_states_not_A_or_B=new_states, n_uniform=n_uniform,
             states=[runs[n]["state"] for n in members],
             all_settled=all(runs[n]["settled"] for n in members),
             labels=labels,
