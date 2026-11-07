@@ -22,7 +22,10 @@ The persistence thresholds were fixed before the reference patterns were analyse
 
 ```bash
 python ../topology/compare_statistics.py <perturbation run directory> --out ../topology/results.json
+python ../topology/compare_statistics.py --end-states ../basins/end_states.csv --out ../topology/results_six.json
 ```
+
+The second form takes every voltage column of the CSV as a reference pattern (here the six patterns A to F) and needs no run directory.
 
 ## Results
 

@@ -8,10 +8,13 @@ usage: python studies/perturbation/analyze.py <run_root> [--out results.json]
 <run_root> holds RESULTS/<run>/{init,sim}/Vmem2D_TextExport/ as written by
 run_one.sh, and perturbations.json from make_configs.py perturb.
 
-Reference states: the last frame of each settling run's unperturbed sim
-phase (settle_A, settle_B). Each perturbed run pert_<P>_<label> starts from
-the state saved at the end of settle_<P>'s init phase, displaced as recorded
-in perturbations.json.
+Reference states: A and B are the last frame of each settling run's
+unperturbed sim phase (settle_A, settle_B); C is the end of the midpoint
+run's continuation; D, E and F are the ends of the basin study's coarse
+random starts (see REFERENCES). Each perturbed run pert_<P>_<label> starts
+from pattern P's saved state, displaced as recorded in perturbations.json.
+"other" means within the threshold of no reference; "flipped" means within
+the threshold of a reference other than the pattern's own.
 """
 
 from __future__ import annotations
@@ -31,6 +34,12 @@ RATE_TOLERANCE = 1.0e-4    # mV per second, sustained over the final samples
 DRIFT_TOLERANCE = 0.1      # mV still to travel, estimated
 SUSTAIN = 20               # final samples over which the rate is checked
 SAME_STATE_THRESHOLD = 1.0  # mV, largest per-cell difference
+
+# Pattern label -> RESULTS/<run>/<phase> whose last frame is the reference.
+REFERENCES = {
+    "A": "settle_A/sim", "B": "settle_B/sim", "C": "cont_pert_A_toward_f50/sim",
+    "D": "basin_L100_r1/init", "E": "basin_L100_r2/init", "F": "basin_L100_r4/init",
+}
 
 
 def load_phase(run_dir: Path, phase: str, dt: float):
@@ -95,12 +104,27 @@ def main(argv=None) -> int:
               f"(drift {init_rep.remaining_drift:.4f} mV, tau {init_rep.time_constant:.0f} s); "
               f"sim continuation moved {settle[label]['init_end_to_sim_end_mV']:.4f} mV, "
               f"settled={sim_rep.settled}; end mean {vs[-1].mean():.2f} mV, spread {np.ptp(vs[-1]):.2f} mV")
+    for label, rel in REFERENCES.items():
+        if label in ref:
+            continue
+        run, phase = rel.split("/")
+        d = results / run / phase / "Vmem2D_TextExport"
+        if d.is_dir():
+            v, t, _, _ = load_phase(results / run, phase, dt)
+            rep = assess_steady_state(v, t, rate_tolerance=RATE_TOLERANCE,
+                                      drift_tolerance=DRIFT_TOLERANCE, sustain=SUSTAIN)
+            ref[label] = v[-1]
+            settle[label] = dict(source=rel, settled=rep.settled, remaining_drift=rep.remaining_drift,
+                                 end_mean_mV=float(v[-1].mean()), end_spread_mV=float(np.ptp(v[-1])))
+            print(f"{label}: from {rel}, settled={rep.settled}, mean {v[-1].mean():.2f} mV")
     if len(ref) < 2:
-        print("Need both settle_A and settle_B", file=sys.stderr)
+        print("Need at least two reference states", file=sys.stderr)
         return 1
-    ab = max_diff(ref["A"], ref["B"])
-    print(f"A vs B: {ab:.2f} mV largest per-cell difference; "
-          f"same-state threshold {SAME_STATE_THRESHOLD} mV\n")
+    ref_pairs = {f"{a} vs {b}": max_diff(ref[a], ref[b])
+                 for i, a in enumerate(ref) for b in list(ref)[i + 1:]}
+    ab = min(ref_pairs.values())
+    print("Reference distances [mV]: " + "; ".join(f"{k} {v:.2f}" for k, v in ref_pairs.items()))
+    print(f"Smallest: {ab:.2f} mV; same-state threshold {SAME_STATE_THRESHOLD} mV\n")
 
     # --- perturbed runs --------------------------------------------------
     header = (f"{'run':30s} {'anion max':>9s} {'anion mean':>10s} {'disp[mV]':>8s} {'d_own end':>9s} "
@@ -113,16 +137,22 @@ def main(argv=None) -> int:
     for d in run_dirs:
         # pert_<P>_<label>, or cont_pert_<P>_<label> for a continuation of it
         own = d.name.split("_")[2 if d.name.startswith("cont_") else 1]
-        other = "B" if own == "A" else "A"
+        if own not in ref:
+            print(f"{d.name}: no reference for pattern {own}; skipped")
+            continue
         v, t, _, _ = load_phase(d, "sim", dt)
         d_own = np.array([max_diff(f, ref[own]) for f in v])
+        # Distance to the nearest other reference at the end; for A and B
+        # that is each other, as in the first round.
+        others = {k: max_diff(v[-1], r) for k, r in ref.items() if k != own}
+        other = min(others, key=others.get)
         d_other = np.array([max_diff(f, ref[other]) for f in v])
         rep = assess_steady_state(v, t, rate_tolerance=RATE_TOLERANCE,
                                   drift_tolerance=DRIFT_TOLERANCE, sustain=SUSTAIN)
         if d_own[-1] < SAME_STATE_THRESHOLD:
             outcome = "returned"
         elif d_other[-1] < SAME_STATE_THRESHOLD:
-            outcome = "flipped"
+            outcome = f"flipped:{other}"
         else:
             outcome = "other"
         t_return = first_sustained_below(d_own, t, SAME_STATE_THRESHOLD)
@@ -135,6 +165,7 @@ def main(argv=None) -> int:
             n_frames=int(len(v)), t_end=float(t[-1]),
             displacement_first_frame_mV=float(d_own[0]),
             mean_abs_displacement_first_frame_mV=float(np.mean(np.abs(v[0] - ref[own]))),
+            nearest_other=other,
             d_own_end_mV=float(d_own[-1]), d_other_end_mV=float(d_other[-1]),
             d_own_min_mV=float(d_own.min()), d_other_min_mV=float(d_other.min()),
             settled=rep.settled, remaining_drift=rep.remaining_drift,
@@ -156,25 +187,25 @@ def main(argv=None) -> int:
     masks = {k: depolarised(ref[k]) for k in ref}
     others = {}
     for d in run_dirs:
-        r = runs[d.name]
-        if r["outcome"] != "other":
+        r = runs.get(d.name)
+        if r is None or r["outcome"] != "other":
             continue
         v = load_phase(d, "sim", dt)[0][-1]
         m = depolarised(v)
         others[d.name] = dict(
-            n_depolarised=int(m.sum()), shared_with_A=int((m & masks["A"]).sum()),
-            shared_with_B=int((m & masks["B"]).sum()), mean_mV=float(v.mean()),
-            spread_mV=float(np.ptp(v)), depolarised_mV=float(v[m].mean()),
-            polarised_mV=float(v[~m].mean()),
+            n_depolarised=int(m.sum()),
+            shared_with={k: int((m & mk).sum()) for k, mk in masks.items()},
+            mean_mV=float(v.mean()), spread_mV=float(np.ptp(v)),
+            depolarised_mV=float(v[m].mean()), polarised_mV=float(v[~m].mean()),
         )
         runs[d.name]["end_state"] = others[d.name]
     if others:
-        print(f"\nEnd states that are neither A nor B (A has {int(masks['A'].sum())} depolarised cells, "
-              f"B {int(masks['B'].sum())}, {int((masks['A'] & masks['B']).sum())} shared):")
+        print("\nEnd states matching no reference (depolarised cells: "
+              + ", ".join(f"{k} {int(m.sum())}" for k, m in masks.items()) + "):")
         for n, o in others.items():
-            print(f"  {n}: {o['n_depolarised']} depolarised cells, {o['shared_with_A']} shared with A, "
-                  f"{o['shared_with_B']} with B; mean {o['mean_mV']:.2f} mV, "
-                  f"{o['depolarised_mV']:.1f} / {o['polarised_mV']:.1f} mV")
+            print(f"  {n}: {o['n_depolarised']} depolarised cells, shared "
+                  + ", ".join(f"{k} {c}" for k, c in o["shared_with"].items())
+                  + f"; mean {o['mean_mV']:.2f} mV, {o['depolarised_mV']:.1f} / {o['polarised_mV']:.1f} mV")
     pairs = {}
     other_names = list(others)
     for i, a in enumerate(other_names):
@@ -189,7 +220,7 @@ def main(argv=None) -> int:
         payload = dict(
             criteria=dict(rate_tolerance=RATE_TOLERANCE, drift_tolerance=DRIFT_TOLERANCE,
                           sustain=SUSTAIN, same_state_threshold=SAME_STATE_THRESHOLD),
-            reference=settle, A_vs_B_mV=ab,
+            reference=settle, reference_distances_mV=ref_pairs, smallest_reference_distance_mV=ab,
             targets={k: {kk: vv for kk, vv in meta[k].items() if kk != "runs"} for k in meta},
             runs=runs, other_end_states=others, other_pairwise_mV=pairs,
         )

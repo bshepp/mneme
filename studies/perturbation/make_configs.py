@@ -5,7 +5,7 @@ stable voltage patterns. This study settles the tissue into each, displaces
 the settled state by a stated amount, and continues the run.
 
 usage: make_configs.py settle            # two settling runs: pattern A and B
-       make_configs.py perturb           # perturbed continuations of both
+       make_configs.py perturb [labels]  # perturbed continuations (default: A B)
        make_configs.py continue <run> <seconds>   # carry a finished run on
 
 Run from a directory holding paper_grn.yaml (patterns_2018.yaml) with its
@@ -57,6 +57,21 @@ WORLD = "world_perturb_grn.betse.gz"
 # (label, Anion initial asymmetry, gradient_x slope or None)
 PATTERNS = {"A": ("gradient_bitmap", None), "B": ("gradient_x", 0.01)}
 
+# Where each settled pattern's state is saved, relative to the run directory.
+# A and B: the settling inits. C: the end of the midpoint run's continuation
+# (this study). D, E, F: the ends of the basin study's coarse random starts.
+SOURCES = {
+    "A": "INITS/init_settle_A.betse.gz",
+    "B": "INITS/init_settle_B.betse.gz",
+    "C": "SIMS/sim_cont_pert_A_toward_f50.betse.gz",
+    "D": "INITS/init_basin_L100_r1.betse.gz",
+    "E": "INITS/init_basin_L100_r2.betse.gz",
+    "F": "INITS/init_basin_L100_r4.betse.gz",
+}
+# The second round (C to F) runs a subset: no "toward" (no partner pattern).
+ROUND2_ERASE = [0.5, 1.0]
+ROUND2_NOISE = [(0.5, 1), (1.0, 1), (1.0, 2)]
+
 ERASE_FRACTIONS = [0.25, 0.5, 1.0]
 TOWARD_FRACTIONS = [0.25, 0.5, 0.75]
 NOISE_SCALES = [0.25, 0.5, 1.0]
@@ -85,8 +100,10 @@ def main(mode):
     elif mode == "perturb":
         from betse.science import filehandling as fh
 
+        labels = sys.argv[2:] or ["A", "B"]
+
         def load(label):
-            return fh.loadSim(str(HERE / "INITS" / f"init_settle_{label}.betse.gz"))
+            return fh.loadSim(str(HERE / SOURCES[label]))
 
         def anion(sim):
             return sim.grn.core.molecules["Anion"].c_cells
@@ -94,8 +111,11 @@ def main(mode):
         # The other pattern's Anion field, for the "toward" perturbations.
         other_anion = {label: np.array(anion(load(label)[0])) for label in PATTERNS}
         record = {}
-        for label in PATTERNS:
-            other = [k for k in PATTERNS if k != label][0]
+        if (HERE / "perturbations.json").exists():
+            record = json.loads((HERE / "perturbations.json").read_text(encoding="utf-8"))
+        for label in labels:
+            first_round = label in PATTERNS
+            other = [k for k in PATTERNS if k != label][0] if first_round else None
             base_sim, base_cells, _ = load(label)
             vm = base_sim.vm_ave * 1e3
             thr = 0.5 * (vm.min() + vm.max())
@@ -114,11 +134,16 @@ def main(mode):
             )
 
             perts = [("ctrl", None, None)]
-            perts += [(f"erase_f{int(f * 100)}", "erase", f) for f in ERASE_FRACTIONS]
-            perts += [(f"toward_f{int(f * 100)}", "toward", f) for f in TOWARD_FRACTIONS]
-            perts += [(f"noise_s{str(s).replace('.', 'p')}_r{r}", "noise", (s, r))
-                      for s in NOISE_SCALES for r in NOISE_SEEDS]
-            perts += [("vm_only", "vm", VM_SHIFT_V)]
+            if first_round:
+                perts += [(f"erase_f{int(f * 100)}", "erase", f) for f in ERASE_FRACTIONS]
+                perts += [(f"toward_f{int(f * 100)}", "toward", f) for f in TOWARD_FRACTIONS]
+                perts += [(f"noise_s{str(s).replace('.', 'p')}_r{r}", "noise", (s, r))
+                          for s in NOISE_SCALES for r in NOISE_SEEDS]
+                perts += [("vm_only", "vm", VM_SHIFT_V)]
+            else:
+                perts += [(f"erase_f{int(f * 100)}", "erase", f) for f in ROUND2_ERASE]
+                perts += [(f"noise_s{str(s).replace('.', 'p')}_r{r}", "noise", (s, r))
+                          for s, r in ROUND2_NOISE]
 
             for plabel, kind, par in perts:
                 sim, cells, p = load(label)          # a fresh copy each time
@@ -139,7 +164,7 @@ def main(mode):
                 name = f"pert_{label}_{plabel}"
                 fh.saveSim(str(HERE / "INITS" / f"init_{name}.betse.gz"), [sim, cells, p])
 
-                _, cfg = settle_config(label)
+                _, cfg = settle_config(label if first_round else "A")   # same parameters
                 cfg["init file saving"]["file"] = f"init_{name}.betse.gz"
                 cfg["sim file saving"]["file"] = f"sim_{name}.betse.gz"
                 cfg["results file saving"]["init directory"] = f"RESULTS/{name}/init"
@@ -158,13 +183,14 @@ def main(mode):
                     vm_shift_mV=float(-vshift.min() * 1e3) if kind == "vm" else 0.0,
                 )
         (HERE / "perturbations.json").write_text(json.dumps(record, indent=1), encoding="utf-8")
+        mode = "perturb" if labels == ["A", "B"] else "perturb_" + "".join(labels)
     elif mode == "continue":
         import shutil
         run, seconds = sys.argv[2], float(sys.argv[3])
-        label = run.split("_")[1] if run.startswith("pert_") else run.split("_")[1]
+        label = run.split("_")[1]
         name = f"cont_{run}"
         shutil.copyfile(HERE / "SIMS" / f"sim_{run}.betse.gz", HERE / "INITS" / f"init_{name}.betse.gz")
-        _, cfg = settle_config(label)
+        _, cfg = settle_config(label if label in PATTERNS else "A")
         cfg["init file saving"]["file"] = f"init_{name}.betse.gz"
         cfg["sim file saving"]["file"] = f"sim_{name}.betse.gz"
         cfg["results file saving"]["init directory"] = f"RESULTS/{name}/init"

@@ -2,6 +2,7 @@
 gene-network tissue.
 
 usage: make_configs.py <dgj|gj>
+       make_configs.py continue <run> <seconds>   # sim phase from a run's init state
 
 dgj  sweeps the Anion's gap-junction diffusion constant Dgj, the paper's own
      "master variable" for the pattern (paper value 5e-14, suggested range
@@ -56,8 +57,20 @@ def main(which):
                 with open(HERE / f"{name}.yaml", "w", encoding="utf-8") as f:
                     yaml.dump(c, f)
                 names.append(name)
+    elif which == "continue":
+        run, seconds = sys.argv[2], float(sys.argv[3])
+        name = f"cont_{run}"
+        c = yaml.load((HERE / f"{run}.yaml").read_text(encoding="utf-8"))
+        # Same parameters and init state as the run; only a longer sim phase.
+        c["sim file saving"]["file"] = f"sim_{name}.betse.gz"
+        c["results file saving"]["sim directory"] = f"RESULTS/{name}/sim"
+        c["sim time settings"]["total time"] = seconds
+        with open(HERE / f"{name}.yaml", "w", encoding="utf-8") as f:
+            yaml.dump(c, f)
+        names.append(name)
+        which = f"continue_{run}"
     else:
-        raise SystemExit("argument must be dgj or gj")
+        raise SystemExit("argument must be dgj, gj or continue")
     (HERE / f"sweep_{which}_runs.txt").write_text("\n".join(names) + "\n", encoding="utf-8", newline="\n")
     print("\n".join(names))
 
