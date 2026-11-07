@@ -54,6 +54,10 @@ Settling is judged by the criteria in `../convergence/analyze.py` (rate below 1e
 | "The pattern returned" | The `ctrl` run's distance from the reference, and the control continuation's own movement |
 | "The pattern flipped" | The A-to-B distance, which must be far larger than the threshold |
 
+## Second round
+
+After the basin study, patterns C (this study's midpoint state) and D, E, F (the basin study's coarse random starts) were perturbed with a reduced set: `ctrl`, `erase_f50`, `erase_f100`, `noise_s0p5_r1`, `noise_s1p0_r1`, `noise_s1p0_r2`. `make_configs.py perturb C D E F` writes them; the sources are listed in the script. Runs not settled at 3,000 s are carried on with `make_configs.py continue <run> 6000`.
+
 ## Reproducing
 
 ```bash

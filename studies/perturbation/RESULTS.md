@@ -89,3 +89,31 @@ The "toward" runs move every cell's Anion a fraction f of the way from one patte
 - **There are at least three stable patterns**, not two, under this parameter set. C was found by a single construction, so nothing here says how large its basin is or whether natural starts reach it.
 - **What is not shown:** how the basin boundary runs in any direction other than the A–B line; any result for a different tissue, geometry or parameter set; anything about real tissue. The relaxation times quoted are from fits to the final half of each run and are descriptive.
 - **The same-state threshold** of 1.0 mV is far below the 28 to 36 mV between the three states and far above the 0.000 to 0.012 mV reached by the returning runs, so the three outcomes are unambiguous for every run.
+
+## Second round (2026-11-06 to 07): patterns C to F
+
+The four patterns found after the first round were perturbed the same way, with a reduced set (no "toward", since the partner pattern is not defined): control, erase 50 % and 100 %, noise exp(0.5 z) seed 1, noise exp(1.0 z) seeds 1 and 2. Sources: C from the midpoint run's continuation; D, E, F from the basin study's coarse starts (`basin_L100_r1`, `r2`, `r4`). Runs that had not settled at 3,000 s were continued for 6,000 s more. The end states of the new patterns are in `end_states.csv`.
+
+| Perturbation | Displacement (mV) C / D / E / F | C | D | E | F |
+|---|---|---|---|---|---|
+| ctrl | 0.2 / 0.1 / 0.1 / 0.1 | returned | returned | returned | returned |
+| noise 0.5, seed 1 | 3.6 / 1.8 / 2.2 / 3.5 | returned, 150 s | returned, 90 s | returned, 120 s | returned, 210 s |
+| noise 1.0, seed 1 | 16.2 / 5.7 / 6.8 / 15.1 | returned, 360 s | returned, 270 s | returned, 390 s | returned, 420 s |
+| noise 1.0, seed 2 | 11.7 / 11.2 / 10.0 / 9.5 | returned, 510 s | returned, 390 s | returned, 570 s | returned, 1,740 s (0.14 mV short at 3,000 s) |
+| erase 50 % | 5.8 / 4.4 / 4.3 / 4.3 | returned, 600 s | returned, 420 s | **left E**: new state E2 | returned, 1,050 s |
+| erase 100 % | 18.5 / 19.6 / 18.5 / 19.7 | returned, 2,100 s (0.02 mV short) | **left D**: new state D2 | **left E**: new state E2 | **flipped to A** |
+
+Noise displacements of up to 16 mV were survived by all four. Erasing the depolarised region told them apart:
+
+- **C** returned from full erasure, like A and B, though slowly (2,100 s, and 0.02 mV short of the threshold at 3,000 s with 0.02 mV to go).
+- **D** survived 50 % erasure but full erasure left it for a new settled pattern, **D2**: 111 depolarised cells, 80 of them D's, 84 of them B's; 28.0 mV from D, 30.8 mV from B, 30.9 mV from E2. It held for a further 6,000 s, moving 0.005 mV.
+- **E** left under 50 % erasure as well as 100 %, and both runs settled into the same new pattern, **E2** (0.000 mV apart after the continuation): 116 depolarised cells, 107 of them E's, 13.9 mV from E in the worst cell. E2 is a close relative of E (nine cells differ) and 30 mV or more from every other pattern. It held for a further 6,000 s.
+- **F** flipped to **A** under full erasure (within 0.007 mV). F shares 97 of its 112 depolarised cells with A and is the pattern nearest to A (24.6 mV).
+
+### What the second round adds
+
+- **All six patterns are attractors against random disturbance**: 24 of 24 noise and control runs returned, with displacements of up to 16 mV.
+- **They differ in what erasure does.** A, B and C regrow their own depolarised region after it is wiped. D, E and F do not: D and E move to neighbouring patterns that had not been seen before (D2, E2), and F falls into A. Patterns found from gradient-like starts (A, B) and the A–B midpoint (C) are the robust ones; those found from coarse random starts (D, E, F) sit in shallower basins, at least in the erasure direction.
+- **Erasure is a strong probe.** It is the one displacement that moved any pattern, and it moved three of six. Its size (18 to 20 mV) is similar to the largest noise displacements (16 mV) that every pattern survived, so again direction, not size, decides.
+- **Eight stable patterns are now known** under this parameter set: A to F, D2 and E2. The count has grown with every study that looked.
+- **Not shown:** the basins of D2 and E2, any perturbation of them, whether erasure at other fractions between 50 and 100 % flips D or F, or anything about another tissue or parameter set. One seed per noise level for the second round except at 1.0; the second-round design was fixed before any of its runs was analysed.

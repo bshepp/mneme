@@ -25,6 +25,11 @@ All notable changes to this project will be documented in this file.
     value, one at three times it); ionic coupling a tenth of the paper's
     kept two patterns; ten times the paper's crashes BETSE.
   - `end_states.csv` in both: the final per-cell voltages of every end state.
+  - Second perturbation round on patterns C to F: all survive random
+    disturbances; erasure separates A, B, C (regrow) from D, E, F (move to
+    new patterns D2, E2, or fall into A). The 2e-14 coupling value settled
+    after a further 12,000 s into two shallow patterns. Topology separates
+    all six patterns at up to 1 mV of noise where the mean voltage cannot.
   - `studies/grn_common.py`, `studies/grn_endstates.py`, `studies/run_queue.sh`.
   - `studies/convergence/run_one.sh` takes an optional run directory and a
     `PHASES` list, and only uses a backslash log path on Windows.
