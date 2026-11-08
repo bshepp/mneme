@@ -65,6 +65,10 @@
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
+         <loc>https://bshepp.github.io/mneme/studies/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
          <loc>https://bshepp.github.io/mneme/api/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
@@ -182,6 +186,58 @@
     </url>
     <url>
          <loc>https://bshepp.github.io/mneme/superpowers/specs/2026-05-16-tier0-scientific-core-design/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/basins/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/basins/RESULTS/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/betse_configs/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/convergence/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/convergence/RESULTS/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/multistability/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/multistability/RESULTS/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/perturbation/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/perturbation/RESULTS/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/sweep/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/sweep/RESULTS/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/topology/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://bshepp.github.io/mneme/studies/topology/RESULTS/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
 </urlset>

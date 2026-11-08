@@ -1,0 +1,176 @@
+{
+  "criteria": {
+    "rate_tolerance": 0.0001,
+    "drift_tolerance": 0.1,
+    "sustain": 20,
+    "same_state_threshold": 1.0
+  },
+  "n_cells": 246,
+  "geometry_gap_um": 0.0,
+  "replicate_noise_mV": 0.0,
+  "runs": {
+    "full_grn_ic_bitmap": {
+      "coupling": "full_grn",
+      "n_frames": 215,
+      "t_end": 6420.0,
+      "start_mean": -48.35221365564111,
+      "end_mean": -48.37292497350542,
+      "end_min": -63.48702603241653,
+      "end_max": -29.973866373408246,
+      "final_rate": 3.9909368846717065e-08,
+      "time_constant": 410.1004090349951,
+      "remaining_drift": 1.6366848488367158e-05,
+      "settled": true
+    },
+    "full_grn_ic_bitmap_rep": {
+      "coupling": "full_grn",
+      "n_frames": 215,
+      "t_end": 6420.0,
+      "start_mean": -48.35221365564111,
+      "end_mean": -48.37292497350542,
+      "end_min": -63.48702603241653,
+      "end_max": -29.973866373408246,
+      "final_rate": 3.9909368846717065e-08,
+      "time_constant": 410.1004090349951,
+      "remaining_drift": 1.6366848488367158e-05,
+      "settled": true
+    },
+    "full_grn_ic_gradx": {
+      "coupling": "full_grn",
+      "n_frames": 215,
+      "t_end": 6420.0,
+      "start_mean": -45.32811316365914,
+      "end_mean": -48.37292927467657,
+      "end_min": -63.487031218527115,
+      "end_max": -29.97384610617872,
+      "final_rate": 7.763022750850724e-07,
+      "time_constant": 409.3532420454246,
+      "remaining_drift": 0.00031778185311331344,
+      "settled": true
+    },
+    "full_grn_ic_grady": {
+      "coupling": "full_grn",
+      "n_frames": 215,
+      "t_end": 6420.0,
+      "start_mean": -45.357398609275776,
+      "end_mean": -48.37292505812707,
+      "end_min": -63.4870261341057,
+      "end_max": -29.973865973160528,
+      "final_rate": 2.378776310744494e-08,
+      "time_constant": 410.5081755204216,
+      "remaining_drift": 9.765071232949217e-06,
+      "settled": true
+    },
+    "full_grn_ic_uniform": {
+      "coupling": "full_grn",
+      "n_frames": 215,
+      "t_end": 6420.0,
+      "start_mean": -37.182115746335576,
+      "end_mean": -37.182115746335576,
+      "end_min": -37.182115746335576,
+      "end_max": -37.182115746335576,
+      "final_rate": 0.0,
+      "time_constant": 0.0,
+      "remaining_drift": 0.0,
+      "settled": true
+    },
+    "perturb_grn_ic_near_uniform_0p1pct": {
+      "coupling": "perturb_grn",
+      "n_frames": 215,
+      "t_end": 6420.0,
+      "start_mean": -37.177304219939025,
+      "end_mean": -48.20483533523699,
+      "end_min": -64.09760324044696,
+      "end_max": -30.806449960528568,
+      "final_rate": 1.959602381826168e-05,
+      "time_constant": 817.414462236031,
+      "remaining_drift": 0.016018073271368827,
+      "settled": true
+    },
+    "perturb_grn_ic_near_uniform_1pct": {
+      "coupling": "perturb_grn",
+      "n_frames": 215,
+      "t_end": 6420.0,
+      "start_mean": -37.13410915952189,
+      "end_mean": -48.205007764845384,
+      "end_min": -64.09726567795096,
+      "end_max": -30.804875245609264,
+      "final_rate": 2.8241140877582894e-05,
+      "time_constant": 810.3798940932631,
+      "remaining_drift": 0.02288605275344855,
+      "settled": true
+    }
+  },
+  "groups": {
+    "full_grn": {
+      "members": [
+        "full_grn_ic_bitmap",
+        "full_grn_ic_gradx",
+        "full_grn_ic_grady",
+        "full_grn_ic_uniform"
+      ],
+      "n_states": 2,
+      "labels": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "largest_start_difference": 21.797551722969814,
+      "largest_end_difference": 26.30491547219154,
+      "largest_remaining_drift": 0.00031778185311331344,
+      "all_settled": true,
+      "distances": [
+        [
+          0.0,
+          0.0003236330575830948,
+          6.389849787069579e-06,
+          26.304910286080954
+        ],
+        [
+          0.0003236330575830948,
+          0.0,
+          0.0003172432077960252,
+          26.30491547219154
+        ],
+        [
+          6.389849787069579e-06,
+          0.0003172432077960252,
+          0.0,
+          26.30491038777012
+        ],
+        [
+          26.304910286080954,
+          26.30491547219154,
+          26.30491038777012,
+          0.0
+        ]
+      ]
+    },
+    "perturb_grn": {
+      "members": [
+        "perturb_grn_ic_near_uniform_0p1pct",
+        "perturb_grn_ic_near_uniform_1pct"
+      ],
+      "n_states": 1,
+      "labels": [
+        0,
+        0
+      ],
+      "largest_start_difference": 0.06359205043038685,
+      "largest_end_difference": 0.007138886876148831,
+      "largest_remaining_drift": 0.02288605275344855,
+      "all_settled": true,
+      "distances": [
+        [
+          0.0,
+          0.007138886876148831
+        ],
+        [
+          0.007138886876148831,
+          0.0
+        ]
+      ]
+    }
+  }
+}
