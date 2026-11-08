@@ -33,6 +33,7 @@ win_venv/
 # Raw data - exclude large datasets but keep small reference data
 /data/raw/*
 !/data/raw/physionet/
+!/data/raw/betse_grn_2026-11/
 
 # BETSE simulation output (large, regeneratable)
 **/RESULTS/

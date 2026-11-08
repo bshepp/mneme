@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 
 - Unreleased
+  - ### Added (2026-11)
+  - `studies/betse_configs/`: the BETSE paper configurations
+    (`patterns_2018.yaml`, `attractors_2016_1.yaml`, with their geometry and
+    network files) that the studies start from, copied from BETSE 1.5.0 with
+    its BSD-2 license, so the studies reproduce without a BETSE checkout.
+  - `studies/perturbation/`: protocol step 4 on the gene-network patterns.
+    Both patterns returned, to within 0.01 mV, from eleven displacements of
+    up to 20 mV (Anion erasure, multiplicative Anion noise); displacement
+    along the line between them flips the pattern, and the midpoint is a
+    third stable state. BETSE's scheduled interventions do nothing under the
+    fast solver, so the saved state is displaced directly.
+  - `studies/topology/`: persistent homology against the mean voltage for
+    telling the two patterns apart under noise. Topology wins at 2 to 5 mV;
+    both fail at 10 mV and above.
+  - `studies/basins/`: eight random Anion starts reached six distinct stable
+    patterns; fine-grained starts went to A or B, coarse starts mostly to
+    patterns not seen before.
+  - `studies/sweep/` (protocol step 5): the pattern count depends on the
+    Anion's gap-junction diffusion constant (none at a tenth of the paper's
+    value, one at three times it); ionic coupling a tenth of the paper's
+    kept two patterns; ten times the paper's crashes BETSE.
+  - `end_states.csv` in both: the final per-cell voltages of every end state.
+  - `data/raw/betse_grn_2026-11/`: the full per-cell voltage trace of every
+    study run as gzipped CSV (79 files, 5 MB), with `studies/pack_runs.py`.
+  - Second perturbation round on patterns C to F: all survive random
+    disturbances; erasure separates A, B, C (regrow) from D, E, F (move to
+    new patterns D2, E2, or fall into A). The 2e-14 coupling value settled
+    after a further 12,000 s into two shallow patterns. Topology separates
+    all six patterns at up to 1 mV of noise where the mean voltage cannot.
+  - `studies/grn_common.py`, `studies/grn_endstates.py`, `studies/run_queue.sh`.
+  - `studies/convergence/run_one.sh` takes an optional run directory and a
+    `PHASES` list, and only uses a backslash log path on Windows.
+  - ### Changed
+  - `ExperimentConfig` uses pydantic's `ConfigDict` (was a deprecated inner
+    `Config` class).
+  - `project_plan.md`: the JOSS section notes the January 2026 change to the
+    effort criterion.
   - ### Withdrawn (2026-09-27)
   - The BETSE analysis report is withdrawn. Its time-dependent results were
     computed on frames loaded out of time order.

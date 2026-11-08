@@ -6,11 +6,11 @@ Developer context for the Mneme project. Useful for both AI assistants and human
 
 Mneme is an exploratory research toolkit for studying field-like memory in biological tissue, starting with simulated bioelectric data (BETSE).
 
-## Current Status (2026-09-27)
+## Current Status (2026-11-05)
 
 **No scientific result produced with Mneme is currently asserted.** A review in September 2026 found that the BETSE analysis report and the PhysioNet Lyapunov numbers were produced by defective code. Both are withdrawn. The defects are fixed; the analyses have not been re-run.
 
-The plan is in [project_plan.md](project_plan.md). Two studies under [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md) are done: the published 2016 configuration has one stable state ([studies/convergence](studies/convergence/RESULTS.md)); the 2018 gene-network configuration has two stable voltage patterns under one parameter set, while Kir2.1 plus a Na⁺ leak gives one ([studies/multistability](studies/multistability/RESULTS.md)). These are simulation results with one geometry and one parameter set each.
+The plan is in [project_plan.md](project_plan.md). Studies under [docs/MULTISTABILITY_PROTOCOL.md](docs/MULTISTABILITY_PROTOCOL.md): the published 2016 configuration has one stable state ([studies/convergence](studies/convergence/RESULTS.md)); the 2018 gene-network configuration has two stable voltage patterns under one parameter set, while Kir2.1 plus a Na⁺ leak gives one ([studies/multistability](studies/multistability/RESULTS.md)); both gene-network patterns return from displacements of up to 20 mV, displacement toward the other pattern flips them, and the midpoint between them is a third stable state ([studies/perturbation](studies/perturbation/RESULTS.md)); persistent homology tells the two patterns apart under 2 to 5 mV of noise where the mean voltage cannot ([studies/topology](studies/topology/RESULTS.md)); eight random starts reach six distinct patterns, and a second perturbation round brings the count to eight ([studies/basins](studies/basins/RESULTS.md)); the pattern count depends on the Anion's gap-junction coupling ([studies/sweep](studies/sweep/RESULTS.md)). These are simulation results with one geometry and one parameter set each.
 
 ### Component tiers
 
@@ -84,8 +84,17 @@ src/mneme/
     └── io.py
 
 scripts/                   # not re-run since the fixes; see Known Issues
+studies/betse_configs/     # the BETSE paper configurations the studies start from (vendored)
 studies/convergence/       # BETSE convergence study: configs, runner, analysis, results
 studies/multistability/    # gene-network and channel studies: configs, results
+studies/perturbation/      # perturbation study (protocol step 4) on the gene-network patterns
+studies/basins/            # random Anion starts on the gene-network tissue
+studies/sweep/             # coupling sweep (protocol step 5)
+studies/topology/          # persistent homology vs mean voltage on the two patterns
+studies/grn_common.py      # shared GRN config setup; grn_endstates.py: shared end-state analysis
+studies/run_queue.sh       # keeps N BETSE runs going from a queue file
+studies/pack_runs.py       # packs BETSE run output into data/raw/betse_grn_2026-11/
+data/raw/betse_grn_2026-11/ # every GRN study run's per-cell voltage trace (gzipped CSV)
 review_artifacts/          # probe scripts and outputs behind the measured numbers
 ```
 
@@ -150,7 +159,8 @@ Read [docs/LYAPUNOV_OPERATING_RANGE.md](docs/LYAPUNOV_OPERATING_RANGE.md) first.
 
 - The scripts in `scripts/` have not been re-run since the fixes. They compute λ₁ on multi-dimensional trajectories while testing only the first column, and they still save the exploratory spectrum and D_KY.
 - The BETSE runs on hand are 119 to 635 frames and are relaxations toward rest. They are outside the operating range of the Lyapunov tools.
-- BETSE's default gap-junction coupling is numerically unstable at a time step of 0.01 s. The convergence study used a coupling 50 times weaker.
+- BETSE's default gap-junction coupling is numerically unstable at a time step of 0.01 s. The convergence study used a coupling 50 times weaker. In the 2018 patterns configuration a gap junction surface area of 1e-7 makes BETSE 1.5.0 exit with an `IndexError` during the init.
+- BETSE's scheduled interventions ("change K mem" and the like) have no effect under the fast solver, which fixes the leak conductance when a phase starts. The perturbation study edits the saved state instead.
 - Import order warning: import juliacall before torch to avoid a potential segfault. On Windows, PySR prints "access violation" traces during tests that still pass.
 - `mypy` runs in CI but cannot fail it.
 - `compute_basin_of_attraction()` was removed; design notes are in [docs/FUTURE_IDEAS.md](docs/FUTURE_IDEAS.md).
