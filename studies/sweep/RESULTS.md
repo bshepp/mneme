@@ -10,7 +10,7 @@ Each value was run from the two starting conditions that reach patterns A and B 
 |---|---|---|---|---|---|
 | 5e-15 | uniform, −37.18 mV | uniform, −37.18 mV | **1**, and it is uniform: no pattern | yes, both | — (spread 0.00 mV) |
 | 2e-14 | pattern J (179 depolarised cells) | pattern K (179 depolarised cells) | **2**, 23.6 mV apart | yes, after a further 12,000 s sim phase: both frozen, 0.000 mV of movement over the final 3,000 s | −37.0 / −48.6 and −36.5 / −47.6 |
-| **5e-14 (paper)** | **A** | **B** | **≥ 6** (A, B, C, D, E, F; perturbation and basins studies) | yes | −38 / −57 |
+| **5e-14 (paper)** | **A** | **B** | **≥ 8** (A to F, D2, E2; perturbation and basins studies) | yes | −38 / −57 |
 | 1.5e-13 | pattern G | pattern G, identical to 0.00 mV | **1** | yes, both (τ ≈ 150 s) | −39.1 / −63.2 |
 
 The number of stable patterns changes with the Anion's coupling, and in both directions. With the Anion ten times less mobile between cells the tissue stays uniform: the uniform state, a saddle at the paper's value, is stable here, and neither start left it (the A start's 17.6 mV initial spread decayed to 0.00). With the Anion three times more mobile, the two starts that reach different patterns at the paper's value converge on the same one, a pattern of 90 depolarised cells with a deeper polarised level, and nothing in this study says whether it is the only one. In between, at 2e-14, the tissue had not settled after 6,000 s: both runs were still rearranging at rates (5e-3 to 2e-2 mV/s) that were not falling. A further 12,000 s sim phase from each saved state settled both (added 2026-11-07): the A start moved another 13 mV before freezing, the B start 0.8 mV, and the two ended 23.6 mV apart, each with 179 of 254 cells depolarised and a voltage step of only 11 mV, half that at the paper's value. So 2e-14 has at least two patterns too, shallower in voltage and slower to form. The A-start continuation began 1.3 mV from its saved state, a larger start-of-phase transient than the 0.1 to 0.2 mV seen elsewhere; it did not affect the end state's settling. End states are in `../perturbation/end_states.csv`.
@@ -20,7 +20,7 @@ The number of stable patterns changes with the Anion's coupling, and in both dir
 | Surface area | A start → | B start → | Distinct end states | Settled |
 |---|---|---|---|---|
 | 1e-9 (nearly closed) | pattern H: 77 depolarised cells at −38.1 mV, the rest at −67.2 mV | pattern I: 79 depolarised cells at −36.8 mV, the rest at −67.2 mV | **2**, 36.6 mV apart | yes, both; no movement at all over the final 4,500 s |
-| **1e-8 (paper)** | A | B | ≥ 6 | yes | |
+| **1e-8 (paper)** | A | B | ≥ 8 | yes | |
 | 1e-7 (very open) | **BETSE failed**: `IndexError: list index out of range` during the init | the same failure | — | — |
 
 With the ionic coupling ten times weaker the two starts still reach two distinct patterns, each with a wider voltage range (29 mV between the two levels, against 19 mV at the paper's value) and frozen: the convergence rate reached exactly zero. The open-junction value could not be run; BETSE 1.5.0 exits with an index error in both runs. The failure is BETSE's, not a simulation outcome, and is left as is.

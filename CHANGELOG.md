@@ -33,6 +33,19 @@ All notable changes to this project will be documented in this file.
     after a further 12,000 s into two shallow patterns. Topology separates
     all six patterns at up to 1 mV of noise where the mean voltage cannot.
   - `studies/grn_common.py`, `studies/grn_endstates.py`, `studies/run_queue.sh`.
+  - The docs site publishes the studies: a `docs/hooks/studies.py` MkDocs
+    hook serves every study's README, RESULTS and data files at their
+    repository paths, a Studies section in the navigation lists them, and
+    `docs/studies.md` summarises the six studies and how to read them.
+  - ### Fixed (2026-11-08)
+  - `studies/perturbation/RESULTS.md` had the outcome of the "B moved 25 %
+    toward A" run inverted: it returns to B (7.3 mV away at 3,000 s, within
+    0.000 mV after a further 6,000 s), it does not reach A. The basin
+    boundary along the A-B line lies between 25 % and 50 % on each side.
+    `project_plan.md` and `CLAUDE.md` said the same and are corrected.
+    Also: D2 is 30.8 mV from E and 35.1 mV from B (not 30.8 mV from B);
+    the A-B mean-voltage difference is 0.56 mV (was rounded to 0.57); the
+    sweep table's count at the paper's value is now eight.
   - `studies/convergence/run_one.sh` takes an optional run directory and a
     `PHASES` list, and only uses a backslash log path on Windows.
   - ### Changed

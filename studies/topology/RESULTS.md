@@ -12,7 +12,7 @@
 | Long-lived H0 features of the superlevel filtration, persistence in mV | ∞, 31.3, 28.2 | ∞, 30.5, 28.0, 27.3 |
 | Longest H1 feature (mV) | 5.1 | 3.6 |
 
-The means differ by 0.57 mV. The patterns differ by 35.0 mV in the worst cell and 18.7 mV root-mean-square over cells. In the superlevel filtration (peaks first), A's depolarised region has three components that persist for about 30 mV before merging; B's has four. All other features persist for less than 8 mV.
+The means differ by 0.56 mV. The patterns differ by 35.0 mV in the worst cell and 18.7 mV root-mean-square over cells. In the superlevel filtration (peaks first), A's depolarised region has three components that persist for about 30 mV before merging; B's has four. All other features persist for less than 8 mV.
 
 ## Telling a noisy sample's pattern
 
@@ -29,11 +29,11 @@ Each noisy sample (Gaussian noise of standard deviation σ added to every cell) 
 
 The 2 mV threshold variant is within 0.02 of the raw one at every σ and is in `results.json`.
 
-A-to-B distances: mean 0.57 mV; topology 18.6 mV (raw), 18.1 mV (≥ 2 mV), 17.1 mV (≥ 5 mV); per-cell RMS 18.7 mV.
+A-to-B distances: mean 0.56 mV; topology 18.6 mV (raw), 18.1 mV (≥ 2 mV), 17.1 mV (≥ 5 mV); per-cell RMS 18.7 mV.
 
 ## What this shows
 
-- **At 2 to 5 mV of noise, topology separates the patterns and the mean voltage does not reliably.** Topology stays at 100% while the mean falls to 95% and then 87.5%. The two patterns have nearly the same mean, so the mean's 0.57 mV margin is lost once the noise on the mean (σ/√254, about 0.3 mV at σ = 5) approaches it. The topological distance between the patterns is 30 times larger than their mean difference.
+- **At 2 to 5 mV of noise, topology separates the patterns and the mean voltage does not reliably.** Topology stays at 100% while the mean falls to 95% and then 87.5%. The two patterns have nearly the same mean, so the mean's 0.56 mV margin is lost once the noise on the mean (σ/√254, about 0.3 mV at σ = 5) approaches it. The topological distance between the patterns is 30 times larger than their mean difference.
 - **At 10 mV and above, both fail, and topology fails first.** Noise of that size creates many new features with persistence of its own order, and the Wasserstein distance counts them: the median distance of a noisy sample from its own pattern grows from 2.8 mV at σ = 0.5 to 59 mV at σ = 10, past the 18.6 mV that separates the patterns. Dropping features below 5 mV does not help there because the noise features are larger than that.
 - **The per-cell comparison beats both at every σ**, as it must: it knows which cell is which. Topology is the better summary statistic only where the cell identities are unavailable or not comparable, which is the situation the project cares about (two tissues, or one tissue imaged twice without registration).
 
@@ -74,5 +74,5 @@ D, E and F have means within 0.06 mV of each other. Topologically, A, B and C ar
 
 - **Topology separates all six patterns at up to 1 mV of noise, where the mean voltage already fails.** The mean is at 77 % with almost no noise, because three of the six patterns have the same mean to 0.06 mV. Topology is at 100 %.
 - **Topology's range shrinks with more patterns.** With two patterns it held to 5 mV of noise; with six it is at 77 % by 2 mV and near chance by 5 mV. The hard pairs are E–F and D–E, 5.6 and 8.7 mV apart topologically, against 18.6 mV for A–B. A statistic's useful range is set by its closest pair.
-- **Dropping short bars hurts here.** The 5 mV threshold removes real structure that distinguishes D, E and F (their third-longest H0 features are near that size), so it is worse than the raw distance at every σ below 5 mV. The 2 mV threshold is indistinguishable from raw. The threshold was fixed before these patterns existed, and this is what came of it.
+- **Dropping short bars hurts here.** The 5 mV threshold removes real structure that distinguishes D, E and F (E's and F's third-longest finite H0 features are 4 to 5 mV), so it is worse than the raw distance at every σ below 5 mV. The 2 mV threshold is indistinguishable from raw. The threshold was fixed before these patterns existed, and this is what came of it.
 - **The per-cell comparison stays at 100 % to 20 mV**, as before.

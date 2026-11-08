@@ -14,11 +14,11 @@
 | Multiplicative Anion noise, exp(0.25 z), two seeds | 1.0, 1.0 / 1.0, 0.9 | returned, both | returned, both |
 | … exp(0.5 z) | 2.3, 2.8 / 2.5, 2.5 | returned, both | returned, both |
 | … exp(1.0 z) (up to 17-fold changes in single cells) | 13.0, 8.8 / 7.3, 8.2 | returned in 450 and 810 s | returned in 360 and 330 s |
-| Anion field moved 25 % of the way to the other pattern | 16.3 / 22.4 | returned in 1,230 s | **left B**, reached A after about 6,000 s |
+| Anion field moved 25 % of the way to the other pattern | 16.3 / 22.4 | returned in 1,230 s | returned, slowly: 7.3 mV from B at 3,000 s; within 0.000 mV after a further 6,000 s |
 | … 50 % (the midpoint; the same state from both sides) | 24.9 / 31.6 | **third state C** | **third state C** |
 | … 75 % | 29.1 / 35.2 | **flipped to B** after about 6,000 s | **flipped to A** in about 3,000 s |
 
-Both patterns returned from every perturbation that did not move the state toward the other pattern, including complete erasure of the depolarised region's Anion. Along the line from A to B, A's basin extends past the 25 % point, B's does not reach its own 25 % point, and the midpoint settles into a third stable state.
+Both patterns returned from every perturbation that did not move the state toward the other pattern, including complete erasure of the depolarised region's Anion. Along the line from A to B, each pattern's basin extends past its own 25 % point, and the midpoint settles into a third stable state. B's return from its 25 % point took more than 3,000 s against A's 1,230 s.
 
 ## Reference states
 
@@ -79,13 +79,13 @@ The "toward" runs move every cell's Anion a fraction f of the way from one patte
 
 **State C** depolarises 106 cells at −37.2 mV against −56.6 mV, the same two voltage levels as A and B. Of its 106 depolarised cells, 77 are also depolarised in A and 26 in B (A and B share 22). Its mean voltage, −48.50 mV, lies between A's and B's. It was reached only from the midpoint, which was run twice as an exact repeat; nothing else in this study or the earlier ones started near it. It stayed put for 9,000 s under the settling criterion.
 
-**The basin boundary along this line is not at the midpoint.** From A's side, 25 % of the way to B still returns to A. From B's side, 25 % of the way to A does not return to B: it ends at A, after about 6,000 s. B's basin is the narrower one in this direction, and B relaxes more slowly (τ ≈ 1,400 s against 370 s), which is also why the B-ward run took 6,000 s to arrive.
+**The basin boundary along this line lies between 25 % and 50 % on each side.** From A's side, 25 % of the way to B returns to A in 1,230 s. From B's side, 25 % of the way to A returns to B, but slowly: 7.3 mV away at 3,000 s, and within 0.000 mV after a further 6,000 s (the continuation was run from the A-side twin of this start, which is the same state to 0.02 mV). B relaxes more slowly than A (τ ≈ 1,400 s against 370 s), which is why. This study does not place the boundary more finely than that, and does not say whether it sits at the same fraction on both sides.
 
 ## What this does and does not show
 
 - **Both patterns are attractors in the operational sense of this study**: each returned, to within 0.01 mV, from eleven distinct displacements of up to 20 mV, including full erasure of its depolarised region and random Anion changes of up to 17-fold in single cells. The control runs moved 0.000 mV. Replicate noise in the earlier studies was 0 mV.
 - **The pattern is not stored in the depolarised cells' Anion alone.** Setting those cells' Anion to the polarised level, so that the Anion field was nearly uniform at 0.2 mmol/L, still regrew the same pattern in about 1,000 s. The residual structure in the polarised cells' Anion, or the tissue geometry acting on the near-uniform field, is enough to select the pattern. The earlier finding that a uniform Anion plus a 1 % gradient goes to B, not A, says the selection is sensitive to small residuals.
-- **Displacement toward the other pattern is what flips it.** Random and erasing displacements of the same voltage size (13 to 20 mV) all returned; a 16 mV displacement along the A–B line was the only one that strained the return (1,230 s), and 22 mV along it left B. Size alone does not decide the outcome; direction does.
+- **Displacement toward the other pattern is what flips it.** Random and erasing displacements of the same voltage size (13 to 20 mV) all returned; the 16 and 22 mV displacements along the A–B line were the slowest to return (1,230 s, and more than 3,000 s), and the 25 to 35 mV displacements along it (the midpoint and beyond) did not return. Size alone does not decide the outcome; direction does.
 - **There are at least three stable patterns**, not two, under this parameter set. C was found by a single construction, so nothing here says how large its basin is or whether natural starts reach it.
 - **What is not shown:** how the basin boundary runs in any direction other than the A–B line; any result for a different tissue, geometry or parameter set; anything about real tissue. The relaxation times quoted are from fits to the final half of each run and are descriptive.
 - **The same-state threshold** of 1.0 mV is far below the 28 to 36 mV between the three states and far above the 0.000 to 0.012 mV reached by the returning runs, so the three outcomes are unambiguous for every run.
@@ -106,13 +106,13 @@ The four patterns found after the first round were perturbed the same way, with 
 Noise displacements of up to 16 mV were survived by all four. Erasing the depolarised region told them apart:
 
 - **C** returned from full erasure, like A and B, though slowly (2,100 s, and 0.02 mV short of the threshold at 3,000 s with 0.02 mV to go).
-- **D** survived 50 % erasure but full erasure left it for a new settled pattern, **D2**: 111 depolarised cells, 80 of them D's, 84 of them B's; 28.0 mV from D, 30.8 mV from B, 30.9 mV from E2. It held for a further 6,000 s, moving 0.005 mV.
-- **E** left under 50 % erasure as well as 100 %, and both runs settled into the same new pattern, **E2** (0.000 mV apart after the continuation): 116 depolarised cells, 107 of them E's, 13.9 mV from E in the worst cell. E2 is a close relative of E (nine cells differ) and 30 mV or more from every other pattern. It held for a further 6,000 s.
+- **D** survived 50 % erasure but full erasure left it for a new settled pattern, **D2**: 111 depolarised cells, 80 of them D's, 84 of them B's; 28.0 mV from D, 30.8 mV from E, 30.9 mV from E2, 35.1 mV from B. It held for a further 6,000 s, moving 0.005 mV.
+- **E** left under 50 % erasure as well as 100 %, and both runs settled into the same new pattern, **E2** (0.000 mV apart after the continuation): 116 depolarised cells, 107 of them E's, 13.9 mV from E in the worst cell. E2 is a close relative of E (it depolarises nine cells E does not, and leaves five of E's depolarised cells polarised) and 30 mV or more from every other pattern. It held for a further 6,000 s.
 - **F** flipped to **A** under full erasure (within 0.007 mV). F shares 97 of its 112 depolarised cells with A and is the pattern nearest to A (24.6 mV).
 
 ### What the second round adds
 
-- **All six patterns are attractors against random disturbance**: 24 of 24 noise and control runs returned, with displacements of up to 16 mV.
+- **All six patterns are attractors against random disturbance**: every noise and control run across the two rounds returned (30 of 30), with displacements of up to 16 mV.
 - **They differ in what erasure does.** A, B and C regrow their own depolarised region after it is wiped. D, E and F do not: D and E move to neighbouring patterns that had not been seen before (D2, E2), and F falls into A. Patterns found from gradient-like starts (A, B) and the A–B midpoint (C) are the robust ones; those found from coarse random starts (D, E, F) sit in shallower basins, at least in the erasure direction.
 - **Erasure is a strong probe.** It is the one displacement that moved any pattern, and it moved three of six. Its size (18 to 20 mV) is similar to the largest noise displacements (16 mV) that every pattern survived, so again direction, not size, decides.
 - **Eight stable patterns are now known** under this parameter set: A to F, D2 and E2. The count has grown with every study that looked.

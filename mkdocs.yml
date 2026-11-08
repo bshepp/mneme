@@ -28,6 +28,9 @@ theme:
     - content.code.copy
     - toc.follow
 
+hooks:
+  - docs/hooks/studies.py
+
 plugins:
   - search
   - mkdocstrings:
@@ -69,6 +72,27 @@ nav:
     - Scope and Support Status: SCOPE.md
     - Lyapunov Operating Range: LYAPUNOV_OPERATING_RANGE.md
     - Multistability Protocol: MULTISTABILITY_PROTOCOL.md
+  - Studies:
+    - Overview: studies.md
+    - Convergence:
+      - Design: studies/convergence/README.md
+      - Results: studies/convergence/RESULTS.md
+    - Multistability:
+      - Design: studies/multistability/README.md
+      - Results: studies/multistability/RESULTS.md
+    - Perturbation:
+      - Design: studies/perturbation/README.md
+      - Results: studies/perturbation/RESULTS.md
+    - Basins:
+      - Design: studies/basins/README.md
+      - Results: studies/basins/RESULTS.md
+    - Sweep:
+      - Design: studies/sweep/README.md
+      - Results: studies/sweep/RESULTS.md
+    - Topology:
+      - Design: studies/topology/README.md
+      - Results: studies/topology/RESULTS.md
+    - BETSE Configurations: studies/betse_configs/README.md
   - Record:
     - Withdrawn BETSE Report: BETSE_ANALYSIS_REPORT.md
   - API Reference:
