@@ -1,7 +1,7 @@
 # Multistability study: results
 
 **Run:** 2026-09-28 to 2026-09-29, BETSE 1.5.0, Python 3.13, Windows 11.
-**Numbers:** `results_grn.json`, `results_vgc.json`. Produced by `../convergence/analyze.py`.
+**Numbers:** `results_grn.json`, `results_vgc.json`. Produced by `../convergence/analyze.py`. The per-cell voltage trace of every GRN run is in `data/raw/betse_grn_2026-09/` (gzipped CSV).
 **Design:** [README.md](README.md).
 
 ## Findings in one table
@@ -40,7 +40,7 @@ Distance matrix between end states, largest per-cell difference in mV:
 
 ### What the two states are
 
-**The patterned state.** Three starts that differ in the direction and shape of the initial Anion gradient (up to 21.8 mV apart at the start) ended in the *same* pattern, to within 0.0003 mV. The pattern has 93 of 246 cells depolarised to about −34 mV and the rest at about −59 mV. The starting gradient decided how long convergence took (3,400 s from the y gradient, 5,000 s from the x gradient), not where it ended. The pattern is therefore set by the tissue, not by the initial condition.
+**The patterned state.** Three starts that differ in the direction and shape of the initial Anion gradient (up to 21.8 mV apart at the start) ended in the *same* pattern, to within 0.0003 mV. Counting as depolarised the cells above the midpoint between the pattern's lowest and highest cell voltage (the definition the later studies use), the pattern has 118 of 246 cells depolarised, at −38.5 mV on average, and the rest at −57.5 mV; the voltages grade between the two levels rather than forming two sharp groups. The starting gradient decided how long convergence took (3,400 s from the y gradient, 5,000 s from the x gradient), not where it ended. The pattern is therefore set by the tissue, not by the initial condition.
 
 **The uniform state.** With a perfectly uniform Anion, every cell stayed at exactly −37.18 mV: the spread across cells was 0.000 mV at every frame. This is a symmetric fixed point. A perfectly symmetric start cannot break symmetry, so this run alone cannot say whether the state is stable or a saddle that any asymmetry would leave.
 
@@ -59,9 +59,11 @@ Both ended in the same new pattern, within 0.01 mV of each other, and that patte
 
 | | A: cells depolarised | A: centroid of depolarised cells (x, y in µm) | B: cells depolarised | B: centroid (x, y) | Cells depolarised in both |
 |---|---|---|---|---|---|
-| | 93 of 246 | (285, 259) | 96 of 246 | (262, 273) | 28 |
+| | 118 of 246 | (285, 257) | 122 of 246 | (262, 274) | 48 |
 
-The two patterns depolarise different regions of the same tissue to the same voltages (about −37 mV against −55 mV). A and B differ by 31.9 mV in the worst cell.
+The two patterns depolarise different regions of the same tissue to the same voltages (about −38.5 mV against −57.5 mV). A and B differ by 31.9 mV in the worst cell.
+
+*Correction (2026-11-08):* the cell counts, centroids and voltage levels in this section were recomputed from the saved runs with the midpoint definition stated above. The values first published here (93 and 96 cells, 28 shared, about −34 and −59 mV) came from a threshold that was not recorded and could not be reproduced; the distances (31.9, 26.9 and 26.3 mV) and every number in the tables above were reproduced exactly.
 
 Grouping all seven end states at the 1.0 mV threshold gives three states: A (four runs, including the repeat), B (two runs), and the uniform saddle (one run).
 

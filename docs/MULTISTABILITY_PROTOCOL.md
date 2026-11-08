@@ -1,6 +1,6 @@
 # Multistability Experiment Protocol
 
-**Status:** steps 1 to 3 done twice. The published 2016 configuration has one stable state (`studies/convergence/RESULTS.md`). The 2018 gene-network configuration has two stable patterns under one parameter set (`studies/multistability/RESULTS.md`). Step 4 (perturbation) is in progress in `studies/perturbation`; step 5 (sweep) is still to do.
+**Status:** all five steps done on the gene-network tissue. The published 2016 configuration has one stable state ([convergence](studies/convergence/RESULTS.md)). The 2018 gene-network configuration has two stable patterns under one parameter set ([multistability](studies/multistability/RESULTS.md)), both of which survive displacements of up to 20 mV, with a third pattern at the midpoint between them ([perturbation](studies/perturbation/RESULTS.md)); random starts bring the count to eight ([basins](studies/basins/RESULTS.md)); the count depends on the Anion's gap-junction coupling ([sweep](studies/sweep/RESULTS.md)); and persistent homology separates the patterns under noise where the mean voltage cannot ([topology](studies/topology/RESULTS.md)). Overview: [Simulation Studies](studies.md).
 
 ## Question
 

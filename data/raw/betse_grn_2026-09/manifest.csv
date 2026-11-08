@@ -1,0 +1,15 @@
+file,run,phase,n_frames,t_end_s,end_mean_mV,end_spread_mV
+full_grn_ic_bitmap__init.csv.gz,full_grn_ic_bitmap,init,16,480,-48.5131,32.4388
+full_grn_ic_bitmap__sim.csv.gz,full_grn_ic_bitmap,sim,199,5970,-48.3729,33.5132
+full_grn_ic_bitmap_rep__init.csv.gz,full_grn_ic_bitmap_rep,init,16,480,-48.5131,32.4388
+full_grn_ic_bitmap_rep__sim.csv.gz,full_grn_ic_bitmap_rep,sim,199,5970,-48.3729,33.5132
+full_grn_ic_gradx__init.csv.gz,full_grn_ic_gradx,init,16,480,-47.5906,34.8919
+full_grn_ic_gradx__sim.csv.gz,full_grn_ic_gradx,sim,199,5970,-48.3729,33.5132
+full_grn_ic_grady__init.csv.gz,full_grn_ic_grady,init,16,480,-47.6459,35.0160
+full_grn_ic_grady__sim.csv.gz,full_grn_ic_grady,sim,199,5970,-48.3729,33.5132
+full_grn_ic_uniform__init.csv.gz,full_grn_ic_uniform,init,16,480,-37.1821,0.0000
+full_grn_ic_uniform__sim.csv.gz,full_grn_ic_uniform,sim,199,5970,-37.1821,0.0000
+perturb_grn_ic_near_uniform_0p1pct__init.csv.gz,perturb_grn_ic_near_uniform_0p1pct,init,16,480,-37.2296,4.2619
+perturb_grn_ic_near_uniform_0p1pct__sim.csv.gz,perturb_grn_ic_near_uniform_0p1pct,sim,199,5970,-48.2048,33.2912
+perturb_grn_ic_near_uniform_1pct__init.csv.gz,perturb_grn_ic_near_uniform_1pct,init,16,480,-41.4220,31.7103
+perturb_grn_ic_near_uniform_1pct__sim.csv.gz,perturb_grn_ic_near_uniform_1pct,sim,199,5970,-48.2050,33.2924

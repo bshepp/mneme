@@ -7,6 +7,9 @@ Mneme is an exploratory research toolkit for studying field-like memory in biolo
 !!! warning "Withdrawn results"
     The BETSE analysis report (2026-02) and the PhysioNet Lyapunov numbers (2025-11) were withdrawn after a review found defects in the code that produced them. Do not cite them. The notice is at [Withdrawn BETSE Report](BETSE_ANALYSIS_REPORT.md); what each component can currently be relied on for is in [Scope and Support Status](SCOPE.md).
 
+!!! note "Current results"
+    The results currently asserted are the six simulation studies on the [Simulation Studies](studies.md) page: the published 2016 BETSE configuration has one stable state; the 2018 gene-network configuration has at least eight stable voltage patterns under one parameter set, which survive displacement, depend on gap-junction coupling, and are told apart by persistent homology under noise where the mean voltage fails. Each is one geometry and one parameter set.
+
 ## Capabilities
 
 | Tier | Components |
@@ -59,6 +62,7 @@ pip install -e ".[pysr]"
 - **[API Reference](api/index.md)** -- Auto-generated reference for all modules
 - **[Data Pipeline](DATA_PIPELINE.md)** -- Pipeline architecture and stages
 - **[Scope and Support Status](SCOPE.md)** -- What is core, frozen and experimental
+- **[Simulation Studies](studies.md)** -- The BETSE studies: design, results, and what they do not show
 - **[Lyapunov Operating Range](LYAPUNOV_OPERATING_RANGE.md)** -- Measured accuracy and limits
 - **[Course](course/README.md)** -- 11-module learning course
 
