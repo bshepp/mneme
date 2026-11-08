@@ -34,6 +34,7 @@ win_venv/
 /data/raw/*
 !/data/raw/physionet/
 !/data/raw/betse_grn_2026-11/
+!/data/raw/betse_grn_2026-09/
 
 # BETSE simulation output (large, regeneratable)
 **/RESULTS/

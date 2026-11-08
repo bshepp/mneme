@@ -46,6 +46,15 @@ All notable changes to this project will be documented in this file.
     Also: D2 is 30.8 mV from E and 35.1 mV from B (not 30.8 mV from B);
     the A-B mean-voltage difference is 0.56 mV (was rounded to 0.57); the
     sweep table's count at the paper's value is now eight.
+  - `studies/multistability/RESULTS.md`: the September description of
+    patterns A and B (93 and 96 depolarised cells, 28 shared, about −34 and
+    −59 mV) came from an unrecorded threshold and did not reproduce from the
+    saved runs. Restated with the midpoint definition the later studies
+    use: 118 and 122 cells, 48 shared, −38.5 against −57.5 mV. The
+    distances and every tabulated number reproduced exactly.
+  - `data/raw/betse_grn_2026-09/`: the per-cell voltage trace of every
+    September GRN run (14 files, 0.8 MB), packed with `studies/pack_runs.py`,
+    so that study can be re-checked without the run directory.
   - `studies/convergence/run_one.sh` takes an optional run directory and a
     `PHASES` list, and only uses a backslash log path on Windows.
   - ### Changed

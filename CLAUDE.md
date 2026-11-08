@@ -95,6 +95,7 @@ studies/grn_common.py      # shared GRN config setup; grn_endstates.py: shared e
 studies/run_queue.sh       # keeps N BETSE runs going from a queue file
 studies/pack_runs.py       # packs BETSE run output into data/raw/betse_grn_2026-11/
 data/raw/betse_grn_2026-11/ # every GRN study run's per-cell voltage trace (gzipped CSV)
+data/raw/betse_grn_2026-09/ # the same for the September multistability study's GRN runs
 review_artifacts/          # probe scripts and outputs behind the measured numbers
 ```
 
