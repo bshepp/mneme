@@ -79,6 +79,7 @@ def main(argv=None) -> int:
 
     # --- reference states ------------------------------------------------
     ref, settle = {}, {}
+    ref_xy = None
     for label in ("A", "B"):
         d = results / f"settle_{label}"
         if not (d / "sim" / "Vmem2D_TextExport").is_dir():
@@ -86,6 +87,11 @@ def main(argv=None) -> int:
         vi, ti, x, y = load_phase(d, "init", dt)
         vs, ts, xs, ys = load_phase(d, "sim", dt)
         assert np.allclose(x, xs) and np.allclose(y, ys)
+        xy = np.column_stack([x, y])
+        if ref_xy is None:
+            ref_xy = xy
+        elif not np.allclose(xy, ref_xy):
+            raise ValueError(f"settle_{label}: cell positions differ from the other reference")
         init_rep = assess_steady_state(vi, ti, rate_tolerance=RATE_TOLERANCE,
                                        drift_tolerance=DRIFT_TOLERANCE, sustain=SUSTAIN)
         sim_rep = assess_steady_state(vs, ts, rate_tolerance=RATE_TOLERANCE,
@@ -140,7 +146,10 @@ def main(argv=None) -> int:
         if own not in ref:
             print(f"{d.name}: no reference for pattern {own}; skipped")
             continue
-        v, t, _, _ = load_phase(d, "sim", dt)
+        v, t, x, y = load_phase(d, "sim", dt)
+        if ref_xy is not None and not np.allclose(np.column_stack([x, y]), ref_xy):
+            raise ValueError(f"{d.name}: cell positions differ from the reference world; "
+                             "per-cell distances would compare unrelated cells")
         d_own = np.array([max_diff(f, ref[own]) for f in v])
         # Distance to the nearest other reference at the end; for A and B
         # that is each other, as in the first round.

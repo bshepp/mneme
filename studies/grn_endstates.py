@@ -48,15 +48,18 @@ def analyze(run_root: Path, prefix: str, group, out: Path | None = None, dt: flo
             extra=None):
     results = run_root / "RESULTS"
     refs = {}
+    ref_xy = None
     for label in ("A", "B"):
         d = results / f"settle_{label}" / "sim" / "Vmem2D_TextExport"
         if d.is_dir():
-            refs[label] = load_betse_cells(d)[0][-1]
+            v, x, y, _ = load_betse_cells(d)
+            refs[label] = v[-1]
+            ref_xy = np.column_stack([x, y]) if ref_xy is None else ref_xy
     for label, rel in EXTRA_REFERENCES.items():
         d = results / rel / "Vmem2D_TextExport"
         if d.is_dir():
             refs[label] = load_betse_cells(d)[0][-1]
-    ab = max_diff(refs["A"], refs["B"]) if len(refs) == 2 else None
+    ab = max_diff(refs["A"], refs["B"]) if {"A", "B"} <= set(refs) else None
     print(f"References: {sorted(refs)}; A vs B {ab if ab is None else f'{ab:.2f}'} mV; "
           f"same-state threshold {SAME_STATE_THRESHOLD} mV")
     masks = {k: depolarised(r) for k, r in refs.items()}
@@ -68,7 +71,10 @@ def analyze(run_root: Path, prefix: str, group, out: Path | None = None, dt: flo
             continue
         if not any((d / "init" / "Vmem2D_TextExport").glob("Vmem2D_*.csv")):
             continue
-        v, t, _, _ = load_phase(d, "init", dt)
+        v, t, x, y = load_phase(d, "init", dt)
+        if ref_xy is not None and not np.allclose(np.column_stack([x, y]), ref_xy):
+            raise ValueError(f"{d.name}: cell positions differ from the reference world; "
+                             "per-cell distances would compare unrelated cells")
         rep = assess_steady_state(v, t, rate_tolerance=RATE_TOLERANCE,
                                   drift_tolerance=DRIFT_TOLERANCE, sustain=SUSTAIN)
         dist = {k: max_diff(v[-1], r) for k, r in refs.items()}

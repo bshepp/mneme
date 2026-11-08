@@ -11,10 +11,12 @@ Gaussian measurement noise of standard deviation σ is added independently to ev
 | Statistic | Distance | Tier |
 |---|---|---|
 | mean | difference of the mean voltage over cells | baseline |
-| topology | 2-Wasserstein distance between persistence diagrams (H0 and H1 of the superlevel filtration, summed) of the field interpolated to a 64 × 64 grid; raw, and with features of persistence below 2 mV and below 5 mV dropped | core |
+| topology | 2-Wasserstein distance (L∞ ground metric; the one infinite H0 bar is dropped from both diagrams) between persistence diagrams (H0 and H1 of the superlevel filtration, summed) of the field interpolated to a 64 × 64 grid; raw, and with features of persistence below 2 mV and below 5 mV dropped | core |
 | cells | root-mean-square per-cell difference | ceiling: uses cell identities, which no summary statistic has |
 
 σ runs from 0.5 to 20 mV; 40 draws per pattern per σ. Accuracy is the fraction assigned to the pattern they came from (chance 0.5). The separation ratio is the A-to-B distance over the median distance of a noisy sample from its own reference.
+
+The grid is the cells' bounding box padded by 5 %, interpolated linearly inside the tissue's convex hull. The tissue is a diagonal strip covering about 28 % of that box, so the grid points outside the hull (77 % of them) take the value of the nearest cell. References and noisy samples go through the same path, and the fill joins no two cells that are not already neighbours, so the comparison is fair; but the statistic is the persistence of this interpolant plus its nearest-cell extension, not of the cell values alone. The grid side is a free parameter of the design; `--resolution` changes it, and its effect is reported in RESULTS.md.
 
 The persistence thresholds were fixed before the reference patterns were analysed: 5 mV is well below the patterns' depolarised-to-polarised step of about 25 mV, and the raw (0 mV) variant is reported beside them so the effect of dropping short bars is visible.
 
@@ -25,7 +27,7 @@ python ../topology/compare_statistics.py <perturbation run directory> --out ../t
 python ../topology/compare_statistics.py --end-states ../basins/end_states.csv --out ../topology/results_six.json
 ```
 
-The second form takes every voltage column of the CSV as a reference pattern (here the six patterns A to F) and needs no run directory.
+The second form takes every voltage column of the CSV as a reference pattern (here the six patterns A to F) and needs no run directory. `--resolution N` interpolates to an N × N grid instead of 64 × 64. The committed `results.json` was written by an earlier revision of the script with a different JSON layout (`A_vs_B` and `reference.A_H0` rather than `pairs` and `reference.A.H0`); the computation is the same and its numbers reproduce from the current script to 3e-4 mV, the rounding of the end-state CSV.
 
 ## Results
 

@@ -94,6 +94,7 @@ studies/topology/          # persistent homology vs mean voltage on the two patt
 studies/grn_common.py      # shared GRN config setup; grn_endstates.py: shared end-state analysis
 studies/run_queue.sh       # keeps N BETSE runs going from a queue file
 studies/pack_runs.py       # packs BETSE run output into data/raw/betse_grn_2026-11/
+studies/write_end_states.py # writes or checks each study's end_states.csv from the packed traces
 data/raw/betse_grn_2026-11/ # every GRN study run's per-cell voltage trace (gzipped CSV)
 data/raw/betse_grn_2026-09/ # the same for the September multistability study's GRN runs
 review_artifacts/          # probe scripts and outputs behind the measured numbers
@@ -164,4 +165,5 @@ Read [docs/LYAPUNOV_OPERATING_RANGE.md](docs/LYAPUNOV_OPERATING_RANGE.md) first.
 - BETSE's scheduled interventions ("change K mem" and the like) have no effect under the fast solver, which fixes the leak conductance when a phase starts. The perturbation study edits the saved state instead.
 - Import order warning: import juliacall before torch to avoid a potential segfault. On Windows, PySR prints "access violation" traces during tests that still pass.
 - `mypy` runs in CI but cannot fail it.
+- `studies/convergence/analyze.py` puts BETSE's first exported frame at t = 0; the GRN scripts and `pack_runs.py` put it at t = dt, which is where BETSE samples it. Only the quoted end times differ (by one interval); rates, time constants and drift estimates do not.
 - `compute_basin_of_attraction()` was removed; design notes are in [docs/FUTURE_IDEAS.md](docs/FUTURE_IDEAS.md).
