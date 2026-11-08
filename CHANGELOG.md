@@ -25,6 +25,8 @@ All notable changes to this project will be documented in this file.
     value, one at three times it); ionic coupling a tenth of the paper's
     kept two patterns; ten times the paper's crashes BETSE.
   - `end_states.csv` in both: the final per-cell voltages of every end state.
+  - `data/raw/betse_grn_2026-11/`: the full per-cell voltage trace of every
+    study run as gzipped CSV (79 files, 5 MB), with `studies/pack_runs.py`.
   - Second perturbation round on patterns C to F: all survive random
     disturbances; erasure separates A, B, C (regrow) from D, E, F (move to
     new patterns D2, E2, or fall into A). The 2e-14 coupling value settled
