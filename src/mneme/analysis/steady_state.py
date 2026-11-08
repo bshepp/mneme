@@ -17,6 +17,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Optional, Sequence
 
+import warnings
+
 import numpy as np
 
 __all__ = [
@@ -171,7 +173,13 @@ def assess_steady_state(
     if not 0.0 < fit_fraction <= 1.0:
         raise ValueError("fit_fraction must be in (0, 1]")
     rate = convergence_rate(values, times)
-    sustain = int(min(max(1, sustain), len(rate)))
+    sustain = int(max(1, sustain))
+    if sustain > len(rate):
+        warnings.warn(
+            f"sustain={sustain} exceeds the {len(rate)} intervals available; "
+            "the rate is checked over every interval instead",
+            RuntimeWarning, stacklevel=2)
+        sustain = len(rate)
     final_rate = float(rate[-1])
 
     # Fit log(rate) = a - t / tau over the tail, where the rate is resolved.

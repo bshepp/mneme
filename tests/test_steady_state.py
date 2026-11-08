@@ -193,3 +193,22 @@ class TestOnASystemWithKnownMultistability:
             run, times, rate_tolerance=1e-4, drift_tolerance=1e-3
         )
         assert report.settled is False
+
+
+def test_assess_steady_state_warns_when_sustain_exceeds_run_length():
+    """A run shorter than the sustain window is judged over what it has, loudly."""
+    times = np.arange(0.0, 150.0, 30.0)                       # 5 frames, 4 intervals
+    values = _relaxation([0.0], [10.0], tau=20.0, times=times)
+    with pytest.warns(RuntimeWarning, match="exceeds the 4 intervals"):
+        rep = assess_steady_state(values, times, rate_tolerance=1e-4, drift_tolerance=0.1, sustain=20)
+    assert rep.settled is False
+
+
+def test_assess_steady_state_silent_when_sustain_fits():
+    times = np.arange(0.0, 3000.0, 30.0)                      # 100 frames
+    values = _relaxation([0.0], [10.0], tau=20.0, times=times)
+    import warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        rep = assess_steady_state(values, times, rate_tolerance=1e-4, drift_tolerance=0.1, sustain=20)
+    assert rep.settled is True

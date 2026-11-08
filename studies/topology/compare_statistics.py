@@ -55,8 +55,8 @@ def topo_label(thr):
     return "topology" if thr == 0 else f"topology{int(thr)}"
 
 
-def diagrams(ph, x, y, v):
-    grid, _, _ = interpolate_to_grid(x, y, v, resolution=RESOLUTION, method="linear")
+def diagrams(ph, x, y, v, resolution=RESOLUTION):
+    grid, _, _ = interpolate_to_grid(x, y, v, resolution=resolution, method="linear")
     return ph.compute_persistence(grid)
 
 
@@ -70,6 +70,8 @@ def main(argv=None) -> int:
     ap.add_argument("--end-states", type=Path, default=None)
     ap.add_argument("--out", type=Path, default=None)
     ap.add_argument("--draws", type=int, default=N_DRAWS)
+    ap.add_argument("--resolution", type=int, default=RESOLUTION[0],
+                    help="grid side for the interpolated field (default %(default)s, the pre-stated design)")
     args = ap.parse_args(argv)
 
     refs, coords = {}, None
@@ -88,7 +90,9 @@ def main(argv=None) -> int:
     labels = list(refs)
     phs = {thr: PersistentHomology(max_dimension=1, filtration="superlevel",
                                    persistence_threshold=thr) for thr in THRESHOLDS_MV}
-    ref_pd = {thr: {k: diagrams(ph, x, y, v) for k, v in refs.items()} for thr, ph in phs.items()}
+    resolution = (args.resolution, args.resolution)
+    ref_pd = {thr: {k: diagrams(ph, x, y, v, resolution) for k, v in refs.items()}
+              for thr, ph in phs.items()}
 
     # Distances between every pair of references, under each statistic; the
     # separation ratio uses the smallest pair distance (the hardest pair).
@@ -127,7 +131,7 @@ def main(argv=None) -> int:
                 d = {}
                 d["mean"] = {k: abs(sample.mean() - refs[k].mean()) for k in refs}
                 for thr, ph in phs.items():
-                    pd = diagrams(ph, x, y, sample)
+                    pd = diagrams(ph, x, y, sample, resolution)
                     d[topo_label(thr)] = {k: topo_distance(pd, ref_pd[thr][k]) for k in refs}
                 d["cells"] = {k: float(np.sqrt(np.mean((sample - refs[k]) ** 2))) for k in refs}
                 for s in stats:
@@ -148,7 +152,7 @@ def main(argv=None) -> int:
 
     if args.out is not None:
         payload = dict(
-            method=dict(sigmas_mV=SIGMAS_MV, draws_per_state=args.draws, resolution=RESOLUTION,
+            method=dict(sigmas_mV=SIGMAS_MV, draws_per_state=args.draws, resolution=list(resolution),
                         filtration="superlevel", dimensions=[0, 1], wasserstein_p=2, seed=SEED,
                         persistence_thresholds_mV=THRESHOLDS_MV),
             reference={k: dict(mean_mV=float(refs[k].mean()),

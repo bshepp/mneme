@@ -92,7 +92,7 @@ The "toward" runs move every cell's Anion a fraction f of the way from one patte
 
 ## Second round (2026-11-06 to 07): patterns C to F
 
-The four patterns found after the first round were perturbed the same way, with a reduced set (no "toward", since the partner pattern is not defined): control, erase 50 % and 100 %, noise exp(0.5 z) seed 1, noise exp(1.0 z) seeds 1 and 2. Sources: C from the midpoint run's continuation; D, E, F from the basin study's coarse starts (`basin_L100_r1`, `r2`, `r4`). Runs that had not settled at 3,000 s were continued for 6,000 s more. The end states of the new patterns are in `end_states.csv`.
+The four patterns found after the first round were perturbed the same way, with a reduced set (no "toward", since the partner pattern is not defined): control, erase 50 % and 100 %, noise exp(0.5 z) seed 1, noise exp(1.0 z) seeds 1 and 2. Sources: C from the midpoint run's continuation; D, E, F from the basin study's coarse starts (`basin_L100_r1`, `r2`, `r4`). The three runs that left their pattern were continued for 6,000 s more. The runs that returned were not; three of them (C erase 100 %, F erase 50 %, F noise 1.0 seed 2) had not met the settling criterion at 3,000 s and were still 0.02 to 0.14 mV from their reference, inside the 1.0 mV threshold and still closing. The end states of the new patterns are in `end_states.csv`, written by `../write_end_states.py` from the packed traces.
 
 | Perturbation | Displacement (mV) C / D / E / F | C | D | E | F |
 |---|---|---|---|---|---|
@@ -100,19 +100,19 @@ The four patterns found after the first round were perturbed the same way, with 
 | noise 0.5, seed 1 | 3.6 / 1.8 / 2.2 / 3.5 | returned, 150 s | returned, 90 s | returned, 120 s | returned, 210 s |
 | noise 1.0, seed 1 | 16.2 / 5.7 / 6.8 / 15.1 | returned, 360 s | returned, 270 s | returned, 390 s | returned, 420 s |
 | noise 1.0, seed 2 | 11.7 / 11.2 / 10.0 / 9.5 | returned, 510 s | returned, 390 s | returned, 570 s | returned, 1,740 s (0.14 mV short at 3,000 s) |
-| erase 50 % | 5.8 / 4.4 / 4.3 / 4.3 | returned, 600 s | returned, 420 s | **left E**: new state E2 | returned, 1,050 s |
+| erase 50 % | 5.8 / 4.4 / 4.3 / 4.3 | returned, 600 s | returned, 420 s | **left E**: new state E2 | returned, 1,050 s (0.05 mV short at 3,000 s) |
 | erase 100 % | 18.5 / 19.6 / 18.5 / 19.7 | returned, 2,100 s (0.02 mV short) | **left D**: new state D2 | **left E**: new state E2 | **flipped to A** |
 
 Noise displacements of up to 16 mV were survived by all four. Erasing the depolarised region told them apart:
 
 - **C** returned from full erasure, like A and B, though slowly (2,100 s, and 0.02 mV short of the threshold at 3,000 s with 0.02 mV to go).
-- **D** survived 50 % erasure but full erasure left it for a new settled pattern, **D2**: 111 depolarised cells, 80 of them D's, 84 of them B's; 28.0 mV from D, 30.8 mV from E, 30.9 mV from E2, 35.1 mV from B. It held for a further 6,000 s, moving 0.005 mV.
+- **D** survived 50 % erasure but full erasure left it for a new settled pattern, **D2**: 111 depolarised cells, 80 of them D's, 84 of them B's; 28.0 mV from D, 30.8 mV from E, 30.9 mV from E2, 35.1 mV from B. It held for a further 6,000 s, moving 0.009 mV between the end of the first run and the end of the continuation.
 - **E** left under 50 % erasure as well as 100 %, and both runs settled into the same new pattern, **E2** (0.000 mV apart after the continuation): 116 depolarised cells, 107 of them E's, 13.9 mV from E in the worst cell. E2 is a close relative of E (it depolarises nine cells E does not, and leaves five of E's depolarised cells polarised) and 30 mV or more from every other pattern. It held for a further 6,000 s.
 - **F** flipped to **A** under full erasure (within 0.007 mV). F shares 97 of its 112 depolarised cells with A and is the pattern nearest to A (24.6 mV).
 
 ### What the second round adds
 
-- **All six patterns are attractors against random disturbance**: every noise and control run across the two rounds returned (30 of 30), with displacements of up to 16 mV.
+- **All six patterns are attractors against random disturbance**: every noise and control run across the two rounds returned (30 of 30), with displacements of up to 16 mV; one of them (F noise 1.0 seed 2) was still 0.14 mV from F at 3,000 s and had not met the settling criterion, though it was inside the threshold and still closing.
 - **They differ in what erasure does.** A, B and C regrow their own depolarised region after it is wiped. D, E and F do not: D and E move to neighbouring patterns that had not been seen before (D2, E2), and F falls into A. Patterns found from gradient-like starts (A, B) and the A–B midpoint (C) are the robust ones; those found from coarse random starts (D, E, F) sit in shallower basins, at least in the erasure direction.
 - **Erasure is a strong probe.** It is the one displacement that moved any pattern, and it moved three of six. Its size (18 to 20 mV) is similar to the largest noise displacements (16 mV) that every pattern survived, so again direction, not size, decides.
 - **Eight stable patterns are now known** under this parameter set: A to F, D2 and E2. The count has grown with every study that looked.

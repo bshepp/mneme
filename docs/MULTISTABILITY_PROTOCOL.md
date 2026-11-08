@@ -89,5 +89,5 @@ A negative result is reported as such.
 | Requirement | Notes |
 |---|---|
 | BETSE | `pip install betse`. Version 1.5.0 was used for the first study. |
-| Simulation configs | In the BETSE source repository under `doc/yaml/paper/`. |
+| Simulation configs | Vendored in [`studies/betse_configs/`](studies/betse_configs/README.md) from BETSE 1.5.0 (`doc/yaml/paper/`). |
 | Compute | About 4.5 hours per run on one core for 25,000 s of simulated time. |

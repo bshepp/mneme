@@ -55,6 +55,26 @@ All notable changes to this project will be documented in this file.
   - `data/raw/betse_grn_2026-09/`: the per-cell voltage trace of every
     September GRN run (14 files, 0.8 MB), packed with `studies/pack_runs.py`,
     so that study can be re-checked without the run directory.
+  - `studies/write_end_states.py`: writes, or with `--check` verifies, each
+    study's `end_states.csv` from the packed traces, and prints the 2e-14
+    continuation numbers the sweep write-up quotes; until now neither had a
+    script behind it. `grn_endstates.py` and `perturbation/analyze.py` now
+    refuse a run whose cell positions differ from the reference world.
+  - `studies/topology/compare_statistics.py` takes `--resolution`. The
+    six-pattern test rerun at 32 and 128 grid points (`results_six_res32.json`,
+    `results_six_res128.json`) and the two-pattern test at 128
+    (`results_two_res128.json`) show the diagrams are not converged at the
+    pre-stated 64: at 128, topology separates all six patterns to 2 mV of
+    noise and is well above chance at 5 mV. Reported in RESULTS.md beside the
+    64-grid numbers, which stand as the pre-registered result. The design
+    now states the interpolation fill, ground metric and essential-bar
+    handling.
+  - `assess_steady_state` warns when the run is shorter than the `sustain`
+    window instead of silently checking fewer intervals.
+  - `studies/perturbation/RESULTS.md`: only the runs that left their pattern
+    were continued, not every unsettled run; three returning runs were
+    0.02 to 0.14 mV short at 3,000 s, now said so. "Moved" figures for the
+    continuations are now the state's own movement.
   - `studies/convergence/run_one.sh` takes an optional run directory and a
     `PHASES` list, and only uses a backslash log path on Windows.
   - ### Changed
