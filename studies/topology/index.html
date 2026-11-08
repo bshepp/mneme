@@ -2872,7 +2872,7 @@
 </tr>
 <tr>
 <td>topology</td>
-<td>2-Wasserstein distance between persistence diagrams (H0 and H1 of the superlevel filtration, summed) of the field interpolated to a 64 × 64 grid; raw, and with features of persistence below 2 mV and below 5 mV dropped</td>
+<td>2-Wasserstein distance (L∞ ground metric; the one infinite H0 bar is dropped from both diagrams) between persistence diagrams (H0 and H1 of the superlevel filtration, summed) of the field interpolated to a 64 × 64 grid; raw, and with features of persistence below 2 mV and below 5 mV dropped</td>
 <td>core</td>
 </tr>
 <tr>
@@ -2883,12 +2883,13 @@
 </tbody>
 </table>
 <p>σ runs from 0.5 to 20 mV; 40 draws per pattern per σ. Accuracy is the fraction assigned to the pattern they came from (chance 0.5). The separation ratio is the A-to-B distance over the median distance of a noisy sample from its own reference.</p>
+<p>The grid is the cells' bounding box padded by 5 %, interpolated linearly inside the tissue's convex hull. The tissue is a diagonal strip covering about 28 % of that box, so the grid points outside the hull (77 % of them) take the value of the nearest cell. References and noisy samples go through the same path, and the fill joins no two cells that are not already neighbours, so the comparison is fair; but the statistic is the persistence of this interpolant plus its nearest-cell extension, not of the cell values alone. The grid side is a free parameter of the design; <code>--resolution</code> changes it, and its effect is reported in RESULTS.md.</p>
 <p>The persistence thresholds were fixed before the reference patterns were analysed: 5 mV is well below the patterns' depolarised-to-polarised step of about 25 mV, and the raw (0 mV) variant is reported beside them so the effect of dropping short bars is visible.</p>
 <h2 id="reproducing">Reproducing<a class="headerlink" href="#reproducing" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>../topology/compare_statistics.py<span class="w"> </span>&lt;perturbation<span class="w"> </span>run<span class="w"> </span>directory&gt;<span class="w"> </span>--out<span class="w"> </span>../topology/results.json
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>../topology/compare_statistics.py<span class="w"> </span>--end-states<span class="w"> </span>../basins/end_states.csv<span class="w"> </span>--out<span class="w"> </span>../topology/results_six.json
 </code></pre></div>
-<p>The second form takes every voltage column of the CSV as a reference pattern (here the six patterns A to F) and needs no run directory.</p>
+<p>The second form takes every voltage column of the CSV as a reference pattern (here the six patterns A to F) and needs no run directory. <code>--resolution N</code> interpolates to an N × N grid instead of 64 × 64. The committed <code>results.json</code> was written by an earlier revision of the script with a different JSON layout (<code>A_vs_B</code> and <code>reference.A_H0</code> rather than <code>pairs</code> and <code>reference.A.H0</code>); the computation is the same and its numbers reproduce from the current script to 3e-4 mV, the rounding of the end-state CSV.</p>
 <h2 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h2>
 <p>See <a href="RESULTS/">RESULTS.md</a>.</p>
 

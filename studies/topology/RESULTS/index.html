@@ -1496,6 +1496,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#grid-resolution-added-2026-11-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grid resolution (added 2026-11-08)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2953,6 +2964,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#grid-resolution-added-2026-11-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grid resolution (added 2026-11-08)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3098,7 +3120,7 @@
 </tr>
 </tbody>
 </table>
-<p>The 2 mV threshold variant is within 0.02 of the raw one at every σ and is in <code>results.json</code>.</p>
+<p>The 2 mV threshold variant is within 0.025 of the raw one at every σ and is in <code>results.json</code>.</p>
 <p>A-to-B distances: mean 0.56 mV; topology 18.6 mV (raw), 18.1 mV (≥ 2 mV), 17.1 mV (≥ 5 mV); per-cell RMS 18.7 mV.</p>
 <h2 id="what-this-shows">What this shows<a class="headerlink" href="#what-this-shows" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3110,6 +3132,8 @@
 <ul>
 <li>One pair of patterns, one tissue, one noise model (independent per-cell Gaussian). Spatially correlated noise, or a different pair of patterns, could order the statistics differently.</li>
 <li>No smoothing was applied before the persistence computation. A denoising step would likely extend topology's range toward higher σ, but it was not part of the pre-stated design and is not reported.</li>
+<li>The grid resolution is a free parameter of the design, fixed at 64 × 64 before the runs. The same draws on a 128 × 128 grid (<code>results_two_res128.json</code>, added 2026-11-08) give an A-to-B topology distance of 24.2 mV instead of 18.6, the same accuracies at every σ up to 5 mV, and 0.688 (raw) at σ = 10 against the mean's 0.700, and 0.475 at σ = 20 against 0.575. "Both fail at 10 mV and topology first" holds at both resolutions, by a smaller margin at the finer one. See <a href="#grid-resolution-added-2026-11-08">Grid resolution</a> below.</li>
+<li>The field is interpolated linearly inside the tissue's convex hull and takes the nearest cell's value outside it; the tissue is a diagonal strip, so 77 % of the grid points are filled that way (see the design). References and samples share the path, so the comparison is fair, but the diagrams are those of that interpolant, not of the cell values alone.</li>
 <li>The separation ratios at σ = 5 (0.7) say the patterns are closer in topology than the noise moves a sample, yet the accuracy is 100%: the two distances move together under noise, so the nearer reference is still the right one. The accuracy is the result; the separation ratio is a description of the margin.</li>
 </ul>
 <h2 id="six-patterns-added-2026-11-06">Six patterns (added 2026-11-06)<a class="headerlink" href="#six-patterns-added-2026-11-06" title="Permanent link">&para;</a></h2>
@@ -3224,9 +3248,49 @@
 <h3 id="what-this-adds">What this adds<a class="headerlink" href="#what-this-adds" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Topology separates all six patterns at up to 1 mV of noise, where the mean voltage already fails.</strong> The mean is at 77 % with almost no noise, because three of the six patterns have the same mean to 0.06 mV. Topology is at 100 %.</li>
-<li><strong>Topology's range shrinks with more patterns.</strong> With two patterns it held to 5 mV of noise; with six it is at 77 % by 2 mV and near chance by 5 mV. The hard pairs are E–F and D–E, 5.6 and 8.7 mV apart topologically, against 18.6 mV for A–B. A statistic's useful range is set by its closest pair.</li>
-<li><strong>Dropping short bars hurts here.</strong> The 5 mV threshold removes real structure that distinguishes D, E and F (E's and F's third-longest finite H0 features are 4 to 5 mV), so it is worse than the raw distance at every σ below 5 mV. The 2 mV threshold is indistinguishable from raw. The threshold was fixed before these patterns existed, and this is what came of it.</li>
+<li><strong>Topology's range shrinks with more patterns, at this grid resolution.</strong> With two patterns it held to 5 mV of noise; with six, on the pre-stated 64 × 64 grid, it is at 77 % by 2 mV and near chance by 5 mV. The hard pairs are E–F and D–E, 5.6 and 8.7 mV apart topologically, against 18.6 mV for A–B. A statistic's useful range is set by its closest pair. On a finer grid the closest pairs move apart and the range extends; see the next section.</li>
+<li><strong>Dropping short bars hurts here.</strong> The 5 mV threshold removes real structure that distinguishes D, E and F (E's third-longest finite H0 feature, 4.2 mV, is dropped; F's, at 5.2 mV, is just kept, and D's is 10.3 mV, so the threshold's cost is not fully explained by that one feature), so it is worse than the raw distance at every σ below 5 mV. The 2 mV threshold is indistinguishable from raw. The threshold was fixed before these patterns existed, and this is what came of it.</li>
 <li><strong>The per-cell comparison stays at 100 % to 20 mV</strong>, as before.</li>
+</ul>
+<h2 id="grid-resolution-added-2026-11-08">Grid resolution (added 2026-11-08)<a class="headerlink" href="#grid-resolution-added-2026-11-08" title="Permanent link">&para;</a></h2>
+<p>A review of the script found that the persistence diagrams are not converged at the pre-stated 64 × 64 grid (grid step 8.4 µm against a median cell spacing of 16.9 µm): the number of bars a noisy field produces keeps growing with the grid. The six-pattern test was therefore rerun with the same seed and draws at 32 × 32 and 128 × 128 (<code>compare_statistics.py --resolution</code>; <code>results_six_res32.json</code>, <code>results_six_res128.json</code>). The mean-voltage and per-cell statistics do not depend on the grid.</p>
+<table>
+<thead>
+<tr>
+<th>Grid</th>
+<th>A–B topology distance (mV)</th>
+<th>Smallest topology pair (mV)</th>
+<th>Raw topology accuracy at σ = 0.5 / 1 / 2 / 5 / 10 mV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>32 × 32</td>
+<td>16.7</td>
+<td>E–F, 3.7</td>
+<td>1.000 / 0.971 / 0.713 / 0.417 / 0.263</td>
+</tr>
+<tr>
+<td><strong>64 × 64 (pre-stated)</strong></td>
+<td>18.6</td>
+<td>E–F, 5.6</td>
+<td>1.000 / 0.996 / 0.767 / 0.388 / 0.267</td>
+</tr>
+<tr>
+<td>128 × 128</td>
+<td>24.2</td>
+<td>A–F, 10.6</td>
+<td>1.000 / 1.000 / 0.992 / 0.546 / 0.204</td>
+</tr>
+</tbody>
+</table>
+<p>Chance is 0.167; the mean voltage is at 0.771 / 0.683 / 0.579 / 0.408 / 0.275 at every grid.</p>
+<ul>
+<li><strong>The distances between patterns grow with the grid</strong>, and the closest pair changes: E–F at 32 and 64, A–F at 128. The reference diagrams gain long bars as the interpolant resolves more of each pattern's structure.</li>
+<li><strong>Topology's range with six patterns is set by the grid, not by the method.</strong> At 128 × 128 it separates all six patterns at up to 2 mV of noise (99 %) and is well above chance at 5 mV (55 %), where the 64 × 64 result was 77 % and 39 %. The statement above that topology is "near chance by 5 mV" with six patterns describes the 64 × 64 discretisation.</li>
+<li><strong>At 10 mV and above, every grid fails</strong>, and the finer grid fails harder (0.20 at 128 against 0.27 at 64), because noise produces more bars on a finer grid and the Wasserstein distance counts them.</li>
+<li><strong>The two-pattern headline is stable</strong>: at 128 × 128 topology is still 100 % at 2 and 5 mV, and still fails at 10 mV (0.688 against the mean's 0.700).</li>
+<li><strong>What this does not settle:</strong> the resolution at which the diagrams converge (128 is not shown to be it), whether smoothing would do what a finer grid does, and whether the design should fix the grid by cell spacing rather than by a count. The 64 × 64 numbers stand as the pre-registered result; the resolution dependence is reported beside them so the result is not read as a property of persistent homology in general.</li>
 </ul>
 
 
