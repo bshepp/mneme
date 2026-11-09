@@ -6,7 +6,7 @@ Developer context for the Mneme project. Useful for both AI assistants and human
 
 Mneme is an exploratory research toolkit for studying field-like memory in biological tissue, starting with simulated bioelectric data (BETSE).
 
-## Current Status (2026-11-05)
+## Current Status (2026-11-09)
 
 **No scientific result produced with Mneme is currently asserted.** A review in September 2026 found that the BETSE analysis report and the PhysioNet Lyapunov numbers were produced by defective code. Both are withdrawn. The defects are fixed; the analyses have not been re-run.
 

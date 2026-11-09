@@ -1,6 +1,6 @@
 # Mneme Project Plan v3
 
-**Last updated:** 2026-11-07
+**Last updated:** 2026-11-09
 **Previous versions:** v2 is in git history (`project_plan.md` before 2026-09-27). v1 is [docs/mneme_project_plan_v1_original.md](docs/mneme_project_plan_v1_original.md).
 
 ---
@@ -40,7 +40,7 @@ Mneme studies whether biological tissue stores pattern memory in its bioelectric
 
 | Stage | Status |
 |---|---|
-| 0. Withdraw unsupported claims | Done. Pending merge of the withdrawal to the public site. |
+| 0. Withdraw unsupported claims | Done. The withdrawal notice is on the public docs site (gh-pages, deployed from main). |
 | 1. Correctness fixes with regression tests | Done |
 | 2. Measure and document the Lyapunov operating range; freeze | Done |
 | 3. Multistability experiment | Steps 3.1 to 3.4 done. The published 2016 configuration has one state ([studies/convergence](studies/convergence/RESULTS.md)). Adding a voltage-coupled gene network gives two stable patterns; adding Kir2.1 plus a Na⁺ leak does not ([studies/multistability](studies/multistability/RESULTS.md)). Both gene-network patterns return from every displacement of up to 20 mV that is not aimed at the other pattern; displacement along the line between them flips the pattern, and the midpoint settles into a third stable state. Random Anion starts reach six distinct stable patterns in eight tries ([studies/basins](studies/basins/RESULTS.md)); a second perturbation round brings the count to eight. The pattern count depends on the Anion's gap-junction coupling: none at a tenth of the paper's value, two at 2e-14, one at three times the paper's ([studies/sweep](studies/sweep/RESULTS.md)). |
